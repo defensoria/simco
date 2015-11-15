@@ -1,0 +1,133 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:jsf="http://xmlns.jcp.org/jsf" xmlns:gc="http://xmlns.jcp.org/jsf/composite/gc">
+<ui:composition template="../template/template.xhtml">
+<ui:define name="content">
+<span class="text-resalt-primary" style="font-size:2em">Añadir Medio de Verificación</span>
+<h:form id="idForm" enctype="multipart/form-data">
+<h:messages />
+<gc:confirmSubmit bean="#{medioVerificacionController.saveMedioVerificacion()}"/>
+<table style="width:100%">
+<tr>
+<td style="width:50%;padding-right:5px;vertical-align:top">
+<div class="panel panel-featured-top-primary">
+<div class="panel-body">
+<script>$(document).ready(function(){$('#idBotenAnadir').on('click',function(){if($('#idTitulo').val()===""){$('#idTitulo').addClass('error');alertar("Debe de ingresar el titulo del medio");return false;}
+else{$('#idTitulo').removeClass('error');}
+if($('#idDescripcion').val()===""){$('#idDescripcion').addClass('error');alertar("Debe de ingresar una descripcion del medio");return false;}
+else{$('#idDescripcion').removeClass('error');}
+if($('.cMedio').val()===""){$('.cMedio').addClass('error');alertar("Debe de agregar un archivo");return false;}
+else{$('.cMedio').removeClass('error');}
+confirmar();return false;});});</script>
+<table style="width:100%">
+<tr>
+<td style="width:50%"><span class="text-resalt-primary">Registrar medios de verificación</span></td>
+<td style="padding:10px;text-align:right">
+<table>
+<tr>
+<td style="padding-right:5px">
+<a style="float:right" class="btn btn-primary" id="idBotenAnadir">
+<span class="glyphicon glyphicon-plus" />Añadir
+</a>
+</td>
+<td style="padding-left:5px">
+<a style="float:right" class="btn btn-danger" jsf:action="registroNuevo">
+<span class="glyphicon glyphicon-share"/>Regresar
+</a>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<br/>
+<input jsf:value="#{medioVerificacionController.medioVerificacion.titulo}" type="text" placeholder="Título" id="idTitulo"/>
+<br/>
+<textarea jsf:value="#{medioVerificacionController.medioVerificacion.descripcion}" rows="3" type="text" placeholder="Descripción" id="idDescripcion"/>
+<br/>
+<textarea jsf:value="#{medioVerificacionController.medioVerificacion.observacion}" rows="3" type="text" placeholder="Observaciones"/>
+<br/>
+<input type="hidden" id="idPalabrasClave" jsf:value="#{medioVerificacionController.medioVerificacion.palabraClave}"/>
+<h:outputText value="Palabras clave" />
+<br/>
+<input type="text" class="palabrasClave" style="width:33%;height:2em"/>
+<input type="text" class="palabrasClave" style="width:33%;height:2em"/>
+<input type="text" class="palabrasClave" style="width:33%;height:2em"/>
+<input type="text" class="palabrasClave" style="width:33%;height:2em"/>
+<input type="text" class="palabrasClave" style="width:33%;height:2em"/>
+<input type="text" class="palabrasClave" style="width:33%;height:2em"/>
+<br/><br/>
+Archivo:
+<h:selectOneRadio value="#{medioVerificacionController.medioVerificacion.tipoArchivo}">
+<f:selectItem itemValue="1" itemLabel="Digital" />
+<f:selectItem itemValue="2" itemLabel="Fisico" />
+<f:selectItem itemValue="3" itemLabel="Fisico y digital" />
+</h:selectOneRadio>
+<br/>
+Soporte:
+<h:selectOneRadio value="#{medioVerificacionController.medioVerificacion.tipoSoporte}">
+<f:selectItem itemValue="1" itemLabel="Sistema" />
+<f:selectItem itemValue="2" itemLabel="Local" />
+<f:selectItem itemValue="3" itemLabel="Sistema y local" />
+</h:selectOneRadio>
+<br/>
+Adjuntar:<h:inputFile class="cMedio" value="#{medioVerificacionController.file1}"/>
+<br/>
+<input type="text" jsf:value="#{medioVerificacionController.medioVerificacion.ubicacion}" placeholder="Ubicación fisica"/>
+<br/>
+</div>
+</div>
+</td>
+<td style="vertical-align:top;padding-left:5px">
+<div class="panel panel-featured-top-primary">
+<div class="panel-body">
+<table style="width:100%">
+<tr>
+<td style="width:50%">
+<span class="text-resalt-primary">Medios de verificación agregados</span></td>
+<td style="padding:10px">
+</td>
+</tr>
+</table>
+<br/>
+<h:dataTable class="table table-hover" value="#{medioVerificacionController.medioVerificacions}" var="medio" binding="#{row}">
+<h:column>
+<f:facet name="header">N.°</f:facet>
+<h:outputText value="#{row.rowIndex+1}" />
+</h:column>
+<h:column>
+<f:facet name="header">Código</f:facet>
+<h:outputText value="#{medio.codigo}" />
+</h:column>
+<h:column>
+<f:facet name="header">Título</f:facet>
+<h:outputText value="#{medio.titulo}" />
+</h:column>
+<h:column>
+<f:facet name="header">Registro</f:facet>
+<h:outputText value="#{medio.fechaRegistro}" />
+</h:column>
+<h:column>
+<f:facet name="header">Archivo</f:facet>
+<a target="_blank" href="/filesystem/#{medio.ruta}">
+#{medio.ruta}
+</a>
+</h:column>
+<h:column>
+<f:facet name="header"></f:facet>
+<a style="float:right;font-size:large;margin:auto; cursor: pointer" onclick="confirmar1#{row.rowIndex+1}()">
+<span style="color:red" class="glyphicon glyphicon-remove"/>
+</a>
+<gc:confirmRemoveSubmit classGC="confirmacion1#{row.rowIndex+1}" bean="#{medioVerificacionController.removeMedioVerificacion(medio)}" mensaje="Esta seguro que desea eliminar el registro del medio?"/>
+<script>function confirmar1#{row.rowIndex+1}(){$(".confirmacion1#{row.rowIndex+1}").modal('show');}</script>
+</h:column>
+</h:dataTable>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</h:form>
+<script>$(document).ready(function(){$('#idForm').on('submit',function(){var i=0;var cadena="";$('.palabrasClave').each(function(){if($(this).val()!==""){if(i===0){cadena=cadena+$(this).val();}else{cadena=cadena+";"+$(this).val();}
+i++;}});$('#idPalabrasClave').val(cadena);return true;});});</script>
+</ui:define>
+</ui:composition>
+</html>

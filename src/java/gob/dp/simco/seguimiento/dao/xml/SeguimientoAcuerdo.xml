@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD iBatis Mapper 3.0 //EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="gob.dp.simco.seguimiento.dao.SeguimientoAcuerdoDao">
+
+    <resultMap id="seguimientoAcuerdoMap" type="seguimientoAcuerdo">
+        <id property="id" column="N_ID_SEGUIEMIENTO" />
+        <result property="inicioSeguimiento" column="D_FECINISEGUIMIENTO" />
+        <result property="finSeguimiento" column="D_FECFINSEGUIMIENTO"/>
+        <result property="tipoTiempoIni" column="C_INDTIPOTIEMPOINI"/>
+        <result property="tipoTiempoFin" column="C_INDTIPOTIEMPOFIN"/>
+        <result property="numeroInicial" column="N_NUMEROTIEMPOINI"/>
+        <result property="numeroFinal" column="N_NUMEROTIEMPOFIN"/>
+        <result property="indicadorAntesDespuesIni" column="C_INDANTESDESPUESINI"/>
+        <result property="indicadorAntesDespuesFin" column="C_INDANTESDESPUESFIN"/>
+        <result property="inicioDefinitivo" column="D_FECINISEGUIMIENTOFINAL"/>
+        <result property="finDefinitivo" column="D_FECFINSEGUIMIENTOFINAL"/>
+        <result property="indicadorLunesViernes" column="C_INDLUNVIER"/>
+        <result property="ultimaEjecucion" column="D_ULTIMAEJECUCION"/>
+        <result property="indiceRepeticion" column="C_INDREPETICION"/>
+        <result property="estado" column="C_ESTADOSEGUIMIENTO"/>
+        <result property="indicadorSeleccionHoraIni" column="C_INDSELECCIONHORAINI"/>
+        <result property="indicadorSeleccionHoraFin" column="C_INDSELECCIONHORAFIN"/>
+        <result property="actaAcuerdoDetalle.id" column="N_ID_ACUERDO"/>
+        <result property="opcionales" column="C_DESTINAOPCIONALES"/>
+
+        
+    </resultMap>
+    
+    <insert id="seguimientoAcuerdoInsertar" parameterType="seguimientoAcuerdo">
+        INSERT INTO SIMCO_SEG_ACUERDOS
+        (
+        N_ID_SEGUIEMIENTO,
+        N_ID_ACUERDO,
+        <if test="inicioSeguimiento != null">
+            D_FECINISEGUIMIENTO,
+        </if>
+        <if test="finSeguimiento != null">
+            D_FECFINSEGUIMIENTO,
+        </if>
+        <if test="tipoTiempoIni != null">
+            C_INDTIPOTIEMPOINI,
+        </if>
+        <if test="tipoTiempoFin != null">
+            C_INDTIPOTIEMPOFIN,
+        </if>
+        <if test="numeroInicial != null">
+            N_NUMEROTIEMPOINI,
+        </if>
+        <if test="numeroFinal != null">
+            N_NUMEROTIEMPOFIN,
+        </if>
+        <if test="indicadorAntesDespuesIni != null">
+            C_INDANTESDESPUESINI,
+        </if>
+        <if test="indicadorAntesDespuesFin != null">
+            C_INDANTESDESPUESFIN,
+        </if>
+        <if test="inicioDefinitivo != null">
+            D_FECINISEGUIMIENTOFINAL,
+        </if>    
+        <if test="finDefinitivo != null">
+            D_FECFINSEGUIMIENTOFINAL,
+        </if>
+        <if test="indicadorLunesViernes != null">
+            C_INDLUNVIER,
+        </if>
+        <if test="ultimaEjecucion != null">
+            D_ULTIMAEJECUCION,
+        </if>
+        <if test="opcionales != null">
+            C_DESTINAOPCIONALES,
+        </if>
+    
+        C_INDSELECCIONHORAINI,
+        C_INDSELECCIONHORAFIN,
+        C_INDREPETICION,
+        C_ESTADOSEGUIMIENTO
+        )
+        VALUES
+        (
+        SEQ_SIMCO_SEG_ACUERDOS.NextVal,
+        #{actaAcuerdoDetalle.id},
+        <if test="inicioSeguimiento != null">
+            #{inicioSeguimiento},
+        </if>
+     
+        <if test="finSeguimiento != null">
+            #{finSeguimiento},
+        </if>
+    
+        <if test="tipoTiempoIni != null">
+            #{tipoTiempoIni},
+        </if>
+    
+        <if test="tipoTiempoFin != null">
+            #{tipoTiempoFin},
+        </if>
+    
+        <if test="numeroInicial != null">
+            #{numeroInicial},
+        </if>
+    
+        <if test="numeroFinal != null">
+            #{numeroFinal},
+        </if>
+    
+        <if test="indicadorAntesDespuesIni != null">
+            #{indicadorAntesDespuesIni},
+        </if>
+    
+        <if test="indicadorAntesDespuesFin != null">
+            #{indicadorAntesDespuesFin},
+        </if>
+    
+        <if test="inicioDefinitivo != null">
+            #{inicioDefinitivo},
+        </if>  
+      
+        <if test="finDefinitivo != null">
+            #{finDefinitivo},
+        </if>
+	
+        <if test="indicadorLunesViernes != null">
+            #{indicadorLunesViernes},
+        </if>
+    
+        <if test="ultimaEjecucion != null">
+            #{ultimaEjecucion},
+        </if>
+        
+        <if test="opcionales != null">
+            #{opcionales},
+        </if>
+        #{indicadorSeleccionHoraIni},
+        #{indicadorSeleccionHoraFin},
+        #{indiceRepeticion},
+        #{estado}
+        ) 
+        <selectKey keyProperty="id" resultType="Long">
+            SELECT SEQ_SIMCO_SEG_ACUERDOS.CURRVAL FROM DUAL
+        </selectKey>
+    </insert>
+
+    <update id="seguimientoAcuerdoUpdate" parameterType="seguimientoAcuerdo">
+        UPDATE SIMCO_SEG_ACUERDOS
+        <set>
+            <if test="inicioSeguimiento != null">
+                D_FECINISEGUIMIENTO = #{inicioSeguimiento},
+            </if> 
+            <if test="finSeguimiento != null">
+                D_FECFINSEGUIMIENTO = #{finSeguimiento},
+            </if> 
+            <if test="numeroInicial != null">
+                N_NUMEROTIEMPOINI = #{numeroInicial},
+            </if> 
+            <if test="numeroFinal != null">
+                N_NUMEROTIEMPOFIN = #{numeroFinal},
+            </if> 
+            <if test="tipoTiempoIni != null">
+                C_INDTIPOTIEMPOINI = #{tipoTiempoIni},
+            </if>
+            <if test="tipoTiempoFin != null">
+                C_INDTIPOTIEMPOFIN = #{tipoTiempoFin},
+            </if>
+            <if test="indicadorAntesDespuesIni != null">
+                C_INDANTESDESPUESINI = #{indicadorAntesDespuesIni},
+            </if>
+            <if test="indicadorAntesDespuesFin != null">
+                C_INDANTESDESPUESFIN = #{indicadorAntesDespuesFin},
+            </if>
+            <if test="inicioDefinitivo != null">
+                D_FECINISEGUIMIENTOFINAL = #{inicioDefinitivo},
+            </if>    
+            <if test="finDefinitivo != null">
+                D_FECFINSEGUIMIENTOFINAL = #{finDefinitivo},
+            </if>
+            <if test="indicadorLunesViernes != null">
+                C_INDLUNVIER = #{indicadorLunesViernes},
+            </if>
+            <if test="ultimaEjecucion != null">
+                D_ULTIMAEJECUCION = #{ultimaEjecucion},
+            </if>
+            <if test="opcionales != null">
+                C_DESTINAOPCIONALES = #{opcionales},
+            </if>
+            <if test="indiceRepeticion != null">
+                C_INDREPETICION = #{indiceRepeticion},
+            </if>
+            C_ESTADOSEGUIMIENTO = #{estado}
+        </set>
+        <where>
+            N_ID_SEGUIEMIENTO = #{id}
+        </where>
+    </update>
+ 
+    <select id="seguimientoAcuerdoBuscar" resultMap="seguimientoAcuerdoMap" parameterType="long">
+        SELECT N_ID_SEGUIEMIENTO,
+        N_ID_ACUERDO,
+        D_FECINISEGUIMIENTO,
+        D_FECFINSEGUIMIENTO,
+        C_INDTIPOTIEMPOINI,
+        C_INDTIPOTIEMPOFIN,
+        N_NUMEROTIEMPOINI,
+        N_NUMEROTIEMPOFIN,
+        C_INDANTESDESPUESINI,
+        C_INDANTESDESPUESFIN,    
+        D_FECINISEGUIMIENTOFINAL,
+        D_FECFINSEGUIMIENTOFINAL,
+        C_INDLUNVIER,
+        D_ULTIMAEJECUCION,
+        C_INDREPETICION,
+        C_ESTADOSEGUIMIENTO,
+        C_INDSELECCIONHORAINI,
+        C_INDSELECCIONHORAFIN,
+        C_DESTINAOPCIONALES
+        FROM SIMCO_SEG_ACUERDOS 
+        where C_ESTADOSEGUIMIENTO != 'INA'
+        AND N_ID_ACUERDO = #{id}
+    </select>
+    
+    <select id="seguimientoAcuerdoBuscarAcuerdo" resultMap="seguimientoAcuerdoMap" parameterType="long">
+        SELECT A.* FROM SIMCO_SEG_ACUERDOS A
+        INNER JOIN SIMCO_REG_DET_ACTA_ACUERDO B ON A.N_ID_ACUERDO = B.N_ID_ACUERDO
+        WHERE B.C_INDALERTAR = 0
+        AND B.N_ID_ACUERDO = #{id}
+    </select>
+    
+    <delete id="seguimientoAcuerdoDelete" parameterType="long">
+        DELETE FROM SIMCO_SEG_ACUERDOS
+        WHERE N_ID_SEGUIEMIENTO = #{id}
+    </delete>
+</mapper>
