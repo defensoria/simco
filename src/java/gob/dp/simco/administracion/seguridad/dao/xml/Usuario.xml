@@ -219,7 +219,7 @@
             #{flagClaveInicial},
         </if>
         <!--#{clave}-->
-        UPPER(#{apellidoMaterno})
+        #{apellidoMaterno}
         )
     </insert>
 

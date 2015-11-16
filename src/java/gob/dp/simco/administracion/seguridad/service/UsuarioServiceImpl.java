@@ -56,6 +56,7 @@ public class UsuarioServiceImpl implements UsuarioService {
         String encPass = MEncript.getStringMessageDigest(usuario.getClave().trim());
         // 2013-08-19- Comentado para permitir generar el codigo de usuario
         //usuario.setCodigo(usuarioDao.generarCodigoUsuario());
+        //usuario.setClave(encPass);
         usuario.setClave(encPass);
         usuarioDao.insertarUsuario(usuario);
         /**

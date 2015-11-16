@@ -55,7 +55,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>
+                                    <td style="padding-bottom: 10px">
                                         <div class="input-group datepicker" id="idDivTxtFechaRegistro">
                                             <div class="input-group-addon add-on">
                                                 <span class="glyphicon glyphicon-calendar"></span>
@@ -65,10 +65,10 @@
                                             </input>
                                         </div>
                                     </td>
-                                    <td>
+                                    <td style="padding-bottom: 10px">
                                         <div id="idDivCmbTipoRegistro">
                                             <script>$(document).ready(function(){$('.selectRadio').multiselect(); });</script>
-                                            <h:selectOneMenu class="selectRadio" id="cmbTipoRegistro" value="#{actaAcuerdoController.actaAcuerdo.tipo}">
+                                            <h:selectOneMenu id="cmbTipoRegistro" value="#{actaAcuerdoController.actaAcuerdo.tipo}">
                                                 <f:selectItems value="#{listasComunesController.buscarTipoActaAcuerdo(false,false,true)}" var="y" itemLabel="#{y.nombreParametro}" itemValue="#{y.valorParametro}" />
                                             </h:selectOneMenu>
                                         </div>
@@ -85,12 +85,12 @@
                                 <tr>
                                     <td>
                                         <div id="idDivTxtDescripcionItem">
-                                            <textarea id="txtDescripcionItem" rows="3" jsf:value="#{actaAcuerdoController.actaAcuerdo.descripcionItem}" style="width:100%;height:170px"/>
+                                            <textarea id="txtDescripcionItem" rows="3" jsf:value="#{actaAcuerdoController.actaAcuerdo.descripcionItem}" style="width:100%;height:170px" maxlength="450"/>
                                         </div>
                                     </td>
                                     <td>
                                         <div id="idDivTxtComentario">
-                                            <textarea id="txtComentario" rows="3" jsf:value="#{actaAcuerdoController.actaAcuerdo.comentario}" style="width:100%;height:170px"/>
+                                            <textarea id="txtComentario" rows="3" jsf:value="#{actaAcuerdoController.actaAcuerdo.comentario}" style="width:100%;height:170px"  maxlength="450"/>
                                         </div>
                                     </td>
                                 </tr>
@@ -216,7 +216,7 @@
                                             <div class="panel-heading">
                                                 <span class="glyphicon glyphicon-user"></span>
                                                 Miembros
-                                                <a style="text-decoration:none" id="addUser">
+                                                <a style="text-decoration:none; cursor: pointer" id="addUser">
                                                     <span id="spanAddUser" class="glyphicon glyphicon-plus"></span>
                                                 </a>
                                             </div>

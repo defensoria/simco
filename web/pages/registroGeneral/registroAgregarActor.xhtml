@@ -171,7 +171,7 @@ function confirmar2(){$(".confirmacion2").modal('show');}</script>
 </td>
 <td style="text-align:left">
 <b>Rol de reunion:</b>
-<h:selectOneMenu value="#{actor.actividadActor.tipoRol}" class="selectRadio">
+<h:selectOneMenu value="#{actor.actividadActor.tipoRol}">
 <f:selectItem itemValue="0" itemLabel="Seleccione" />
 <f:selectItems value="#{listasComunesController.buscarTipoRolActor(false,false,false)}" var="y" itemLabel="#{y.nombreParametro}" itemValue="#{y.valorParametro}" />
 </h:selectOneMenu>

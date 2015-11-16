@@ -10,6 +10,7 @@ import gob.dp.simco.administracion.seguridad.entity.Rol;
 import gob.dp.simco.administracion.seguridad.entity.Usuario;
 import gob.dp.simco.administracion.seguridad.service.RolService;
 import gob.dp.simco.administracion.seguridad.service.UsuarioService;
+import gob.dp.simco.comun.MessagesUtil;
 import gob.dp.simco.comun.mb.AbstractManagedBean;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +39,7 @@ public class UsuarioNuevoController extends AbstractManagedBean {
     private List<String> lstRolesSeleccionados;
     private boolean verGuardar=true;
     private boolean habilitado=true;
-
+private MessagesUtil msg;
     @Autowired
     private UsuarioService usuarioService;
 
@@ -107,6 +108,7 @@ public class UsuarioNuevoController extends AbstractManagedBean {
      }
 
       public void insertarUsuario(){
+          msg = new MessagesUtil();
         log.debug("Entrando a insertarUsuario");
         Usuario filter=new Usuario();
         this.llenarFiltro(filter);
@@ -122,8 +124,7 @@ public class UsuarioNuevoController extends AbstractManagedBean {
             }
             usuarioService.insertarUsuario(filter,lstRolSel);
             usuario.setCodigo(filter.getCodigo());
-            addInfo(getMessage("administracion.usuario.crear.ok"));
-
+            msg.messageInfo("Se registro correctamente el usuario", null);
             usuario = new Usuario();
         }catch(Exception e){
             log.error(e);
@@ -203,4 +204,13 @@ public class UsuarioNuevoController extends AbstractManagedBean {
     public void setRolService(RolService rolService) {
         this.rolService = rolService;
     }
+
+    public MessagesUtil getMsg() {
+        return msg;
+    }
+
+    public void setMsg(MessagesUtil msg) {
+        this.msg = msg;
+    }
+    
 }

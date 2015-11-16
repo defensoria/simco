@@ -5,7 +5,6 @@ import gob.dp.simco.administracion.seguridad.entity.Usuario;
 import gob.dp.simco.analisis.controller.AnalisisController;
 import gob.dp.simco.analisis.controller.GraficController;
 import gob.dp.simco.comun.controller.BusquedaController;
-import gob.dp.simco.comun.controller.ReporteController;
 import gob.dp.simco.comun.controller.SessionStorageController;
 import gob.dp.simco.comun.entity.Menu;
 import gob.dp.simco.comun.service.MenuService;

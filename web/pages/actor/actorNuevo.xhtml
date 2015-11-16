@@ -5,6 +5,13 @@
                 <h:messages id="idMessages"/>
                 <script>sessionStorage.setItem('menuHijoSession', 'Nuevo');
                     $(document).ready(function () {
+                        $("#idPanelBodyActuacion").hide();
+                        $("#spanAddActuacion").removeClass("glyphicon-minus").addClass("glyphicon-plus");
+                        $("#idPanelBodyActuacion2").hide();
+                        $("#spanAddActuacion2").removeClass("glyphicon-minus").addClass("glyphicon-plus");
+                        $("#idPanelBodyActuacion3").hide();
+                        $("#spanAddActuacion3").removeClass("glyphicon-minus").addClass("glyphicon-plus");
+                        
                         $('#idBotonGuardar').on('click', function () {
                             $("#idPanelBodyActuacion").slideDown(400).delay(800);
                             $("#spanAddActuacion").removeClass("glyphicon-plus").addClass("glyphicon-minus");
@@ -172,7 +179,7 @@
                                                                             </td>
                                                                             <td style="width: 34%">
                                                                                 <label>Provincia:</label>
-                                                                                <h:selectOneMenu id="cmbProvincia" value="#{actorController.actor.idProvincia}" onchange="loadingModal()">
+                                                                                <h:selectOneMenu value="#{actorController.actor.idProvincia}" onchange="loadingModal()">
                                                                                     <f:selectItem itemLabel="Provincia" itemValue="0"/>
                                                                                     <f:selectItems value="#{actorController.listaProvincia}" var="y" itemLabel="#{y.value} #{y.label}" itemValue="#{y.id}" />
                                                                                     <f:ajax listener="#{actorController.comboDistrito()}" render="idPanelUbigeoPersona" onevent="closeModal"/>
@@ -180,7 +187,7 @@
                                                                             </td>
                                                                             <td>
                                                                                 <label>Distrito</label>
-                                                                                <h:selectOneMenu id="cmbDistrito" value="#{actorController.actor.idDistrito}">
+                                                                                <h:selectOneMenu value="#{actorController.actor.idDistrito}">
                                                                                     <f:selectItem itemLabel="Distrito" itemValue="0"/>
                                                                                     <f:selectItems value="#{actorController.listaDistrito}" var="y" itemLabel="#{y.value} #{y.label}" itemValue="#{y.id}" />
                                                                                 </h:selectOneMenu>
@@ -542,7 +549,7 @@
                                                                             </td>
                                                                             <td style="width: 34%">
                                                                                 <label><b>Provincia:</b></label><br/>
-                                                                                <h:selectOneMenu id="cmbProvincia2" value="#{actorController.empresa.idProvincia}" onchange="loadingModal()">
+                                                                                <h:selectOneMenu value="#{actorController.empresa.idProvincia}" onchange="loadingModal()">
                                                                                     <f:selectItem itemLabel="Provincia" itemValue="0"/>
                                                                                     <f:selectItems value="#{actorController.listaProvincia}" var="y" itemLabel="#{y.value} #{y.label}" itemValue="#{y.id}" />
                                                                                     <f:ajax listener="#{actorController.comboDistritoEmpresa()}" render="idPanelUbigeoEmpresa" onevent="closeModal"/>
@@ -550,7 +557,7 @@
                                                                             </td>
                                                                             <td>
                                                                                 <label><b>Distrito:</b></label><br/>
-                                                                                <h:selectOneMenu id="cmbDistrito2" value="#{actorController.empresa.idDistrito}">
+                                                                                <h:selectOneMenu value="#{actorController.empresa.idDistrito}">
                                                                                     <f:selectItem itemLabel="Distrito" itemValue="0"/>
                                                                                     <f:selectItems value="#{actorController.listaDistrito}" var="y" itemLabel="#{y.value} #{y.label}" itemValue="#{y.id}" />
                                                                                 </h:selectOneMenu>
@@ -834,7 +841,7 @@
                                                                             </td>
                                                                             <td style="width: 34%">
                                                                                 <b>Provincia:</b><br/>
-                                                                                <h:selectOneMenu id="cmbProvincia3" value="#{actorController.entidad.idProvincia}" onchange="loadingModal()">
+                                                                                <h:selectOneMenu value="#{actorController.entidad.idProvincia}" onchange="loadingModal()">
                                                                                     <f:selectItem itemLabel="Provincia" itemValue="0"/>
                                                                                     <f:selectItems value="#{actorController.listaProvincia}" var="y" itemLabel="#{y.value} #{y.label}" itemValue="#{y.id}" />
                                                                                     <f:ajax listener="#{actorController.comboDistritoEntidad()}" render="idPanelUbigeoEntidad" onevent="closeModal"/>
@@ -842,7 +849,7 @@
                                                                             </td>
                                                                             <td>
                                                                                 <b>Distrito:</b><br/>
-                                                                                <h:selectOneMenu id="cmbDistrito3" value="#{actorController.entidad.idDistrito}">
+                                                                                <h:selectOneMenu value="#{actorController.entidad.idDistrito}">
                                                                                     <f:selectItem itemLabel="Distrito" itemValue="0"/>
                                                                                     <f:selectItems value="#{actorController.listaDistrito}" var="y" itemLabel="#{y.value} #{y.label}" itemValue="#{y.id}" />
                                                                                 </h:selectOneMenu>
@@ -1000,12 +1007,12 @@
                             $(".modal-backdrop").removeClass("modal-backdrop");
                         }
                     }
-                    if ($('#idDniActor').val() === '') {
+                    /*if ($('#idDniActor').val() === '') {
                         $("#idPanelBodyActuacion").hide();
                         $("#spanAddActuacion").removeClass("glyphicon-minus").addClass("glyphicon-plus");
                     } else {
                         $("#spanAddActuacion").removeClass("glyphicon-plus").addClass("glyphicon-minus");
-                    }          
+                    } */         
 
                     $("#addActuacion").click(function () {
                         if ($("#spanAddActuacion").attr('class') === "glyphicon glyphicon-plus")
@@ -1023,12 +1030,13 @@
                             $("#spanAddActuacion").removeClass("glyphicon-minus").addClass("glyphicon-plus");
                         }
                     });
-                    if ($('#idNombreEmpresa').val() === '') {
+                    
+                    /*if ($('#idNombreEmpresa').val() === '') {
                         $("#idPanelBodyActuacion2").hide();
                         $("#spanAddActuacion2").removeClass("glyphicon-minus").addClass("glyphicon-plus");
                     } else {
                         $("#spanAddActuacion2").removeClass("glyphicon-plus").addClass("glyphicon-minus");
-                    }
+                    }*/
                     
                     $("#addActuacion2").click(function () {
                         if ($("#spanAddActuacion2").attr('class') === "glyphicon glyphicon-plus")
@@ -1046,12 +1054,12 @@
                             $("#spanAddActuacion2").removeClass("glyphicon-minus").addClass("glyphicon-plus");
                         }
                     });
-                    if ($('#idNombreEntidad').val() === '') {
+                    /*if ($('#idNombreEntidad').val() === '') {
                         $("#idPanelBodyActuacion3").hide();
                         $("#spanAddActuacion3").removeClass("glyphicon-minus").addClass("glyphicon-plus");
                     } else {
                         $("#spanAddActuacion3").removeClass("glyphicon-plus").addClass("glyphicon-minus");
-                    }
+                    }*/
                     $("#addActuacion3").click(function () {
                         if ($("#spanAddActuacion3").attr('class') === "glyphicon glyphicon-plus")
                         {

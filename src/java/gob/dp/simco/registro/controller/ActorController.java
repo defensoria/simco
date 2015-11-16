@@ -1314,6 +1314,7 @@ public class ActorController implements Serializable {
             actividadActor1.setComentario(a.getActividadActor().getComentario());
             actividadActor1.setDemanda(a.getActividadActor().getDemanda());
             actividadActor1.setPosicion(a.getActividadActor().getPosicion());
+            actividadActor1.setTipoRol(a.getActividadActor().getTipoRol());
             actividadActor1.setEstado("ACT");
             if (a.getActividadActor().getNivel() != null) {
                 actividadActor1.setNivel(a.getActividadActor().getNivel());
