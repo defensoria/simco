@@ -22,6 +22,7 @@ import gob.dp.simco.intervencion.service.IntervencionHistorialActService;
 import gob.dp.simco.intervencion.service.IntervencionMiembroService;
 import gob.dp.simco.intervencion.service.IntervencionService;
 import gob.dp.simco.intervencion.vo.ReportPlanIntervencionVO;
+import gob.dp.simco.registro.constantes.ConstantesUtil;
 import gob.dp.simco.registro.entity.Actividad;
 import gob.dp.simco.registro.entity.Caso;
 import gob.dp.simco.registro.service.ActividadService;
@@ -141,12 +142,19 @@ public class IntervencionController implements Serializable {
     }
 
     public String cargarPaginaIntervencion() {
+        usuarioSession();
         intervencion = new Intervencion();
-        intervencions = intervencionService.intervencionBuscar();
+        intervencions = intervencionService.intervencionBuscar(usuarioSession.getCodigo());
         listarIntervenciones();
         caso = new Caso();
         generarCadenaCasos();
         return "intervencion";
+    }
+    
+    private void usuarioSession() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        LoginController loginController = (LoginController) context.getELContext().getELResolver().getValue(context.getELContext(), null, "loginController");
+        usuarioSession = loginController.getUsuarioSesion();
     }
 
     public String cargarPaginaIntervencionDetalle(Intervencion intervencion) {
@@ -262,7 +270,7 @@ public class IntervencionController implements Serializable {
 
             JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(
                     lista);
-            jasperPrint = JasperFillManager.fillReport("C:\\recursos\\reportes\\planIntervencion.jasper",
+            jasperPrint = JasperFillManager.fillReport(ConstantesUtil.BASE_URL_REPORT+"\\planIntervencion.jasper",
                     new HashMap(), beanCollectionDataSource);
             return true;
         } else {
@@ -569,20 +577,22 @@ public class IntervencionController implements Serializable {
     }
 
     public void updateIntervencionEtapaEnEjecucion() {
-        if (StringUtils.equals(intervencionEtapa.getTipo(), "PLA")) {
-            for (IntervencionMiembro miembro : intervencionMiembros) {
+        List<IntervencionMiembro> ims = intervencionMiembroService.intervencionMiembroBuscar(intervencionEtapa.getId());
+        for(IntervencionMiembro im : ims){
+            im.setEstado("TEM");
+            intervencionMiembroService.intervencionMiembroUpdate(im);
+        }
+        if(intervencionEtapa.getListaActuacionesEjecutadas() > 0){
+            intervencionEtapa.setTipo("ENE");
+        }else{
+            intervencionEtapa.setTipo("PLA");
+        }
+        
+        for (IntervencionMiembro miembro : intervencionMiembros) {
                 miembro.setIntervencionEtapa(intervencionEtapa);
                 intervencionMiembroService.intervencionMiembroInsertar(miembro);
             }
-        }
-        if (StringUtils.equals(intervencionEtapa.getTipo(), "ENE")) {
-            for (IntervencionMiembro miembro : intervencionMiembros) {
-                miembro.setIntervencionEtapa(intervencionEtapa);
-                if (miembro.getId() == null) {
-                    intervencionMiembroService.intervencionMiembroInsertar(miembro);
-                }
-            }
-        }
+        
         intervencionEtapaUpdate();
 
         if (ejecutados > 0) {
@@ -608,11 +618,13 @@ public class IntervencionController implements Serializable {
         return true;
     }
 
-    public void removeMiembro(IntervencionMiembro miembro) {
-        if (miembro.getId() == null) {
+    public boolean removeMiembro(IntervencionMiembro miembro) {
+        if(StringUtils.equals(usuarioSession.getCodigo(), miembro.getCodigoUsuario())){
+            return false;
+        }else{
             intervencionMiembros.remove(miembro);
         }
-
+        return true;
     }
 
     public void priorizar(Intervencion inter) {
@@ -648,12 +660,10 @@ public class IntervencionController implements Serializable {
 
     public void openModalRegistroDescripcion(IntervencionEtapa etapa) {
         try {
-            FacesContext context = FacesContext.getCurrentInstance();
-            LoginController loginController = (LoginController) context.getELContext().getELResolver().getValue(context.getELContext(), null, "loginController");
             actividads = actividadService.actividadxCodigoCasoBuscarTotal(intervencion.getCodigoCaso());
             intervencionAccionSelect = new IntervencionAccion();
             descripcionActuacion = "";
-            usuarioSession = loginController.getUsuarioSesion();
+            usuarioSession();
             IntervencionEtapa etapa1 = intervencionEtapaService.intervencionEtapaBuscar(etapa.getId());
             if (etapa1.getIntervencionAccionId() != null) {
                 intervencionAccionSelect = intervencionAccionService.intervencionAccionBuscar(etapa.getIntervencionAccionId());
@@ -695,7 +705,7 @@ public class IntervencionController implements Serializable {
 
     public boolean saveIntervencion() {
         try {
-        intervencions = intervencionService.intervencionBuscar();
+        intervencions = intervencionService.intervencionBuscar(usuarioSession.getCodigo());
         
         if (caso.getId() == null) {
             msg.messageAlert("Debe de seleccionar un caso", null);
@@ -714,7 +724,7 @@ public class IntervencionController implements Serializable {
         intervencion.setNombre(caso.getNombre());
         intervencion.setCodigoCaso(caso.getCodigo());
         intervencionService.intervencionInsertar(intervencion);
-        intervencions = intervencionService.intervencionBuscar();
+        intervencions = intervencionService.intervencionBuscar(usuarioSession.getCodigo());
         listarIntervenciones();
         } catch (Exception ex) {
                 log.error(ex);

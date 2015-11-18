@@ -29,6 +29,13 @@ public class IntervencionMiembroServiceImpl implements IntervencionMiembroServic
         log.debug("METODO : IntervencionMiembroServiceImpl.intervencionMiembroInsertar");
         if(intervencionMiembroDao.intervencionMiembroValidaInsert(intervencionMiembro) == 0){
             intervencionMiembroDao.intervencionMiembroInsertar(intervencionMiembro);
+        }else{
+            intervencionMiembro.setEstado("ACT");
+            if(intervencionMiembro.getId() == null){
+                long id = intervencionMiembroDao.intervencionMiembroCodigoMiembro(intervencionMiembro);
+                intervencionMiembro.setId(id);
+            }
+            intervencionMiembroDao.intervencionMiembroUpdate(intervencionMiembro);
         }
     }
 
@@ -42,6 +49,11 @@ public class IntervencionMiembroServiceImpl implements IntervencionMiembroServic
     public Integer intervencionMiembroCountEtapa(Long idEtapa) {
         log.debug("METODO : IntervencionMiembroServiceImpl.intervencionMiembroCountEtapa");
         return intervencionMiembroDao.intervencionMiembroCountEtapa(idEtapa);
+    }
+
+    @Override
+    public void intervencionMiembroUpdate(IntervencionMiembro intervencionMiembro) {
+        intervencionMiembroDao.intervencionMiembroUpdate(intervencionMiembro);
     }
     
 }

@@ -27,9 +27,9 @@ public class IntervencionDaoImpl extends SqlSessionDaoSupport implements Interve
     }
 
     @Override
-    public List<Intervencion> intervencionBuscar() {
+    public List<Intervencion> intervencionBuscar(String codigoUsuario) {
         log.debug("METODO : IntervencionDaoImpl.intervencionBuscar");
-        return getSqlSession().selectList("gob.dp.simco.intervencion.dao.IntervencionDao.intervencionBuscar");
+        return getSqlSession().selectList("gob.dp.simco.intervencion.dao.IntervencionDao.intervencionBuscar",codigoUsuario);
     }
 
     @Override

@@ -16,7 +16,7 @@ public interface IntervencionService {
     
     public void intervencionInsertar(Intervencion intervencion);
     
-    public List<Intervencion> intervencionBuscar();
+    public List<Intervencion> intervencionBuscar(String codigoUsuario);
     
     public void intervencionUpdate(Intervencion intervencion);
     

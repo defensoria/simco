@@ -181,12 +181,12 @@
                                             <tr>
                                                 <td style="width:90%">
                                                     <script>$(document).ready(function () {
-                                                            if ($(".cTipoEstado").val() === "04") {
+                                                            if ($(".cTipoEstado").val() === "04" || $(".cTipoEstado").val() === "01" || $(".cTipoEstado").val() === "02") {
                                                                 $(".TipoDialogo").css("display", "");
                                                             } else {
                                                                 $(".TipoDialogo").css("display", "none");
                                                             }
-                                                            if ($(".cTipoEstado").val() === "04") {
+                                                            if ($(".cTipoEstado").val() === "04" || $(".cTipoEstado").val() === "01" || $(".cTipoEstado").val() === "02") {
                                                                 $(".TipoDialogo").css("display", "");
                                                                 if ($(".tipoFace").val() !== "05") {
                                                                     $(".cTipoFace").css("display", "none");
@@ -197,7 +197,7 @@
                                                             }
 
                                                             $(".cTipoEstado").on("change", function () {
-                                                                if ($(".cTipoEstado").val() === "04") {
+                                                                if ($(".cTipoEstado").val() === "04" || $(".cTipoEstado").val() === "01" || $(".cTipoEstado").val() === "02") {
                                                                     $(".TipoDialogo").css("display", "");
                                                                     if ($(".tipoFace").val() !== "05") {
                                                                         $(".cTipoFace").css("display", "none");
@@ -207,7 +207,7 @@
                                                                 }
                                                             });
                                                             if ($(".tipoFace").val() === "05") {
-                                                                if ($(".cTipoEstado").val() === "04") {
+                                                                if ($(".cTipoEstado").val() === "04" || $(".cTipoEstado").val() === "01" || $(".cTipoEstado").val() === "02") {
                                                                     $(".tipoFace").css("background", "#6AA84F").css("color", "#F5F5F5");
                                                                     $(".cTipoFace").css("display", "");
                                                                 }
@@ -507,7 +507,7 @@
                                         </td>
                                         <td style="float:right">
                                             <a id="addActuacion1" style="cursor:pointer">
-                                                <span id="spanAddActuacion1" class="glyphicon glyphicon-plus" style="font-size:medium;color:red"></span>
+                                                <span id="spanAddActuacion1" class="glyphicon glyphicon-circle-arrow-down" style="font-size:medium;"></span>
                                             </a>
                                         </td>
                                     </tr>
@@ -517,12 +517,12 @@
                                         if (f === 1)
                                         {
                                             $("#idPanelBodyActuacion1").slideUp(300).delay(800);
-                                            $("#spanAddActuacion1").removeClass("glyphicon-plus").addClass("glyphicon-minus");
+                                            $("#spanAddActuacion1").removeClass("glyphicon-circle-arrow-down").addClass("glyphicon-circle-arrow-up");
                                             f = 2;
                                         } else
                                         {
                                             $("#idPanelBodyActuacion1").slideDown(400).delay(800);
-                                            $("#spanAddActuacion1").removeClass("glyphicon-minus").addClass("glyphicon-plus");
+                                            $("#spanAddActuacion1").removeClass("glyphicon-circle-arrow-up").addClass("glyphicon-circle-arrow-down");
                                             f = 1;
                                         }
                                     });</script>
@@ -632,7 +632,7 @@
                                         </td>
                                         <td style="float:right">
                                             <a id="addActuacion" style="cursor:pointer">
-                                                <span id="spanAddActuacion" class="glyphicon glyphicon-plus" style="font-size:medium;color:red"></span>
+                                                <span id="spanAddActuacion" class="glyphicon glyphicon-circle-arrow-down" style="font-size:medium;"></span>
                                             </a>
                                         </td>
                                     </tr>
@@ -642,12 +642,12 @@
                                         if (i === 1)
                                         {
                                             $("#idPanelBodyActuacion").slideUp(300).delay(800);
-                                            $("#spanAddActuacion").removeClass("glyphicon-plus").addClass("glyphicon-minus");
+                                            $("#spanAddActuacion").removeClass("glyphicon-circle-arrow-down").addClass("glyphicon-circle-arrow-up");
                                             i = 2;
                                         } else
                                         {
                                             $("#idPanelBodyActuacion").slideDown(400).delay(800);
-                                            $("#spanAddActuacion").removeClass("glyphicon-minus").addClass("glyphicon-plus");
+                                            $("#spanAddActuacion").removeClass("glyphicon-circle-arrow-up").addClass("glyphicon-circle-arrow-down");
                                             i = 1;
                                         }
                                     });</script>
@@ -675,7 +675,7 @@
                                         </td>
                                         <td style="float:right">
                                             <a id="addActuacion2" style="cursor:pointer">
-                                                <span id="spanAddActuacion2" class="glyphicon glyphicon-plus" style="font-size:medium;color:red"></span>
+                                                <span id="spanAddActuacion2" class="glyphicon glyphicon-circle-arrow-down" style="font-size:medium;"></span>
                                             </a>
                                         </td>
                                     </tr>
@@ -685,12 +685,12 @@
                                         if (k === 1)
                                         {
                                             $("#idPanelBodyActuacion2").slideUp(300).delay(800);
-                                            $("#spanAddActuacion2").removeClass("glyphicon-plus").addClass("glyphicon-minus");
+                                            $("#spanAddActuacion2").removeClass("glyphicon-circle-arrow-down").addClass("glyphicon-circle-arrow-up");
                                             k = 2;
                                         } else
                                         {
                                             $("#idPanelBodyActuacion2").slideDown(400).delay(800);
-                                            $("#spanAddActuacion2").removeClass("glyphicon-minus").addClass("glyphicon-plus");
+                                            $("#spanAddActuacion2").removeClass("glyphicon-circle-arrow-up").addClass("glyphicon-circle-arrow-down");
                                             k = 1;
                                         }
                                     });</script>
@@ -713,19 +713,19 @@
                                                 <td>
                                                     <span style="font-weight:bold;font-size:1.3em" class="text-primary">Actuaciones defensoriales</span>
                                                     <a id="addActuacion4" style="cursor:pointer">
-                                                        <span id="spanAddActuacion4" class="glyphicon glyphicon-plus" style="font-size:medium;color:red"></span>
+                                                        <span id="spanAddActuacion4" class="glyphicon glyphicon-circle-arrow-down" style="font-size:medium;"></span>
                                                     </a>
                                                     <script>var l = 1;
                                                         $("#addActuacion4").click(function () {
                                                             if (l === 1)
                                                             {
                                                                 $("#idPanelBodyActuacion4").slideUp(300).delay(800);
-                                                                $("#spanAddActuacion4").removeClass("glyphicon-plus").addClass("glyphicon-minus");
+                                                                $("#spanAddActuacion4").removeClass("glyphicon-circle-arrow-down").addClass("glyphicon-circle-arrow-up");
                                                                 l = 2;
                                                             } else
                                                             {
                                                                 $("#idPanelBodyActuacion4").slideDown(400).delay(800);
-                                                                $("#spanAddActuacion4").removeClass("glyphicon-minus").addClass("glyphicon-plus");
+                                                                $("#spanAddActuacion4").removeClass("glyphicon-circle-arrow-up").addClass("glyphicon-circle-arrow-down");
                                                                 l = 1;
                                                             }
                                                         });</script>
@@ -781,19 +781,19 @@
                                                 <td>
                                                     <span style="font-weight:bold;font-size:1.3em" class="text-primary">Acontecimientos</span>
                                                     <a id="addActuacion5" style="cursor:pointer">
-                                                        <span id="spanAddActuacion5" class="glyphicon glyphicon-plus" style="font-size:medium;color:red"></span>
+                                                        <span id="spanAddActuacion5" class="glyphicon glyphicon-circle-arrow-down" style="font-size:medium;"></span>
                                                     </a>
                                                     <script>var s = 1;
                                                         $("#addActuacion5").click(function () {
                                                             if (s === 1)
                                                             {
                                                                 $("#idPanelBodyActuacion5").slideUp(300).delay(800);
-                                                                $("#spanAddActuacion5").removeClass("glyphicon-plus").addClass("glyphicon-minus");
+                                                                $("#spanAddActuacion5").removeClass("glyphicon-circle-arrow-down").addClass("glyphicon-circle-arrow-up");
                                                                 s = 2;
                                                             } else
                                                             {
                                                                 $("#idPanelBodyActuacion5").slideDown(400).delay(800);
-                                                                $("#spanAddActuacion5").removeClass("glyphicon-minus").addClass("glyphicon-plus");
+                                                                $("#spanAddActuacion5").removeClass("glyphicon-circle-arrow-up").addClass("glyphicon-circle-arrow-down");
                                                                 s = 1;
                                                             }
                                                         });</script>

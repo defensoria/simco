@@ -43,5 +43,15 @@ public class IntervencionMiembroDaoImpl extends SqlSessionDaoSupport implements 
         log.debug("METODO : IntervencionMiembroDaoImpl.intervencionMiembroValidaInsert");
         return getSqlSession().selectOne("gob.dp.simco.intervencion.dao.IntervencionMiembroDao.intervencionMiembroValidaInsert",intervencionMiembro); 
     }
+
+    @Override
+    public void intervencionMiembroUpdate(IntervencionMiembro intervencionMiembro) {
+        getSqlSession().update("gob.dp.simco.intervencion.dao.IntervencionMiembroDao.intervencionMiembroUpdate", intervencionMiembro);
+    }
+
+    @Override
+    public Integer intervencionMiembroCodigoMiembro(IntervencionMiembro intervencionMiembro) {
+        return getSqlSession().selectOne("gob.dp.simco.intervencion.dao.IntervencionMiembroDao.intervencionMiembroCodigoMiembro",intervencionMiembro); 
+    }
     
 }

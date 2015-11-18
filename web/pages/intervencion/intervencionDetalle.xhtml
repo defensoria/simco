@@ -200,7 +200,7 @@
                             </h:dataTable>
                         </td>
                         <td style="width:19%;vertical-align:top">
-                            <span style="color:#0074cc;font-size:large">Campos de acciCampos de acciónn</span>
+                            <span style="color:#0074cc;font-size:large">Campos de acción</span>
                             <a style="text-decoration:none" jsf:action="#{intervencionController.openModalCampoAccion()}">
                                 <span class="glyphicon glyphicon-plus" style="font-size:medium"></span>
                                 <f:ajax render="@form" onevent="openModalCampoAccion"/>
@@ -281,7 +281,7 @@
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <span class="text-primary" style="font-size:1.5em">Campo de Acción</span>
+                                    <span class="text-primary" style="font-size:1.5em">Campo de acción</span>
                                 </div>
                                 <div class="modal-body">
                                     <div class="panel panel-default">
@@ -358,7 +358,7 @@
                                             <table style="width:100%">
                                                 <tr>
                                                     <td style="width:60%;padding-right:10px;vertical-align:top">
-                                                        <div class="alert fade in" role="alert" style="text-align:right;border:solid #{intervencionController.intervencionAccionSelect.color == null? 'silver':intervencionController.intervencionAccionSelect.color}1px;background:#{intervencionController.intervencionAccionSelect.color == null? 'white':intervencionController.intervencionAccionSelect.color};color:#{intervencionController.intervencionAccionSelect.color == null? 'silver':'white'};padding-bottom:5px;padding-top:5px;margin-bottom:3px">
+                                                        <div class="alert fade in" role="alert" style="text-align:right;border:solid #{intervencionController.intervencionAccionSelect.color == null? 'silver':intervencionController.intervencionAccionSelect.color} 1px;background:#{intervencionController.intervencionAccionSelect.color == null? 'white':intervencionController.intervencionAccionSelect.color};color:#{intervencionController.intervencionAccionSelect.color == null? 'silver':'white'};padding-bottom:5px;padding-top:5px;margin-bottom:3px">
                                                             <strong>
                                                                 <h:outputText style="float:left" value="#{intervencionController.intervencionAccionSelect.title == null? 'Campo de acción' : intervencionController.intervencionAccionSelect.title}" />
                                                                 <h:inputHidden value="#{intervencionController.intervencionEtapa.intervencionAccionId}" />
@@ -434,6 +434,8 @@
             i = 1;
         }
     });</script>
+                                                        <h:panelGroup id="idPanelMiembros">
+                                                            <h:messages id="idMessages"/>
                                                         <div class="panel panel-warning" style="width:100%">
                                                             <div class="panel-heading">
                                                                 <span class="glyphicon glyphicon-user"></span>
@@ -442,7 +444,9 @@
                                                                     <span id="spanAddUser" class="glyphicon glyphicon-plus"></span>
                                                                 </a>
                                                             </div>
+                                                            
                                                             <div id="idPanelBody" class="panel-body">
+                                                                
                                                                 <h:dataTable value="#{busquedaUsuarioController.listaUsuario}" var="item" id="idDatatableActor" class="table table-striped" style="font-size:.8em;text-align:left">
                                                                     <h:column id="colNombre">
                                                                         <f:facet name="header">
@@ -456,10 +460,10 @@
                                                                         </f:facet>
                                                                         <h:outputText value="#{item.dni}"/>
                                                                     </h:column>
-                                                                    <h:column id="colCambioClave">
-                                                                        <a jsf:action="#{intervencionController.addMiembro(item)}" data-toggle="tooltip" data-placement="bottom" title="Modificar usuario">
+                                                                    <h:column>
+                                                                        <a  style="cursor: pointer" jsf:action="#{intervencionController.addMiembro(item)}" data-toggle="tooltip" data-placement="bottom" title="Modificar usuario">
                                                                             <span class="glyphicon glyphicon-share-alt" style="font-size:large"/>
-                                                                            <f:ajax render="@form"/>
+                                                                            <f:ajax render=":idForm2:idPanelMiembros"/>
                                                                         </a>
                                                                     </h:column>
                                                                 </h:dataTable>
@@ -474,30 +478,32 @@
                                                                         </a>
                                                                     </li>
                                                                 </ul>
-                                                            </div>
-                                                            <div class="panel-footer">
-                                                                <center>
-                                                                    <h:dataTable value="#{intervencionController.intervencionMiembros}" var="miembro" style="text-align:left;width:100%;font-size:.8em" class="table table-striped">
+                                                             
+                                                                    <h:dataTable id="idDatableSeleccionado" value="#{intervencionController.intervencionMiembros}" var="miembro" style="text-align:left;width:100%;font-size:.8em" class="table table-striped">
                                                                         <h:column>
                                                                             <li>
                                                                                 <h:outputText value="#{miembro.nombre}" />
                                                                             </li>
                                                                         </h:column>
                                                                         <h:column>
-                                                                            <a href="#" jsf:action="#{intervencionController.removeMiembro(miembro)}" jsf:rendered="#{miembro.id == null and miembro.estado == 'TMP'}">
+                                                                            <a style="cursor: pointer" jsf:action="#{intervencionController.removeMiembro(miembro)}" >
                                                                                 <span style="color:red" class="glyphicon glyphicon-remove"></span>
-                                                                                <f:ajax render="@form"/>
+                                                                                <f:ajax render=":idForm2:idPanelMiembros"/>
                                                                             </a>
                                                                         </h:column>
                                                                     </h:dataTable>
-                                                                </center>
+                                                              
+                                                            </div>
+                                                            <div class="panel-footer">
+                                                                
                                                             </div>
                                                         </div>
+    </h:panelGroup>
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td style="padding-right:10px">
-                                                        <span class="text-bold">Actuaciones</span>
+                                                        <span class="text-bold">Actividades:</span>
                                                         <div class="progress">
                                                             <div class="progress-bar" role="progressbar" aria-valuenow="#{intervencionController.intervencionEtapa.avance.toString()}" aria-valuemin="0" aria-valuemax="100" style="width:#{intervencionController.intervencionEtapa.avance.toString()}%">#{intervencionController.intervencionEtapa.avance.toString()}%</div>
                                                         </div>

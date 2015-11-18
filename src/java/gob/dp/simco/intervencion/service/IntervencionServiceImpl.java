@@ -31,9 +31,9 @@ public class IntervencionServiceImpl implements IntervencionService{
     }
 
     @Override
-    public List<Intervencion> intervencionBuscar() {
+    public List<Intervencion> intervencionBuscar(String codigoUsuario) {
         log.debug("METODO : IntervencionServiceImpl.intervencionBuscar");
-        return intervencionDao.intervencionBuscar();
+        return intervencionDao.intervencionBuscar(codigoUsuario);
     }
 
     @Override

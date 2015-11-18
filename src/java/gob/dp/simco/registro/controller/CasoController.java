@@ -47,7 +47,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
-import java.util.logging.Level;
 import javax.inject.Named;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
@@ -175,7 +174,9 @@ public class CasoController implements Serializable {
 
     public String cargarPaginaCasosSigues() {
         try {
+            usuarioSession();
             caso = new Caso();
+            caso.setUsuarioRegistro(usuarioSession.getCodigo());
             casos = casoService.casoBuscar(caso);
         } catch (Exception ex) {
             log.error(ex.getMessage());
@@ -653,7 +654,7 @@ public class CasoController implements Serializable {
         lista.add(vo);
         JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(
                 lista);
-        jasperPrint = JasperFillManager.fillReport("C:\\recursos\\reportes\\documentoCaso.jasper",
+        jasperPrint = JasperFillManager.fillReport(ConstantesUtil.BASE_URL_REPORT+"\\documentoCaso.jasper",
                 new HashMap(), beanCollectionDataSource);
     }
 

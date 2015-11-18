@@ -79,6 +79,9 @@
             <if test="id != null">
                 AND A.N_ID_CASO=#{id}
             </if>
+            <if test="usuarioRegistro != null">
+                AND A.C_USUREGISTRO=#{usuarioRegistro}
+            </if>
             AND A.C_INDVIGENTE= 'A'
         </where>
         ORDER BY A.N_ID_CASO

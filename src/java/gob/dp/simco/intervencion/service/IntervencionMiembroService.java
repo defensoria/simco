@@ -20,4 +20,6 @@ public interface IntervencionMiembroService {
     
     public Integer intervencionMiembroCountEtapa(Long idEtapa);
     
+    public void intervencionMiembroUpdate(IntervencionMiembro intervencionMiembro);
+    
 }

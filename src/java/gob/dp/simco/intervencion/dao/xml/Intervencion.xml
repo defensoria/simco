@@ -43,14 +43,17 @@
         WHERE N_IDINTERVENCION = #{id}
     </update>
  
-    <select id="intervencionBuscar" resultMap="intervencionMap">
+    <select id="intervencionBuscar" parameterType="String" resultMap="intervencionMap">
         SELECT 
-            N_IDINTERVENCION,
-            C_NOMBREINTERVEN,
-            C_DESCRIPCION,
-            C_ESTADO,
-            C_CODIGOCASO
-        FROM SIMCO_INTER_INTERVENCION 
+            A.N_IDINTERVENCION,
+            A.C_NOMBREINTERVEN,
+            A.C_DESCRIPCION,
+            A.C_ESTADO,
+            A.C_CODIGOCASO
+        FROM SIMCO_INTER_INTERVENCION A
+        INNER JOIN SIMCO_REG_CASO B ON A.C_CODIGOCASO = B.C_CODIGOCASO
+        AND B.C_INDVIGENTE = 'A'
+        AND B.C_USUREGISTRO =  #{value}
     </select>
     
     <select id="intervencionBuscarActivas" resultMap="intervencionMap">

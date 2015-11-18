@@ -18,7 +18,7 @@ public interface IntervencionDao {
     
     public void intervencionUpdate(Intervencion intervencion);
     
-    public List<Intervencion> intervencionBuscar();
+    public List<Intervencion> intervencionBuscar(String codigoUsuario);
     
     public List<Intervencion> intervencionBuscarPriorizados();
     

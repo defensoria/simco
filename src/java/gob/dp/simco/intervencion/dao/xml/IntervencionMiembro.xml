@@ -32,6 +32,15 @@
             SELECT SEQ_SIMCO_INTER_MIEMBRO.CURRVAL FROM DUAL
         </selectKey>
     </insert>
+    
+    <update id="intervencionMiembroUpdate"  parameterType="intervencionMiembro">
+        UPDATE SIMCO_INTER_MIEMBRO SET
+        <if test="id != null">
+            C_ESTADO = #{estado}
+        </if>
+        WHERE N_IDMIEMBRO = #{id}
+        
+    </update>
 
     <select id="intervencionMiembroBuscar" resultMap="intervencionMiembroMap" parameterType="long">
         SELECT 
@@ -42,9 +51,13 @@
             N_ID_ETAPA
         FROM SIMCO_INTER_MIEMBRO
         where N_ID_ETAPA = #{id}
+        and C_ESTADO = 'ACT'
         ORDER BY N_IDMIEMBRO
     </select>
     
+    <select id="intervencionMiembroCodigoMiembro" resultType="java.lang.Integer" parameterType="intervencionMiembro">
+        SELECT N_IDMIEMBRO FROM SIMCO_INTER_MIEMBRO WHERE C_CODUSUARIO = #{codigoUsuario} AND N_ID_ETAPA = #{intervencionEtapa.id}
+    </select>
     
     <select id="intervencionMiembroCountEtapa" resultType="java.lang.Integer" parameterType="analisisActorIntensidad">
         SELECT COUNT(*)

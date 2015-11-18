@@ -15,11 +15,15 @@ import java.util.List;
 public interface IntervencionMiembroDao {
     
     public void intervencionMiembroInsertar(IntervencionMiembro intervencionMiembro);
+    
+    public void intervencionMiembroUpdate(IntervencionMiembro intervencionMiembro);
             
     public List<IntervencionMiembro> intervencionMiembroBuscar(Long idEtapa);
     
     public Integer intervencionMiembroCountEtapa(Long idEtapa);
     
     public Integer intervencionMiembroValidaInsert(IntervencionMiembro intervencionMiembro);
+    
+    public Integer intervencionMiembroCodigoMiembro(IntervencionMiembro intervencionMiembro);
     
 }
