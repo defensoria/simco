@@ -172,6 +172,7 @@ public class IntervencionController implements Serializable {
     }
 
     public String cargarPaginaIntervencionDetalleCaso(long idCaso) {
+        usuarioSession();
         caso = new Caso();
         try {
         caso = casoService.casoBuscarOne(idCaso);
@@ -270,7 +271,7 @@ public class IntervencionController implements Serializable {
 
             JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(
                     lista);
-            jasperPrint = JasperFillManager.fillReport(ConstantesUtil.BASE_URL_REPORT+"\\planIntervencion.jasper",
+            jasperPrint = JasperFillManager.fillReport(ConstantesUtil.BASE_URL_REPORT+"planIntervencion.jasper",
                     new HashMap(), beanCollectionDataSource);
             return true;
         } else {

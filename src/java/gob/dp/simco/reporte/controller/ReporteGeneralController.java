@@ -699,7 +699,7 @@ public class ReporteGeneralController implements Serializable {
     
     public void initJasperReporteEjecutivo() throws JRException {
         JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(listaResumenEjecutivo);
-        jasperPrint = JasperFillManager.fillReport(ConstantesUtil.BASE_URL_REPORT+"\\reportePublicResumenEjecutivo.jasper",new HashMap(), beanCollectionDataSource);
+        jasperPrint = JasperFillManager.fillReport(ConstantesUtil.BASE_URL_REPORT+"reportePublicResumenEjecutivo.jasper",new HashMap(), beanCollectionDataSource);
      }
     
     public void generarReportePublicoMensual() throws JRException, IOException {
@@ -1949,19 +1949,19 @@ public class ReporteGeneralController implements Serializable {
         JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(
                 elementoReportes);
         if(ind == 1)
-            jasperPrint = JasperFillManager.fillReport(ConstantesUtil.BASE_URL_REPORT+"\\reporteFiltroCasoTipo.jasper",new HashMap(), beanCollectionDataSource);
+            jasperPrint = JasperFillManager.fillReport(ConstantesUtil.BASE_URL_REPORT+"reporteFiltroCasoTipo.jasper",new HashMap(), beanCollectionDataSource);
         if(ind == 2)
-            jasperPrint = JasperFillManager.fillReport(ConstantesUtil.BASE_URL_REPORT+"\\reporteFiltroCasoAutoridadCompetente.jasper",new HashMap(), beanCollectionDataSource);
+            jasperPrint = JasperFillManager.fillReport(ConstantesUtil.BASE_URL_REPORT+"reporteFiltroCasoAutoridadCompetente.jasper",new HashMap(), beanCollectionDataSource);
         if(ind == 3)
-            jasperPrint = JasperFillManager.fillReport(ConstantesUtil.BASE_URL_REPORT+"\\reporteFiltroCasoEstado.jasper",new HashMap(), beanCollectionDataSource);
+            jasperPrint = JasperFillManager.fillReport(ConstantesUtil.BASE_URL_REPORT+"reporteFiltroCasoEstado.jasper",new HashMap(), beanCollectionDataSource);
         if(ind == 4)
-            jasperPrint = JasperFillManager.fillReport(ConstantesUtil.BASE_URL_REPORT+"\\reporteFiltroCasoFace.jasper",new HashMap(), beanCollectionDataSource);
+            jasperPrint = JasperFillManager.fillReport(ConstantesUtil.BASE_URL_REPORT+"reporteFiltroCasoFace.jasper",new HashMap(), beanCollectionDataSource);
         if(ind == 5)
-            jasperPrint = JasperFillManager.fillReport(ConstantesUtil.BASE_URL_REPORT+"\\reporteFiltroCasoMecanismoDialogo.jasper",new HashMap(), beanCollectionDataSource);
+            jasperPrint = JasperFillManager.fillReport(ConstantesUtil.BASE_URL_REPORT+"reporteFiltroCasoMecanismoDialogo.jasper",new HashMap(), beanCollectionDataSource);
         if(ind == 6)
-            jasperPrint = JasperFillManager.fillReport(ConstantesUtil.BASE_URL_REPORT+"\\reporteFiltroCasoFaceParticipacion.jasper",new HashMap(), beanCollectionDataSource);
+            jasperPrint = JasperFillManager.fillReport(ConstantesUtil.BASE_URL_REPORT+"reporteFiltroCasoFaceParticipacion.jasper",new HashMap(), beanCollectionDataSource);
         if(ind == 7)
-            jasperPrint = JasperFillManager.fillReport(ConstantesUtil.BASE_URL_REPORT+"\\reporteFiltroCasoRegion.jasper",new HashMap(), beanCollectionDataSource);
+            jasperPrint = JasperFillManager.fillReport(ConstantesUtil.BASE_URL_REPORT+"reporteFiltroCasoRegion.jasper",new HashMap(), beanCollectionDataSource);
         
         
     }

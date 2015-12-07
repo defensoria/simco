@@ -19,7 +19,7 @@ import org.springframework.context.annotation.Scope;
 
 @Named
 @Scope("session")
-public class AsignarRecursoRolController extends AbstractManagedBean implements Serializable {
+public class AsignarRecursoRolController implements Serializable {
 
     private static final Logger log = Logger.getLogger(AsignarRecursoRolController.class);
     

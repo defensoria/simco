@@ -654,7 +654,7 @@ public class CasoController implements Serializable {
         lista.add(vo);
         JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(
                 lista);
-        jasperPrint = JasperFillManager.fillReport(ConstantesUtil.BASE_URL_REPORT+"\\documentoCaso.jasper",
+        jasperPrint = JasperFillManager.fillReport(ConstantesUtil.BASE_URL_REPORT+"documentoCaso.jasper",
                 new HashMap(), beanCollectionDataSource);
     }
 

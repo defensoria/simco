@@ -354,23 +354,23 @@ public class ReporteController implements Serializable {
     public void initJasper(int ind) throws JRException {
         if (ind == 1) {
             JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(listaResumen);
-            jasperPrint = JasperFillManager.fillReport(ConstantesUtil.BASE_URL_REPORT+"\\reporteCaso001.jasper", new HashMap(), beanCollectionDataSource);
+            jasperPrint = JasperFillManager.fillReport(ConstantesUtil.BASE_URL_REPORT+"reporteCaso001.jasper", new HashMap(), beanCollectionDataSource);
         }
         if (ind == 2) {
             JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(listaResumen2);
-            jasperPrint = JasperFillManager.fillReport(ConstantesUtil.BASE_URL_REPORT+"\\reporteCaso002.jasper", new HashMap(), beanCollectionDataSource);
+            jasperPrint = JasperFillManager.fillReport(ConstantesUtil.BASE_URL_REPORT+"reporteCaso002.jasper", new HashMap(), beanCollectionDataSource);
         }
 
         if (ind == 3) {
             JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(listaResumen3);
-            jasperPrint = JasperFillManager.fillReport(ConstantesUtil.BASE_URL_REPORT+"\\reporteCaso003.jasper", new HashMap(), beanCollectionDataSource);
+            jasperPrint = JasperFillManager.fillReport(ConstantesUtil.BASE_URL_REPORT+"reporteCaso003.jasper", new HashMap(), beanCollectionDataSource);
         }
     }
 
     public void initJasper4() throws JRException {
         JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(
                 listaResumen4);
-        jasperPrint = JasperFillManager.fillReport(ConstantesUtil.BASE_URL_REPORT+"\\reporteCaso004.jasper",
+        jasperPrint = JasperFillManager.fillReport(ConstantesUtil.BASE_URL_REPORT+"reporteCaso004.jasper",
                 new HashMap(), beanCollectionDataSource);
 
     }
@@ -378,7 +378,7 @@ public class ReporteController implements Serializable {
     public void initJasper5() throws JRException {
         JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(
                 listaResumen5);
-        jasperPrint = JasperFillManager.fillReport(ConstantesUtil.BASE_URL_REPORT+"\\reporteCaso004.jasper",
+        jasperPrint = JasperFillManager.fillReport(ConstantesUtil.BASE_URL_REPORT+"reporteCaso004.jasper",
                 new HashMap(), beanCollectionDataSource);
 
     }
