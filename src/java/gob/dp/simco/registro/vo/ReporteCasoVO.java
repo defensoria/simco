@@ -59,6 +59,8 @@ public class ReporteCasoVO {
     private List<ReporteActuacionDefensorialVO> acontecimientos;
     
     private List<CasoRegion> listaCasoRegiones;
+    
+    private String imagePath;
 
     public ReporteCasoVO() {
     }
@@ -245,6 +247,14 @@ public class ReporteCasoVO {
 
     public void setListaCasoRegiones(List<CasoRegion> listaCasoRegiones) {
         this.listaCasoRegiones = listaCasoRegiones;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
     
     

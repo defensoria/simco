@@ -25,6 +25,8 @@ public class ReportPlanIntervencionVO {
     
     private List<IntervencionAccion> accionesSeleccionadas;
     
+    private String imagePath;
+    
     
     public String getDescripcion() {
         return descripcion;
@@ -64,6 +66,14 @@ public class ReportPlanIntervencionVO {
 
     public void setAccionesSeleccionadas(List<IntervencionAccion> accionesSeleccionadas) {
         this.accionesSeleccionadas = accionesSeleccionadas;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
     
     

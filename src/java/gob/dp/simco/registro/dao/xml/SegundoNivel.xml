@@ -11,7 +11,7 @@
 
     <select id="segundoNivelBuscar" resultMap="segundoNivelMap"  parameterType="String" >
         select * from SIMCO_REG_SEGUNDO_NIVEL 
-        where C_TIPO = #{value}
+        where TRIM(C_TIPO) = TRIM(#{value})
     </select>
     
     <select id="segundoNivelOne" resultMap="segundoNivelMap"  parameterType="String" >

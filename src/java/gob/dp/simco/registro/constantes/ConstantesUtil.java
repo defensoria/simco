@@ -30,6 +30,10 @@ public class ConstantesUtil {
     /**LINUX*/
     //public static final String BASE_URL_REPORT = "/usr/local/recursos/reportes/";
     
+     public static final String BASE_URL_IMAGEPATH = "C:\\u01\\simco\\images\\";
+    /**LINUX*/
+    //public static final String BASE_URL_IMAGEPATH = "/usr/local/recursos/images/";
+    
     public static final String BASE_URL_PRODUCCION_IMAGE = "http://localhost:8080/filesystem/";
     
     

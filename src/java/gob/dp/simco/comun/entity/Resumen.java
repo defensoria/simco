@@ -56,6 +56,8 @@ public class Resumen implements Serializable{
 
     private String anho;
     
+    private String imagePath;
+    
     public String getTipo() {
         return tipo;
     }
@@ -224,6 +226,14 @@ public class Resumen implements Serializable{
 
     public void setAnho(String anho) {
         this.anho = anho;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
     
     

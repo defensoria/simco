@@ -266,6 +266,7 @@ public class IntervencionController implements Serializable {
                 ias.add(ia);
             }
             vo.setAcciones(ias);
+            vo.setImagePath(ConstantesUtil.BASE_URL_IMAGEPATH+"logoPlanIntervencion.png");
 
             lista.add(vo);
 

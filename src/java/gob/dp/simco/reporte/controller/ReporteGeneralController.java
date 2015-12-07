@@ -215,7 +215,10 @@ public class ReporteGeneralController implements Serializable {
         Integer totalResueltos = reporteEjecutivoService.totalCasosResueltos(filtroReporte);
         ejecutivo.setTotalCasosResueltoMes(totalResueltos);
         Integer totalPropuestos = reporteEjecutivoService.totalCasosPropuestos(filtroReporte);
-        String totalResueltosString = reporteEjecutivoService.cadenaNombreCasosResueltos(filtroReporte);
+        String totalResueltosString = "";
+        if(totalResueltos > 0){
+            totalResueltosString = reporteEjecutivoService.cadenaNombreCasosResueltos(filtroReporte);
+        }
         String totalPropuestosString = reporteEjecutivoService.cadenaNombreCasosResueltos(filtroReporte);
         StringBuilder sb1 = new StringBuilder();
         sb1.append("Durante el mes se resolvieron "+totalResueltos+" casos y se incorporó "+totalPropuestos+" (ver Anexo I y Anexo II). Los casos resueltos ");
@@ -474,6 +477,8 @@ public class ReporteGeneralController implements Serializable {
         fts.add(new FaceTotal("Desescalamiento", totalCasosGeneralDesescalamiento));
         fts.add(new FaceTotal("Dialogo", totalGeneralDialogo));
         ejecutivo.setFaceTotals(fts);
+        ejecutivo.setImagePath001(ConstantesUtil.BASE_URL_IMAGEPATH+"portada01.png");
+        ejecutivo.setImagePath002(ConstantesUtil.BASE_URL_IMAGEPATH+"portada02.png");
         listaResumenEjecutivo.add(ejecutivo);
 
         

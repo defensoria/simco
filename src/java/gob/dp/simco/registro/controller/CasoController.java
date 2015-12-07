@@ -645,6 +645,7 @@ public class CasoController implements Serializable {
                 radvos2.add(radvo);
             }
             vo.setAcontecimientos(radvos2);
+            vo.setImagePath(ConstantesUtil.BASE_URL_IMAGEPATH+"logoPlanIntervencion.png");
         }
         if (listaCasoRegion != null) {
             if (listaCasoRegion.size() > 0) {
