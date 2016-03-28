@@ -90,6 +90,7 @@ public class VictimaViolenciaController implements Serializable{
         int nroHerido = 0;
         int nroDetenidos = 0;
         int nroOtros = 0;
+        int nroDesaparecidos = 0;
         if(listaVictimas != null){
             for(ActividadVictima av : listaVictimas){
                 if(StringUtils.equals(av.getTipo(), "01"))
@@ -101,6 +102,8 @@ public class VictimaViolenciaController implements Serializable{
                 if(StringUtils.equals(av.getTipo(), "04"))
                     nroDetenidos++;
                 if(StringUtils.equals(av.getTipo(), "05"))
+                    nroDesaparecidos++;
+                if(StringUtils.equals(av.getTipo(), "06"))
                     nroOtros++;
             }
         }
@@ -108,6 +111,7 @@ public class VictimaViolenciaController implements Serializable{
         tiposVictima.put("Heridos", nroHerido);
         tiposVictima.put("Secuestrados", nroSecuestrados);
         tiposVictima.put("Detenidos", nroDetenidos);
+        tiposVictima.put("Desaparecidos", nroDesaparecidos);
         tiposVictima.put("Otros", nroOtros);
     }
     

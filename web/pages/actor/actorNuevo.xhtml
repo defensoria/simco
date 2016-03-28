@@ -71,8 +71,8 @@
                                         <div class="form-group">
                                             <table style="width:100%">
                                                 <tr>
-                                                    <td style="width:50%;padding-right:5px">
-                                                        <div class="panel panel-featured-top-primary" style="height:500px">
+                                                    <td style="width:50%;padding-right:5px; vertical-align: top">
+                                                        <div class="panel panel-featured-top-primary" style="height:auto">
                                                             <div class="panel-body">
                                                                 <span class="text-resalt-primary">Datos generales del actor</span>
                                                                 <br/><br/><br/>
@@ -159,47 +159,16 @@
                                                                             </h:selectOneRadio>
                                                                         </td>
                                                                         <td style="width:50%">
-                                                                            <label>Fecha nacimiento:</label>
-                                                                            <gc:calendar value="#{actorController.actor.fechaNacimiento}" id="txtFechaIni" />
+                                                                            
                                                                         </td>
                                                                     </tr>
                                                                 </table>
                                                                 <br/>
-                                                                <label>Lugar de nacimiento</label>
-                                                                <h:panelGroup id="idPanelUbigeoPersona">
-                                                                    <table style="width: 100%">
-                                                                        <tr>
-                                                                            <td style="width: 34%">
-                                                                                <label>Departamento:</label>
-                                                                                <h:selectOneMenu value="#{actorController.actor.idDepartamento}" onchange="loadingModal()">
-                                                                                    <f:selectItem itemLabel="Departamento" itemValue="0"/>
-                                                                                    <f:selectItems value="#{actorController.listaDepartamento}" var="y" itemLabel="#{y.value}" itemValue="#{y.label}" />
-                                                                                    <f:ajax listener="#{actorController.comboProvincia()}" render="idPanelUbigeoPersona" onevent="closeModal"/>
-                                                                                </h:selectOneMenu>
-                                                                            </td>
-                                                                            <td style="width: 34%">
-                                                                                <label>Provincia:</label>
-                                                                                <h:selectOneMenu value="#{actorController.actor.idProvincia}" onchange="loadingModal()">
-                                                                                    <f:selectItem itemLabel="Provincia" itemValue="0"/>
-                                                                                    <f:selectItems value="#{actorController.listaProvincia}" var="y" itemLabel="#{y.value} #{y.label}" itemValue="#{y.id}" />
-                                                                                    <f:ajax listener="#{actorController.comboDistrito()}" render="idPanelUbigeoPersona" onevent="closeModal"/>
-                                                                                </h:selectOneMenu>
-                                                                            </td>
-                                                                            <td>
-                                                                                <label>Distrito</label>
-                                                                                <h:selectOneMenu value="#{actorController.actor.idDistrito}">
-                                                                                    <f:selectItem itemLabel="Distrito" itemValue="0"/>
-                                                                                    <f:selectItems value="#{actorController.listaDistrito}" var="y" itemLabel="#{y.value} #{y.label}" itemValue="#{y.id}" />
-                                                                                </h:selectOneMenu>
-                                                                            </td>
-                                                                        </tr>
-                                                                    </table>
-                                                                </h:panelGroup>
                                                             </div>
                                                         </div>
                                                     </td>
                                                     <td style="vertical-align:top;padding-left:5px">
-                                                        <div class="panel panel-featured-top-primary" style="height:500px">
+                                                        <div class="panel panel-featured-top-primary" style="height:auto">
                                                             <div class="panel-body">
                                                                 <span class="text-resalt-primary">Datos de contacto</span>
                                                                 <br/><br/><br/>

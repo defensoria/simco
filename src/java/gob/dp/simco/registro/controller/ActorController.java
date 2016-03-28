@@ -827,6 +827,32 @@ public class ActorController implements Serializable {
         actorBusquedaTemp = new ActorBusquedaTemp();
         listaActorSeleccionado = null;
     }
+    
+    public void listarActorSeleccionadoActividad(){
+        try {
+            Actor a;
+            if (actor.getId() != null) {
+                a = actorService.actorBuscarOne(actor.getId());
+                boolean i = true;
+
+                for (Actor a1 : listaActorSeleccionadoFinal) {
+                    if (Objects.equals(a1.getId(), a.getId())) {
+                        i = false;
+                    }
+                }
+                if (i) {
+                    listarActorSeleccionado(a);
+                } else {
+                    msg.messageAlert("El actor seleccionado ya se encuentra agregado", null);
+                }
+            } else {
+                msg.messageAlert("Debe de seleccionar un actor", null);
+            }
+            actor = new Actor();
+        } catch (Exception ex) {
+            log.error(ex.getMessage());
+        }
+    }
 
     public void listarActorSeleccionado(Actor actor) {
         boolean pass = true;

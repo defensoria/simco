@@ -28,6 +28,7 @@
         <if test="codigoPadreParametro != null">
              AND PADRE_PARAMETRO = #{codigoPadreParametro}
         </if>
+            AND COD_ESTADO = 'A'
     </where>
     ORDER BY 
 

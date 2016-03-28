@@ -111,7 +111,6 @@ public class MedioVerificacionController implements Serializable {
     private String getFileExtension(String name) {
         try {
             return name.substring(name.lastIndexOf("."));
-
         } catch (Exception e) {
             return "";
         }
