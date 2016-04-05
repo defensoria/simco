@@ -117,7 +117,17 @@
                                             }
                                             function confirmar2() {
                                                 $(".confirmacion2").modal('show');
-                                            }</script>
+                                            }
+                                        $(document).ready(function(){
+                        $(".tooltip-top").tooltip(
+                                {placement:"top",viewport:
+                                    {selector:"body",padding:2
+                            }
+                        }
+                                );
+                    }
+                            );                                            
+                                        </script>
                                     </div>
                                     <p></p>
                                     <h:dataTable value="#{actorController.listaActorSeleccionadoFinal}" var="actor" class="table" id="idDatatableActorDetalle" style="font-size:small" binding="#{row3}">
@@ -142,7 +152,7 @@
                                                         <table style="width:100%">
                                                             <tr>
                                                                 <td style="width:50%">
-                                                                    <b>A.D:</b>
+                                                                    <b class="round tooltip-top" title="Actitud frente al dialogo">A.D:</b>
                                                                     <div class="slider slider-horizontal">
                                                                         <div class="slider-track">
                                                                             <div style="left:0;width:70%" class="slider-selection">

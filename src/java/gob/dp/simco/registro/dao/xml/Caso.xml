@@ -392,8 +392,7 @@
     
     <select id="casoCodigoGenerado" resultType="java.lang.Integer" >
         SELECT COUNT(*) FROM SIMCO_REG_CASO
-        WHERE TO_CHAR(D_FECHACREACION, 'YYYYMM') = TO_CHAR(SYSDATE,  'YYYYMM')
-        AND C_INDVIGENTE = 'A'
+        WHERE C_INDVIGENTE = 'A'
     </select>
     
     <select id="casoxActaAcuerdoDetalle" resultMap="casoMap" parameterType="long" >

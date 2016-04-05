@@ -6,17 +6,87 @@
                 <h:messages />
                 <input type="hidden" id="idUsuarioSession" jsf:value="#{actaAcuerdoController.actaAcuerdoDetalle.usuarioRegistro}" />
                 <style>#project-label{display:block;font-weight:bold;margin-bottom:1em}#project-icon{float:left;height:32px;width:32px}#project-description{margin:0;padding:0}</style>
-                <script>/*<![CDATA[*/var usu = JSON.parse(sessionStorage.getItem('userSesion')); $("#idUsuarioSession").val(usu.codigo); $(document).ready(function(){$('.datepicker').datetimepicker({pickTime:false}); $(".datepicker").on("changeDate", function(ev){$(this).datetimepicker("hide"); }); $('.timepicker').datetimepicker({pickDate:false}); }); function validarActaAcuerdo(){if ($('#txtFechaRegistro').val() === ""){$('#idDivTxtFechaRegistro').addClass('has-error'); $('#txtFechaRegistro').css("background", "#F2DEDE"); alertar("Debe de ingresar la fecha en la que se tomaron los acuerdos/compromisos"); return false; }
-                    else{$('#idDivTxtFechaRegistro').removeClass('has-error'); $('#txtFechaRegistro').css("background", ""); }
-                    if ($('#idFormAgregarAcuerdo\\:cmbTipoRegistro').val() === "-3000"){$('#idDivCmbTipoRegistro').addClass('has-error'); $('#idFormAgregarAcuerdo\\:cmbTipoRegistro').css("background", "#F2DEDE"); alertar("Debe de seleccionar el tipo de registro"); return false; }
-                    else{$('#idDivCmbTipoRegistro').removeClass('has-error'); $('#idFormAgregarAcuerdo\\:cmbTipoRegistro').css("background", ""); }
-                    if ($('#txtDescripcionItem').val() === ""){$('#idDivTxtDescripcionItem').addClass('has-error'); $('#txtDescripcionItem').css("background", "#F2DEDE"); alertar("Debe de ingresar el detalle"); return false; }
-                    else{$('#idDivTxtDescripcionItem').removeClass('has-error'); $('#txtDescripcionItem').css("background", ""); }
-                    if ($('#txtComentario').val() === ""){$('#idDivTxtComentario').addClass('has-error'); $('#txtComentario').css("background", "#F2DEDE"); alertar("Debe de ingresar un comentario"); return false; }
-                    else{$('#idDivTxtComentario').removeClass('has-error'); $('#txtComentario').css("background", ""); }
-                    confirmar(); return false; }
-                    $(function(){#{actaAcuerdoController.cadenaAutocomplete}
-                    $("#actor").autocomplete({minLength:3, source:projects, focus:function(event, ui){$("#actor").val(ui.item.label); return false; }, select:function(event, ui){$("#actor").val(ui.item.label); $("#actor-id").val(ui.item.value); return false; }}).data("ui-autocomplete")._renderItem = function(ul, item){return $("<li/>").append("<a>" + item.label + "<br/>" + item.desc + "</a>").appendTo(ul); }; $("#actor2").autocomplete({minLength:3, source:projects, focus:function(event, ui){$("#actor2").val(ui.item.label); return false; }, select:function(event, ui){$("#actor2").val(ui.item.label); $("#actor-id2").val(ui.item.value); return false; }}).data("ui-autocomplete")._renderItem = function(ul, item){return $("<li/>").append("<a>" + item.label + "<br/>" + item.desc + "</a>").appendTo(ul); }; }); /*]]>*/</script>
+                <script>
+                    /*<![CDATA[*/
+                    var usu = JSON.parse(sessionStorage.getItem('userSesion'));
+                    $("#idUsuarioSession").val(usu.codigo);
+                    $(document).ready(function () {
+                        $('.datepicker').datetimepicker({pickTime: false});
+                        $(".datepicker").on("changeDate", function (ev) {
+                            $(this).datetimepicker("hide");
+                        });
+                        $('.timepicker').datetimepicker({pickDate: false});
+                    });
+
+                    function validarActaAcuerdo() {
+                        if ($('#txtFechaRegistro').val() === "") {
+                            $('#idDivTxtFechaRegistro').addClass('has-error');
+                            $('#txtFechaRegistro').css("background", "#F2DEDE");
+                            alertar("Debe de ingresar la fecha en la que se tomaron los acuerdos/compromisos");
+                            return false;
+                        }
+                        else {
+                            $('#idDivTxtFechaRegistro').removeClass('has-error');
+                            $('#txtFechaRegistro').css("background", "");
+                        }
+
+                        if ($('#idFormAgregarAcuerdo\\:cmbTipoRegistro').val() === "-3000") {
+                            $('#idDivCmbTipoRegistro').addClass('has-error');
+                            $('#idFormAgregarAcuerdo\\:cmbTipoRegistro').css("background", "#F2DEDE");
+                            alertar("Debe de seleccionar el tipo de registro");
+                            return false;
+                        }
+                        else {
+                            $('#idDivCmbTipoRegistro').removeClass('has-error');
+                            $('#idFormAgregarAcuerdo\\:cmbTipoRegistro').css("background", "");
+                        }
+
+                        if ($('#txtDescripcionItem').val() === "") {
+                            $('#idDivTxtDescripcionItem').addClass('has-error');
+                            $('#txtDescripcionItem').css("background", "#F2DEDE");
+                            alertar("Debe de ingresar el detalle");
+                            return false;
+                        }
+                        else {
+                            $('#idDivTxtDescripcionItem').removeClass('has-error');
+                            $('#txtDescripcionItem').css("background", "");
+                        }
+                        if ($('#txtComentario').val() === "") {
+                            $('#idDivTxtComentario').addClass('has-error');
+                            $('#txtComentario').css("background", "#F2DEDE");
+                            alertar("Debe de ingresar un comentario");
+                            return false;
+                        }
+                        else {
+                            $('#idDivTxtComentario').removeClass('has-error');
+                            $('#txtComentario').css("background", "");
+                        }
+                        confirmar();
+                        return false;
+                    }
+                    $(function () {#{actaAcuerdoController.cadenaAutocomplete}
+                        $("#actor").autocomplete({minLength: 3, source: projects, focus: function (event, ui) {
+                                $("#actor").val(ui.item.label);
+                                return false;
+                            }, select: function (event, ui) {
+                                $("#actor").val(ui.item.label);
+                                $("#actor-id").val(ui.item.value);
+                                return false;
+                            }}).data("ui-autocomplete")._renderItem = function (ul, item) {
+                            return $("<li/>").append("<a>" + item.label + "<br/>" + item.desc + "</a>").appendTo(ul);
+                        };
+                        $("#actor2").autocomplete({minLength: 3, source: projects, focus: function (event, ui) {
+                                $("#actor2").val(ui.item.label);
+                                return false;
+                            }, select: function (event, ui) {
+                                $("#actor2").val(ui.item.label);
+                                $("#actor-id2").val(ui.item.value);
+                                return false;
+                            }}).data("ui-autocomplete")._renderItem = function (ul, item) {
+                            return $("<li/>").append("<a>" + item.label + "<br/>" + item.desc + "</a>").appendTo(ul);
+                        };
+                    }); /*]]>*/                        
+                </script>
                 <gc:confirmSubmit bean="#{actaAcuerdoController.registrarActaAcuerdoxActividad2(registroController.actividadTemp.id)}" />
                 <div class="panel panel-default" style="width:100%;margin:auto;background:#F5F5F5">
                     <div class="panel-heading">
@@ -48,30 +118,43 @@
                             <table style="width:100%">
                                 <tr>
                                     <td style="width:50%;padding-right:5px">
-                                        <span class="text-primary" style="font-size:1.2em;font-weight:bold">Fecha en que se tomaron los acuerdos/compromisos</span>
-                                    </td>
-                                    <td style="padding-left:5px">
-                                        <span class="text-primary" style="font-size:1.2em;font-weight:bold">Tipo de Registro</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="padding-bottom: 10px">
-                                        <div class="input-group datepicker" id="idDivTxtFechaRegistro">
+                                        <table style="width: 100%">
+                                            <tr>
+                                                <td style="width: 50%; padding-right: 5px">
+                                                    <span class="text-primary" style="font-size:1.2em;font-weight:bold">Fecha que se tomaron los acuerdos</span>
+                                                    <br/>
+                                                    <div class="input-group datepicker" id="idDivTxtFechaRegistro">
                                             <div class="input-group-addon add-on">
                                                 <span class="glyphicon glyphicon-calendar"></span>
                                             </div>
-                                            <input type="text" id="txtFechaRegistro" data-format="dd/MM/yyyy" jsf:value="#{actaAcuerdoController.actaAcuerdo.fechaRegistro}" style="width:40%">
+                                            <input type="text" id="txtFechaRegistro" data-format="dd/MM/yyyy" jsf:value="#{actaAcuerdoController.actaAcuerdo.fechaRegistro}" >
                                                 <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Lima" />
                                             </input>
                                         </div>
-                                    </td>
-                                    <td style="padding-bottom: 10px">
-                                        <div id="idDivCmbTipoRegistro">
-                                            <script>$(document).ready(function(){$('.selectRadio').multiselect(); });</script>
+                                                </td>
+                                                <td style="padding-left: 5px">
+                                                    <span class="text-primary" style="font-size:1.2em;font-weight:bold">Tipo de Registro</span>
+                                                    <br/>
+                                                    <div id="idDivCmbTipoRegistro">
                                             <h:selectOneMenu id="cmbTipoRegistro" value="#{actaAcuerdoController.actaAcuerdo.tipo}">
                                                 <f:selectItems value="#{listasComunesController.buscarTipoActaAcuerdo(false,false,true)}" var="y" itemLabel="#{y.nombreParametro}" itemValue="#{y.valorParametro}" />
                                             </h:selectOneMenu>
                                         </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        
+                                    </td>
+                                    <td style="padding-left:5px">
+                                        
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-bottom: 10px">
+                                        
+                                    </td>
+                                    <td style="padding-bottom: 10px">
+                                        
                                     </td>
                                 </tr>
                                 <tr>
@@ -270,10 +353,23 @@
                                         </div>
                                     </div>
                                 </div>
-                                <script>$("#idPanelBody").hide(); $("#spanAddUser").removeClass("glyphicon-minus").addClass("glyphicon-plus"); var i = 1; $("#addUser").click(function(){if (i === 1)
-                                            {$("#idPanelBody").slideDown(400).delay(800); $("#spanAddUser").removeClass("glyphicon-plus").addClass("glyphicon-minus"); i = 2; }
-                                    else
-                                            {$("#idPanelBody").slideUp(300).delay(800); $("#spanAddUser").removeClass("glyphicon-minus").addClass("glyphicon-plus"); i = 1; }});</script>
+                                <script>$("#idPanelBody").hide();
+                                    $("#spanAddUser").removeClass("glyphicon-minus").addClass("glyphicon-plus");
+                                    var i = 1;
+                                    $("#addUser").click(function () {
+                                        if (i === 1)
+                                        {
+                                            $("#idPanelBody").slideDown(400).delay(800);
+                                            $("#spanAddUser").removeClass("glyphicon-plus").addClass("glyphicon-minus");
+                                            i = 2;
+                                        }
+                                        else
+                                        {
+                                            $("#idPanelBody").slideUp(300).delay(800);
+                                            $("#spanAddUser").removeClass("glyphicon-minus").addClass("glyphicon-plus");
+                                            i = 1;
+                                        }
+                                    });</script>
                             </td>
                             <td style="width:60%;padding-left:2px">
                                 <div class="panel panel-featured-top-primary" style="overflow-y:auto;height:360px">
@@ -454,11 +550,32 @@
                                                 </table>
                                             </div>
                                         </div>
-                                        <script>/*<![CDATA[*/var miAplicacion = angular.module('accion', []); miAplicacion.controller('controlador1', ['$scope', function($scope){var emails = $("#idCadenaEmail").val().split(";"); $scope.listaEmail = []; for (var i = 0; i < emails.length; i++){if (emails[i].length > 0){$scope.listaEmail.push({emai:emails[i], id:i})}}
-                                                    $scope.addEmail = function(){if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/.test($("#idEmail").val())){i++; $("#idCadenaEmail").val($("#idCadenaEmail").val() + $scope.emai + ";")
-                                                            $scope.listaEmail.push({emai:$scope.emai, id:i}); $scope.emai = ""; } else{alertar("Debe de ingresar un email correcto"); $scope.emai = ""; }}
-                                                    $scope.removeEmail = function(item){$("#idCadenaEmail").val($("#idCadenaEmail").val().replace(item.emai + ";", ""))
-                                                            var index = $scope.listaEmail.indexOf(item); $scope.listaEmail.splice(index, 1); }}])/*]]>*/</script>
+                                        <script>/*<![CDATA[*/var miAplicacion = angular.module('accion', []);
+                                                    miAplicacion.controller('controlador1', ['$scope', function ($scope) {
+                                                            var emails = $("#idCadenaEmail").val().split(";");
+                                                            $scope.listaEmail = [];
+                                                            for (var i = 0; i < emails.length; i++) {
+                                                                if (emails[i].length > 0) {
+                                                                    $scope.listaEmail.push({emai: emails[i], id: i})
+                                                                }
+                                                            }
+                                                            $scope.addEmail = function () {
+                                                                if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/.test($("#idEmail").val())) {
+                                                                    i++;
+                                                                    $("#idCadenaEmail").val($("#idCadenaEmail").val() + $scope.emai + ";")
+                                                                    $scope.listaEmail.push({emai: $scope.emai, id: i});
+                                                                    $scope.emai = "";
+                                                                } else {
+                                                                    alertar("Debe de ingresar un email correcto");
+                                                                    $scope.emai = "";
+                                                                }
+                                                            }
+                                                            $scope.removeEmail = function (item) {
+                                                                $("#idCadenaEmail").val($("#idCadenaEmail").val().replace(item.emai + ";", ""))
+                                                                var index = $scope.listaEmail.indexOf(item);
+                                                                $scope.listaEmail.splice(index, 1);
+                                                            }
+                                                        }])/*]]>*/</script>
                                     </div>
                                 </div>
                             </td>
@@ -466,8 +583,12 @@
                     </table>
                     <br/>
                     <gc:confirmSubmit bean="#{actaAcuerdoController.agregarActaAcuerdoxActividad(registroController.actividadTemp.id)}" classGC="confirmacion1" mensaje="Esta seguro que desea agregar el registro?" />
-                    <script>function confirmar1(){$(".confirmacion1").modal('show'); }
-    function confirmar2(){$(".confirmacion2").modal('show'); }</script>
+                    <script>function confirmar1() {
+                            $(".confirmacion1").modal('show');
+                        }
+                        function confirmar2() {
+                            $(".confirmacion2").modal('show');
+                        }</script>
                     <table style="width:100%">
                         <tr>
                             <td>
@@ -536,7 +657,9 @@
                                                     </span>
                                                 </a>
                                                 <gc:confirmRemoveAjax bean="#{actaAcuerdoController.removeActaAcuerdoxActividad(item)}" classGC="confirmacion2#{item.id}" mensaje="Esta seguro que desea eliminar el registro?" />
-                                                <script>function confirmar2#{item.id}(){$(".confirmacion2#{item.id}").modal('show'); }</script>
+                                                <script>function confirmar2#{item.id}() {
+                                                        $(".confirmacion2#{item.id}").modal('show');
+                                                    }</script>
                                             </h:column>
                                         </h:dataTable>
                                     </div>
@@ -545,57 +668,345 @@
                         </tr>
                     </table>
                 </h:panelGroup>
-                <script type="text/javascript">function sumaDias(fecha, dias){var fec = converterFecha(fecha); return new Date(fec.valueOf() + (dias * 24 * 3600 * 1000)); }
-                    function converterFecha(stringFecha){var parts = stringFecha.split("/"); var dt = new Date(parseInt(parts[2], 10), parseInt(parts[1], 10) - 1, parseInt(parts[0], 10)); return dt; }
+                <script type="text/javascript">function sumaDias(fecha, dias) {
+                        var fec = converterFecha(fecha);
+                        return new Date(fec.valueOf() + (dias * 24 * 3600 * 1000));
+                    }
+                    function converterFecha(stringFecha) {
+                        var parts = stringFecha.split("/");
+                        var dt = new Date(parseInt(parts[2], 10), parseInt(parts[1], 10) - 1, parseInt(parts[0], 10));
+                        return dt;
+                    }
                     function soloNumbero(e)
-                            {var keynum = window.event?window.event.keyCode:e.which; if ((keynum === 8) || (keynum === 46))
-                                    return true; return /\d/.test(String.fromCharCode(keynum)); }
-                    function comparaFechas(date1, date2){var date_dia1 = date1.getDate(); var date_mes1 = date1.getMonth(); var date_anho1 = date1.getFullYear(); var date_dia2 = date2.getDate(); var date_mes2 = date2.getMonth(); var date_anho2 = date2.getFullYear(); if (parseInt(date_anho1) > parseInt(date_anho2)){return 1; }
-                    if (parseInt(date_anho2) > parseInt(date_anho1)){return 1; }
-                    if (parseInt(date_anho1) === parseInt(date_anho2)){if (parseInt(date_mes1) > parseInt(date_mes2)){return 1; }
-                    if (parseInt(date_mes2) > parseInt(date_mes1)){return 2; }
-                    if (parseInt(date_mes1) === parseInt(date_mes2)){if (date_dia1 > date_dia2){return 1; }
-                    if (date_dia2 > date_dia1){return 2; }
-                    if (date_dia1 === date_dia2){return 0; }}}}
-                    function agregarAcuerdo(tipo){if ($('#txtDescripcion').val() === ""){$('#txtDescripcion').addClass('error'); alertar("Debe de ingresar el detalle del acuerdo"); return false; }
-                    else{$('#txtDescripcion').removeClass('error'); }
-                    if ($('#idFormAgregarAcuerdo\\:checkIndCumplimientoBoolean').is(':checked')){$('#txtFechaCumplimiento').removeClass('error'); }
-                    else{if ($('#txtFechaCumplimiento').val() === ""){$('#txtFechaCumplimiento').addClass('error'); alertar("Debe de ingresar la fecha correspondiente"); return false; } else{$('#txtFechaCumplimiento').removeClass('error'); var dt = converterFecha($('#txtFechaCumplimiento').val()); var dat = new Date(); if (comparaFechas(dt, dat) === 2){$('#txtFechaCumplimiento').addClass('error'); alertar("La fecha debe ser mayor o igual que hoy"); return false; } else{$('#txtFechaCumplimiento').removeClass('error'); }}}
-                    if ($('#idFormAgregarAcuerdo\\:checkIndAlertar').is(':checked')){} else{var i = 0; if ($('#idFormAgregarAcuerdo\\:checkIndicadorSeleccionHoraIni').is(':checked')){if ($('#txtInicioDefinitivo').val() === ""){$('#txtInicioDefinitivo').addClass('error'); i++; } else{$('#txtInicioDefinitivo').removeClass('error'); }
-                    $('#txtNumeroInicial').removeClass('error'); $('#idFormAgregarAcuerdo\\:selTipoTiempoIni').removeClass('error'); $('#idDivSelIndicadorAntesDespuesIni').removeClass('error'); $('#idDivTxtInicioSeguimiento').removeClass('error'); } else{$('#idDivTxtInicioDefinitivo').removeClass('error'); if ($('#txtNumeroInicial').val() === ""){$('#txtNumeroInicial').addClass('error'); i++; } else{$('#txtNumeroInicial').removeClass('error'); }
-                    if ($('#idFormAgregarAcuerdo\\:selTipoTiempoIni').val() === "0"){$('#idFormAgregarAcuerdo\\:selTipoTiempoIni').addClass('error'); i++; } else{$('#idFormAgregarAcuerdo\\:selTipoTiempoIni').removeClass('error'); }
-                    if ($('#idFormAgregarAcuerdo\\:selIndicadorAntesDespuesIni').val() === "0"){$('#idFormAgregarAcuerdo\\:selIndicadorAntesDespuesIni').addClass('error'); i++; } else{$('#idFormAgregarAcuerdo\\:selIndicadorAntesDespuesIni').removeClass('error'); }
-                    if ($('#txtInicioSeguimiento').val() === ""){$('#txtInicioSeguimiento').addClass('error'); i++; } else{$('#txtInicioSeguimiento').removeClass('error'); }
-                    var date1 = null; var date2 = null; if ($('#idFormAgregarAcuerdo\\:selIndicadorAntesDespuesIni').val() === 'ANT'){date1 = sumaDias($('#txtInicioSeguimiento').val(), $('#txtNumeroInicial').val() * ( - 1)); }
-                    if ($('#idFormAgregarAcuerdo\\:selIndicadorAntesDespuesIni').val() === 'DES'){date1 = sumaDias($('#txtInicioSeguimiento').val(), $('#txtNumeroInicial').val()); }
-                    if ($('#idFormAgregarAcuerdo\\:selIndicadorAntesDespuesFin').val() === 'ANT'){date2 = sumaDias($('#txtFinSeguimiento').val(), $('#txtNumeroFinal').val() * ( - 1)); }
-                    if ($('#idFormAgregarAcuerdo\\:selIndicadorAntesDespuesFin').val() === 'DES'){date2 = sumaDias($('#txtFinSeguimiento').val(), $('#txtNumeroFinal').val()); }
-                    if (date1 !== null){if (date2 !== null){if (date1 > date2){$('#txtFinSeguimiento').addClass('error'); $('#txtInicioSeguimiento').addClass('error'); alertar("La fecha de inicio de seguimiento no puede mayor que la fecha de fin de seguimiento")
-                            return false; } else{$('#txtInicioSeguimiento').removeClass('error'); $('#txtFinSeguimiento').removeClass('error'); }}}}
-                    if ($('#idFormAgregarAcuerdo\\:checkIndicadorSeleccionHoraFin').is(':checked')){if ($('#txtFinDefinitivo').val() === ""){$('#txtFinDefinitivo').addClass('error'); i++; } else{$('#txtFinDefinitivo').removeClass('error'); }
-                    $('#txtNumeroFinal').removeClass('error'); $('#idFormAgregarAcuerdo\\:selTipoTiempoFin').removeClass('error'); $('#idFormAgregarAcuerdo\\:selIndicadorAntesDespuesFin').removeClass('error'); $('#txtFinDefinitivo').removeClass('error'); } else{$('#txtFinDefinitivo').removeClass('error'); if ($('#txtNumeroFinal').val() === ""){$('#txtNumeroFinal').addClass('error'); i++; } else{$('#txtNumeroFinal').removeClass('error'); }
-                    if ($('#idFormAgregarAcuerdo\\:selTipoTiempoFin').val() === "0"){$('#idFormAgregarAcuerdo\\:selTipoTiempoFin').addClass('error'); i++; } else{$('#idFormAgregarAcuerdo\\:selTipoTiempoFin').removeClass('error'); }
-                    if ($('#idFormAgregarAcuerdo\\:selIndicadorAntesDespuesFin').val() === "0"){$('#idFormAgregarAcuerdo\\:selIndicadorAntesDespuesFin').addClass('error'); i++; } else{$('#idFormAgregarAcuerdo\\:selIndicadorAntesDespuesFin').removeClass('error'); }
-                    if ($('#txtFinSeguimiento').val() === ""){$('#txtFinSeguimiento').addClass('error'); i++; } else{$('#txtFinSeguimiento').removeClass('error'); }}
-                    if ($('#txtInicioDefinitivo').val() !== ""){if ($('#txtFinDefinitivo').val() !== ""){var fec1 = converterFecha($('#txtInicioDefinitivo').val()); var fec2 = converterFecha($('#txtFinDefinitivo').val()); if (fec1 > fec2){$('#txtInicioDefinitivo').addClass('error'); $('#txtFinDefinitivo').addClass('error'); alertar("La fecha de inicio no puede ser mayor que la fecha de fin")
-                            return false; } else{$('#txtInicioDefinitivo').removeClass('error'); $('#txtFinDefinitivo').removeClass('error'); }}}
-                    if ($('#idFormAgregarAcuerdo\\:selIndiceRepeticion').val() === "0"){$('#idFormAgregarAcuerdo\\:selIndiceRepeticion').addClass('error'); i++; } else{$('#idFormAgregarAcuerdo\\:selIndiceRepeticion').removeClass('error'); }
-                    if (i === 0){} else{alertar("Debe completar todos los campos resaltados de la programacion de las alertas")
-                            return false; }}
-                    if (tipo === 1){confirmar1(); } else{loadingModal(); }}
-                    $(document).ready(function(){var i = 1; $('#idImagen').on('click', function(){$('#idImagen').removeClass(); if (i === 1)
-                            {$('#idImagen').addClass('glyphicon glyphicon-plus'); i = 2; }
-                    else
-                            {$('#idImagen').addClass('glyphicon glyphicon-minus'); i = 1; }}); $('#idFormAgregarAcuerdo\\:checkIndCumplimientoBoolean').on('click', function(){if ($('#idFormAgregarAcuerdo\\:checkIndCumplimientoBoolean').is(':checked')){$('#txtFechaCumplimiento').attr('disabled', true).val(''); }
-                    else{$('#txtFechaCumplimiento').removeAttr('disabled'); }}); if ($('#idFormAgregarAcuerdo\\:checkIndAlertar').is(':checked')){$('#idDivAlert').addClass('vacio'); }
-                    else{$('#idDivAlert').removeClass('vacio'); }
-                    $('#idFormAgregarAcuerdo\\:checkIndAlertar').on('click', function(){if ($('#idFormAgregarAcuerdo\\:checkIndAlertar').is(':checked')){$('#idDivAlert').addClass('vacio'); }
-                    else{$('#idDivAlert').removeClass('vacio'); }}); if ($('#idFormAgregarAcuerdo\\:checkIndCumplimientoBoolean').is(':checked')){$('#txtFechaCumplimiento').attr('disabled', true); }
-                    else{$('#txtFechaCumplimiento').removeAttr('disabled'); }
-                    $('#txtFinDefinitivo').attr('disabled', true); $('#txtInicioDefinitivo').attr('disabled', true); if ($('#idFormAgregarAcuerdo\\:checkIndicadorSeleccionHoraIni').is(':checked')){$('#idFormAgregarAcuerdo\\:selTipoTiempoIni').attr('disabled', true); $('#idFormAgregarAcuerdo\\:selTipoTiempoIni option:eq(0)').prop('selected', true); $('#idFormAgregarAcuerdo\\:selIndicadorAntesDespuesIni').attr('disabled', true); $('#idFormAgregarAcuerdo\\:selIndicadorAntesDespuesIni option:eq(0)').prop('selected', true); $('#txtNumeroInicial').attr('disabled', true).val(''); $('#txtInicioSeguimiento').attr('disabled', true).val(''); $('#txtInicioDefinitivo').removeAttr('disabled'); } else{$('#idFormAgregarAcuerdo\\:selTipoTiempoIni').removeAttr('disabled'); $('#idFormAgregarAcuerdo\\:selIndicadorAntesDespuesIni').removeAttr('disabled'); $('#txtNumeroInicial').removeAttr('disabled'); $('#txtInicioSeguimiento').removeAttr('disabled'); $('#txtInicioDefinitivo').attr('disabled', true).val(''); }
-                    if ($('#idFormAgregarAcuerdo\\:checkIndicadorSeleccionHoraFin').is(':checked')){$('#idFormAgregarAcuerdo\\:selTipoTiempoFin').attr('disabled', true); $('#idFormAgregarAcuerdo\\:selTipoTiempoFin option:eq(0)').prop('selected', true); $('#idFormAgregarAcuerdo\\:selIndicadorAntesDespuesFin').attr('disabled', true); $('#idFormAgregarAcuerdo\\:selIndicadorAntesDespuesFin option:eq(0)').prop('selected', true); $('#txtNumeroFinal').attr('disabled', true).val(''); $('#txtFinSeguimiento').attr('disabled', true).val(''); $('#txtFinDefinitivo').removeAttr('disabled'); } else{$('#idFormAgregarAcuerdo\\:selTipoTiempoFin').removeAttr('disabled'); $('#idFormAgregarAcuerdo\\:selIndicadorAntesDespuesFin').removeAttr('disabled'); $('#txtNumeroFinal').removeAttr('disabled'); $('#txtFinSeguimiento').removeAttr('disabled'); $('#txtFinDefinitivo').attr('disabled', true).val(''); }
-                    $('#idFormAgregarAcuerdo\\:checkIndicadorSeleccionHoraIni').on('click', function(){if ($('#idFormAgregarAcuerdo\\:checkIndicadorSeleccionHoraIni').is(':checked')){$('#idFormAgregarAcuerdo\\:selTipoTiempoIni').attr('disabled', true); $('#idFormAgregarAcuerdo\\:selTipoTiempoIni option:eq(0)').prop('selected', true); $('#idFormAgregarAcuerdo\\:selIndicadorAntesDespuesIni').attr('disabled', true); $('#idFormAgregarAcuerdo\\:selIndicadorAntesDespuesIni option:eq(0)').prop('selected', true); $('#txtNumeroInicial').attr('disabled', true).val(''); $('#txtInicioSeguimiento').attr('disabled', true).val(''); $('#txtInicioDefinitivo').removeAttr('disabled'); } else{$('#idFormAgregarAcuerdo\\:selTipoTiempoIni').removeAttr('disabled'); $('#idFormAgregarAcuerdo\\:selIndicadorAntesDespuesIni').removeAttr('disabled'); $('#txtNumeroInicial').removeAttr('disabled'); $('#txtInicioSeguimiento').removeAttr('disabled'); $('#txtInicioDefinitivo').attr('disabled', true); }}); $('#idFormAgregarAcuerdo\\:checkIndicadorSeleccionHoraFin').on('click', function(){if ($('#idFormAgregarAcuerdo\\:checkIndicadorSeleccionHoraFin').is(':checked')){$('#idFormAgregarAcuerdo\\:selTipoTiempoFin').attr('disabled', true); $('#idFormAgregarAcuerdo\\:selTipoTiempoFin option:eq(0)').prop('selected', true); $('#idFormAgregarAcuerdo\\:selIndicadorAntesDespuesFin').attr('disabled', true); $('#idFormAgregarAcuerdo\\:selIndicadorAntesDespuesFin option:eq(0)').prop('selected', true); $('#txtNumeroFinal').attr('disabled', true).val(''); $('#txtFinSeguimiento').attr('disabled', true).val(''); $('#txtFinDefinitivo').removeAttr('disabled'); } else{$('#idFormAgregarAcuerdo\\:selTipoTiempoFin').removeAttr('disabled'); $('#idFormAgregarAcuerdo\\:selIndicadorAntesDespuesFin').removeAttr('disabled'); $('#txtNumeroFinal').removeAttr('disabled'); $('#txtFinSeguimiento').removeAttr('disabled'); $('#txtFinDefinitivo').attr('disabled', true); }}); });</script>
-                <script>/*<![CDATA[*/function reconstruirEmail(){alert(1); $("#idEmails").empty(); var emails = $("#idCadenaEmail").val().split(";"); for (var i = 0; i < emails.length; i++){if (emails[i].length > 0){$("#idEmails").append('<div class='col - md - 3 alert alert - success fade in' style='margin:2px; color:green'><table style='width:100 % '><tr><td class='tex'><span style='font - weight:bold'>' + emails[i] + '</span></td><td style='text - align:right'><a><span class='glyphicon glyphicon - remove remover' style='color:red'/></a></td></tr></table></div>'); }}}/*]]>*/</script>
+                    {
+                        var keynum = window.event ? window.event.keyCode : e.which;
+                        if ((keynum === 8) || (keynum === 46))
+                            return true;
+                        return /\d/.test(String.fromCharCode(keynum));
+                    }
+                    function comparaFechas(date1, date2) {
+                        var date_dia1 = date1.getDate();
+                        var date_mes1 = date1.getMonth();
+                        var date_anho1 = date1.getFullYear();
+                        var date_dia2 = date2.getDate();
+                        var date_mes2 = date2.getMonth();
+                        var date_anho2 = date2.getFullYear();
+                        if (parseInt(date_anho1) > parseInt(date_anho2)) {
+                            return 1;
+                        }
+                        if (parseInt(date_anho2) > parseInt(date_anho1)) {
+                            return 1;
+                        }
+                        if (parseInt(date_anho1) === parseInt(date_anho2)) {
+                            if (parseInt(date_mes1) > parseInt(date_mes2)) {
+                                return 1;
+                            }
+                            if (parseInt(date_mes2) > parseInt(date_mes1)) {
+                                return 2;
+                            }
+                            if (parseInt(date_mes1) === parseInt(date_mes2)) {
+                                if (date_dia1 > date_dia2) {
+                                    return 1;
+                                }
+                                if (date_dia2 > date_dia1) {
+                                    return 2;
+                                }
+                                if (date_dia1 === date_dia2) {
+                                    return 0;
+                                }
+                            }
+                        }
+                    }
+                    function agregarAcuerdo(tipo) {
+                        if ($('#txtDescripcion').val() === "") {
+                            $('#txtDescripcion').addClass('error');
+                            alertar("Debe de ingresar el detalle del acuerdo");
+                            return false;
+                        }
+                        else {
+                            $('#txtDescripcion').removeClass('error');
+                        }
+                        if ($('#idFormAgregarAcuerdo\\:checkIndCumplimientoBoolean').is(':checked')) {
+                            $('#txtFechaCumplimiento').removeClass('error');
+                        }
+                        else {
+                            if ($('#txtFechaCumplimiento').val() === "") {
+                                $('#txtFechaCumplimiento').addClass('error');
+                                alertar("Debe de ingresar la fecha correspondiente");
+                                return false;
+                            } else {
+                                $('#txtFechaCumplimiento').removeClass('error');
+                                var dt = converterFecha($('#txtFechaCumplimiento').val());
+                                var dat = new Date();
+                                if (comparaFechas(dt, dat) === 2) {
+                                    $('#txtFechaCumplimiento').addClass('error');
+                                    alertar("La fecha debe ser mayor o igual que hoy");
+                                    return false;
+                                } else {
+                                    $('#txtFechaCumplimiento').removeClass('error');
+                                }
+                            }
+                        }
+                        if ($('#idFormAgregarAcuerdo\\:checkIndAlertar').is(':checked')) {
+                        } else {
+                            var i = 0;
+                            if ($('#idFormAgregarAcuerdo\\:checkIndicadorSeleccionHoraIni').is(':checked')) {
+                                if ($('#txtInicioDefinitivo').val() === "") {
+                                    $('#txtInicioDefinitivo').addClass('error');
+                                    i++;
+                                } else {
+                                    $('#txtInicioDefinitivo').removeClass('error');
+                                }
+                                $('#txtNumeroInicial').removeClass('error');
+                                $('#idFormAgregarAcuerdo\\:selTipoTiempoIni').removeClass('error');
+                                $('#idDivSelIndicadorAntesDespuesIni').removeClass('error');
+                                $('#idDivTxtInicioSeguimiento').removeClass('error');
+                            } else {
+                                $('#idDivTxtInicioDefinitivo').removeClass('error');
+                                if ($('#txtNumeroInicial').val() === "") {
+                                    $('#txtNumeroInicial').addClass('error');
+                                    i++;
+                                } else {
+                                    $('#txtNumeroInicial').removeClass('error');
+                                }
+                                if ($('#idFormAgregarAcuerdo\\:selTipoTiempoIni').val() === "0") {
+                                    $('#idFormAgregarAcuerdo\\:selTipoTiempoIni').addClass('error');
+                                    i++;
+                                } else {
+                                    $('#idFormAgregarAcuerdo\\:selTipoTiempoIni').removeClass('error');
+                                }
+                                if ($('#idFormAgregarAcuerdo\\:selIndicadorAntesDespuesIni').val() === "0") {
+                                    $('#idFormAgregarAcuerdo\\:selIndicadorAntesDespuesIni').addClass('error');
+                                    i++;
+                                } else {
+                                    $('#idFormAgregarAcuerdo\\:selIndicadorAntesDespuesIni').removeClass('error');
+                                }
+                                if ($('#txtInicioSeguimiento').val() === "") {
+                                    $('#txtInicioSeguimiento').addClass('error');
+                                    i++;
+                                } else {
+                                    $('#txtInicioSeguimiento').removeClass('error');
+                                }
+                                var date1 = null;
+                                var date2 = null;
+                                if ($('#idFormAgregarAcuerdo\\:selIndicadorAntesDespuesIni').val() === 'ANT') {
+                                    date1 = sumaDias($('#txtInicioSeguimiento').val(), $('#txtNumeroInicial').val() * (-1));
+                                }
+                                if ($('#idFormAgregarAcuerdo\\:selIndicadorAntesDespuesIni').val() === 'DES') {
+                                    date1 = sumaDias($('#txtInicioSeguimiento').val(), $('#txtNumeroInicial').val());
+                                }
+                                if ($('#idFormAgregarAcuerdo\\:selIndicadorAntesDespuesFin').val() === 'ANT') {
+                                    date2 = sumaDias($('#txtFinSeguimiento').val(), $('#txtNumeroFinal').val() * (-1));
+                                }
+                                if ($('#idFormAgregarAcuerdo\\:selIndicadorAntesDespuesFin').val() === 'DES') {
+                                    date2 = sumaDias($('#txtFinSeguimiento').val(), $('#txtNumeroFinal').val());
+                                }
+                                if (date1 !== null) {
+                                    if (date2 !== null) {
+                                        if (date1 > date2) {
+                                            $('#txtFinSeguimiento').addClass('error');
+                                            $('#txtInicioSeguimiento').addClass('error');
+                                            alertar("La fecha de inicio de seguimiento no puede mayor que la fecha de fin de seguimiento")
+                                            return false;
+                                        } else {
+                                            $('#txtInicioSeguimiento').removeClass('error');
+                                            $('#txtFinSeguimiento').removeClass('error');
+                                        }
+                                    }
+                                }
+                            }
+                            if ($('#idFormAgregarAcuerdo\\:checkIndicadorSeleccionHoraFin').is(':checked')) {
+                                if ($('#txtFinDefinitivo').val() === "") {
+                                    $('#txtFinDefinitivo').addClass('error');
+                                    i++;
+                                } else {
+                                    $('#txtFinDefinitivo').removeClass('error');
+                                }
+                                $('#txtNumeroFinal').removeClass('error');
+                                $('#idFormAgregarAcuerdo\\:selTipoTiempoFin').removeClass('error');
+                                $('#idFormAgregarAcuerdo\\:selIndicadorAntesDespuesFin').removeClass('error');
+                                $('#txtFinDefinitivo').removeClass('error');
+                            } else {
+                                $('#txtFinDefinitivo').removeClass('error');
+                                if ($('#txtNumeroFinal').val() === "") {
+                                    $('#txtNumeroFinal').addClass('error');
+                                    i++;
+                                } else {
+                                    $('#txtNumeroFinal').removeClass('error');
+                                }
+                                if ($('#idFormAgregarAcuerdo\\:selTipoTiempoFin').val() === "0") {
+                                    $('#idFormAgregarAcuerdo\\:selTipoTiempoFin').addClass('error');
+                                    i++;
+                                } else {
+                                    $('#idFormAgregarAcuerdo\\:selTipoTiempoFin').removeClass('error');
+                                }
+                                if ($('#idFormAgregarAcuerdo\\:selIndicadorAntesDespuesFin').val() === "0") {
+                                    $('#idFormAgregarAcuerdo\\:selIndicadorAntesDespuesFin').addClass('error');
+                                    i++;
+                                } else {
+                                    $('#idFormAgregarAcuerdo\\:selIndicadorAntesDespuesFin').removeClass('error');
+                                }
+                                if ($('#txtFinSeguimiento').val() === "") {
+                                    $('#txtFinSeguimiento').addClass('error');
+                                    i++;
+                                } else {
+                                    $('#txtFinSeguimiento').removeClass('error');
+                                }
+                            }
+                            if ($('#txtInicioDefinitivo').val() !== "") {
+                                if ($('#txtFinDefinitivo').val() !== "") {
+                                    var fec1 = converterFecha($('#txtInicioDefinitivo').val());
+                                    var fec2 = converterFecha($('#txtFinDefinitivo').val());
+                                    if (fec1 > fec2) {
+                                        $('#txtInicioDefinitivo').addClass('error');
+                                        $('#txtFinDefinitivo').addClass('error');
+                                        alertar("La fecha de inicio no puede ser mayor que la fecha de fin")
+                                        return false;
+                                    } else {
+                                        $('#txtInicioDefinitivo').removeClass('error');
+                                        $('#txtFinDefinitivo').removeClass('error');
+                                    }
+                                }
+                            }
+                            if ($('#idFormAgregarAcuerdo\\:selIndiceRepeticion').val() === "0") {
+                                $('#idFormAgregarAcuerdo\\:selIndiceRepeticion').addClass('error');
+                                i++;
+                            } else {
+                                $('#idFormAgregarAcuerdo\\:selIndiceRepeticion').removeClass('error');
+                            }
+                            if (i === 0) {
+                            } else {
+                                alertar("Debe completar todos los campos resaltados de la programacion de las alertas")
+                                return false;
+                            }
+                        }
+                        if (tipo === 1) {
+                            confirmar1();
+                        } else {
+                            loadingModal();
+                        }
+                    }
+                    $(document).ready(function () {
+                        var i = 1;
+                        $('#idImagen').on('click', function () {
+                            $('#idImagen').removeClass();
+                            if (i === 1)
+                            {
+                                $('#idImagen').addClass('glyphicon glyphicon-plus');
+                                i = 2;
+                            }
+                            else
+                            {
+                                $('#idImagen').addClass('glyphicon glyphicon-minus');
+                                i = 1;
+                            }
+                        });
+                        $('#idFormAgregarAcuerdo\\:checkIndCumplimientoBoolean').on('click', function () {
+                            if ($('#idFormAgregarAcuerdo\\:checkIndCumplimientoBoolean').is(':checked')) {
+                                $('#txtFechaCumplimiento').attr('disabled', true).val('');
+                            }
+                            else {
+                                $('#txtFechaCumplimiento').removeAttr('disabled');
+                            }
+                        });
+                        if ($('#idFormAgregarAcuerdo\\:checkIndAlertar').is(':checked')) {
+                            $('#idDivAlert').addClass('vacio');
+                        }
+                        else {
+                            $('#idDivAlert').removeClass('vacio');
+                        }
+                        $('#idFormAgregarAcuerdo\\:checkIndAlertar').on('click', function () {
+                            if ($('#idFormAgregarAcuerdo\\:checkIndAlertar').is(':checked')) {
+                                $('#idDivAlert').addClass('vacio');
+                            }
+                            else {
+                                $('#idDivAlert').removeClass('vacio');
+                            }
+                        });
+                        if ($('#idFormAgregarAcuerdo\\:checkIndCumplimientoBoolean').is(':checked')) {
+                            $('#txtFechaCumplimiento').attr('disabled', true);
+                        }
+                        else {
+                            $('#txtFechaCumplimiento').removeAttr('disabled');
+                        }
+                        $('#txtFinDefinitivo').attr('disabled', true);
+                        $('#txtInicioDefinitivo').attr('disabled', true);
+                        if ($('#idFormAgregarAcuerdo\\:checkIndicadorSeleccionHoraIni').is(':checked')) {
+                            $('#idFormAgregarAcuerdo\\:selTipoTiempoIni').attr('disabled', true);
+                            $('#idFormAgregarAcuerdo\\:selTipoTiempoIni option:eq(0)').prop('selected', true);
+                            $('#idFormAgregarAcuerdo\\:selIndicadorAntesDespuesIni').attr('disabled', true);
+                            $('#idFormAgregarAcuerdo\\:selIndicadorAntesDespuesIni option:eq(0)').prop('selected', true);
+                            $('#txtNumeroInicial').attr('disabled', true).val('');
+                            $('#txtInicioSeguimiento').attr('disabled', true).val('');
+                            $('#txtInicioDefinitivo').removeAttr('disabled');
+                        } else {
+                            $('#idFormAgregarAcuerdo\\:selTipoTiempoIni').removeAttr('disabled');
+                            $('#idFormAgregarAcuerdo\\:selIndicadorAntesDespuesIni').removeAttr('disabled');
+                            $('#txtNumeroInicial').removeAttr('disabled');
+                            $('#txtInicioSeguimiento').removeAttr('disabled');
+                            $('#txtInicioDefinitivo').attr('disabled', true).val('');
+                        }
+                        if ($('#idFormAgregarAcuerdo\\:checkIndicadorSeleccionHoraFin').is(':checked')) {
+                            $('#idFormAgregarAcuerdo\\:selTipoTiempoFin').attr('disabled', true);
+                            $('#idFormAgregarAcuerdo\\:selTipoTiempoFin option:eq(0)').prop('selected', true);
+                            $('#idFormAgregarAcuerdo\\:selIndicadorAntesDespuesFin').attr('disabled', true);
+                            $('#idFormAgregarAcuerdo\\:selIndicadorAntesDespuesFin option:eq(0)').prop('selected', true);
+                            $('#txtNumeroFinal').attr('disabled', true).val('');
+                            $('#txtFinSeguimiento').attr('disabled', true).val('');
+                            $('#txtFinDefinitivo').removeAttr('disabled');
+                        } else {
+                            $('#idFormAgregarAcuerdo\\:selTipoTiempoFin').removeAttr('disabled');
+                            $('#idFormAgregarAcuerdo\\:selIndicadorAntesDespuesFin').removeAttr('disabled');
+                            $('#txtNumeroFinal').removeAttr('disabled');
+                            $('#txtFinSeguimiento').removeAttr('disabled');
+                            $('#txtFinDefinitivo').attr('disabled', true).val('');
+                        }
+                        $('#idFormAgregarAcuerdo\\:checkIndicadorSeleccionHoraIni').on('click', function () {
+                            if ($('#idFormAgregarAcuerdo\\:checkIndicadorSeleccionHoraIni').is(':checked')) {
+                                $('#idFormAgregarAcuerdo\\:selTipoTiempoIni').attr('disabled', true);
+                                $('#idFormAgregarAcuerdo\\:selTipoTiempoIni option:eq(0)').prop('selected', true);
+                                $('#idFormAgregarAcuerdo\\:selIndicadorAntesDespuesIni').attr('disabled', true);
+                                $('#idFormAgregarAcuerdo\\:selIndicadorAntesDespuesIni option:eq(0)').prop('selected', true);
+                                $('#txtNumeroInicial').attr('disabled', true).val('');
+                                $('#txtInicioSeguimiento').attr('disabled', true).val('');
+                                $('#txtInicioDefinitivo').removeAttr('disabled');
+                            } else {
+                                $('#idFormAgregarAcuerdo\\:selTipoTiempoIni').removeAttr('disabled');
+                                $('#idFormAgregarAcuerdo\\:selIndicadorAntesDespuesIni').removeAttr('disabled');
+                                $('#txtNumeroInicial').removeAttr('disabled');
+                                $('#txtInicioSeguimiento').removeAttr('disabled');
+                                $('#txtInicioDefinitivo').attr('disabled', true);
+                            }
+                        });
+                        $('#idFormAgregarAcuerdo\\:checkIndicadorSeleccionHoraFin').on('click', function () {
+                            if ($('#idFormAgregarAcuerdo\\:checkIndicadorSeleccionHoraFin').is(':checked')) {
+                                $('#idFormAgregarAcuerdo\\:selTipoTiempoFin').attr('disabled', true);
+                                $('#idFormAgregarAcuerdo\\:selTipoTiempoFin option:eq(0)').prop('selected', true);
+                                $('#idFormAgregarAcuerdo\\:selIndicadorAntesDespuesFin').attr('disabled', true);
+                                $('#idFormAgregarAcuerdo\\:selIndicadorAntesDespuesFin option:eq(0)').prop('selected', true);
+                                $('#txtNumeroFinal').attr('disabled', true).val('');
+                                $('#txtFinSeguimiento').attr('disabled', true).val('');
+                                $('#txtFinDefinitivo').removeAttr('disabled');
+                            } else {
+                                $('#idFormAgregarAcuerdo\\:selTipoTiempoFin').removeAttr('disabled');
+                                $('#idFormAgregarAcuerdo\\:selIndicadorAntesDespuesFin').removeAttr('disabled');
+                                $('#txtNumeroFinal').removeAttr('disabled');
+                                $('#txtFinSeguimiento').removeAttr('disabled');
+                                $('#txtFinDefinitivo').attr('disabled', true);
+                            }
+                        });
+                    });</script>
+                <script>
+    /*<![CDATA[*/function reconstruirEmail() {
+                        $("#idEmails").empty();
+                        var emails = $("#idCadenaEmail").val().split(";");
+                        for (var i = 0; i < emails.length; i++) {
+                            if (emails[i].length > 0) {
+                                $("#idEmails").append('<div class='col - md - 3 alert alert - success fade in' style='margin:2px; color:green'><table style='width:100 % '><tr><td class='tex'><span style='font - weight:bold'>' + emails[i] + '</span></td><td style='text - align:right'><a><span class='glyphicon glyphicon - remove remover' style='color:red'/></a></td></tr></table></div>'); }
+                        }
+                    }/*]]>*/
+                                    
+                </script>
             </h:form>
         </ui:define>
     </ui:composition>

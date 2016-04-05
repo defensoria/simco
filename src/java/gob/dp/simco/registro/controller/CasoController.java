@@ -822,10 +822,8 @@ public class CasoController implements Serializable {
     }
 
     private String generarCodigoCaso() {
-        SimpleDateFormat formato = new SimpleDateFormat("yyyyMM");
-        String codigo = formato.format(new Date());
-        String numero = String.format("%2s", casoService.casoCodigoGenerado().toString()).replace(' ', '0');
-        return "CN" + codigo + numero;
+        String numero = String.format("%8s", casoService.casoCodigoGenerado().toString()).replace(' ', '0');
+        return "CN"+ numero;
     }
 
     public void cargarListaActividadesSinCaso(int tipo) {
