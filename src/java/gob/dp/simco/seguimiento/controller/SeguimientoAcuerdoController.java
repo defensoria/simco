@@ -116,6 +116,15 @@ public class SeguimientoAcuerdoController implements Serializable {
         ad.setUsuarioRegistro(usuarioSession.getCodigo());
         acuerdoDetalles = actaAcuerdoDetalleService.actaAcuerdoDetalleSeguimiento(ad);
         for(ActaAcuerdoDetalle aad : acuerdoDetalles){
+            if(aad.getFechaCumplimiento().after(new Date())){
+                aad.setColor("yelow");
+            }
+            if(aad.getFechaCumplimiento().before(new Date())){
+                aad.setColor("red");
+            }
+            if(aad.isIndCumplido())
+                aad.setColor("green");
+            
             verAlertas(aad);
         }
         seteaValoresInicio();
@@ -146,16 +155,7 @@ public class SeguimientoAcuerdoController implements Serializable {
         actaAcuerdoDetalleService.actaAcuerdoDetalleUpdateColor(aad);
     }
     
-    public void setearColor(ActaAcuerdoDetalle aad,int color){
-        if(color == 1){
-            aad.setColor("blue");
-        }
-        if(color == 2){
-            aad.setColor("red");
-        }
-        if(color == 3){
-            aad.setColor("green");
-        }
+    public void setearColor(ActaAcuerdoDetalle aad){
         actaAcuerdoDetalleService.actaAcuerdoDetalleUpdateColor(aad);
     }
     

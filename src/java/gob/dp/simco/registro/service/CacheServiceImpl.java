@@ -78,6 +78,8 @@ public class CacheServiceImpl implements CacheService{
     private static final Integer CACHE_PARAMETRO_ANHO = 280;
     
     private static final Integer CACHE_PARAMETRO_DEPARTAMENTO = 290;
+    
+    private static final Integer CACHE_PARAMETRO_TIPO_INVESTIGACION = 300;
 
     private volatile HashMap<Integer, Object> contenedor = null;
 
@@ -247,6 +249,11 @@ public class CacheServiceImpl implements CacheService{
         return buscarParametro(CACHE_PARAMETRO_DEPARTAMENTO, CACHE_PARAMETRO_DEPARTAMENTO);
     }
     
+    @Override
+    public List<Parametro> buscarTipoInvestigacion() {
+        return buscarParametro(CACHE_PARAMETRO_TIPO_INVESTIGACION, CACHE_PARAMETRO_TIPO_INVESTIGACION);
+    }
+    
     private Object getElemento(Integer key) {
         if (this.contenedor == null) {
             return null;
@@ -261,6 +268,5 @@ public class CacheServiceImpl implements CacheService{
         this.contenedor.put(key, objeto);
         notifyAll();
     }
-
 
 }

@@ -1,4 +1,9 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:jsf="http://xmlns.jcp.org/jsf" xmlns:gc="http://xmlns.jcp.org/jsf/composite/gc">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:h="http://xmlns.jcp.org/jsf/html" 
+      xmlns:f="http://xmlns.jcp.org/jsf/core" 
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets" 
+      xmlns:jsf="http://xmlns.jcp.org/jsf" 
+      xmlns:gc="http://xmlns.jcp.org/jsf/composite/gc">
     <ui:composition template="../template/template.xhtml">
         <ui:define name="content">
             <h:form class="form-horizontal">
@@ -6,7 +11,9 @@
                 <gc:confirmSubmit classGC="confirmacionGuardarTodo" bean="#{intervencionController.saveIntervencionEtapa()}"/>
                 <table style="width:100%">
                     <tr>
-                        <td style="width:40%">
+                        <td style="width:40%; padding-right: 3px">
+                            <h:outputText style="text-justify: kashida" value="#{intervencionController.intervencion.descripcion}" />
+                            <br/>
                             <span class="text-titulo-comun-simco">Intervención - #{intervencionController.intervencion.nombre}</span>
                             <a style="text-decoration:none;cursor: pointer" onclick="openModalDetalle()">
                                 <span class="glyphicon glyphicon-align-justify" style="font-size:large"></span>
@@ -27,7 +34,7 @@
                                                 <b>Total de actividades:  </b> 
                                                 <span>#{intervencionController.actividadesTotales}</span>
                                             </td>
-                                            </tr>
+                                        </tr>
                                         <tr>
                                             <td>
                                                 <b>Total de actividades ejecutadas:  </b> 
@@ -45,9 +52,11 @@
                             </div>
                         </td>
                         <td style="text-align:right">
-                            <script>function confirmacionGuardarTodo() {
-        $(".confirmacionGuardarTodo").modal("show");
-    }</script>
+                            <script>
+                                function confirmacionGuardarTodo() {
+                                    $(".confirmacionGuardarTodo").modal("show");
+                                }
+                            </script>
                             <a class="btn btn-primary" onclick="confirmacionGuardarTodo()">
                                 <span class="glyphicon glyphicon-floppy-disk"/>Guardar
                             </a>
@@ -71,14 +80,14 @@
                             <h:dataTable value="#{intervencionController.listPlanificado}" var="planificado" binding="#{item1}">
                                 <h:column>
                                     <h:panelGroup rendered="#{planificado.listaActuacionesEjecutadas == 0}" id="idPanel2">
-                                        
+
                                         <div class="form-group has-feedback">
                                             <textarea class="form-control" rows="8" jsf:value="#{planificado.detalle}" style="width:95%;font-size:1em; background: #{planificado.intervencionAccion.color}"/>
                                             <a jsf:action="#{intervencionController.openModalRegistroDescripcion(planificado)}" jsf:rendered="#{planificado.id != null}">
                                                 <span class="glyphicon glyphicon-pencil form-control-feedback" style="font-size:small;color:#0074cc;right:18px"></span>
                                                 <f:ajax render=":idPanelGroupIntervencionDescripcion :idForm2" onevent="openModalDescripcion"/>
                                             </a>
-                                            
+
                                             <table style="width:85%;top:80%" class="form-control-feedback">
                                                 <tr>
                                                     <td style="height:28px;width:10%">
@@ -122,7 +131,7 @@
                                                 <span class="glyphicon glyphicon-pencil form-control-feedback" style="font-size:small;color:#0074cc;right:18px"></span>
                                                 <f:ajax render=":idPanelGroupIntervencionDescripcion :idForm2" onevent="openModalDescripcion"/>
                                             </a>
-                                            
+
                                             <table style="width:85%;top:80%" class="form-control-feedback">
                                                 <tr>
                                                     <td style="height:28px;width:10%">
@@ -166,7 +175,7 @@
                                                 <span class="glyphicon glyphicon-pencil form-control-feedback" style="font-size:small;color:#0074cc;right:18px"></span>
                                                 <f:ajax render=":idPanelGroupIntervencionDescripcion :idForm2" onevent="openModalDescripcion"/>
                                             </a>
-                                           
+
                                             <table style="width:85%;top:80%" class="form-control-feedback">
                                                 <tr>
                                                     <td style="height:28px;width:10%">
@@ -218,7 +227,8 @@
                     </tr>
                 </table>
                 <h:panelGroup id="idPanelGroupIntervencion">
-                    <script>function validaDetalleGeneral() {
+                    <script>
+                        function validaDetalleGeneral() {
                             if ($('#idDescripcionGeneral').val() === "") {
                                 $('#idDescripcionGeneral').addClass('error');
                                 return false;
@@ -228,8 +238,9 @@
                             }
                         }
                         function limpiaDetalle() {
-        $('#idDescripcionGeneral').removeClass('error');
-    }</script>
+                            $('#idDescripcionGeneral').removeClass('error');
+                        }
+                    </script>
                     <div class="modal fade" id="idModalDetalle" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
@@ -273,9 +284,9 @@
                             return false;
                         }
                         else {
-            $('#idDivColor').removeClass('error');
-        }
-    }</script>
+                            $('#idDivColor').removeClass('error');
+                        }
+                    }</script>
                 <h:panelGroup id="idPanelGroupIntervencion2">
                     <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
@@ -345,12 +356,12 @@
                                         </a>
                                         &#160;&#160;
                                         <a class="btn btn-warning" onclick="confirmar1()">
-                                                <span class="glyphicon glyphicon-remove"/>Eliminar
-                                            </a>
+                                            <span class="glyphicon glyphicon-remove"/>Eliminar
+                                        </a>
                                         <gc:confirmRemoveSubmit classGC="confirmacion1" bean="#{intervencionController.removeListaIntervencionEtapa(intervencionController.intervencionEtapa, intervencionController.intervencionEtapa.avance)}"/>
-                                    <script>function confirmar1() {
-        $(".confirmacion1").modal('show');
-    }</script>
+                                        <script>function confirmar1() {
+                                                $(".confirmacion1").modal('show');
+                                            }</script>
                                     </div>
                                     <br/>
                                     <div class="panel panel-default">
@@ -389,15 +400,15 @@
                                                             </div>
                                                             <style>.alink:hover{text-decoration:none}.alink:link{text-decoration:none}.alink:active{text-decoration:none}</style>
                                                             <script>$('.trigger').popover({html: true, placement: 'bottom', tabindex: '0', trigger: 'focus', title: function () {
-            return $(this).parent().find('.head').html();
-        }, content: function () {
-            return $(this).parent().find('.content').html();
-        }});
-    $('.datepicker').datetimepicker({pickTime: false});
-    $(".datepicker").on("changeDate", function (ev) {
-        $(this).datetimepicker("hide");
-    });
-    $('.timepicker').datetimepicker({pickDate: false});</script>
+                                                                        return $(this).parent().find('.head').html();
+                                                                    }, content: function () {
+                                                                        return $(this).parent().find('.content').html();
+                                                                    }});
+                                                                $('.datepicker').datetimepicker({pickTime: false});
+                                                                $(".datepicker").on("changeDate", function (ev) {
+                                                                    $(this).datetimepicker("hide");
+                                                                });
+                                                                $('.timepicker').datetimepicker({pickDate: false});</script>
                                                         </div>
                                                     </td>
                                                     <td style="width:40%;padding-left:10px;padding-bottom:20px;vertical-align:top">
@@ -429,56 +440,56 @@
                                                                 }
                                                                 else
                                                                 {
-            $("#idPanelBody").slideUp(300).delay(800);
-            $("#spanAddUser").removeClass("glyphicon-minus").addClass("glyphicon-plus");
-            i = 1;
-        }
-    });</script>
+                                                                    $("#idPanelBody").slideUp(300).delay(800);
+                                                                    $("#spanAddUser").removeClass("glyphicon-minus").addClass("glyphicon-plus");
+                                                                    i = 1;
+                                                                }
+                                                            });</script>
                                                         <h:panelGroup id="idPanelMiembros">
                                                             <h:messages id="idMessages"/>
-                                                        <div class="panel panel-warning" style="width:100%">
-                                                            <div class="panel-heading">
-                                                                <span class="glyphicon glyphicon-user"></span>
-                                                                Miembros
-                                                                <a style="text-decoration:none; cursor: pointer" id="addUser">
-                                                                    <span id="spanAddUser" class="glyphicon glyphicon-plus"></span>
-                                                                </a>
-                                                            </div>
-                                                            
-                                                            <div id="idPanelBody" class="panel-body">
-                                                                
-                                                                <h:dataTable value="#{busquedaUsuarioController.listaUsuario}" var="item" id="idDatatableActor" class="table table-striped" style="font-size:.8em;text-align:left">
-                                                                    <h:column id="colNombre">
-                                                                        <f:facet name="header">
-                                                                            <h:outputText value="Nombre"/>
-                                                                        </f:facet>
-                                                                        <h:outputText value="#{item.nombre} #{item.apellidoPaterno}"/>
-                                                                    </h:column>
-                                                                    <h:column id="colDni">
-                                                                        <f:facet name="header">
-                                                                            <h:outputText value="Documento"/>
-                                                                        </f:facet>
-                                                                        <h:outputText value="#{item.dni}"/>
-                                                                    </h:column>
-                                                                    <h:column>
-                                                                        <a  style="cursor: pointer" jsf:action="#{intervencionController.addMiembro(item)}" data-toggle="tooltip" data-placement="bottom" title="Modificar usuario">
-                                                                            <span class="glyphicon glyphicon-share-alt" style="font-size:large"/>
-                                                                            <f:ajax render=":idForm2:idPanelMiembros"/>
-                                                                        </a>
-                                                                    </h:column>
-                                                                </h:dataTable>
-                                                                <ul class="pager">
-                                                                    <li><a jsf:action="#{busquedaUsuarioController.listarPaginado(busquedaUsuarioController.nroPagina -1)}">Anterior
-                                                                            <f:ajax render="idDatatableActor" />
-                                                                        </a>
-                                                                    </li>
-                                                                    <li>
-                                                                        <a jsf:action="#{busquedaUsuarioController.listarPaginado(busquedaUsuarioController.nroPagina +1)}">Siguiente
-                                                                            <f:ajax render="idDatatableActor" />
-                                                                        </a>
-                                                                    </li>
-                                                                </ul>
-                                                             
+                                                            <div class="panel panel-warning" style="width:100%">
+                                                                <div class="panel-heading">
+                                                                    <span class="glyphicon glyphicon-user"></span>
+                                                                    Miembros
+                                                                    <a style="text-decoration:none; cursor: pointer" id="addUser">
+                                                                        <span id="spanAddUser" class="glyphicon glyphicon-plus"></span>
+                                                                    </a>
+                                                                </div>
+
+                                                                <div id="idPanelBody" class="panel-body">
+
+                                                                    <h:dataTable value="#{busquedaUsuarioController.listaUsuario}" var="item" id="idDatatableActor" class="table table-striped" style="font-size:.8em;text-align:left">
+                                                                        <h:column id="colNombre">
+                                                                            <f:facet name="header">
+                                                                                <h:outputText value="Nombre"/>
+                                                                            </f:facet>
+                                                                            <h:outputText value="#{item.nombre} #{item.apellidoPaterno}"/>
+                                                                        </h:column>
+                                                                        <h:column id="colDni">
+                                                                            <f:facet name="header">
+                                                                                <h:outputText value="Documento"/>
+                                                                            </f:facet>
+                                                                            <h:outputText value="#{item.dni}"/>
+                                                                        </h:column>
+                                                                        <h:column>
+                                                                            <a  style="cursor: pointer" jsf:action="#{intervencionController.addMiembro(item)}" data-toggle="tooltip" data-placement="bottom" title="Modificar usuario">
+                                                                                <span class="glyphicon glyphicon-share-alt" style="font-size:large"/>
+                                                                                <f:ajax render=":idForm2:idPanelMiembros"/>
+                                                                            </a>
+                                                                        </h:column>
+                                                                    </h:dataTable>
+                                                                    <ul class="pager">
+                                                                        <li><a jsf:action="#{busquedaUsuarioController.listarPaginado(busquedaUsuarioController.nroPagina -1)}">Anterior
+                                                                                <f:ajax render="idDatatableActor" />
+                                                                            </a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a jsf:action="#{busquedaUsuarioController.listarPaginado(busquedaUsuarioController.nroPagina +1)}">Siguiente
+                                                                                <f:ajax render="idDatatableActor" />
+                                                                            </a>
+                                                                        </li>
+                                                                    </ul>
+
                                                                     <h:dataTable id="idDatableSeleccionado" value="#{intervencionController.intervencionMiembros}" var="miembro" style="text-align:left;width:100%;font-size:.8em" class="table table-striped">
                                                                         <h:column>
                                                                             <li>
@@ -492,13 +503,13 @@
                                                                             </a>
                                                                         </h:column>
                                                                     </h:dataTable>
-                                                              
+
+                                                                </div>
+                                                                <div class="panel-footer">
+
+                                                                </div>
                                                             </div>
-                                                            <div class="panel-footer">
-                                                                
-                                                            </div>
-                                                        </div>
-    </h:panelGroup>
+                                                        </h:panelGroup>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -579,11 +590,11 @@
                                                                         }
                                                                         else
                                                                         {
-            $("#idPanelBodyActuacion").slideUp(300).delay(800);
-            $("#spanAddActuacion").removeClass("glyphicon-minus").addClass("glyphicon-plus");
-            i = 1;
-        }
-    });</script>
+                                                                            $("#idPanelBodyActuacion").slideUp(300).delay(800);
+                                                                            $("#spanAddActuacion").removeClass("glyphicon-minus").addClass("glyphicon-plus");
+                                                                            i = 1;
+                                                                        }
+                                                                    });</script>
                                                             </div>
                                                         </div>
                                                     </td>
@@ -747,7 +758,7 @@
                             $('#a8').removeClass("glyphicon glyphicon-ok");
                             $('#a9').addClass("glyphicon glyphicon-ok");
                             $('#idHiddenColor').val("maroon");
-                        }
+                    }
                 }
                 sessionStorage.setItem('menuHijoSession', 'Intervencion');</script>
         </ui:define>

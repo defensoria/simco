@@ -49,6 +49,8 @@ public class ActaAcuerdoDetalle implements Serializable{
     
     private String usuarioRegistro;
     
+    private boolean indCumplido;
+    
     public Long getId() {
         return id;
     }
@@ -175,6 +177,14 @@ public class ActaAcuerdoDetalle implements Serializable{
 
     public void setUsuarioRegistro(String usuarioRegistro) {
         this.usuarioRegistro = usuarioRegistro;
+    }
+
+    public boolean isIndCumplido() {
+        return indCumplido;
+    }
+
+    public void setIndCumplido(boolean indCumplido) {
+        this.indCumplido = indCumplido;
     }
 
 }

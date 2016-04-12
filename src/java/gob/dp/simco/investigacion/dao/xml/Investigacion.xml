@@ -11,6 +11,9 @@
         <result property="usuarioRegistro" column="C_USUREGISTRO"/>
         <result property="fechaModificacion" column="D_FECMODIFICACION"/>
         <result property="version" column="N_VERSION"/>
+        <result property="tipo" column="C_TIPO"/>
+        <result property="fecha" column="D_FECHA"/>
+        <result property="responsable" column="C_RESPONSABLE"/>
     </resultMap> 
 
     <insert id="investigacionInsertar" parameterType="investigacion">
@@ -35,6 +38,15 @@
         <if test="version !=null">
             N_VERSION,
         </if>
+        <if test="tipo !=null">
+            C_TIPO,
+        </if>
+        <if test="fecha !=null">
+            D_FECHA,
+        </if>
+        <if test="responsable !=null">
+            C_RESPONSABLE,
+        </if>
         C_TITULO
         )
         VALUES 
@@ -57,6 +69,15 @@
         </if>
         <if test="version !=null">
             #{version},
+        </if>
+        <if test="tipo !=null">
+            #{tipo},
+        </if>
+        <if test="fecha !=null">
+            #{fecha},
+        </if>
+        <if test="responsable !=null">
+            #{responsable},
         </if>
         #{titulo}
         )
@@ -81,6 +102,15 @@
             <if test="version !=null">
                 N_VERSION = #{version},
             </if>
+            <if test="tipo !=null">
+                C_TIPO = #{tipo},
+            </if>
+            <if test="fecha !=null">
+                D_FECHA = #{fecha},
+            </if>
+            <if test="responsable !=null">
+                C_RESPONSABLE = #{responsable},
+            </if>
             C_ESTADO = #{estado}
         </set>
         <where>
@@ -90,9 +120,9 @@
     
     <select id="investigacionBuscar" resultMap="investigacionMap" parameterType="investigacion">
         SELECT DISTINCT A.* FROM SIMCO_INVESTIGACION A
-            INNER JOIN SIMCO_INVESTIGACION_PARTICIPA B ON A.N_ID_INVESTIGACION = B.N_ID_INVESTIGACION
-            WHERE A.C_ESTADO = 'ACT'
-            AND B.C_CODIGOUSU = #{usuarioRegistro}
-            ORDER BY A.N_ID_INVESTIGACION
+        INNER JOIN SIMCO_INVESTIGACION_PARTICIPA B ON A.N_ID_INVESTIGACION = B.N_ID_INVESTIGACION
+        WHERE A.C_ESTADO = 'ACT'
+        AND B.C_CODIGOUSU = #{usuarioRegistro}
+        ORDER BY A.N_ID_INVESTIGACION
     </select>
 </mapper>

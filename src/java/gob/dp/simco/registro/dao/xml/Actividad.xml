@@ -47,6 +47,8 @@
         <result property="tipoAcontecimiento" column="C_TIPOACONTECIMIENTO"/>
         <result property="tipoViolencia" column="C_TIPOVIOLENCIA"/>
         <result property="resultadoViolencia" column="C_RESULTADOVIOLENCIA"/>
+        <result property="idAcontecimiento" column="N_ID_ACONTECIMIENTO"/>
+        <result property="indiceVinculado" column="N_INDICEVINCULADO"/>
     </resultMap> 
 
     <sql id="sqlBuscarActividad">
@@ -67,7 +69,9 @@
         B.NOMBRE_PARAMETRO AS PARAM_TIPO_ACTIVIDAD_NOM,
         A.C_TIPOACONTECIMIENTO,
         A.C_TIPOVIOLENCIA,
-        A.C_RESULTADOVIOLENCIA
+        A.C_RESULTADOVIOLENCIA,
+        A.N_ID_ACONTECIMIENTO,
+        A.N_INDICEVINCULADO
         FROM
         SIMCO_REG_ACTIVIDAD A 
         LEFT JOIN
@@ -102,7 +106,9 @@
         D.C_ESTADOACTACT,
         A.C_TIPOACONTECIMIENTO,
         A.C_TIPOVIOLENCIA,
-        A.C_RESULTADOVIOLENCIA
+        A.C_RESULTADOVIOLENCIA,
+        A.N_ID_ACONTECIMIENTO,
+        A.N_INDICEVINCULADO
         FROM
         SIMCO_REG_ACTIVIDAD A 
         LEFT JOIN
@@ -130,7 +136,9 @@
         D.C_ESTADOACTACT,
         A.C_TIPOACONTECIMIENTO,
         A.C_TIPOVIOLENCIA,
-        A.C_RESULTADOVIOLENCIA
+        A.C_RESULTADOVIOLENCIA,
+        A.N_ID_ACONTECIMIENTO,
+        A.N_INDICEVINCULADO
         FROM
         SIMCO_REG_ACTIVIDAD A 
         LEFT JOIN
@@ -156,7 +164,9 @@
         D.C_ESTADO_ACTI_ACTOR,
         A.C_TIPOACONTECIMIENTO,
         A.C_TIPOVIOLENCIA,
-        A.C_RESULTADOVIOLENCIA
+        A.C_RESULTADOVIOLENCIA,
+        A.N_ID_ACONTECIMIENTO,
+        A.N_INDICEVINCULADO
         FROM
         SIMCO_REG_ACTIVIDAD A 
         LEFT JOIN
@@ -184,7 +194,9 @@
         D.C_ESTADO_ACTI_ACTOR,
         A.C_TIPOACONTECIMIENTO,
         A.C_TIPOVIOLENCIA,
-        A.C_RESULTADOVIOLENCIA
+        A.C_RESULTADOVIOLENCIA,
+        A.N_ID_ACONTECIMIENTO,
+        A.N_INDICEVINCULADO
         FROM
         SIMCO_REG_ACTIVIDAD A 
         LEFT JOIN
@@ -426,16 +438,46 @@
                 C_RUTA = #{ruta},
             </if>
             <if test="tipoAcontecimiento != null">
-            C_TIPOACONTECIMIENTO = #{tipoAcontecimiento},
-        </if>
-        <if test="tipoViolencia != null">
-            C_TIPOVIOLENCIA = #{tipoViolencia},
-        </if>
-        <if test="resultadoViolencia != null">
-            C_RESULTADOVIOLENCIA = #{resultadoViolencia},
-        </if>
+                C_TIPOACONTECIMIENTO = #{tipoAcontecimiento},
+            </if>
+            <if test="tipoViolencia != null">
+                C_TIPOVIOLENCIA = #{tipoViolencia},
+            </if>
+            <if test="resultadoViolencia != null">
+                C_RESULTADOVIOLENCIA = #{resultadoViolencia},
+            </if>
             C_TIPO_ACTIVIDAD = #{tipoActividad.valorParametro, jdbcType=CHAR}
             
+        </set>
+        <where>
+            N_ID_ACTIVIDAD=#{id}
+        </where>
+    </update>
+        
+    <update id="actividadUpdateAcontecimiento" parameterType="actividad">
+        UPDATE SIMCO_REG_ACTIVIDAD
+        <set>
+            N_ID_ACONTECIMIENTO= #{idAcontecimiento}
+        </set>
+        <where>
+            N_ID_ACTIVIDAD=#{id}
+        </where>
+    </update>
+    
+    <update id="actividadUpdateVincular" parameterType="long">
+        UPDATE SIMCO_REG_ACTIVIDAD
+        <set>
+            N_INDICEVINCULADO = 1
+        </set>
+        <where>
+            N_ID_ACTIVIDAD=#{id}
+        </where>
+    </update>
+    
+    <update id="actividadUpdateDesVincular" parameterType="long">
+        UPDATE SIMCO_REG_ACTIVIDAD
+        <set>
+            N_INDICEVINCULADO = 0
         </set>
         <where>
             N_ID_ACTIVIDAD=#{id}
@@ -477,7 +519,9 @@
         D.C_RUTA as RUTA_IMAGEN,
         A.C_TIPOACONTECIMIENTO,
         A.C_TIPOVIOLENCIA,
-        A.C_RESULTADOVIOLENCIA
+        A.C_RESULTADOVIOLENCIA,
+        A.N_ID_ACONTECIMIENTO,
+        A.N_INDICEVINCULADO
         FROM
         SIMCO_REG_ACTIVIDAD A 
         LEFT JOIN
@@ -525,7 +569,9 @@
         D.C_RUTA as RUTA_IMAGEN,
         A.C_TIPOACONTECIMIENTO,
         A.C_TIPOVIOLENCIA,
-        A.C_RESULTADOVIOLENCIA
+        A.C_RESULTADOVIOLENCIA,
+        A.N_ID_ACONTECIMIENTO,
+        A.N_INDICEVINCULADO
         FROM
         SIMCO_REG_ACTIVIDAD A 
         LEFT JOIN
@@ -565,7 +611,9 @@
         A.C_TIPOACONTECIMIENTO,
         A.C_TIPOVIOLENCIA,
         A.C_RESULTADOVIOLENCIA,
-        A.C_RUTA
+        A.C_RUTA,
+        A.N_ID_ACONTECIMIENTO,
+        A.N_INDICEVINCULADO
         FROM
         SIMCO_REG_ACTIVIDAD A 
         LEFT JOIN
@@ -595,7 +643,9 @@
         D.C_ESTADOACTCASO,
         A.C_TIPOACONTECIMIENTO,
         A.C_TIPOVIOLENCIA,
-        A.C_RESULTADOVIOLENCIA
+        A.C_RESULTADOVIOLENCIA,
+        A.N_ID_ACONTECIMIENTO,
+        A.N_INDICEVINCULADO
         FROM
         SIMCO_REG_ACTIVIDAD A 
         LEFT JOIN
@@ -605,7 +655,6 @@
         WHERE D.N_ID_CASO =#{id}
         AND D.C_ESTADOACTCASO = 'ACT'
     </select>
-
 
     <select id="actividadxActaAcuerdoBuscarTotal" resultMap="actividadMap" parameterType="long">
         SELECT 
@@ -623,7 +672,9 @@
         D.C_ESTADOACTIACTA,
         A.C_TIPOACONTECIMIENTO,
         A.C_TIPOVIOLENCIA,
-        A.C_RESULTADOVIOLENCIA
+        A.C_RESULTADOVIOLENCIA,
+        A.N_ID_ACONTECIMIENTO,
+        A.N_INDICEVINCULADO
         FROM
         SIMCO_REG_ACTIVIDAD A 
         LEFT JOIN
@@ -650,7 +701,9 @@
         D.C_ESTADOACTIACTA,
         A.C_TIPOACONTECIMIENTO,
         A.C_TIPOVIOLENCIA,
-        A.C_RESULTADOVIOLENCIA
+        A.C_RESULTADOVIOLENCIA,
+        A.N_ID_ACONTECIMIENTO,
+        A.N_INDICEVINCULADO
         FROM
         SIMCO_REG_ACTIVIDAD A 
         LEFT JOIN
@@ -677,7 +730,9 @@
         D.C_ESTADOACTMEDIO,
         A.C_TIPOACONTECIMIENTO,
         A.C_TIPOVIOLENCIA,
-        A.C_RESULTADOVIOLENCIA
+        A.C_RESULTADOVIOLENCIA,
+        A.N_ID_ACONTECIMIENTO,
+        A.N_INDICEVINCULADO
         FROM
         SIMCO_REG_ACTIVIDAD A 
         LEFT JOIN
@@ -703,7 +758,9 @@
         D.C_ESTADOACTMEDIO,
         A.C_TIPOACONTECIMIENTO,
         A.C_TIPOVIOLENCIA,
-        A.C_RESULTADOVIOLENCIA
+        A.C_RESULTADOVIOLENCIA,
+        A.N_ID_ACONTECIMIENTO,
+        A.N_INDICEVINCULADO
         FROM
         SIMCO_REG_ACTIVIDAD A 
         LEFT JOIN
@@ -729,7 +786,9 @@
         A.C_COMENTARIOACTIVIDAD,
         A.C_TIPOACONTECIMIENTO,
         A.C_TIPOVIOLENCIA,
-        A.C_RESULTADOVIOLENCIA
+        A.C_RESULTADOVIOLENCIA,
+        A.N_ID_ACONTECIMIENTO,
+        A.N_INDICEVINCULADO
         from simco_reg_actividad A
             
     </select>
@@ -739,7 +798,7 @@
         left JOIN SIMCO_REG_CASO_ACTIVIDAD b on a.N_ID_ACTIVIDAD = b.N_ID_ACTIVIDAD
         where b.N_ID_CASO is null and a.C_TIPO = 'AC'
         UNION
-select a.* from SIMCO_REG_ACTIVIDAD a
+        select a.* from SIMCO_REG_ACTIVIDAD a
         INNER JOIN SIMCO_REG_CASO_ACTIVIDAD b on a.N_ID_ACTIVIDAD = b.N_ID_ACTIVIDAD
         where b.N_ID_CASO is not null and a.C_TIPO = 'AC' AND a.N_ID_ACTIVIDAD NOT IN (
         select a.N_ID_ACTIVIDAD from SIMCO_REG_ACTIVIDAD a
@@ -748,12 +807,19 @@ select a.* from SIMCO_REG_ACTIVIDAD a
         )
     </select>
     
+    <select id="actividadBusquedaPorCasoAC" resultMap="actividadMap" parameterType="long">
+        SELECT A.* FROM SIMCO_REG_ACTIVIDAD A
+        INNER JOIN SIMCO_REG_CASO_ACTIVIDAD B ON A.N_ID_ACTIVIDAD = B.N_ID_ACTIVIDAD AND B.C_ESTADOACTCASO = 'ACT'
+        INNER JOIN SIMCO_REG_CASO C ON B.N_ID_CASO = C.N_ID_CASO AND C.C_INDVIGENTE = 'A'
+        WHERE nvl(A.N_INDICEVINCULADO, 0) != 1 AND C.N_ID_CASO = #{id}
+    </select>
+    
     <select id="actividadBusquedaSinCasoAD" resultMap="actividadMap">
         select a.* from SIMCO_REG_ACTIVIDAD a
         left JOIN SIMCO_REG_CASO_ACTIVIDAD b on a.N_ID_ACTIVIDAD = b.N_ID_ACTIVIDAD
         where b.N_ID_CASO is null and a.C_TIPO = 'AD'
         UNION
-select a.* from SIMCO_REG_ACTIVIDAD a
+        select a.* from SIMCO_REG_ACTIVIDAD a
         INNER JOIN SIMCO_REG_CASO_ACTIVIDAD b on a.N_ID_ACTIVIDAD = b.N_ID_ACTIVIDAD
         where b.N_ID_CASO is not null and a.C_TIPO = 'AD' AND a.N_ID_ACTIVIDAD NOT IN (
         select a.N_ID_ACTIVIDAD from SIMCO_REG_ACTIVIDAD a

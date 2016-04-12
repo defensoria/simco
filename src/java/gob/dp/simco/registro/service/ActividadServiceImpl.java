@@ -189,5 +189,25 @@ public class ActividadServiceImpl implements ActividadService{
     public List<Actividad> actividadxCodigoCasoBuscarTotal(String codigo) throws Exception {
         return actividadDao.actividadxCodigoCasoBuscarTotal(codigo);
     }
+
+    @Override
+    public List<Actividad> actividadBusquedaPorCasoAC(long idCaso) {
+        return actividadDao.actividadBusquedaPorCasoAC(idCaso);
+    }
+
+    @Override
+    public void actividadUpdateVincular(long idActividad) {
+        actividadDao.actividadUpdateVincular(idActividad);
+    }
+
+    @Override
+    public void actividadUpdateDesVincular(long idActividad) {
+        actividadDao.actividadUpdateDesVincular(idActividad);
+    }
+
+    @Override
+    public void actividadUpdateAcontecimiento(Actividad actividad) {
+        actividadDao.actividadUpdateAcontecimiento(actividad);
+    }
     
 }

@@ -8,6 +8,7 @@ package gob.dp.simco.investigacion.controller;
 import gob.dp.simco.administracion.seguridad.controller.LoginController;
 import gob.dp.simco.administracion.seguridad.entity.Usuario;
 import gob.dp.simco.administracion.seguridad.service.UsuarioService;
+import gob.dp.simco.comun.MessagesUtil;
 import gob.dp.simco.investigacion.entity.Campo;
 import gob.dp.simco.investigacion.entity.CampoDetalle;
 import gob.dp.simco.investigacion.entity.HistorialActividad;
@@ -72,6 +73,8 @@ public class InvestigacionController implements Serializable {
     private Usuario usuarioSession;
     
     private Part file1;
+    
+    private MessagesUtil msg;
 
     @Autowired
     private UsuarioService usuarioService;
@@ -92,6 +95,7 @@ public class InvestigacionController implements Serializable {
     private HistorialActividadService historialActividadService;
 
     public String cargarCrearInvestigacion() {
+        msg = new MessagesUtil();
         investigacion = new Investigacion();
         campo = new Campo();
         campoDetalle = new CampoDetalle();
@@ -276,6 +280,7 @@ public class InvestigacionController implements Serializable {
             }
         }
         listarHistorialActividad();
+        msg.messageInfo("Se registro la investigación", null);
     }
 
     public void addUsuario() {
@@ -413,6 +418,14 @@ public class InvestigacionController implements Serializable {
 
     public void setUsuarioSession(Usuario usuarioSession) {
         this.usuarioSession = usuarioSession;
+    }
+
+    public MessagesUtil getMsg() {
+        return msg;
+    }
+
+    public void setMsg(MessagesUtil msg) {
+        this.msg = msg;
     }
 
 }

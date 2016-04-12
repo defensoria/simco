@@ -1,4 +1,10 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:jsf="http://xmlns.jcp.org/jsf" xmlns:gc="http://xmlns.jcp.org/jsf/composite/gc">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:h="http://xmlns.jcp.org/jsf/html" 
+      xmlns:f="http://xmlns.jcp.org/jsf/core" 
+      xmlns:c="http://java.sun.com/jsp/jstl/core" 
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets" 
+      xmlns:jsf="http://xmlns.jcp.org/jsf" 
+      xmlns:gc="http://xmlns.jcp.org/jsf/composite/gc">
     <ui:composition template="../template/template.xhtml">
         <ui:define name="content">
             <h:form id="idForm" class="form-horizontal" enctype="multipart/form-data">
@@ -9,6 +15,7 @@
                 <h:inputHidden id="hidCodActividad" value="#{registroController.actividadTemp.id}" />
                 <input type="hidden" id="idTipoRegistro" jsf:value="#{registroController.actividadTemp.tipo}" />
                 <div class="panel panel-featured-top-primary">
+
                     <table style="width:100%">
                         <tr>
                             <td style="width:50%;text-align:left;padding:10px">
@@ -19,61 +26,55 @@
                             </td>
                         </tr>
                         <tr>
-                            <span class="text-titulo-primary-simco" style="color:#878787" id="idTextoRegistro">Nuevo Registro</span><h:outputText value="&#160;&#160;&#160;" />
-                            <a href="#" class="trigger">
-                                <span style="color:#3183b9;font-size:large;vertical-align:bottom" class="glyphicon glyphicon-chevron-down trigger"></span>
-                            </a>
-                            <div class="popover-markup" style="float:right">
-                                <div class="head hide"><b class="text-primary">Seleccione</b></div>
-                                <div class="content hide">
-                                    <div style="width:100%">
-                                        <a class="alink" onclick="asignarTipo('AD')" style="cursor:pointer">
-                                            <div class="alert fade in alert-danger" role="alert" style="padding-bottom:5px;padding-top:5px;margin-bottom:3px">
-                                                <strong>
-                                                    <h:outputText value="Actuación defensorial" class="cTipoRegistro"/>
-                                                </strong>
-                                            </div>
-                                        </a>
-                                        <a class="alink" onclick="asignarTipo('AC')" style="cursor:pointer">
-                                            <div class="alert fade in alert-danger" role="alert" style="padding-bottom:5px;padding-top:5px;margin-bottom:3px">
-                                                <strong>
-                                                    <h:outputText value="Acontecimiento" class="cTipoRegistro" />
-                                                </strong>
-                                            </div>
-                                        </a>
+                            <td>
+                                <span class="text-titulo-primary-simco" style="color:#878787" id="idTextoRegistro">Nuevo Registro</span><h:outputText value="&#160;&#160;&#160;" />
+                                <a href="#" class="trigger">
+                                    <span style="color:#3183b9;font-size:large;vertical-align:bottom" class="glyphicon glyphicon-chevron-down trigger"></span>
+                                </a>
+                                <div class="popover-markup" style="float:right">
+                                    <div class="head hide"><b class="text-primary">Seleccione</b></div>
+                                    <div class="content hide">
+                                        <div style="width:100%">
+                                            <a class="alink" onclick="asignarTipo('AD')" style="cursor:pointer">
+                                                <div class="alert fade in alert-danger" role="alert" style="padding-bottom:5px;padding-top:5px;margin-bottom:3px">
+                                                    <strong>
+                                                        <h:outputText value="Actuación defensorial" class="cTipoRegistro"/>
+                                                    </strong>
+                                                </div>
+                                            </a>
+                                            <a class="alink" onclick="asignarTipo('AC')" style="cursor:pointer">
+                                                <div class="alert fade in alert-danger" role="alert" style="padding-bottom:5px;padding-top:5px;margin-bottom:3px">
+                                                    <strong>
+                                                        <h:outputText value="Acontecimiento" class="cTipoRegistro" />
+                                                    </strong>
+                                                </div>
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <style>.alink:hover{text-decoration:none}.alink:link{text-decoration:none}.alink:active{text-decoration:none}</style>
-                            <script>$('.trigger').popover({html: true, placement: 'bottom', tabindex: '0', trigger: 'focus', title: function () {
-                                        return $(this).parent().find('.head').html();
-                                    }, content: function () {
-                                        return $(this).parent().find('.content').html();
-                                    }});
-                                function asignarTipo(tipo) {
-                                    $("#idTipoRegistro").val(tipo);
-                                    $("#idTextoRegistro").css("color", "#3071A9");
-                                    if (tipo === "AD") {
-                                        $("#idTextoRegistro").text("Actuacion Defensorial");
-                                        $("#idPanelViolencia").css("display", "none");
+                                <style>
+                                    .alink:hover{text-decoration:none}
+                                    .alink:link{text-decoration:none}
+                                    .alink:active{text-decoration:none}
+                                </style>
+                                <script>
+                                    $('.trigger').popover({html: true, placement: 'bottom', tabindex: '0', trigger: 'focus', title: function () {
+                                            return $(this).parent().find('.head').html();
+                                        }, content: function () {
+                                            return $(this).parent().find('.content').html();
+                                        }});
+                                    function asignarTipo(tipo) {
+                                        $("#idTipoRegistro").val(tipo);
+                                        $("#idTextoRegistro").css("color", "#3071A9");
+                                        if (tipo === "AD") {
+                                            $("#idTextoRegistro").text("Actuacion Defensorial");
+                                            $("#idPanelViolencia").css("display", "none");
+                                        }
+                                        if (tipo === "AC") {
+                                            $("#idTextoRegistro").text("Acontecimiento");
+                                            $("#idPanelViolencia").css("display", "");
+                                        }
                                     }
-                                    if (tipo === "AC") {
-                                        $("#idTextoRegistro").text("Acontecimiento");
-                                        $("#idPanelViolencia").css("display", "");
-                                    }
-                                }
-                                if ($("#idTipoRegistro").val() !== "") {
-                                    if ($("#idTipoRegistro").val() === 'AD') {
-                                        $("#idTextoRegistro").text("Actuacion Defensorial");
-                                        $("#idPanelViolencia").css("display", "none");
-                                    }
-                                    if ($("#idTipoRegistro").val() === 'AC') {
-                                        $("#idTextoRegistro").text("Acontecimiento");
-                                        $("#idPanelViolencia").css("display", "");
-                                    }
-                                    $("#idTextoRegistro").css("color", "#3071A9");
-                                }
-                                $(document).ready(function () {
                                     if ($("#idTipoRegistro").val() !== "") {
                                         if ($("#idTipoRegistro").val() === 'AD') {
                                             $("#idTextoRegistro").text("Actuacion Defensorial");
@@ -85,9 +86,74 @@
                                         }
                                         $("#idTextoRegistro").css("color", "#3071A9");
                                     }
-                                });</script>
+                                    $(document).ready(function () {
+                                        if ($("#idTipoRegistro").val() !== "") {
+                                            if ($("#idTipoRegistro").val() === 'AD') {
+                                                $("#idTextoRegistro").text("Actuacion Defensorial");
+                                                $("#idPanelViolencia").css("display", "none");
+                                            }
+                                            if ($("#idTipoRegistro").val() === 'AC') {
+                                                $("#idTextoRegistro").text("Acontecimiento");
+                                                $("#idPanelViolencia").css("display", "");
+                                            }
+                                            $("#idTextoRegistro").css("color", "#3071A9");
+                                        }
+                                    });
+                                </script>
+                            </td>
+                            <td style="text-align: right; padding-right: 20px">
+                                <script>
+                                    function openModalBusquedaSinCaso(data) {
+                                        if (data.status === 'success') {
+                                            $("#loadModal").modal('hide');
+                                            $('body').removeClass('modal-open');
+                                            $(".modal-backdrop").removeClass("modal-backdrop");
+                                            $("#idModalAcontecimientoBusqueda").modal('show');
+                                        }
+                                    }
+                                </script>
+                                <h:outputText rendered="#{registroController.caso.id != null and registroController.actividadTemp.tipo == 'AC'}" class="text-resalt-primary" value="Vincular acontecimiento:" />
+                                <a jsf:action="#{registroController.cargarActontecimientoPorCaso()}" jsf:onclick="loadingModal()">
+                                    <span style="font-size:large" class="glyphicon glyphicon-search"></span>
+                                    <f:ajax render="idPanelGroupAcontecimientoBusqueda" onevent="openModalBusquedaSinCaso" />
+                                </a>
+                            </td>
                         </tr>
                     </table>
+                    <h:panelGroup id="idPanelGroupAcontecimientoBusqueda">
+                        <div class="modal fade" data-backdrop="static" data-keyboard="false" id="idModalAcontecimientoBusqueda" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                        <div class="modal-header">
+                                            <a type="button" class="close" data-dismiss="modal">
+                                                <span style="color:red" class="glyphicon glyphicon-remove"></span>
+                                            </a>
+                                            <h:outputText class="text-primary" style="font-weight:bold;font-size:1.4em" value="Buscar Actuaciones defensoriales" rendered="#{!casoController.verTitulo}"/>
+                                            <h:outputText class="text-primary" style="font-weight:bold;font-size:1.4em" value="Buscar Acontecimientos" rendered="#{casoController.verTitulo}"/>
+                                        </div>
+                                        <div class="modal-body">
+                                            <h:dataTable style="width:100%" value="#{registroController.listaActividadesPorCaso}" var="act" class="table table-striped">
+                                                <h:column>
+                                                    <f:facet name="header">Nombre</f:facet>
+                                                    <h:outputText value="#{act.nombre}" />
+                                                </h:column>
+                                                <h:column>
+                                                    <f:facet name="header">Registro</f:facet>
+                                                    <h:outputText value="#{act.fechaRegistro}">
+                                                        <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Lima" />
+                                                    </h:outputText>
+                                                </h:column>
+                                                <h:column>
+                                                    <a jsf:action="#{registroController.vincularAcontecimientoActuacion(act)}">
+                                                        <span class="glyphicon glyphicon-share" style="font-size:large"></span>
+                                                    </a>
+                                                </h:column>
+                                            </h:dataTable>
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+                    </h:panelGroup>
                     <div class="panel-body">
                         <table style="width:100%">
                             <tr>
@@ -139,7 +205,6 @@
                                             <label class="col-sm-2 control-label">Clasificación</label>
                                             <div class="col-sm-7">
                                                 <h:selectOneMenu class="selectRadio" id="cmbTipoActividad" value="#{registroController.actividadTemp.tipoActividad}" rendered="#{registroController.actividadTemp.tipo == 'AD'}">
-                                                    <f:selectItem itemValue="0" itemLabel="Seleccione" />
                                                     <f:selectItems value="#{listasComunesController.buscarTipoActividad(false,false,false)}" var="y" itemLabel="#{y.nombreParametro}" itemValue="#{y.valorParametro}" />
                                                 </h:selectOneMenu>
                                             </div>
@@ -150,7 +215,6 @@
                                             <label class="col-sm-2 control-label">Clasificación</label>
                                             <div class="col-sm-7">
                                                 <h:selectOneMenu class="selectRadio" id="cmbTipoAcontecimiento" value="#{registroController.actividadTemp.tipoAcontecimiento}" rendered="#{registroController.actividadTemp.tipo == 'AC'}">
-                                                    <f:selectItem itemValue="0" itemLabel="Seleccione" />
                                                     <f:selectItems value="#{listasComunesController.buscarTipoAcontecimiento(false,false,false)}" var="y" itemLabel="#{y.nombreParametro}" itemValue="#{y.valorParametro}" />
                                                 </h:selectOneMenu>
                                             </div>
@@ -281,8 +345,8 @@
                                     <br/>
                                     <h:panelGroup id="idPanelUbigeo">
                                         <script>$(document).ready(function () {
-                                    $('.selectRadio').multiselect();
-                                });</script>
+                                        $('.selectRadio').multiselect();
+                                    });</script>
                                         <table>
                                             <tr>
                                                 <td>
@@ -474,7 +538,8 @@
                         </tr>
                     </table>
                 </h:panelGroup>
-                <script>/*<![CDATA[*/$('.datepicker').datetimepicker({pickTime: false});
+                <script>
+                    /*<![CDATA[*/$('.datepicker').datetimepicker({pickTime: false});
                     $(".datepicker").on("changeDate", function (ev) {
                         $(this).datetimepicker("hide");
                     });
@@ -578,13 +643,15 @@
                                 $('#divFechaFin').removeClass('formDisabled');
                             }
                         });
-                    });/*]]>*/</script>
-                <script>function openModal(data) {
+                    });/*]]>*/
+
+                    function openModal(data) {
                         alert(data.status);
                         if (data.status === 'success') {
                             $('#busquedaCasoModal').modal('show');
                         }
-                    }</script>
+                    }
+                </script>
             </h:form>
         </ui:define>
     </ui:composition>

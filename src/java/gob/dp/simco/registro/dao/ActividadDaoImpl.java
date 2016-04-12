@@ -156,5 +156,25 @@ public class ActividadDaoImpl extends SqlSessionDaoSupport implements ActividadD
     public List<Actividad> actividadxCodigoCasoBuscarTotal(String codigo) throws Exception {
         return getSqlSession().selectList("gob.dp.simco.registro.dao.ActividadDao.actividadxCodigoCasoBuscarTotal",codigo);
     }
+
+    @Override
+    public List<Actividad> actividadBusquedaPorCasoAC(long idCaso) {
+        return getSqlSession().selectList("gob.dp.simco.registro.dao.ActividadDao.actividadBusquedaPorCasoAC",idCaso);
+    }
+
+    @Override
+    public void actividadUpdateAcontecimiento(Actividad actividad) {
+        getSqlSession().update("gob.dp.simco.registro.dao.ActividadDao.actividadUpdateAcontecimiento", actividad);
+    }
+
+    @Override
+    public void actividadUpdateVincular(long idActividad) {
+        getSqlSession().update("gob.dp.simco.registro.dao.ActividadDao.actividadUpdateVincular", idActividad);
+    }
+
+    @Override
+    public void actividadUpdateDesVincular(long idActividad) {
+        getSqlSession().update("gob.dp.simco.registro.dao.ActividadDao.actividadUpdateDesVincular", idActividad);
+    }
     
 }

@@ -28,6 +28,8 @@ public class ActaAcuerdo implements Serializable{
     private String tipo;
     
     private ActividadActaAcuerdo actividadActaAcuerdo;
+    
+    private String ruta;
 
     public Long getId() {
         return id;
@@ -83,6 +85,14 @@ public class ActaAcuerdo implements Serializable{
 
     public void setCodigo(String codigo) {
         this.codigo = codigo;
+    }
+
+    public String getRuta() {
+        return ruta;
+    }
+
+    public void setRuta(String ruta) {
+        this.ruta = ruta;
     }
     
     

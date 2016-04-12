@@ -9,6 +9,7 @@ import gob.dp.simco.administracion.seguridad.controller.BusquedaUsuarioControlle
 import gob.dp.simco.administracion.seguridad.entity.Usuario;
 import gob.dp.simco.comun.MessagesUtil;
 import gob.dp.simco.registro.bean.FiltroActaAcuerdo;
+import gob.dp.simco.registro.constantes.ConstantesUtil;
 import gob.dp.simco.registro.entity.ActaAcuerdo;
 import gob.dp.simco.registro.entity.ActaAcuerdoDetalle;
 import gob.dp.simco.registro.entity.ActaAcuerdoDetalleMiembro;
@@ -25,13 +26,19 @@ import gob.dp.simco.registro.service.ActorAcuerdoService;
 import gob.dp.simco.registro.service.ActorService;
 import gob.dp.simco.seguimiento.entity.SeguimientoAcuerdo;
 import gob.dp.simco.seguimiento.service.SeguimientoAcuerdoService;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
+import java.nio.file.Files;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.inject.Named;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.Part;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,6 +95,8 @@ public class ActaAcuerdoController implements Serializable {
     int tip = 1;
 
     private MessagesUtil msg;
+    
+    private Part file1;
 
     @Autowired
     private ActaAcuerdoService actaAcuerdoService;
@@ -269,6 +278,8 @@ public class ActaAcuerdoController implements Serializable {
     public void registrarActaAcuerdo() {
         log.debug("METODO : ActaAcuerdoController.registrarActaAcuerdo");
         try {
+            String ruta1 = uploadArchive(file1);
+            actaAcuerdo.setRuta(ruta1);
             if (actaAcuerdo.getId() != null) {
                 actaAcuerdoService.actaAcuerdoModificar(actaAcuerdo);
             } else {
@@ -496,6 +507,44 @@ public class ActaAcuerdoController implements Serializable {
         } catch (Exception e) {
             log.error(e.getCause());
         }
+    }
+    
+    private String uploadArchive(Part fil) {
+        
+            String nameArchive = getFilename(fil);
+            String extencion = getFileExtension(getFilename(fil));
+            if (StringUtils.isNoneBlank(nameArchive)) {
+                String formato = RandomStringUtils.random(32, 0, 20, true, true, "qw32rfHIJk9iQ8Ud7h0X".toCharArray());
+                String ruta = formato + extencion;
+                File file = new File(ConstantesUtil.FILE_SYSTEM + ruta);
+                try (InputStream input = fil.getInputStream()) {
+                    Files.copy(input, file.toPath());
+                } catch (IOException ex) {
+                    log.error(ex);
+                }
+                return ruta;
+            }
+        
+
+        return null;
+    }
+    
+    private String getFileExtension(String name) {
+        try {
+            return name.substring(name.lastIndexOf("."));
+        } catch (Exception e) {
+            return "";
+        }
+    }
+
+    private static String getFilename(Part part) {
+        for (String cd : part.getHeader("content-disposition").split(";")) {
+            if (cd.trim().startsWith("filename")) {
+                String filename = cd.substring(cd.indexOf("=") + 1).trim().replace("\"", "");
+                return filename.substring(filename.lastIndexOf('/') + 1).substring(filename.lastIndexOf('\\') + 1);
+            }
+        }
+        return null;
     }
 
     private void registrarActaAcuerdoDetalle() {
@@ -806,6 +855,14 @@ public class ActaAcuerdoController implements Serializable {
 
     public void setMsg(MessagesUtil msg) {
         this.msg = msg;
+    }
+
+    public Part getFile1() {
+        return file1;
+    }
+
+    public void setFile1(Part file1) {
+        this.file1 = file1;
     }
 
 }

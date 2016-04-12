@@ -28,143 +28,119 @@ public class ListasComunesController {
     private CacheService cacheService;
 
     public List<Parametro> buscarTipoActividad(boolean insertarTODOS, boolean insertarNINGUNO, boolean insertarSELECCIONE) {
-        //log.debug("METODO : ListasComunesController.buscarTipoActividad");
         return insertarValoresDefectoParametro(cacheService.buscarTipoActividad(), insertarTODOS, insertarNINGUNO, insertarSELECCIONE);
     }
     
     public List<Parametro> buscarParticipacionDefensoria(boolean insertarTODOS, boolean insertarNINGUNO, boolean insertarSELECCIONE) {
-        //log.debug("METODO : ListasComunesController.buscarParticipacionDefensoria");
         return insertarValoresDefectoParametro(cacheService.buscarPartificacionDefensoria(), insertarTODOS, insertarNINGUNO, insertarSELECCIONE);
     }
     
     public List<Parametro> buscarTipoActor(boolean insertarTODOS, boolean insertarNINGUNO, boolean insertarSELECCIONE) {
-        //log.debug("METODO : ListasComunesController.buscarTipoActor");
         return insertarValoresDefectoParametro(cacheService.buscarTipoActor(), insertarTODOS, insertarNINGUNO, insertarSELECCIONE);
     }
     
     public List<Parametro> buscarTipoActaAcuerdo(boolean insertarTODOS, boolean insertarNINGUNO, boolean insertarSELECCIONE) {
-       // log.debug("METODO : ListasComunesController.buscarTipoActaAcuerdo");
         return insertarValoresDefectoParametro(cacheService.buscarTipoActaAcuerdo(), insertarTODOS, insertarNINGUNO, insertarSELECCIONE);
     }
     
     public List<Parametro> buscarTipoMedio(boolean insertarTODOS, boolean insertarNINGUNO, boolean insertarSELECCIONE) {
-        //log.debug("METODO : ListasComunesController.buscarTipoMedio");
         return insertarValoresDefectoParametro(cacheService.buscarTipoMedio(), insertarTODOS, insertarNINGUNO, insertarSELECCIONE);
     }
     
     public List<Parametro> buscarTipoParticipacionActor(boolean insertarTODOS, boolean insertarNINGUNO, boolean insertarSELECCIONE) {
-        //log.debug("METODO : ListasComunesController.buscarTipoParticipacionActor");
         return insertarValoresDefectoParametro(cacheService.buscarTipoParticipacionActor(), insertarTODOS, insertarNINGUNO, insertarSELECCIONE);
     }
     
     public List<Parametro> buscarTipoAcontecimiento(boolean insertarTODOS, boolean insertarNINGUNO, boolean insertarSELECCIONE) {
-        //log.debug("METODO : ListasComunesController.buscarTipoParticipacionActor");
         return insertarValoresDefectoParametro(cacheService.buscarTipoAcontecimiento(), insertarTODOS, insertarNINGUNO, insertarSELECCIONE);
     }
     
     public List<Parametro> buscarClasificacionActor(boolean insertarTODOS, boolean insertarNINGUNO, boolean insertarSELECCIONE) {
-        //log.debug("METODO : ListasComunesController.buscarTipoParticipacionActor");
         return insertarValoresDefectoParametro(cacheService.buscarClasificacionActor(), insertarTODOS, insertarNINGUNO, insertarSELECCIONE);
     }
     
     public List<Parametro> buscarTipoCaso(boolean insertarTODOS, boolean insertarNINGUNO, boolean insertarSELECCIONE) {
-        //log.debug("METODO : ListasComunesController.buscarTipoParticipacionActor");
         return insertarValoresDefectoParametro(cacheService.buscarTipoCaso(), insertarTODOS, insertarNINGUNO, insertarSELECCIONE);
     }
     
     public List<Parametro> buscarEstadoCaso(boolean insertarTODOS, boolean insertarNINGUNO, boolean insertarSELECCIONE) {
-        //log.debug("METODO : ListasComunesController.buscarTipoParticipacionActor");
         return insertarValoresDefectoParametro(cacheService.buscarEstadoCaso(), insertarTODOS, insertarNINGUNO, insertarSELECCIONE);
     }
     
     public List<Parametro> buscarSocioAmbientalCaso(boolean insertarTODOS, boolean insertarNINGUNO, boolean insertarSELECCIONE) {
-        //log.debug("METODO : ListasComunesController.buscarTipoParticipacionActor");
         return insertarValoresDefectoParametro(cacheService.buscarSocioAmbientalCaso(), insertarTODOS, insertarNINGUNO, insertarSELECCIONE);
     }
     
     public List<Parametro> buscarGobiernoCaso(boolean insertarTODOS, boolean insertarNINGUNO, boolean insertarSELECCIONE) {
-        //log.debug("METODO : ListasComunesController.buscarTipoParticipacionActor");
         return insertarValoresDefectoParametro(cacheService.buscarGobiernoCaso(), insertarTODOS, insertarNINGUNO, insertarSELECCIONE);
     }
     
     public List<Parametro> buscarAdjuntiaDefensorial(boolean insertarTODOS, boolean insertarNINGUNO, boolean insertarSELECCIONE) {
-        //log.debug("METODO : ListasComunesController.buscarTipoParticipacionActor");
         return insertarValoresDefectoParametro(cacheService.buscarAdjuntiaDefensorial(), insertarTODOS, insertarNINGUNO, insertarSELECCIONE);
     }
     
     public List<Parametro> buscarTipoParticipacion(boolean insertarTODOS, boolean insertarNINGUNO, boolean insertarSELECCIONE) {
-        //log.debug("METODO : ListasComunesController.buscarTipoParticipacionActor");
         return insertarValoresDefectoParametro(cacheService.buscarTipoParticipacion(), insertarTODOS, insertarNINGUNO, insertarSELECCIONE);
     }
     
     public List<Parametro> buscarTipoOrganizacion(boolean insertarTODOS, boolean insertarNINGUNO, boolean insertarSELECCIONE) {
-        //log.debug("METODO : ListasComunesController.buscarTipoParticipacionActor");
         return insertarValoresDefectoParametro(cacheService.buscarTipoOrganizacion(), insertarTODOS, insertarNINGUNO, insertarSELECCIONE);
     }
     
     public List<Parametro> buscarAmbito(boolean insertarTODOS, boolean insertarNINGUNO, boolean insertarSELECCIONE) {
-        //log.debug("METODO : ListasComunesController.buscarTipoParticipacionActor");
         return insertarValoresDefectoParametro(cacheService.buscarAmbito(), insertarTODOS, insertarNINGUNO, insertarSELECCIONE);
     }
 
     public List<Parametro> buscarTipoEntidad(boolean insertarTODOS, boolean insertarNINGUNO, boolean insertarSELECCIONE) {
-        //log.debug("METODO : ListasComunesController.buscarTipoParticipacionActor");
         return insertarValoresDefectoParametro(cacheService.buscarTipoEntidad(), insertarTODOS, insertarNINGUNO, insertarSELECCIONE);
     }
     
     public List<Parametro> buscarTipoCivilPNPFFAA(boolean insertarTODOS, boolean insertarNINGUNO, boolean insertarSELECCIONE) {
-        //log.debug("METODO : ListasComunesController.buscarTipoParticipacionActor");
         return insertarValoresDefectoParametro(cacheService.buscarTipoCivilPNPFFAA(), insertarTODOS, insertarNINGUNO, insertarSELECCIONE);
     }
     
     public List<Parametro> buscarTipoVictima(boolean insertarTODOS, boolean insertarNINGUNO, boolean insertarSELECCIONE) {
-        //log.debug("METODO : ListasComunesController.buscarTipoParticipacionActor");
         return insertarValoresDefectoParametro(cacheService.buscarTipoVictima(), insertarTODOS, insertarNINGUNO, insertarSELECCIONE);
     }
     
     public List<Parametro> buscarTipoDialogo(boolean insertarTODOS, boolean insertarNINGUNO, boolean insertarSELECCIONE) {
-        //log.debug("METODO : ListasComunesController.buscarTipoParticipacionActor");
         return insertarValoresDefectoParametro(cacheService.buscarTipoDialogo(), insertarTODOS, insertarNINGUNO, insertarSELECCIONE);
     }
     
     public List<Parametro> buscarTipoMecanismo(boolean insertarTODOS, boolean insertarNINGUNO, boolean insertarSELECCIONE) {
-        //log.debug("METODO : ListasComunesController.buscarTipoParticipacionActor");
         return insertarValoresDefectoParametro(cacheService.buscarTipoMecanismo(), insertarTODOS, insertarNINGUNO, insertarSELECCIONE);
     }
     
     public List<Parametro> buscarTipoParticipacionCaso(boolean insertarTODOS, boolean insertarNINGUNO, boolean insertarSELECCIONE) {
-        //log.debug("METODO : ListasComunesController.buscarTipoParticipacionActor");
         return insertarValoresDefectoParametro(cacheService.buscarTipoParticipacionCaso(), insertarTODOS, insertarNINGUNO, insertarSELECCIONE);
     }
     
     public List<Parametro> buscarMomentoDialogo(boolean insertarTODOS, boolean insertarNINGUNO, boolean insertarSELECCIONE) {
-        //log.debug("METODO : ListasComunesController.buscarTipoParticipacionActor");
         return insertarValoresDefectoParametro(cacheService.buscarMomentoDialogo(), insertarTODOS, insertarNINGUNO, insertarSELECCIONE);
     }
     
     public List<Parametro> buscarTipoViolencia(boolean insertarTODOS, boolean insertarNINGUNO, boolean insertarSELECCIONE) {
-        //log.debug("METODO : ListasComunesController.buscarTipoParticipacionActor");
         return insertarValoresDefectoParametro(cacheService.buscarTipoViolencia(), insertarTODOS, insertarNINGUNO, insertarSELECCIONE);
     }
     
     public List<Parametro> buscarResultadoViolencia(boolean insertarTODOS, boolean insertarNINGUNO, boolean insertarSELECCIONE) {
-        //log.debug("METODO : ListasComunesController.buscarTipoParticipacionActor");
         return insertarValoresDefectoParametro(cacheService.buscarResultadoViolencia(), insertarTODOS, insertarNINGUNO, insertarSELECCIONE);
     }
     
     public List<Parametro> buscarTipoRolActor(boolean insertarTODOS, boolean insertarNINGUNO, boolean insertarSELECCIONE) {
-        //log.debug("METODO : ListasComunesController.buscarTipoParticipacionActor");
         return insertarValoresDefectoParametro(cacheService.buscarTipoRolActor(), insertarTODOS, insertarNINGUNO, insertarSELECCIONE);
     }
     
     public List<Parametro> buscarAnhos(boolean insertarTODOS, boolean insertarNINGUNO, boolean insertarSELECCIONE) {
-        //log.debug("METODO : ListasComunesController.buscarTipoParticipacionActor");
         return insertarValoresDefectoParametro(cacheService.buscarAnhos(), insertarTODOS, insertarNINGUNO, insertarSELECCIONE);
     }
     
     public List<Parametro> buscarDepartamentos(boolean insertarTODOS, boolean insertarNINGUNO, boolean insertarSELECCIONE) {
-        //log.debug("METODO : ListasComunesController.buscarTipoParticipacionActor");
         return insertarValoresDefectoParametro(cacheService.buscarDepartamentos(), insertarTODOS, insertarNINGUNO, insertarSELECCIONE);
+    }
+    
+    public List<Parametro> buscarTipoInvestigacion(boolean insertarTODOS, boolean insertarNINGUNO, boolean insertarSELECCIONE) {
+        return insertarValoresDefectoParametro(cacheService.buscarTipoInvestigacion(), insertarTODOS, insertarNINGUNO, insertarSELECCIONE);
     }
 
     private List insertarValoresDefectoParametro(List lst, boolean insertarTODOS, boolean insertarNINGUNO, boolean insertarSELECCIONE) {

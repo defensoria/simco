@@ -830,7 +830,7 @@ public class CasoController implements Serializable {
         verTitulo = tipo == 1;
         listaActividadesSinCaso = actividadService.actividadBusquedaSinCaso(tipo);
     }
-
+    
     public void vincularActividadCaso(Actividad activida) {
         ActividadCaso ac = new ActividadCaso();
         String tipo = activida.getTipo();

@@ -61,5 +61,13 @@ public interface ActividadDao {
    public int actividadADCodigoGenerado();
    
    public Actividad actividadxCasoBuscarID(long idActividad);
-
+   
+   public List<Actividad> actividadBusquedaPorCasoAC(long idCaso);
+   
+   public void actividadUpdateAcontecimiento(Actividad actividad);
+   
+   public void actividadUpdateVincular(long idActividad);
+   
+   public void actividadUpdateDesVincular(long idActividad);
+   
 }

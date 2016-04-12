@@ -70,4 +70,6 @@ public interface CacheService {
     public List<Parametro> buscarAnhos();
     
     public List<Parametro> buscarDepartamentos();
+    
+    public List<Parametro> buscarTipoInvestigacion();
 }

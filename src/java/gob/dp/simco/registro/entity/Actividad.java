@@ -91,6 +91,10 @@ public class Actividad implements Serializable{
     private String nombreCaso;
     
     private Long idCaso;
+    
+    private Long idAcontecimiento;
+    
+    private Integer indiceVinculado;
 
     public Long getId() {
         return id;
@@ -386,6 +390,22 @@ public class Actividad implements Serializable{
 
     public void setResultadoViolencia(String resultadoViolencia) {
         this.resultadoViolencia = resultadoViolencia;
+    }
+
+    public Long getIdAcontecimiento() {
+        return idAcontecimiento;
+    }
+
+    public void setIdAcontecimiento(Long idAcontecimiento) {
+        this.idAcontecimiento = idAcontecimiento;
+    }
+
+    public Integer getIndiceVinculado() {
+        return indiceVinculado;
+    }
+
+    public void setIndiceVinculado(Integer indiceVinculado) {
+        this.indiceVinculado = indiceVinculado;
     }
     
    

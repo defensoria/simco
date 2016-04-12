@@ -1,4 +1,11 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:jsf="http://xmlns.jcp.org/jsf" xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:gc="http://xmlns.jcp.org/jsf/composite/gc">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:h="http://xmlns.jcp.org/jsf/html" 
+      xmlns:f="http://xmlns.jcp.org/jsf/core" 
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets" 
+      xmlns:jsf="http://xmlns.jcp.org/jsf" 
+      xmlns:c="http://java.sun.com/jsp/jstl/core" 
+      xmlns:gc="http://xmlns.jcp.org/jsf/composite/gc">
+    
     <ui:composition template="../template/template.xhtml">
         <ui:define name="content">
             <h:form id="idForm3" class="form-horizontal" enctype="multipart/form-data">
@@ -6,8 +13,18 @@
                 <input type="hidden" jsf:value="#{registroController.actividadTemp.coordenadaY}" id="idCoordenadaY"/>
                 <input type="hidden" jsf:value="#{registroController.actividadTemp.zoom}" id="idZoom"/>
                 <gc:confirmSubmit bean="#{registroController.registrarActividad()}"/>
-                <style>#project-label{display:block;font-weight:bold;margin-bottom:1em}#project-icon{float:left;height:32px;width:32px}#project-description{margin:0;padding:0}</style>
-                <script>/*<![CDATA[*/$(function () {#{registroController.cadenaAutocomplete}
+                <style>
+                    #project-label{display:block;
+                                   font-weight:bold;
+                                   margin-bottom:1em}
+                    #project-icon{float:left;
+                                  height:32px;
+                                  width:32px}
+                    #project-description{margin:0;
+                                         padding:0}
+                </style>
+                <script>
+                    /*<![CDATA[*/$(function () {#{registroController.cadenaAutocomplete}
                         $("#nombreCaso").autocomplete({minLength: 3, source: projects, focus: function (event, ui) {
                                 $("#nombreCaso").val(ui.item.label);
                                 return false;
@@ -18,7 +35,8 @@
                             }}).data("ui-autocomplete")._renderItem = function (ul, item) {
                             return $("<li/>").append("<a>" + item.label + "<br/>" + item.desc + "</a>").appendTo(ul);
                         };
-                    });/*]]>*/</script>
+                    });/*]]>*/                        
+                </script>
                 <h:commandButton action="#{utilBean.correo()}" value="enviar" rendered="false"/>
                 <h:inputHidden id="hidCodActividad" value="#{registroController.actividadTemp.id}" />
                 <input type="hidden" id="idTipoRegistro" jsf:value="#{registroController.actividadTemp.tipo}" />
@@ -161,11 +179,9 @@
                                             </td>
                                             <td>
                                                 <h:selectOneMenu class="selectRadio" id="cmbTipoActividad" value="#{registroController.actividadTemp.tipoActividad}" rendered="#{registroController.actividadTemp.tipo == 'AD'}">
-                                                    <f:selectItem itemValue="0" itemLabel="Seleccione" />
                                                     <f:selectItems value="#{listasComunesController.buscarTipoActividad(false,false,false)}" var="y" itemLabel="#{y.nombreParametro}" itemValue="#{y.valorParametro}" />
                                                 </h:selectOneMenu>
                                                 <h:selectOneMenu class="selectRadio" id="cmbTipoAcontecimiento" value="#{registroController.actividadTemp.tipoAcontecimiento}" rendered="#{registroController.actividadTemp.tipo == 'AC'}">
-                                                    <f:selectItem itemValue="0" itemLabel="Seleccione" />
                                                     <f:selectItems value="#{listasComunesController.buscarTipoAcontecimiento(false,false,false)}" var="y" itemLabel="#{y.nombreParametro}" itemValue="#{y.valorParametro}" />
                                                 </h:selectOneMenu>
                                             </td>

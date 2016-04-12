@@ -1,4 +1,9 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:jsf="http://xmlns.jcp.org/jsf">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:h="http://xmlns.jcp.org/jsf/html" 
+      xmlns:f="http://xmlns.jcp.org/jsf/core" 
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets" 
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:gc="http://xmlns.jcp.org/jsf/composite/gc">
     <ui:composition template="../template/template.xhtml">
         <ui:define name="content">
             <h:form enctype="multipart/form-data" class="form-horizontal">
@@ -6,7 +11,8 @@
                 <input type="hidden" id="idNombreCompleto" jsf:value="#{investigacionController.historialActividad.nombre}" />
                 <input type="hidden" id="idNumeroParticipantes" value="#{investigacionController.listaParticipantes.size()}" />
                 <style>#project-label{display:block;font-weight:bold;margin-bottom:1em}#project-icon{float:left;height:32px;width:32px}#project-description{margin:0;padding:0}</style>
-                <script>/*<![CDATA[*/sessionStorage.setItem('menuHijoSession', 'Crear');
+                <script>
+                    /*<![CDATA[*/sessionStorage.setItem('menuHijoSession', 'Crear');
                     var usu = JSON.parse(sessionStorage.getItem('userSesion'));
                     $("#idUsuarioSession").val(usu.codigo);
                     $("#idNombreCompleto").val(usu.nombre + " " + usu.apellidoPat + " " + usu.apellidoMat);
@@ -86,7 +92,8 @@
                             $('#idCampoDetalle').addClass('error');
                             return false;
                         }
-                    }/*]]>*/</script>
+                    }/*]]>*/
+                </script>
                 <div class="modal fade confirmacion" data-keyboard="false" data-backdrop="static">
                     <div class="modal-dialog modal-sm">
                         <div class="modal-content" style="background:#D9EDF7">
@@ -197,7 +204,7 @@
                         </td>
                         <td style="float:right">
                             <a class="btn btn-primary" id="idBotonGuardar">
-                                <span class="glyphicon glyphicon-floppy-disk">Guardar</span>
+                                <span class="glyphicon glyphicon-floppy-disk"/>Guardar
                             </a>
                         </td>
                     </tr>
@@ -206,12 +213,81 @@
                     <tr>
                         <td style="width:50%;padding-right:5px">
                             <div class="panel panel-featured-top-primary" style="min-height:330px">
+                                <span class="text-resalt-primary">Datos generales</span>
                                 <div class="panel-body">
-                                    <span class="text-resalt-primary">Datos generales</span>
-                                    <br/><br/>
-                                    <input type="text" id="idTitulo" jsf:value="#{investigacionController.investigacion.titulo}" placeholder="Titulo"/>
-                                    <br/>
-                                    <textarea id="idDescripcion" rows="7" jsf:value="#{investigacionController.investigacion.descripcion}" style="width:100%" placeholder="Descripción"/>
+                                    <table style="width: 100%">
+                                        <tr>
+                                            <td style="width: 50%; padding-right: 10px; padding-bottom: 5px">
+                                                <table style="width: 100%">
+                                                    <tr>
+                                                        <td style="width: 30%">
+                                                            <span class="text-primary" style="font-weight: bold">Título:</span>
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" id="idTitulo" jsf:value="#{investigacionController.investigacion.titulo}" placeholder="Titulo"/>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                            <td style="padding-left: 10px;padding-bottom: 5px">
+                                                <table style="width: 100%">
+                                                    <tr>
+                                                        <td style="width: 30%">
+                                                            <span class="text-primary" style="font-weight: bold">Tipo:</span>
+                                                        </td>
+                                                        <td>
+                                                            <h:selectOneMenu value="#{investigacionController.investigacion.tipo}">
+                                                                <f:selectItems value="#{listasComunesController.buscarTipoInvestigacion(false,false,false)}" var="y" itemLabel="#{y.nombreParametro}" itemValue="#{y.valorParametro}" />
+                                                            </h:selectOneMenu>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                        
+                                        <tr>
+                                            <td style="width: 50%; padding-right: 10px;padding-bottom: 5px">
+                                                <table style="width: 100%">
+                                                    <tr>
+                                                        <td style="width: 30%">
+                                                            <span class="text-primary" style="font-weight: bold">Responsable:</span>
+                                                        </td>
+                                                        <td>
+                                                            <input type="text"  jsf:value="#{investigacionController.investigacion.responsable}" placeholder="Resposable"/>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                            <td style="padding-left: 10px">
+                                                <table style="width: 100%">
+                                                    <tr>
+                                                        <td style="width: 30%">
+                                                            <span class="text-primary" style="font-weight: bold">Fecha:</span>
+                                                        </td>
+                                                        <td>
+                                                            <gc:calendar value="#{investigacionController.investigacion.fecha}"/>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </table> 
+                                    <table style="width: 100%;">
+                                        <tr>
+                                            <td style="width: 100%;">
+                                                <table style="width: 100%">
+                                                    <tr>
+                                                        <td style="width: 14%;">
+                                                            <span class="text-primary" style="font-weight: bold">Descripción:</span>
+                                                        </td>
+                                                        <td style="padding-left: 4px">
+                                                            <textarea id="idDescripcion" rows="7" jsf:value="#{investigacionController.investigacion.descripcion}" style="width:100%" placeholder="Descripción"/>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </table>
                                 </div>
                             </div>
                         </td>
@@ -220,10 +296,10 @@
                                 <div class="panel-body">
                                     <table style="width:100%">
                                         <tr>
-                                            <td style="width:25%;vertical-align:top">
+                                            <td style="width:25%;vertical-align:top; padding-bottom: 5px">
                                                 <span class="text-resalt-red">Participantes</span>
                                             </td>
-                                            <td style="width:75%;text-align:right">
+                                            <td style="width:75%;text-align:right; padding-bottom: 5px">
                                                 <div class="form-group has-feedback" style="width:100%;margin:auto">
                                                     <input type="text" jsf:value="#{investigacionController.usuario.nombre}" id="usuario" />
                                                     <input type="hidden" jsf:value="#{investigacionController.usuario.codigo}" id="usuario-id" />

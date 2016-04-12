@@ -83,9 +83,9 @@ public class RegistroController implements Serializable {
     private ActividadCaso actividadCaso;
 
     private Caso caso;
-    
+
     private Noticia noticia;
-    
+
     private List<Actor> listaActoresxActividad;
 
     private List<Actor> listaActoresxActividadTotal;
@@ -109,9 +109,9 @@ public class RegistroController implements Serializable {
     private List<Actividad> listaActividadxActividadTotal;
 
     private List<ActividadHistorial> listaActividadHistorial;
-    
+
     private List<Noticia> listaNoticias;
-    
+
     private List<NoticiaRegistro> listaNoticiasRegistros;
 
     private boolean verVinculosMantenimientoActividad = false;
@@ -125,37 +125,39 @@ public class RegistroController implements Serializable {
     private boolean verBoton = false;
 
     private boolean verDetalleRegistro = false;
-    
+
     private Boolean tipoBoton;
 
     private String nombreCaso = null;
 
     private String cadenaAutocomplete;
-    
+
     private int nroActaAcuerdoDetalle = 0;
-    
+
     private Usuario usuarioSession;
-    
+
     private ActaAcuerdo actaAcuerdo;
-    
+
     private Long nroPagina = 1L;
 
     private String detalleNoticia;
-    
+
     private boolean verEnlaceNoticia;
-    
+
     Integer tip = 1;
-    
+
     private String cordenadax;
-    
+
     private String cordenaday;
-    
+
     private Integer zoom;
-    
+
     private Part file1;
-    
+
     private MessagesUtil msg;
     
+    private List<Actividad> listaActividadesPorCaso;
+
     @Autowired
     private ActividadService actividadService;
 
@@ -191,18 +193,18 @@ public class RegistroController implements Serializable {
 
     @Autowired
     private UbigeoService ubigeoService;
-    
+
     @Autowired
     private ActaAcuerdoDetalleService actaAcuerdoDetalleService;
-    
+
     @Autowired
     private NoticiaService noticiaService;
-    
+
     @Autowired
     private NoticiaRegistroService noticiaRegistroService;
 
     public String cargarPagina() {
-        msg= new MessagesUtil();
+        msg = new MessagesUtil();
         usuarioSession();
         actividadTemp = new ActividadTemp();
         cambiarPaginaEstado(null);
@@ -218,38 +220,53 @@ public class RegistroController implements Serializable {
         listaNoticiasRegistros = new ArrayList<>();
         return "registroNuevo";
     }
-    
-    public String cargarNoticias(int tipo){
+
+    public String cargarNoticias(int tipo) {
         setTip(tipo);
         noticia = new Noticia();
         listaNoticias = null;
-        if(tipo == 1)
+        if (tipo == 1) {
             listaNoticiasRegistro();
-        
+        }
+
         verEnlaceNoticia = true;
         return "noticiaVinculo";
     }
-    
-    public String cargarNoticiasCaso(){
+
+    public String cargarNoticiasCaso() {
         noticia = new Noticia();
         verEnlaceNoticia = false;
         listaNoticias = null;
         return "noticiaVinculo";
     }
 
-    private void usuarioSession(){
+    private void usuarioSession() {
         FacesContext context = FacesContext.getCurrentInstance();
         LoginController loginController = (LoginController) context.getELContext().getELResolver().getValue(context.getELContext(), null, "loginController");
         usuarioSession = loginController.getUsuarioSesion();
     }
-    
-    private void limpiarMedios(){
+
+    private void limpiarMedios() {
         FacesContext context = FacesContext.getCurrentInstance();
         MedioVerificacionController medioVerificacionController = (MedioVerificacionController) context.getELContext().getELResolver().getValue(context.getELContext(), null, "medioVerificacionController");
         medioVerificacionController.limpiarListaMedios();
     }
     
-    public String irModificarRegistro(Actividad acti){
+    public void cargarActontecimientoPorCaso(){
+        if(caso.getId() != null)
+            listaActividadesPorCaso = actividadService.actividadBusquedaPorCasoAC(caso.getId());
+    }
+    
+    public void vincularAcontecimientoActuacion(Actividad acontecimiento){
+        Actividad a = new Actividad();
+        a.setId(actividadTemp.getId());
+        a.setIdAcontecimiento(acontecimiento.getId());
+        actividadService.actividadUpdateAcontecimiento(a);
+        actividadService.actividadUpdateVincular(acontecimiento.getId());
+        msg.messageInfo("Se vinculo el acontecimiento", null);
+    }
+
+    public String irModificarRegistro(Actividad acti) {
         try {
             FacesContext context = FacesContext.getCurrentInstance();
             ActorController actorController = (ActorController) context.getELContext().getELResolver().getValue(context.getELContext(), null, "actorController");
@@ -264,28 +281,30 @@ public class RegistroController implements Serializable {
             caso = new Caso();
             caso.setNombre(acti.getNombreCaso());
             caso.setId(acti.getIdCaso());
-            if(acti.getIdDepartamento() != 0)
+            if (acti.getIdDepartamento() != 0) {
                 comboProvincia();
-            if(acti.getIdProvincia() != 0)
+            }
+            if (acti.getIdProvincia() != 0) {
                 comboDistrito();
+            }
             actorController.listarActoresXcaso(acti.getId());
             nroActaAcuerdoDetalle = 0;
             nroActaAcuerdoDetalle = actaAcuerdoDetalleService.actaAcuerdoDetalleCount(acti.getId());
             actaAcuerdo = new ActaAcuerdo();
             actaAcuerdo = actaAcuerdoService.actaAcuerdoxActividadBuscarOne(acti.getId());
-           
+
             listaNoticiasRegistro();
             limpiarActaAcuerdo();
             limpiarVictimas2();
-            msg= new MessagesUtil();
+            msg = new MessagesUtil();
             return "registroEdit";
         } catch (Exception ex) {
             log.error(ex.getCause());
             return null;
         }
     }
-    
-    public String irModificarRegistro2(Actividad acti){
+
+    public String irModificarRegistro2(Actividad acti) {
         try {
             FacesContext context = FacesContext.getCurrentInstance();
             ActorController actorController = (ActorController) context.getELContext().getELResolver().getValue(context.getELContext(), null, "actorController");
@@ -300,10 +319,12 @@ public class RegistroController implements Serializable {
             caso = new Caso();
             caso.setNombre(acti.getNombreCaso());
             caso.setId(acti.getIdCaso());
-            if(acti.getIdDepartamento() != 0)
+            if (acti.getIdDepartamento() != 0) {
                 comboProvincia();
-            if(acti.getIdProvincia() != 0)
+            }
+            if (acti.getIdProvincia() != 0) {
                 comboDistrito();
+            }
             actorController.listarActoresXcaso(acti.getId());
             nroActaAcuerdoDetalle = 0;
             nroActaAcuerdoDetalle = actaAcuerdoDetalleService.actaAcuerdoDetalleCount(acti.getId());
@@ -312,25 +333,26 @@ public class RegistroController implements Serializable {
             actaAcuerdo = actaAcuerdoService.actaAcuerdoxActividadBuscarOne(acti.getId());
             listaNoticiasRegistro();
             limpiarVictimas2();
-            msg= new MessagesUtil();
+            msg = new MessagesUtil();
             return "registroNuevo";
         } catch (Exception ex) {
             log.error(ex.getCause());
             return null;
         }
     }
-    
-    public void verDetalleNoticia(String detalle){
+
+    public void verDetalleNoticia(String detalle) {
         detalleNoticia = detalle;
     }
-    
-    public Actividad cargarActividadId(long idActividad){
+
+    public Actividad cargarActividadId(long idActividad) {
         Actividad a = actividadService.actividadxCasoBuscarID(idActividad);
-        if(a != null)
-           return a;
+        if (a != null) {
+            return a;
+        }
         return null;
     }
- 
+
     public void cargarAcontecimientoModal(Caso c, int tipo) {
         tipoBoton = null;
         setCaso(c);
@@ -345,8 +367,8 @@ public class RegistroController implements Serializable {
         verDetalleRegistro = false;
         cambiarPaginaEstado(null);
     }
-    
-    public boolean vinculaNoticia(Noticia noticia){
+
+    public boolean vinculaNoticia(Noticia noticia) {
         NoticiaRegistro noticiaRegistro = new NoticiaRegistro();
         noticiaRegistro.setDescripcion(noticia.getDescripcion());
         noticiaRegistro.setEmpresa(noticia.getEmpresa());
@@ -357,8 +379,8 @@ public class RegistroController implements Serializable {
         noticiaRegistro.setTitulo(noticia.getTitulo());
         noticiaRegistro.setIdActividad(actividadTemp.getId());
         noticiaRegistro.setEstado("ACT");
-        for(NoticiaRegistro noticia1 : listaNoticiasRegistros){
-            if(StringUtils.equals(noticia.getTitulo(), noticia1.getTitulo())){
+        for (NoticiaRegistro noticia1 : listaNoticiasRegistros) {
+            if (StringUtils.equals(noticia.getTitulo(), noticia1.getTitulo())) {
                 msg.messageAlert("Esta noticia ya fue vinculada", null);
                 return false;
             }
@@ -368,35 +390,36 @@ public class RegistroController implements Serializable {
         return true;
     }
 
-    public void listaNoticiasRegistro(){
+    public void listaNoticiasRegistro() {
         List<NoticiaRegistro> list = noticiaRegistroService.noticiaRegistroBuscar(actividadTemp.getId());
         listaNoticiasRegistros = new ArrayList<>();
         listaNoticiasRegistros.addAll(list);
     }
-    
-    public void eliminarNoticiaRegistro(NoticiaRegistro noticiaRegistro){
+
+    public void eliminarNoticiaRegistro(NoticiaRegistro noticiaRegistro) {
         noticiaRegistro.setEstado("INA");
         msg.messageAlert("Se ha marcado para eliminar esta noticia", null);
     }
-    
-    public String guardarVinculos(){
-        if(listaNoticiasRegistros.isEmpty()){
+
+    public String guardarVinculos() {
+        if (listaNoticiasRegistros.isEmpty()) {
             msg.messageAlert("Debe de enlazar por lo menos una noticia para poder guardar", null);
             return null;
         }
-        for(NoticiaRegistro noticiaRegistro : listaNoticiasRegistros){
-            if(noticiaRegistro.getId() == null){
+        for (NoticiaRegistro noticiaRegistro : listaNoticiasRegistros) {
+            if (noticiaRegistro.getId() == null) {
                 noticiaRegistroService.noticiaRegistroInsertar(noticiaRegistro);
-            }else{
+            } else {
                 noticiaRegistroService.noticiaRegistroUpdate(noticiaRegistro);
             }
         }
         listaNoticiasRegistro();
         msg.messageInfo("Se han registrado los cambios", null);
-        if(tip == 1)
+        if (tip == 1) {
             return "registroNuevo";
-        else
+        } else {
             return "registroEdit";
+        }
     }
 
     private void generarCadenaCasos() {
@@ -406,16 +429,16 @@ public class RegistroController implements Serializable {
             log.error(ex.getMessage());
         }
     }
-    
-    public String generarCodigoAD(){
+
+    public String generarCodigoAD() {
         SimpleDateFormat formato = new SimpleDateFormat("yyyyMM");
         String codigo = formato.format(new Date());
-        String numero = String.format("%2s",actividadService.actividadADCodigoGenerado().toString()).replace(' ','0');
-        return "AC"+codigo+numero;
+        String numero = String.format("%2s", actividadService.actividadADCodigoGenerado().toString()).replace(' ', '0');
+        return "AC" + codigo + numero;
     }
-    
-    public void buscarNoticia(Long pagina){
-        if(pagina > 0){
+
+    public void buscarNoticia(Long pagina) {
+        if (pagina > 0) {
             int paginado = ConstantesUtil.PAGINADO_10;
             Long ini = paginado * (pagina - 1) + 1;
             Long fin = paginado * pagina;
@@ -427,26 +450,26 @@ public class RegistroController implements Serializable {
             noticia.setFin(fin);
             try {
                 List<Noticia> list = noticiaService.listaNoticias(noticia);
-                if(list.size() > 0){
+                if (list.size() > 0) {
                     listaNoticias = list;
                     nroPagina = pagina;
-                }else{
+                } else {
                     listaNoticias = null;
                     msg.messageAlert("La busqueda no ha obtenido resultados", null);
                 }
-                
+
             } catch (Exception e) {
                 log.error(e);
-                
+
             }
         }
     }
-    
-    public void limpiarNoticias(){
+
+    public void limpiarNoticias() {
         noticia = new Noticia();
         listaNoticias = null;
     }
-    
+
     public void buscarCaso() {
         try {
             casos = casoService.casoBuscar(caso);
@@ -466,19 +489,18 @@ public class RegistroController implements Serializable {
         ActaAcuerdoController actaAcuerdoController = (ActaAcuerdoController) context.getELContext().getELResolver().getValue(context.getELContext(), null, "actaAcuerdoController");
         actaAcuerdoController.limpiarActaAcuerdo();
     }
-    
+
     private void limpiarVictimas() {
         FacesContext context = FacesContext.getCurrentInstance();
         VictimaViolenciaController victimaViolenciaController = (VictimaViolenciaController) context.getELContext().getELResolver().getValue(context.getELContext(), null, "victimaViolenciaController");
         victimaViolenciaController.limpiarVictimas();
     }
-    
+
     private void limpiarVictimas2() {
         FacesContext context = FacesContext.getCurrentInstance();
         VictimaViolenciaController victimaViolenciaController = (VictimaViolenciaController) context.getELContext().getELResolver().getValue(context.getELContext(), null, "victimaViolenciaController");
         victimaViolenciaController.limpiarVictimasEdit(actividadTemp.getId());
     }
-    
 
     public String cargarPaginaRetornoActividad(int tipo) {
         actividadTemp = new ActividadTemp();
@@ -499,13 +521,14 @@ public class RegistroController implements Serializable {
         log.debug("METODO : ActividadController.regresarPaginaBusqueda");
         return "actividadBusqueda";
     }
-    
-    public String regresarDeNoticias(){
+
+    public String regresarDeNoticias() {
         listaNoticiasRegistro();
-        if(tip == 1)
+        if (tip == 1) {
             return "registroNuevo";
-        else
+        } else {
             return "registroEdit";
+        }
     }
 
     public String cargarPaginaCrearActor() {
@@ -523,15 +546,16 @@ public class RegistroController implements Serializable {
         Actividad actividad;
         actividad = actividadTempHaciaActividad(actividadTemp);
         String ruta = uploadArchiveImage();
-        if(StringUtils.isNoneBlank(ruta))
+        if (StringUtils.isNoneBlank(ruta)) {
             actividad.setRuta(ruta);
+        }
         try {
             String accionHistorial;
             if (actividadTemp.isIsIndicadorActividadExiste()) {
                 actividad.setFechaModificacion(new Date());
                 actividad.setUsuarioModificacion(usuarioSession.getCodigo());
                 actividadService.actividadModificar(actividad);
-                if(caso.getId() != null){
+                if (caso.getId() != null) {
                     insertaUpdateActividadCaso(setearActividadCaso(actividad, caso));
                 }
                 actividadTemp = actividadHaciaActividadTemp(actividad);
@@ -543,8 +567,8 @@ public class RegistroController implements Serializable {
                 actividadService.actividadNuevo(actividad);
                 actividadTemp = actividadHaciaActividadTemp(actividad);
                 accionHistorial = HistorialType.HISTORIAL_CREACION.getKey();
-                if(caso != null){
-                    if(caso.getId() != null){
+                if (caso != null) {
+                    if (caso.getId() != null) {
                         insertaUpdateActividadCaso(setearActividadCaso(actividad, caso));
                     }
                 }
@@ -556,43 +580,46 @@ public class RegistroController implements Serializable {
             log.error(e);
         }
     }
-    
-    private void insertaUpdateActividadCaso(ActividadCaso ac){
+
+    private void insertaUpdateActividadCaso(ActividadCaso ac) {
         int count = actividadCasoService.actividadCasoValida(ac.getActividad().getId());
-        if(count == 0){
+        if (count == 0) {
             actividadCasoService.actividadCasoInsertar(ac);
-        }else{
+        } else {
             actividadCasoService.actividadCasoUpdate(ac);
         }
     }
-    
-    private String uploadArchiveImage(){
+
+    private String uploadArchiveImage() {
         String nameArchive = getFilename(file1);
         String extencion = "";
-        if(StringUtils.isNoneBlank(nameArchive)){
+        if (StringUtils.isNoneBlank(nameArchive)) {
             switch (file1.getContentType()) {
-            case "image/png":  extencion = ".png";
-                     break;
-            case "image/jpeg":  extencion = ".jpg";
-                     break;
-            case "image/gif":  extencion = ".gif";
-                     break;                     
+                case "image/png":
+                    extencion = ".png";
+                    break;
+                case "image/jpeg":
+                    extencion = ".jpg";
+                    break;
+                case "image/gif":
+                    extencion = ".gif";
+                    break;
             }
-            
+
             DateFormat fechaHora = new SimpleDateFormat("yyyyMMddHHmmss");
             String formato = fechaHora.format(new Date());
             String ruta = formato + extencion;
-            File file = new File(ConstantesUtil.FILE_SYSTEM+ruta);
+            File file = new File(ConstantesUtil.FILE_SYSTEM + ruta);
             try (InputStream input = file1.getInputStream()) {
                 Files.copy(input, file.toPath());
             } catch (IOException ex) {
                 log.error(ex.getCause());
             }
             return ruta;
-            }
+        }
         return null;
     }
-    
+
     private static String getFilename(Part part) {
         for (String cd : part.getHeader("content-disposition").split(";")) {
             if (cd.trim().startsWith("filename")) {
@@ -602,14 +629,14 @@ public class RegistroController implements Serializable {
         }
         return null;
     }
-    
+
     public void registrarActividadModal(int tipo) {
         Actividad actividad;
         actividad = actividadTempHaciaActividad(actividadTemp);
-        if(tipo == 1){
+        if (tipo == 1) {
             actividad.setTipo("AC");
         }
-        if(tipo == 2){
+        if (tipo == 2) {
             actividad.setTipo("AD");
         }
         FacesContext context = FacesContext.getCurrentInstance();
@@ -619,10 +646,10 @@ public class RegistroController implements Serializable {
                 actividad.setFechaModificacion(new Date());
                 actividad.setUsuarioModificacion(usuarioSession.getCodigo());
                 actividadService.actividadModificar(actividad);
-                if(caso.getId() != null){
+                if (caso.getId() != null) {
                     actividadCasoService.actividadCasoUpdate(setearActividadCaso(actividad, caso));
                 }
-                
+
                 ActorController actorController = (ActorController) context.getELContext().getELResolver().getValue(context.getELContext(), null, "actorController");
                 actorController.actividadUnionActorModal(actividad.getId());
                 //addInfo(getMessage("registro.actividad.actualizo.ok"));
@@ -635,11 +662,11 @@ public class RegistroController implements Serializable {
                 actividadTemp = actividadHaciaActividadTemp(actividad);
                 //addInfo(getMessage("registro.actividad.guardar.ok"));
                 accionHistorial = HistorialType.HISTORIAL_CREACION.getKey();
-                if(caso != null){
-                    if(caso.getId() != null){
+                if (caso != null) {
+                    if (caso.getId() != null) {
                         actividadCasoService.actividadCasoInsertar(setearActividadCaso(actividad, caso));
                     }
-                    
+
                 }
                 verDetalleRegistro = true;
             }
@@ -650,7 +677,6 @@ public class RegistroController implements Serializable {
             log.error(e.getCause());
         }
     }
-    
 
     private ActividadCaso setearActividadCaso(Actividad a, Caso c) {
         actividadCaso = new ActividadCaso();
@@ -659,17 +685,9 @@ public class RegistroController implements Serializable {
         actividadCaso.setEstado("ACT");
         return actividadCaso;
     }
-
-    public void registrarActividadxActaAcuerdo() {
-        log.debug("METODO : ActividadController.registrarActividadxActaAcuerdo");
-    //    registrarActividad();
-        //  vincularActividadxActaAcuerdo();
-        verVinculosMantenimientoActividad = false;
-    }
-
+    
     private ActividadTemp actividadHaciaActividadTemp(Actividad actividad) {
         ActividadTemp out = new ActividadTemp();
-
         out.setId(actividad.getId());
         out.setNombre(actividad.getNombre());
         out.setDescripcion(actividad.getDescripcion());
@@ -697,11 +715,11 @@ public class RegistroController implements Serializable {
         } else {
             out.setIndCurso(false);
         }
-
-        out.setTipoActividad(actividad.getTipoActividad()== null? null :actividad.getTipoActividad().getValorParametro());
-        out.setTipoActividadNombre(actividad.getTipoActividad()== null? null :actividad.getTipoActividad().getNombreParametro());
+        out.setTipoActividad(actividad.getTipoActividad() == null ? null : actividad.getTipoActividad().getValorParametro());
+        out.setTipoActividadNombre(actividad.getTipoActividad() == null ? null : actividad.getTipoActividad().getNombreParametro());
         out.setJustificacionIntervencion(actividad.getJustificacionIntervencion());
-
+        out.setIdAcontecimiento(actividad.getIdAcontecimiento());
+        out.setIndiceVinculado(actividad.getIndiceVinculado());
         return out;
     }
 
@@ -742,6 +760,8 @@ public class RegistroController implements Serializable {
         p1.setNombreParametro(actividadTemp.getTipoParticipacionDefensoriaNombre());
         out.setTipoActividad(p);
         out.setJustificacionIntervencion(actividadTemp.getJustificacionIntervencion());
+        out.setIdAcontecimiento(actividadTemp.getIdAcontecimiento());
+        out.setIndiceVinculado(actividadTemp.getIndiceVinculado());
         return out;
     }
 
@@ -823,15 +843,13 @@ public class RegistroController implements Serializable {
     public String actividadUnionActa(Long idActaAcuerdo) {
         log.debug("METODO : ActividadController.actividadUnionActa");
         ActividadActaAcuerdo actividadActaAcuerdo = new ActividadActaAcuerdo();
-        ActaAcuerdo actaAcuerdo = new ActaAcuerdo();
+        ActaAcuerdo actaAc = new ActaAcuerdo();
         Actividad actividad = new Actividad();
-
         actividad.setId(actividadTemp.getId());
-        actaAcuerdo.setId(idActaAcuerdo);
+        actaAc.setId(idActaAcuerdo);
         actividadActaAcuerdo.setActividad(actividad);
-        actividadActaAcuerdo.setActaAcuerdo(actaAcuerdo);
+        actividadActaAcuerdo.setActaAcuerdo(actaAc);
         actividadActaAcuerdo.setEstado("TMP");
-
         try {
             listaActaAcuerdoxActividadTotal = listarActaAcuerdoActividadTotal();
         } catch (Exception e) {
@@ -866,13 +884,11 @@ public class RegistroController implements Serializable {
         ActividadMedioVerificacion actividadMedioVerificacion = new ActividadMedioVerificacion();
         MedioVerificacion medioVerificacion = new MedioVerificacion();
         Actividad actividad = new Actividad();
-
         actividad.setId(actividadTemp.getId());
         medioVerificacion.setId(idMedioVerificacion);
         actividadMedioVerificacion.setActividad(actividad);
         actividadMedioVerificacion.setMedioVerificacion(medioVerificacion);
         actividadMedioVerificacion.setEstado("TMP");
-
         try {
             actividadMedioVerificacionService.actividadMedioVerificacionInsertar(actividadMedioVerificacion);
             listaMedioVerificacionxActividadTotal = listarMedioVerificacionActividadTotal();
@@ -911,10 +927,10 @@ public class RegistroController implements Serializable {
         }
         return "actividadDetalle";
     }
-    
+
     public void comboProvincia() {
         listaProvincia = new ArrayList<>();
-        listaDistrito= new ArrayList<>();
+        listaDistrito = new ArrayList<>();
         int id = actividadTemp.getIdDepartamento();
         if (id == 0) {
             listaProvincia.clear();
@@ -931,7 +947,7 @@ public class RegistroController implements Serializable {
             zoom = dep.getZoom();
         }
     }
-    
+
     public void comboDistrito() {
         listaDistrito = new ArrayList<>();
         int id = actividadTemp.getIdProvincia();
@@ -947,19 +963,19 @@ public class RegistroController implements Serializable {
             Provincia prov = ubigeoService.provinciaOne(actividadTemp.getIdProvincia());
             cordenadax = prov.getCoordenadax();
             cordenaday = prov.getCoordenaday();
-            zoom = prov.getZoom();        
+            zoom = prov.getZoom();
         }
     }
-    
-    public void coordenadasDistrito(){
+
+    public void coordenadasDistrito() {
         Integer idDistrito = actividadTemp.getIdDistrito();
-        if(idDistrito != null){
+        if (idDistrito != null) {
             Distrito dist = ubigeoService.distritoOne(idDistrito);
             cordenadax = dist.getCoordenadax();
             cordenaday = dist.getCoordenaday();
             zoom = dist.getZoom();
         }
-        
+
     }
 
     private List<Caso> listarCasoActividadTotal() {
@@ -992,11 +1008,11 @@ public class RegistroController implements Serializable {
     public void eliminarActaAcuerdoActividad(Long idActaAcuerdo) {
         log.debug("METODO : ActividadController.eliminarActaAcuerdoActividad");
         Actividad actividad = new Actividad();
-        ActaAcuerdo actaAcuerdo = new ActaAcuerdo();
+        ActaAcuerdo actaAc = new ActaAcuerdo();
 
         actividad.setId(actividadTemp.getId());
-        actaAcuerdo.setId(idActaAcuerdo);
-        ActividadActaAcuerdo actividadActaAcuerdo = new ActividadActaAcuerdo(actividad, actaAcuerdo, null);
+        actaAc.setId(idActaAcuerdo);
+        ActividadActaAcuerdo actividadActaAcuerdo = new ActividadActaAcuerdo(actividad, actaAc, null);
         try {
             actividadActaAcuerdoService.actividadActaAcuerdoDelete(actividadActaAcuerdo);
             listaActaAcuerdoxActividadTotal = listarActaAcuerdoActividadTotal();
@@ -1041,13 +1057,12 @@ public class RegistroController implements Serializable {
     public void eliminarCasoActividad(Long idCaso) {
         log.debug("METODO : ActividadController.eliminarCasoActividad");
         Actividad actividad = new Actividad();
-        Caso caso = new Caso();
-
+        Caso c = new Caso();
         actividad.setId(actividadTemp.getId());
-        caso.setId(idCaso);
-        ActividadCaso actividadCaso = new ActividadCaso(actividad, caso, null);
+        c.setId(idCaso);
+        ActividadCaso actaAc = new ActividadCaso(actividad, c, null);
         try {
-            actividadCasoService.actividadCasoDelete(actividadCaso);
+            actividadCasoService.actividadCasoDelete(actaAc);
             listaCasoxActividadTotal = listarCasoActividadTotal();
         } catch (Exception e) {
             log.error("METODO : ActividadController.eliminarCasoActividad" + e.getMessage());
@@ -1056,7 +1071,6 @@ public class RegistroController implements Serializable {
 
     public String fichaActividad(Long idActividad) {
         log.debug("METODO : ActividadController.fichaActividad");
-//        setearFormActividad(idActividad);
         return "actividadFicha";
     }
 
@@ -1084,7 +1098,7 @@ public class RegistroController implements Serializable {
         }
         return list;
     }
- 
+
     public ActividadTemp getActividadTemp() {
         return actividadTemp;
     }
@@ -1423,6 +1437,13 @@ public class RegistroController implements Serializable {
         this.msg = msg;
     }
 
-   
+    public List<Actividad> getListaActividadesPorCaso() {
+        return listaActividadesPorCaso;
+    }
 
+    public void setListaActividadesPorCaso(List<Actividad> listaActividadesPorCaso) {
+        this.listaActividadesPorCaso = listaActividadesPorCaso;
+    }
+    
+    
 }

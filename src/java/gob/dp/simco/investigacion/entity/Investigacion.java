@@ -29,6 +29,13 @@ public class Investigacion implements Serializable{
     private Date fechaModificacion;
     
     private Integer version;
+    
+    private String tipo;
+    
+    private Date fecha;
+    
+    private String responsable;
+    
 
     public Long getId() {
         return id;
@@ -92,6 +99,30 @@ public class Investigacion implements Serializable{
 
     public void setVersion(Integer version) {
         this.version = version;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
+    public Date getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
+    }
+
+    public String getResponsable() {
+        return responsable;
+    }
+
+    public void setResponsable(String responsable) {
+        this.responsable = responsable;
     }
 
     

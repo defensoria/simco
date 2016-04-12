@@ -12,6 +12,7 @@
         <result property="fechaRegistro" column="D_REGISTRODETACTA"/> 
         <result property="indAlertar" column="C_INDALERTAR"/>
         <result property="color" column="C_COLOR"/>
+        <result property="indCumplido" column="C_INDCUMPLIDO"/>
         <!--AGREGADOS--> 
         <result property="actividad.codigoActividad" column="C_CODIGOACTIVIDAD"/>
         <result property="actividad.nombre" column="C_NOMACTIVIDAD"/>
@@ -79,8 +80,8 @@
     <update id="actaAcuerdoDetalleUpdateColor" parameterType="actaAcuerdoDetalle">
         UPDATE SIMCO_REG_DET_ACTA_ACUERDO
         <set>
-            <if test="color != null">
-                C_COLOR=#{color}
+            <if test="indCumplido != null">
+                C_INDCUMPLIDO=#{indCumplido}
             </if>
         </set>
         <where>
@@ -99,7 +100,8 @@
         A.C_COLOR,
         A.C_DESCRIPACUERDO,
         A.C_INDALERTAR,
-        A.C_INDCUMPLIMIENTO
+        A.C_INDCUMPLIMIENTO,
+        A.C_INDCUMPLIDO
         FROM SIMCO_REG_DET_ACTA_ACUERDO A
         WHERE A.N_ID_ACTA = #{id}
     </select>
@@ -125,13 +127,14 @@
         F.C_CODIGOCASO,
         F.C_NOMCASO, 
         A.C_COLOR,
+        A.C_INDCUMPLIDO,
         A.C_INDALERTAR 
         from SIMCO_REG_DET_ACTA_ACUERDO A 
         inner join SIMCO_REG_ACTA_ACUERDO B on A.N_ID_ACTA = b.N_ID_ACTA
         inner join SIMCO_REG_ACTIVIDAD_ACTAS C on B.N_ID_ACTA = C.N_ID_ACTA
         inner join SIMCO_REG_ACTIVIDAD D on C.N_ID_ACTIVIDAD = D.N_ID_ACTIVIDAD
-        inner join SIMCO_REG_CASO_ACTIVIDAD E on E.N_ID_ACTIVIDAD = D.N_ID_ACTIVIDAD
-        inner join SIMCO_REG_CASO F on F.N_ID_CASO = E.N_ID_CASO
+        inner join SIMCO_REG_CASO_ACTIVIDAD E on E.N_ID_ACTIVIDAD = D.N_ID_ACTIVIDAD AND E.C_ESTADOACTCASO = 'ACT'
+        inner join SIMCO_REG_CASO F on F.N_ID_CASO = E.N_ID_CASO AND F.C_INDVIGENTE = 'A'
         where a.c_usuregistro = #{usuarioRegistro}
         order by A.N_ID_ACUERDO
     </select>
@@ -148,13 +151,14 @@
         F.C_NOMCASO, 
         A.C_COLOR,
         D.N_ID_ACTIVIDAD,
+        A.C_INDCUMPLIDO,
         A.C_INDALERTAR 
         from SIMCO_REG_DET_ACTA_ACUERDO A 
         inner join SIMCO_REG_ACTA_ACUERDO B on A.N_ID_ACTA = b.N_ID_ACTA
         inner join SIMCO_REG_ACTIVIDAD_ACTAS C on B.N_ID_ACTA = C.N_ID_ACTA
         inner join SIMCO_REG_ACTIVIDAD D on C.N_ID_ACTIVIDAD = D.N_ID_ACTIVIDAD
-        inner join SIMCO_REG_CASO_ACTIVIDAD E on E.N_ID_ACTIVIDAD = D.N_ID_ACTIVIDAD
-        inner join SIMCO_REG_CASO F on F.N_ID_CASO = E.N_ID_CASO
+        inner join SIMCO_REG_CASO_ACTIVIDAD E on E.N_ID_ACTIVIDAD = D.N_ID_ACTIVIDAD AND E.C_ESTADOACTCASO = 'ACT'
+        inner join SIMCO_REG_CASO F on F.N_ID_CASO = E.N_ID_CASO AND F.C_INDVIGENTE = 'A'
         where F.N_ID_CASO = #{id}
     </select>
  

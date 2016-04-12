@@ -2,10 +2,24 @@
     <ui:composition template="../template/template.xhtml">
         <ui:define name="content">
             <style>.vacio{display:none}</style>
-            <h:form id="idFormAgregarAcuerdo" class="form-horizontal">
+            <h:form id="idFormAgregarAcuerdo" class="form-horizontal" enctype="multipart/form-data">
                 <h:messages />
                 <input type="hidden" id="idUsuarioSession" jsf:value="#{actaAcuerdoController.actaAcuerdoDetalle.usuarioRegistro}" />
-                <style>#project-label{display:block;font-weight:bold;margin-bottom:1em}#project-icon{float:left;height:32px;width:32px}#project-description{margin:0;padding:0}</style>
+                <style>
+                    #project-label{
+                        display:block;
+                        font-weight:bold;
+                        margin-bottom:1em
+                    }
+                    #project-icon{
+                        float:left;
+                        height:32px;
+                        width:32px
+                    }
+                    #project-description{
+                        margin:0;padding:0
+                    }
+                </style>
                 <script>
                     /*<![CDATA[*/
                     var usu = JSON.parse(sessionStorage.getItem('userSesion'));
@@ -85,7 +99,7 @@
                             }}).data("ui-autocomplete")._renderItem = function (ul, item) {
                             return $("<li/>").append("<a>" + item.label + "<br/>" + item.desc + "</a>").appendTo(ul);
                         };
-                    }); /*]]>*/                        
+                    }); /*]]>*/
                 </script>
                 <gc:confirmSubmit bean="#{actaAcuerdoController.registrarActaAcuerdoxActividad2(registroController.actividadTemp.id)}" />
                 <div class="panel panel-default" style="width:100%;margin:auto;background:#F5F5F5">
@@ -124,37 +138,46 @@
                                                     <span class="text-primary" style="font-size:1.2em;font-weight:bold">Fecha que se tomaron los acuerdos</span>
                                                     <br/>
                                                     <div class="input-group datepicker" id="idDivTxtFechaRegistro">
-                                            <div class="input-group-addon add-on">
-                                                <span class="glyphicon glyphicon-calendar"></span>
-                                            </div>
-                                            <input type="text" id="txtFechaRegistro" data-format="dd/MM/yyyy" jsf:value="#{actaAcuerdoController.actaAcuerdo.fechaRegistro}" >
-                                                <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Lima" />
-                                            </input>
-                                        </div>
+                                                        <div class="input-group-addon add-on">
+                                                            <span class="glyphicon glyphicon-calendar"></span>
+                                                        </div>
+                                                        <input type="text" id="txtFechaRegistro" data-format="dd/MM/yyyy" jsf:value="#{actaAcuerdoController.actaAcuerdo.fechaRegistro}" >
+                                                            <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Lima" />
+                                                        </input>
+                                                    </div>
                                                 </td>
                                                 <td style="padding-left: 5px">
                                                     <span class="text-primary" style="font-size:1.2em;font-weight:bold">Tipo de Registro</span>
                                                     <br/>
                                                     <div id="idDivCmbTipoRegistro">
-                                            <h:selectOneMenu id="cmbTipoRegistro" value="#{actaAcuerdoController.actaAcuerdo.tipo}">
-                                                <f:selectItems value="#{listasComunesController.buscarTipoActaAcuerdo(false,false,true)}" var="y" itemLabel="#{y.nombreParametro}" itemValue="#{y.valorParametro}" />
-                                            </h:selectOneMenu>
-                                        </div>
+                                                        <h:selectOneMenu id="cmbTipoRegistro" value="#{actaAcuerdoController.actaAcuerdo.tipo}">
+                                                            <f:selectItems value="#{listasComunesController.buscarTipoActaAcuerdo(false,false,true)}" var="y" itemLabel="#{y.nombreParametro}" itemValue="#{y.valorParametro}" />
+                                                        </h:selectOneMenu>
+                                                    </div>
                                                 </td>
                                             </tr>
                                         </table>
-                                        
+
                                     </td>
                                     <td style="padding-left:5px">
-                                        
+
+                                                                <label><span style="font-size: large" class="glyphicon glyphicon-paperclip" />Adjuntar archivo:</label>
+                                                                <h:inputFile class="cMedio" value="#{actaAcuerdoController.file1}"/>
+                                                           <br/>
+                                                                <h:panelGroup rendered="#{actaAcuerdoController.actaAcuerdo.ruta != null}">
+                                                                    <a target="_blank" href="/filesystem/#{registroController.actaAcuerdo.ruta}">
+                                                                        <span style="font-size: large" class="glyphicon glyphicon-link" />
+                                                                    </a>
+                                                                </h:panelGroup>
+                                                          
                                     </td>
                                 </tr>
                                 <tr>
                                     <td style="padding-bottom: 10px">
-                                        
+
                                     </td>
                                     <td style="padding-bottom: 10px">
-                                        
+
                                     </td>
                                 </tr>
                                 <tr>
@@ -997,7 +1020,7 @@
                         });
                     });</script>
                 <script>
-    /*<![CDATA[*/function reconstruirEmail() {
+                    /*<![CDATA[*/function reconstruirEmail() {
                         $("#idEmails").empty();
                         var emails = $("#idCadenaEmail").val().split(";");
                         for (var i = 0; i < emails.length; i++) {
@@ -1005,7 +1028,7 @@
                                 $("#idEmails").append('<div class='col - md - 3 alert alert - success fade in' style='margin:2px; color:green'><table style='width:100 % '><tr><td class='tex'><span style='font - weight:bold'>' + emails[i] + '</span></td><td style='text - align:right'><a><span class='glyphicon glyphicon - remove remover' style='color:red'/></a></td></tr></table></div>'); }
                         }
                     }/*]]>*/
-                                    
+
                 </script>
             </h:form>
         </ui:define>
