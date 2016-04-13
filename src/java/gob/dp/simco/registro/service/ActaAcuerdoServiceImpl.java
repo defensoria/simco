@@ -6,7 +6,6 @@
 
 package gob.dp.simco.registro.service;
 
-import gob.dp.simco.registro.bean.FiltroActaAcuerdo;
 import gob.dp.simco.registro.dao.ActaAcuerdoDao;
 import gob.dp.simco.registro.entity.ActaAcuerdo;
 import java.util.List;
@@ -36,18 +35,6 @@ public class ActaAcuerdoServiceImpl implements ActaAcuerdoService{
     public void actaAcuerdoModificar(ActaAcuerdo actaAcuerdo) throws Exception {
         log.debug("METODO : ActaAcuerdoServiceImpl.actaAcuerdoModificar");
         actaAcuerdoDao.actaAcuerdoUpdate(actaAcuerdo);
-    }
-
-    @Override
-    public List<ActaAcuerdo> actaAcuerdoBuscar(FiltroActaAcuerdo filtroActaAcuerdo) throws Exception {
-        log.debug("METODO : ActaAcuerdoServiceImpl.actaAcuerdoBuscar");
-        return actaAcuerdoDao.actaAcuerdoBuscar(filtroActaAcuerdo);
-    }
-
-    @Override
-    public Integer actaAcuerdoTotalBuscar(FiltroActaAcuerdo filtroActaAcuerdo) throws Exception {
-        log.debug("METODO : ActaAcuerdoServiceImpl.actaAcuerdoTotalBuscar");
-        return actaAcuerdoDao.actaAcuerdoTotalBuscar(filtroActaAcuerdo);
     }
 
     @Override

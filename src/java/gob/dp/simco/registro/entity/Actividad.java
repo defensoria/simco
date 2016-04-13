@@ -32,7 +32,7 @@ public class Actividad implements Serializable{
     
     private Date horaRealizacionFin;
     
-    private Parametro tipoActividad;
+    private String tipoActividad;
     
     private String justificacionIntervencion;
     
@@ -40,7 +40,7 @@ public class Actividad implements Serializable{
     
     private String codigoActividad;
     
-    private Integer indCurso;
+    private Boolean indCurso;
     
     private int idDepartamento;
     
@@ -135,14 +135,6 @@ public class Actividad implements Serializable{
     public void setJustificacionIntervencion(String justificacionIntervencion) {
         this.justificacionIntervencion = justificacionIntervencion;
     }
-
-    public Parametro getTipoActividad() {
-        return tipoActividad;
-    }
-
-    public void setTipoActividad(Parametro tipoActividad) {
-        this.tipoActividad = tipoActividad;
-    }
     
     public Date getFechaRealizacionIni() {
         return fechaRealizacionIni;
@@ -232,11 +224,11 @@ public class Actividad implements Serializable{
         this.codigoActividad = codigoActividad;
     }
 
-    public Integer getIndCurso() {
+    public Boolean getIndCurso() {
         return indCurso;
     }
 
-    public void setIndCurso(Integer indCurso) {
+    public void setIndCurso(Boolean indCurso) {
         this.indCurso = indCurso;
     }
 
@@ -407,7 +399,13 @@ public class Actividad implements Serializable{
     public void setIndiceVinculado(Integer indiceVinculado) {
         this.indiceVinculado = indiceVinculado;
     }
-    
-   
+
+    public String getTipoActividad() {
+        return tipoActividad;
+    }
+
+    public void setTipoActividad(String tipoActividad) {
+        this.tipoActividad = tipoActividad;
+    }
     
 }

@@ -6,7 +6,6 @@
 
 package gob.dp.simco.registro.dao;
 
-import gob.dp.simco.registro.bean.FiltroActaAcuerdo;
 import gob.dp.simco.registro.entity.ActaAcuerdo;
 import java.util.List;
 import org.apache.log4j.Logger;
@@ -32,18 +31,6 @@ public class ActaAcuerdoDaoImpl extends SqlSessionDaoSupport implements ActaAcue
     public void actaAcuerdoUpdate(ActaAcuerdo actaAcuerdo) throws Exception {
         log.debug("METODO : ActaAcuerdoDaoImpl.actaAcuerdoUpdate");
         getSqlSession().update("gob.dp.simco.registro.dao.ActaAcuerdoDao.actaAcuerdoUpdate", actaAcuerdo);
-    }
-
-    @Override
-    public List<ActaAcuerdo> actaAcuerdoBuscar(FiltroActaAcuerdo filtroActaAcuerdo) throws Exception {
-        log.debug("METODO : ActaAcuerdoDaoImpl.actaAcuerdoBuscar");
-        return getSqlSession().selectList("gob.dp.simco.registro.dao.ActaAcuerdoDao.actaAcuerdoBuscar",filtroActaAcuerdo);
-    }
-
-    @Override
-    public Integer actaAcuerdoTotalBuscar(FiltroActaAcuerdo filtroActaAcuerdo) throws Exception {
-        log.debug("METODO : ActaAcuerdoDaoImpl.actaAcuerdoTotalBuscar");
-        return getSqlSession().selectOne("gob.dp.simco.registro.dao.ActaAcuerdoDao.actaAcuerdoTotalBuscar",filtroActaAcuerdo);
     }
     
     @Override

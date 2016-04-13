@@ -5,13 +5,13 @@
       xmlns:jsf="http://xmlns.jcp.org/jsf" 
       xmlns:c="http://java.sun.com/jsp/jstl/core" 
       xmlns:gc="http://xmlns.jcp.org/jsf/composite/gc">
-    
+
     <ui:composition template="../template/template.xhtml">
         <ui:define name="content">
             <h:form id="idForm3" class="form-horizontal" enctype="multipart/form-data">
-                <input type="hidden" jsf:value="#{registroController.actividadTemp.coordenadaX}" id="idCoordenadaX"/>
-                <input type="hidden" jsf:value="#{registroController.actividadTemp.coordenadaY}" id="idCoordenadaY"/>
-                <input type="hidden" jsf:value="#{registroController.actividadTemp.zoom}" id="idZoom"/>
+                <input type="hidden" jsf:value="#{registroController.actividad.coordenadaX}" id="idCoordenadaX"/>
+                <input type="hidden" jsf:value="#{registroController.actividad.coordenadaY}" id="idCoordenadaY"/>
+                <input type="hidden" jsf:value="#{registroController.actividad.zoom}" id="idZoom"/>
                 <gc:confirmSubmit bean="#{registroController.registrarActividad()}"/>
                 <style>
                     #project-label{display:block;
@@ -22,8 +22,8 @@
                                   width:32px}
                     #project-description{margin:0;
                                          padding:0}
-                </style>
-                <script>
+                    </style>
+                    <script>
                     /*<![CDATA[*/$(function () {#{registroController.cadenaAutocomplete}
                         $("#nombreCaso").autocomplete({minLength: 3, source: projects, focus: function (event, ui) {
                                 $("#nombreCaso").val(ui.item.label);
@@ -35,11 +35,11 @@
                             }}).data("ui-autocomplete")._renderItem = function (ul, item) {
                             return $("<li/>").append("<a>" + item.label + "<br/>" + item.desc + "</a>").appendTo(ul);
                         };
-                    });/*]]>*/                        
-                </script>
-                <h:commandButton action="#{utilBean.correo()}" value="enviar" rendered="false"/>
-                <h:inputHidden id="hidCodActividad" value="#{registroController.actividadTemp.id}" />
-                <input type="hidden" id="idTipoRegistro" jsf:value="#{registroController.actividadTemp.tipo}" />
+                    });/*]]>*/
+                    </script>
+                    <h:commandButton action="#{utilBean.correo()}" value="enviar" rendered="false"/>
+                    <h:inputHidden id="hidCodActividad" value="#{registroController.actividad.id}" />
+                <input type="hidden" id="idTipoRegistro" jsf:value="#{registroController.actividad.tipo}" />
                 <div class="panel panel-featured-top-primary">
                     <br/>
                     <table style="width:100%">
@@ -129,7 +129,7 @@
                                                 <span class="text-bold">Nombre</span>
                                             </td>
                                             <td style="width:60%">
-                                                <input type="text" id="txtNombre" placeholder="Nombre" jsf:value="#{registroController.actividadTemp.nombre}" style="width:100%" title="Ingrese el nombre" autocomplete="off" maxlength="300"/>
+                                                <input type="text" id="txtNombre" placeholder="Nombre" jsf:value="#{registroController.actividad.nombre}" style="width:100%" title="Ingrese el nombre" autocomplete="off" maxlength="300"/>
                                             </td>
                                         </tr>
                                         <tr>
@@ -140,10 +140,10 @@
                                                 <table style="width:100%">
                                                     <tr>
                                                         <td style="width:50%">
-                                                            <gc:calendar value="#{registroController.actividadTemp.fechaRealizacionIni}" id="txtFechaIni"/>
+                                                            <gc:calendar value="#{registroController.actividad.fechaRealizacionIni}" id="txtFechaIni"/>
                                                         </td>
                                                         <td>
-                                                            <gc:time value="#{registroController.actividadTemp.horaRealizacionIni}"/>
+                                                            <gc:time value="#{registroController.actividad.horaRealizacionIni}"/>
                                                         </td>
                                                     </tr>
                                                 </table>
@@ -157,10 +157,10 @@
                                                 <table style="width:100%">
                                                     <tr>
                                                         <td style="width:50%">
-                                                            <gc:calendar value="#{registroController.actividadTemp.fechaRealizacionFin}" id="txtFechaFin" idDiv="divFechaFin" />
+                                                            <gc:calendar value="#{registroController.actividad.fechaRealizacionFin}" id="txtFechaFin" idDiv="divFechaFin" />
                                                         </td>
                                                         <td>
-                                                            <gc:time value="#{registroController.actividadTemp.horaRealizacionFin}" id="txtHoraFin" idDiv="divHoraFin"/>
+                                                            <gc:time value="#{registroController.actividad.horaRealizacionFin}" id="txtHoraFin" idDiv="divHoraFin"/>
                                                         </td>
                                                     </tr>
                                                 </table>
@@ -170,36 +170,38 @@
                                             <td style="padding:10px">
                                             </td>
                                             <td>
-                                                <h:selectBooleanCheckbox id="idCheckbox" value="#{registroController.actividadTemp.indCurso}" />Todavia en curso
+                                                <h:selectBooleanCheckbox id="idCheckbox" value="#{registroController.actividad.indCurso}" />Todavia en curso
                                             </td>
                                         </tr>
                                         <tr>
                                             <td style="padding:10px">
-                                                <h:outputText class="text-bold" style="padding-bottom:5px" value="Clasificación" rendered="#{registroController.actividadTemp.tipo == 'AC' or registroController.actividadTemp.tipo == 'AD'}" />
+                                                <h:outputText class="text-bold" style="padding-bottom:5px" value="Clasificación" rendered="#{registroController.actividad.tipo == 'AC' or registroController.actividad.tipo == 'AD'}" />
                                             </td>
                                             <td>
-                                                <h:selectOneMenu class="selectRadio" id="cmbTipoActividad" value="#{registroController.actividadTemp.tipoActividad}" rendered="#{registroController.actividadTemp.tipo == 'AD'}">
+                                                <h:selectOneMenu id="cmbTipoActividad" value="#{registroController.actividad.tipoActividad}" rendered="#{registroController.actividad.tipo == 'AD'}" style="width: 50%">
+                                                    <f:selectItem itemLabel="Seleccione" />
                                                     <f:selectItems value="#{listasComunesController.buscarTipoActividad(false,false,false)}" var="y" itemLabel="#{y.nombreParametro}" itemValue="#{y.valorParametro}" />
                                                 </h:selectOneMenu>
-                                                <h:selectOneMenu class="selectRadio" id="cmbTipoAcontecimiento" value="#{registroController.actividadTemp.tipoAcontecimiento}" rendered="#{registroController.actividadTemp.tipo == 'AC'}">
+                                                <h:selectOneMenu id="cmbTipoAcontecimiento" value="#{registroController.actividad.tipoAcontecimiento}" rendered="#{registroController.actividad.tipo == 'AC'}" style="width: 50%">
+                                                    <f:selectItem itemValue="0" itemLabel="Seleccione" />
                                                     <f:selectItems value="#{listasComunesController.buscarTipoAcontecimiento(false,false,false)}" var="y" itemLabel="#{y.nombreParametro}" itemValue="#{y.valorParametro}" />
                                                 </h:selectOneMenu>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td style="padding:10px">
-                                                <h:outputText class="text-bold" style="padding-bottom:5px" value="Tipo de violencia" rendered="#{registroController.actividadTemp.tipo == 'AC'}" />
+                                                <h:outputText class="text-bold" style="padding-bottom:5px" value="Tipo de violencia" rendered="#{registroController.actividad.tipo == 'AC'}" />
                                             </td>
                                             <td>
-                                                <gc:selectMultiBootstrap idSelect="idSelectTipoViolencia" idHidden="idSelect4" lista="#{listasComunesController.buscarTipoViolencia(false,false,false)}" value="#{registroController.actividadTemp.tipoViolencia}" rendered="#{registroController.actividadTemp.tipo == 'AC'}"/>
+                                                <gc:selectMultiBootstrap idSelect="idSelectTipoViolencia" idHidden="idSelect4" lista="#{listasComunesController.buscarTipoViolencia(false,false,false)}" value="#{registroController.actividad.tipoViolencia}" rendered="#{registroController.actividad.tipo == 'AC'}"/>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td style="padding:10px">
-                                                <h:outputText class="text-bold" style="padding-bottom:5px" value="Resultado de la violencia" rendered="#{registroController.actividadTemp.tipo == 'AC'}" />
+                                                <h:outputText class="text-bold" style="padding-bottom:5px" value="Resultado de la violencia" rendered="#{registroController.actividad.tipo == 'AC'}" />
                                             </td>
                                             <td>
-                                                <gc:selectMultiBootstrap idSelect="idSelectResultadoViolencia" idHidden="idSelect3" lista="#{listasComunesController.buscarResultadoViolencia(false,false,false)}" value="#{registroController.actividadTemp.resultadoViolencia}" rendered="#{registroController.actividadTemp.tipo == 'AC'}"/>
+                                                <gc:selectMultiBootstrap idSelect="idSelectResultadoViolencia" idHidden="idSelect3" lista="#{listasComunesController.buscarResultadoViolencia(false,false,false)}" value="#{registroController.actividad.resultadoViolencia}" rendered="#{registroController.actividad.tipo == 'AC'}"/>
                                             </td>
                                         </tr>
                                         <td style="padding:20px">
@@ -215,16 +217,16 @@
                                     <span class="text-primary" style="font-size: 1.5em">Seleccionar imagen:</span>
                                     <h:inputFile class="cMedio" value="#{registroController.file1}"/><br/>
                                     <span style="color: red">*</span><span>Solo puede subir los formatos: png, jpe y gif</span>
-                                    <div jsf:rendered="#{registroController.actividadTemp.ruta != null}">
+                                    <div jsf:rendered="#{registroController.actividad.ruta != null}">
                                         <table class="table table-striped">
                                             <tr>
                                                 <td>Imagen</td>
                                                 <td>ver</td>
                                             </tr>
                                             <tr>
-                                                <td>#{registroController.actividadTemp.ruta}</td>
+                                                <td>#{registroController.actividad.ruta}</td>
                                                 <td>
-                                                    <a target="_blank" href="/filesystem/#{registroController.actividadTemp.ruta}">
+                                                    <a target="_blank" href="/filesystem/#{registroController.actividad.ruta}">
                                                         <span class="glyphicon glyphicon-picture" />
                                                     </a>
                                                 </td>
@@ -247,7 +249,7 @@
                                 <div class="panel panel-featured-top-primary" style="width:100%;height:250px">
                                     <div class="panel-body">
                                         <span class="text-resalt-primary">Descripción</span>
-                                        <textarea rows="3" jsf:value="#{registroController.actividadTemp.descripcion}" style="width:100%;height:170px" placeholder="Descripcion" maxlength="1400"/>
+                                        <textarea rows="3" jsf:value="#{registroController.actividad.descripcion}" style="width:100%;height:170px" placeholder="Descripcion" maxlength="1400"/>
                                     </div>
                                 </div>
                             </td>
@@ -256,7 +258,7 @@
                                     <div class="panel-body">
                                         <div>
                                             <span class="text-resalt-primary">Actores</span>
-                                            <a style="float:right" jsf:action="#{actorController.cargarRegistroAgregarActor3(registroController.caso, registroController.actividadTemp.id)}">
+                                            <a style="float:right" jsf:action="#{actorController.cargarRegistroAgregarActor3(registroController.caso, registroController.actividad.id)}">
                                                 <span class="glyphicon glyphicon-plus" style="font-size:large"></span>
                                             </a>
                                         </div>
@@ -280,7 +282,7 @@
                                 <div class="panel panel-featured-top-primary" style="width:100%;height:250px">
                                     <div class="panel-body">
                                         <span class="text-resalt-primary">Comentarios</span>
-                                        <textarea rows="3" jsf:value="#{registroController.actividadTemp.comentario}" style="width:100%;height:170px" placeholder="Comentarios" maxlength="1400"/>
+                                        <textarea rows="3" jsf:value="#{registroController.actividad.comentario}" style="width:100%;height:170px" placeholder="Comentarios" maxlength="1400"/>
                                     </div>
                                 </div>
                                 <div class="panel panel-featured-top-primary" style="width:100%;height:270px;overflow-y:auto">
@@ -312,24 +314,26 @@
                                         <table>
                                             <tr>
                                                 <td>
-                                                    <script>$(document).ready(function () {
+                                                    <script>
+                                    $(document).ready(function () {
                                         $('.selectRadio').multiselect();
-                                    });</script>
-                                                    <h:selectOneMenu class="selectRadio" value="#{registroController.actividadTemp.idDepartamento}" onchange="loadingModal()">
+                                    });
+                                                    </script>
+                                                    <h:selectOneMenu value="#{registroController.actividad.idDepartamento}" onchange="loadingModal()">
                                                         <f:selectItem itemLabel="Departamento" itemValue="0"/>
                                                         <f:selectItems value="#{registroController.listaDepartamento}" var="y" itemLabel="#{y.value}" itemValue="#{y.label}" />
                                                         <f:ajax listener="#{registroController.comboProvincia()}" render="idPanelUbigeo" onevent="closeModal"/>
                                                     </h:selectOneMenu>
                                                 </td>
                                                 <td>
-                                                    <h:selectOneMenu class="selectRadio" id="cmbProvincia" value="#{registroController.actividadTemp.idProvincia}" onchange="loadingModal()">
+                                                    <h:selectOneMenu id="cmbProvincia" value="#{registroController.actividad.idProvincia}" onchange="loadingModal()">
                                                         <f:selectItem itemLabel="Provincia" itemValue="0"/>
                                                         <f:selectItems value="#{registroController.listaProvincia}" var="y" itemLabel="#{y.value} #{y.label}" itemValue="#{y.id}" />
                                                         <f:ajax listener="#{registroController.comboDistrito()}" render="idPanelUbigeo" onevent="closeModal"/>
                                                     </h:selectOneMenu>
                                                 </td>
                                                 <td>
-                                                    <h:selectOneMenu class="selectRadio" id="cmbDistrito" value="#{registroController.actividadTemp.idDistrito}" onchange="loadingModal()">
+                                                    <h:selectOneMenu id="cmbDistrito" value="#{registroController.actividad.idDistrito}" onchange="loadingModal()">
                                                         <f:selectItem itemLabel="Distrito" itemValue="0"/>
                                                         <f:selectItems value="#{registroController.listaDistrito}" var="y" itemLabel="#{y.value} #{y.label}" itemValue="#{y.id}" />
                                                         <f:ajax listener="#{registroController.coordenadasDistrito()}" render="idPanelUbigeo" onevent="closeModal"/>
@@ -435,12 +439,12 @@
                             </td>
                         </tr>
                         <tr>
-                            <td style="padding-right:5px" jsf:rendered="#{registroController.actividadTemp.tipo == 'AC'}">
+                            <td style="padding-right:5px" jsf:rendered="#{registroController.actividad.tipo == 'AC'}">
                                 <div class="panel panel-featured-top-primary" style="width:100%;height:250px">
                                     <div class="panel-body">
                                         <div>
                                             <span class="text-resalt-primary">Acuerdos</span>
-                                            <a style="float:right;font-size:large" jsf:action="#{actaAcuerdoController.cargarRegistroAgregarAcuerdo(registroController.actividadTemp.id, 1)}">
+                                            <a style="float:right;font-size:large" jsf:action="#{actaAcuerdoController.cargarRegistroAgregarAcuerdo(registroController.actividad.id, 1)}">
                                                 <span class="glyphicon glyphicon-plus"></span>
                                             </a>
                                             <br/><br/>
@@ -457,7 +461,7 @@
                                     <div class="panel-body">
                                         <div>
                                             <span class="text-resalt-primary">Medios de Verificación</span>
-                                            <a style="float:right;font-size:large" jsf:action="#{medioVerificacionController.cargarPagina(registroController.actividadTemp.id)}">
+                                            <a style="float:right;font-size:large" jsf:action="#{medioVerificacionController.cargarPagina(registroController.actividad.id)}">
                                                 <span class="glyphicon glyphicon-plus"></span>
                                             </a>
                                             <br/>
@@ -482,7 +486,7 @@
                                         <div class="panel-body">
                                             <div>
                                                 <span class="text-resalt-primary">Resultado de la violencia</span>
-                                                <a style="float:right;font-size:large" jsf:action="#{victimaViolenciaController.cargarPagina(registroController.actividadTemp.id, 1)}">
+                                                <a style="float:right;font-size:large" jsf:action="#{victimaViolenciaController.cargarPagina(registroController.actividad.id, 1)}">
                                                     <span class="glyphicon glyphicon-plus"/>
                                                 </a>
                                                 <br/>
@@ -608,13 +612,15 @@
                             $('#divHoraFin').removeClass('formDisabled');
                             $('#divFechaFin').removeClass('formDisabled');
                         }
-                    });/*]]>*/</script>
-                <script>function openModal(data) {
+                    });/*]]>*/
+
+                    function openModal(data) {
                         alert(data.status);
                         if (data.status === 'success') {
                             $('#busquedaCasoModal').modal('show');
                         }
-                    }</script>
+                    }
+                </script>
             </h:form>
         </ui:define>
     </ui:composition>

@@ -8,7 +8,6 @@ package gob.dp.simco.registro.controller;
 import gob.dp.simco.administracion.seguridad.controller.BusquedaUsuarioController;
 import gob.dp.simco.administracion.seguridad.entity.Usuario;
 import gob.dp.simco.comun.MessagesUtil;
-import gob.dp.simco.registro.bean.FiltroActaAcuerdo;
 import gob.dp.simco.registro.constantes.ConstantesUtil;
 import gob.dp.simco.registro.entity.ActaAcuerdo;
 import gob.dp.simco.registro.entity.ActaAcuerdoDetalle;
@@ -95,7 +94,7 @@ public class ActaAcuerdoController implements Serializable {
     int tip = 1;
 
     private MessagesUtil msg;
-    
+
     private Part file1;
 
     @Autowired
@@ -269,52 +268,24 @@ public class ActaAcuerdoController implements Serializable {
         listaActividadxActaAcuerdoTotal = null;
     }
 
-    public String cargarPaginaBusqueda(int tipo) {
-        log.debug("METODO : ActaAcuerdoController.cargarPaginaBusqueda");
-        actaAcuerdoBusquedaTemp = new ActaAcuerdoBusquedaTemp();
-        return "actaAcuerdoBusqueda";
-    }
-
-    public void registrarActaAcuerdo() {
-        log.debug("METODO : ActaAcuerdoController.registrarActaAcuerdo");
+    public void registrarActaAcuerdo(long idActividad) {
         try {
+            ActaAcuerdo aa = actaAcuerdoService.actaAcuerdoxActividadBuscarOne(idActividad);
             String ruta1 = uploadArchive(file1);
             actaAcuerdo.setRuta(ruta1);
-            if (actaAcuerdo.getId() != null) {
+            if (aa != null) {
+                actaAcuerdo.setId(aa.getId());
                 actaAcuerdoService.actaAcuerdoModificar(actaAcuerdo);
             } else {
                 actaAcuerdo.setCodigo(generarCodigoActaAcuerdo());
                 actaAcuerdoService.actaAcuerdoNuevo(actaAcuerdo);
             }
-            setActaAcuerdo(actaAcuerdo);
         } catch (Exception e) {
             log.error("METODO : ActaAcuerdoController.registrarActaAcuerdo" + e.getMessage());
         }
     }
 
-    public List<ActaAcuerdo> buscarActaAcuerdo() {
-        log.debug("METODO : ActaAcuerdoController.buscarActaAcuerdo");
-        List<ActaAcuerdo> lst = null;
-        try {
-            FiltroActaAcuerdo filtro = busquedaActaAcuerdoTempHaciaFiltroActaAcuerdo(actaAcuerdoBusquedaTemp);
-        } catch (Exception e) {
-            log.error("METODO : ActaAcuerdoController.buscarActaAcuerdo" + e.getMessage());
-        }
-
-        return lst;
-    }
-
-    private FiltroActaAcuerdo busquedaActaAcuerdoTempHaciaFiltroActaAcuerdo(ActaAcuerdoBusquedaTemp bean) {
-        FiltroActaAcuerdo filtro = new FiltroActaAcuerdo();
-        if (!StringUtils.isBlank(bean.getDescripcionItem())) {
-            filtro.setDescripcionItem(bean.getDescripcionItem().trim());
-        }
-
-        return filtro;
-    }
-
     public void agregarActaAcuerdoxActividad(Long idActividad) {
-        log.debug("METODO : ActaAcuerdoController.agregarActaAcuerdoxActividad");
         actaAcuerdoDetalle.setActaAcuerdo(actaAcuerdo);
         if (actaAcuerdoDetalle.getFechaRegistro() == null) {
             actaAcuerdoDetalle.setFechaRegistro(new Date());
@@ -491,44 +462,39 @@ public class ActaAcuerdoController implements Serializable {
     }
 
     public String registrarActaAcuerdoxActividad(Long idActividad) {
-        log.debug("METODO : ActaAcuerdoController.registrarActaAcuerdoxActividad");
-        registrarActaAcuerdo();
+        registrarActaAcuerdo(idActividad);
         vincularActaAcuerdoxActividad(idActividad);
         registrarActaAcuerdoDetalle();
         return "registroNuevo";
     }
 
     public void registrarActaAcuerdoxActividad2(Long idActividad) {
-        log.debug("METODO : ActaAcuerdoController.registrarActaAcuerdoxActividad");
         try {
-            registrarActaAcuerdo();
+            registrarActaAcuerdo(idActividad);
             vincularActaAcuerdoxActividad(idActividad);
             msg.messageInfo("Se han registrado los cambios", null);
         } catch (Exception e) {
             log.error(e.getCause());
         }
     }
-    
-    private String uploadArchive(Part fil) {
-        
-            String nameArchive = getFilename(fil);
-            String extencion = getFileExtension(getFilename(fil));
-            if (StringUtils.isNoneBlank(nameArchive)) {
-                String formato = RandomStringUtils.random(32, 0, 20, true, true, "qw32rfHIJk9iQ8Ud7h0X".toCharArray());
-                String ruta = formato + extencion;
-                File file = new File(ConstantesUtil.FILE_SYSTEM + ruta);
-                try (InputStream input = fil.getInputStream()) {
-                    Files.copy(input, file.toPath());
-                } catch (IOException ex) {
-                    log.error(ex);
-                }
-                return ruta;
-            }
-        
 
+    private String uploadArchive(Part fil) {
+        String nameArchive = getFilename(fil);
+        String extencion = getFileExtension(getFilename(fil));
+        if (StringUtils.isNoneBlank(nameArchive)) {
+            String formato = RandomStringUtils.random(32, 0, 20, true, true, "qw32rfHIJk9iQ8Ud7h0X".toCharArray());
+            String ruta = formato + extencion;
+            File file = new File(ConstantesUtil.FILE_SYSTEM + ruta);
+            try (InputStream input = fil.getInputStream()) {
+                Files.copy(input, file.toPath());
+            } catch (IOException ex) {
+                log.error(ex);
+            }
+            return ruta;
+        }
         return null;
     }
-    
+
     private String getFileExtension(String name) {
         try {
             return name.substring(name.lastIndexOf("."));
@@ -548,8 +514,6 @@ public class ActaAcuerdoController implements Serializable {
     }
 
     private void registrarActaAcuerdoDetalle() {
-        ActaAcuerdo actaAcuerdo = new ActaAcuerdo();
-        actaAcuerdo.setId(actaAcuerdo.getId());
         for (ActaAcuerdoDetalle aad : listaActaAcuerdoDetalleXActa) {
             aad.setActaAcuerdo(actaAcuerdo);
             registrarUpdateActaAcuerdoDetalle(aad);
@@ -607,7 +571,6 @@ public class ActaAcuerdoController implements Serializable {
         } else {
             seguimientoAcuerdoService.seguimientoAcuerdoUpdate(sa);
         }
-
     }
 
     private List<Actor> vincularActaAcuerdoListaActoresView() {
@@ -625,14 +588,12 @@ public class ActaAcuerdoController implements Serializable {
     }
 
     private void vincularActaAcuerdoxActividad(Long idActividad) {
-        log.debug("METODO : ActividadController.actividadUnionActa");
         ActividadActaAcuerdo actividadActaAcuerdo = new ActividadActaAcuerdo();
         Actividad actividad = new Actividad();
         actividad.setId(idActividad);
         actividadActaAcuerdo.setActividad(actividad);
         actividadActaAcuerdo.setActaAcuerdo(actaAcuerdo);
         actividadActaAcuerdo.setEstado("ACT");
-
         try {
             actividadActaAcuerdoService.actividadActaAcuerdoInsertarUpdate(actividadActaAcuerdo);
         } catch (Exception e) {
@@ -650,21 +611,9 @@ public class ActaAcuerdoController implements Serializable {
         return list;
     }
 
-    private List<Actividad> listarActividadActaAcuerdo() {
-        List<Actividad> list = null;
-        try {
-            list = actividadService.actividadxActaAcuerdoBuscar(actaAcuerdo.getId());
-        } catch (Exception e) {
-            log.error("ERROR : ActaAcuerdoController.listarActividadActaAcuerdoTotal: " + e.getMessage());
-        }
-        return list;
-    }
-
     public void eliminarActividadActaAcuerdo(Long idActividad) {
-        log.debug("METODO : ActaAcuerdoController.eliminarActividadActaAcuerdo");
         Actividad actividad = new Actividad();
         ActaAcuerdo aa = new ActaAcuerdo();
-
         aa.setId(actaAcuerdo.getId());
         actividad.setId(idActividad);
         ActividadActaAcuerdo actividadActaAcuerdo = new ActividadActaAcuerdo(actividad, aa, null);
@@ -676,11 +625,6 @@ public class ActaAcuerdoController implements Serializable {
         }
     }
 
-    /**
-     * GETTER AND SETTE
-     *
-     * @return R
-     */
     public ActaAcuerdoService getActaAcuerdoService() {
         return actaAcuerdoService;
     }
@@ -728,7 +672,7 @@ public class ActaAcuerdoController implements Serializable {
     public void setVerBoton(boolean verBoton) {
         this.verBoton = verBoton;
     }
-    
+
     public boolean isVerBotonActividad() {
         return verBotonActividad;
     }
@@ -864,5 +808,4 @@ public class ActaAcuerdoController implements Serializable {
     public void setFile1(Part file1) {
         this.file1 = file1;
     }
-
 }

@@ -8,12 +8,12 @@
     <ui:composition template="../template/template.xhtml">
         <ui:define name="content">
             <h:form id="idForm" class="form-horizontal" enctype="multipart/form-data">
-                <input type="hidden" jsf:value="#{registroController.actividadTemp.coordenadaX}" id="idCoordenadaX"/>
-                <input type="hidden" jsf:value="#{registroController.actividadTemp.coordenadaY}" id="idCoordenadaY"/>
-                <input type="hidden" jsf:value="#{registroController.actividadTemp.zoom}" id="idZoom"/>
+                <input type="hidden" jsf:value="#{registroController.actividad.coordenadaX}" id="idCoordenadaX"/>
+                <input type="hidden" jsf:value="#{registroController.actividad.coordenadaY}" id="idCoordenadaY"/>
+                <input type="hidden" jsf:value="#{registroController.actividad.zoom}" id="idZoom"/>
                 <gc:confirmSubmit bean="#{registroController.registrarActividad()}"/>
-                <h:inputHidden id="hidCodActividad" value="#{registroController.actividadTemp.id}" />
-                <input type="hidden" id="idTipoRegistro" jsf:value="#{registroController.actividadTemp.tipo}" />
+                <h:inputHidden id="hidCodActividad" value="#{registroController.actividad.id}" />
+                <input type="hidden" id="idTipoRegistro" jsf:value="#{registroController.actividad.tipo}" />
                 <div class="panel panel-featured-top-primary">
 
                     <table style="width:100%">
@@ -112,11 +112,26 @@
                                         }
                                     }
                                 </script>
-                                <h:outputText rendered="#{registroController.caso.id != null and registroController.actividadTemp.tipo == 'AC'}" class="text-resalt-primary" value="Vincular acontecimiento:" />
-                                <a jsf:action="#{registroController.cargarActontecimientoPorCaso()}" jsf:onclick="loadingModal()">
+                                <h:outputText rendered="#{registroController.caso.id != null and registroController.actividad.tipo == 'AC'}" class="text-resalt-primary" value="Vincular acontecimiento:" />
+                                <a jsf:action="#{registroController.cargarActontecimientoPorCaso()}" jsf:rendered="#{registroController.caso.id != null and registroController.actividad.tipo == 'AC'}" jsf:onclick="loadingModal()">
                                     <span style="font-size:large" class="glyphicon glyphicon-search"></span>
                                     <f:ajax render="idPanelGroupAcontecimientoBusqueda" onevent="openModalBusquedaSinCaso" />
                                 </a>
+                                <br/>
+                                <div style="float: right">
+                                    <h:dataTable value="#{registroController.acontecimientoVinculado}" var="acont" class="table table-hover"
+                                                 rendered="#{registroController.acontecimientoVinculado.size() > 0}">
+                                        <h:column>
+                                            <f:facet name="header">Acontecimiento</f:facet>
+                                            <h:outputText value="#{acont.nombre}" />
+                                        </h:column>
+                                        <h:column>
+                                            <a jsf:action="#{registroController.removeAcontecimientoVinculado()}">
+                                                <span class="glyphicon glyphicon-remove" style="color: red"/>
+                                            </a>
+                                        </h:column>
+                                    </h:dataTable>
+                                </div>
                             </td>
                         </tr>
                     </table>
@@ -124,36 +139,37 @@
                         <div class="modal fade" data-backdrop="static" data-keyboard="false" id="idModalAcontecimientoBusqueda" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
-                                        <div class="modal-header">
-                                            <a type="button" class="close" data-dismiss="modal">
-                                                <span style="color:red" class="glyphicon glyphicon-remove"></span>
-                                            </a>
-                                            <h:outputText class="text-primary" style="font-weight:bold;font-size:1.4em" value="Buscar Actuaciones defensoriales" rendered="#{!casoController.verTitulo}"/>
-                                            <h:outputText class="text-primary" style="font-weight:bold;font-size:1.4em" value="Buscar Acontecimientos" rendered="#{casoController.verTitulo}"/>
-                                        </div>
-                                        <div class="modal-body">
-                                            <h:dataTable style="width:100%" value="#{registroController.listaActividadesPorCaso}" var="act" class="table table-striped">
-                                                <h:column>
-                                                    <f:facet name="header">Nombre</f:facet>
-                                                    <h:outputText value="#{act.nombre}" />
-                                                </h:column>
-                                                <h:column>
-                                                    <f:facet name="header">Registro</f:facet>
-                                                    <h:outputText value="#{act.fechaRegistro}">
-                                                        <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Lima" />
-                                                    </h:outputText>
-                                                </h:column>
-                                                <h:column>
-                                                    <a jsf:action="#{registroController.vincularAcontecimientoActuacion(act)}">
-                                                        <span class="glyphicon glyphicon-share" style="font-size:large"></span>
-                                                    </a>
-                                                </h:column>
-                                            </h:dataTable>
-                                        </div>
+                                    <div class="modal-header">
+                                        <a type="button" class="close" data-dismiss="modal">
+                                            <span style="color:red" class="glyphicon glyphicon-remove"></span>
+                                        </a>
+                                        <h:outputText class="text-primary" style="font-weight:bold;font-size:1.4em" value="Buscar Actuaciones defensoriales" rendered="#{!casoController.verTitulo}"/>
+                                        <h:outputText class="text-primary" style="font-weight:bold;font-size:1.4em" value="Buscar Acontecimientos" rendered="#{casoController.verTitulo}"/>
+                                    </div>
+                                    <div class="modal-body">
+                                        <h:dataTable style="width:100%" value="#{registroController.listaActividadesPorCaso}" var="act" class="table table-striped">
+                                            <h:column>
+                                                <f:facet name="header">Nombre</f:facet>
+                                                <h:outputText value="#{act.nombre}" />
+                                            </h:column>
+                                            <h:column>
+                                                <f:facet name="header">Registro</f:facet>
+                                                <h:outputText value="#{act.fechaRegistro}">
+                                                    <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Lima" />
+                                                </h:outputText>
+                                            </h:column>
+                                            <h:column>
+                                                <a jsf:action="#{registroController.vincularAcontecimientoActuacion(act)}">
+                                                    <span class="glyphicon glyphicon-share" style="font-size:large"></span>
+                                                </a>
+                                            </h:column>
+                                        </h:dataTable>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </h:panelGroup>
+
                     <div class="panel-body">
                         <table style="width:100%">
                             <tr>
@@ -161,7 +177,7 @@
                                     <div id="idDivTxtNombre" class="form-group">
                                         <label for="txtNombre" class="col-sm-2 control-label">Nombre</label>
                                         <div class="col-sm-7">
-                                            <input type="text" id="txtNombre" placeholder="Nombre" jsf:value="#{registroController.actividadTemp.nombre}" style="width:100%" title="Ingrese el nombre" autocomplete="off" maxlength="300"/>
+                                            <input type="text" id="txtNombre" placeholder="Nombre" jsf:value="#{registroController.actividad.nombre}" style="width:100%" title="Ingrese el nombre" autocomplete="off" maxlength="300"/>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -170,10 +186,10 @@
                                             <table style="width:100%">
                                                 <tr>
                                                     <td style="width:50%">
-                                                        <gc:calendar value="#{registroController.actividadTemp.fechaRealizacionIni}" id="txtFechaIni"/>
+                                                        <gc:calendar value="#{registroController.actividad.fechaRealizacionIni}" id="txtFechaIni"/>
                                                     </td>
                                                     <td>
-                                                        <gc:time value="#{registroController.actividadTemp.horaRealizacionIni}"/>
+                                                        <gc:time value="#{registroController.actividad.horaRealizacionIni}"/>
                                                     </td>
                                                 </tr>
                                             </table>
@@ -185,10 +201,10 @@
                                             <table style="width:100%">
                                                 <tr>
                                                     <td style="width:50%">
-                                                        <gc:calendar value="#{registroController.actividadTemp.fechaRealizacionFin}" id="txtFechaFin" idDiv="divFechaFin" />
+                                                        <gc:calendar value="#{registroController.actividad.fechaRealizacionFin}" id="txtFechaFin" idDiv="divFechaFin" />
                                                     </td>
                                                     <td>
-                                                        <gc:time value="#{registroController.actividadTemp.horaRealizacionFin}" id="txtHoraFin" idDiv="divHoraFin"/>
+                                                        <gc:time value="#{registroController.actividad.horaRealizacionFin}" id="txtHoraFin" idDiv="divHoraFin"/>
                                                     </td>
                                                 </tr>
                                             </table>
@@ -197,42 +213,42 @@
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label"></label>
                                         <div class="col-sm-7">
-                                            <h:selectBooleanCheckbox id="idCheckbox" value="#{registroController.actividadTemp.indCurso}" />Todavia en curso
+                                            <h:selectBooleanCheckbox id="idCheckbox" value="#{registroController.actividad.indCurso}" />Todavia en curso
                                         </div>
                                     </div>
-                                    <h:panelGroup rendered="#{registroController.actividadTemp.tipo == 'AD'}">
+                                    <h:panelGroup rendered="#{registroController.actividad.tipo == 'AD'}">
                                         <div class="form-group" id="idDivCmbTipoActividad">
                                             <label class="col-sm-2 control-label">Clasificación</label>
                                             <div class="col-sm-7">
-                                                <h:selectOneMenu class="selectRadio" id="cmbTipoActividad" value="#{registroController.actividadTemp.tipoActividad}" rendered="#{registroController.actividadTemp.tipo == 'AD'}">
+                                                <h:selectOneMenu class="selectRadio" id="cmbTipoActividad" value="#{registroController.actividad.tipoActividad}" rendered="#{registroController.actividad.tipo == 'AD'}">
                                                     <f:selectItems value="#{listasComunesController.buscarTipoActividad(false,false,false)}" var="y" itemLabel="#{y.nombreParametro}" itemValue="#{y.valorParametro}" />
                                                 </h:selectOneMenu>
                                             </div>
                                         </div>
                                     </h:panelGroup>
-                                    <h:panelGroup rendered="#{registroController.actividadTemp.tipo == 'AC'}">
+                                    <h:panelGroup rendered="#{registroController.actividad.tipo == 'AC'}">
                                         <div class="form-group" id="idDivCmbTipoActividad">
                                             <label class="col-sm-2 control-label">Clasificación</label>
                                             <div class="col-sm-7">
-                                                <h:selectOneMenu class="selectRadio" id="cmbTipoAcontecimiento" value="#{registroController.actividadTemp.tipoAcontecimiento}" rendered="#{registroController.actividadTemp.tipo == 'AC'}">
+                                                <h:selectOneMenu class="selectRadio" id="cmbTipoAcontecimiento" value="#{registroController.actividad.tipoAcontecimiento}" rendered="#{registroController.actividad.tipo == 'AC'}">
                                                     <f:selectItems value="#{listasComunesController.buscarTipoAcontecimiento(false,false,false)}" var="y" itemLabel="#{y.nombreParametro}" itemValue="#{y.valorParametro}" />
                                                 </h:selectOneMenu>
                                             </div>
                                         </div>
                                     </h:panelGroup>
-                                    <h:panelGroup rendered="#{registroController.actividadTemp.tipo == 'AC'}">
+                                    <h:panelGroup rendered="#{registroController.actividad.tipo == 'AC'}">
                                         <div class="form-group" id="idDivCmbTipoActividad">
                                             <label class="col-sm-2 control-label">Tipo de violencia</label>
                                             <div class="col-sm-7">
-                                                <gc:selectMultiBootstrap idSelect="idSelectTipoViolencia" idHidden="idSelect4" lista="#{listasComunesController.buscarTipoViolencia(false,false,false)}" value="#{registroController.actividadTemp.tipoViolencia}" rendered="#{registroController.actividadTemp.tipo == 'AC'}"/>
+                                                <gc:selectMultiBootstrap idSelect="idSelectTipoViolencia" idHidden="idSelect4" lista="#{listasComunesController.buscarTipoViolencia(false,false,false)}" value="#{registroController.actividad.tipoViolencia}" rendered="#{registroController.actividad.tipo == 'AC'}"/>
                                             </div>
                                         </div>
                                     </h:panelGroup>
-                                    <h:panelGroup rendered="#{registroController.actividadTemp.tipo == 'AC'}">
+                                    <h:panelGroup rendered="#{registroController.actividad.tipo == 'AC'}">
                                         <div class="form-group" id="idDivCmbTipoActividad">
                                             <label class="col-sm-2 control-label">Resultado de la violencia</label>
                                             <div class="col-sm-7">
-                                                <gc:selectMultiBootstrap idSelect="idSelectResultadoViolencia" idHidden="idSelect3" lista="#{listasComunesController.buscarResultadoViolencia(false,false,false)}" value="#{registroController.actividadTemp.resultadoViolencia}" />
+                                                <gc:selectMultiBootstrap idSelect="idSelectResultadoViolencia" idHidden="idSelect3" lista="#{listasComunesController.buscarResultadoViolencia(false,false,false)}" value="#{registroController.actividad.resultadoViolencia}" />
                                             </div>
                                         </div>
                                     </h:panelGroup>
@@ -249,16 +265,16 @@
                                     <span class="text-primary" style="font-size: 1.5em">Seleccionar imagen:</span>
                                     <h:inputFile class="cMedio" value="#{registroController.file1}"/><br/>
                                     <span style="color: red">*</span><span>Solo puede subir los formatos: png, jpe y gif</span>
-                                    <div jsf:rendered="#{registroController.actividadTemp.ruta != null}">
+                                    <div jsf:rendered="#{registroController.actividad.ruta != null}">
                                         <table class="table table-striped">
                                             <tr>
                                                 <td>Imagen</td>
                                                 <td>ver</td>
                                             </tr>
                                             <tr>
-                                                <td>#{registroController.actividadTemp.ruta}</td>
+                                                <td>#{registroController.actividad.ruta}</td>
                                                 <td>
-                                                    <a target="_blank" href="/filesystem/#{registroController.actividadTemp.ruta}">
+                                                    <a target="_blank" href="/filesystem/#{registroController.actividad.ruta}">
                                                         <span class="glyphicon glyphicon-picture" />
                                                     </a>
                                                 </td>
@@ -277,7 +293,7 @@
                                 <div class="panel panel-featured-top-primary" style="width:100%;height:250px">
                                     <div class="panel-body">
                                         <span class="text-resalt-primary">Descripción</span>
-                                        <textarea rows="3" jsf:value="#{registroController.actividadTemp.descripcion}" style="width:100%;height:170px" maxlength="1400"/>
+                                        <textarea rows="3" jsf:value="#{registroController.actividad.descripcion}" style="width:100%;height:170px" maxlength="1400"/>
                                     </div>
                                 </div>
                             </td>
@@ -286,7 +302,7 @@
                                     <div class="panel-body">
                                         <div>
                                             <span class="text-resalt-primary">Actores</span>
-                                            <a style="float:right" jsf:action="#{actorController.cargarRegistroAgregarActor2(registroController.caso, registroController.actividadTemp.id)}">
+                                            <a style="float:right" jsf:action="#{actorController.cargarRegistroAgregarActor2(registroController.caso, registroController.actividad.id)}">
                                                 <span class="glyphicon glyphicon-plus" style="font-size:large"></span>
                                             </a>
                                         </div>
@@ -315,7 +331,7 @@
                                 <div class="panel panel-featured-top-primary" style="width:100%;height:250px">
                                     <div class="panel-body">
                                         <span class="text-resalt-primary">Comentarios</span>
-                                        <textarea rows="3" jsf:value="#{registroController.actividadTemp.comentario}" style="width:100%;height:170px" maxlength="1400"/>
+                                        <textarea rows="3" jsf:value="#{registroController.actividad.comentario}" style="width:100%;height:170px" maxlength="1400"/>
                                     </div>
                                 </div>
                                 <div class="panel panel-featured-top-primary" style="width:100%;height:250px;overflow-y:auto">
@@ -350,21 +366,21 @@
                                         <table>
                                             <tr>
                                                 <td>
-                                                    <h:selectOneMenu class="selectRadio" value="#{registroController.actividadTemp.idDepartamento}" onchange="loadingModal()">
+                                                    <h:selectOneMenu class="selectRadio" value="#{registroController.actividad.idDepartamento}" onchange="loadingModal()">
                                                         <f:selectItem itemLabel="Departamento" itemValue="0"/>
                                                         <f:selectItems value="#{registroController.listaDepartamento}" var="y" itemLabel="#{y.value}" itemValue="#{y.label}" />
                                                         <f:ajax listener="#{registroController.comboProvincia()}" render="idPanelUbigeo" onevent="closeModal"/>
                                                     </h:selectOneMenu>
                                                 </td>
                                                 <td>
-                                                    <h:selectOneMenu class="selectRadio" id="cmbProvincia" value="#{registroController.actividadTemp.idProvincia}" onchange="loadingModal()">
+                                                    <h:selectOneMenu class="selectRadio" id="cmbProvincia" value="#{registroController.actividad.idProvincia}" onchange="loadingModal()">
                                                         <f:selectItem itemLabel="Provincia" itemValue="0"/>
                                                         <f:selectItems value="#{registroController.listaProvincia}" var="y" itemLabel="#{y.value} #{y.label}" itemValue="#{y.id}" />
                                                         <f:ajax listener="#{registroController.comboDistrito()}" render="idPanelUbigeo" onevent="closeModal"/>
                                                     </h:selectOneMenu>
                                                 </td>
                                                 <td>
-                                                    <h:selectOneMenu class="selectRadio" id="cmbDistrito" value="#{registroController.actividadTemp.idDistrito}" onchange="loadingModal()">
+                                                    <h:selectOneMenu class="selectRadio" id="cmbDistrito" value="#{registroController.actividad.idDistrito}" onchange="loadingModal()">
                                                         <f:selectItem itemLabel="Distrito" itemValue="0"/>
                                                         <f:selectItems value="#{registroController.listaDistrito}" var="y" itemLabel="#{y.value} #{y.label}" itemValue="#{y.id}" />
                                                         <f:ajax listener="#{registroController.coordenadasDistrito()}" render="idPanelUbigeo" onevent="closeModal"/>
@@ -372,110 +388,125 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <script>function ejectuar() {
+                                                <script>
+                                                    function ejectuar() {
                                                         x = parseFloat(#{registroController.cordenadax});
                                                         y = parseFloat(#{registroController.cordenaday});
                                                         z = parseInt(#{registroController.zoom});
                                                         codeLatLng(x, y, z);
                                                     }
-                                                    ejectuar();</script>
+                                                    ejectuar();
+                                                </script>
                                             </tr>
                                         </table>
                                     </h:panelGroup>
                                     <br/>
-                                    <style>html,body,#map-canvas{height:100%;margin:0;padding:0}#panel{position:absolute;top:5px;left:50%;margin-left:-180px;z-index:5;background-color:#fff;padding:5px;border:1px solid #999}</style>
-                                    <script>/*<![CDATA[*/var markers = [];
-                                        var geocoder;
-                                        var map;
-                                        var marker;
-                                        function initialize() {
-                                            var longitud = parseFloat(-10.18997);
-                                            if ($("#idCoordenadaX").val() !== "") {
-                                                longitud = parseFloat($("#idCoordenadaX").val());
-                                            }
-                                            var latitud = parseFloat(-75.01515);
-                                            if ($("#idCoordenadaY").val() !== "") {
-                                                latitud = parseFloat($("#idCoordenadaY").val());
-                                            }
-                                            var nivelZoom = parseInt(6);
-                                            if ($("#idZoom").val() !== "") {
-                                                nivelZoom = parseInt($("#idZoom").val());
-                                            }
-                                            geocoder = new google.maps.Geocoder();
-                                            var latlng = new google.maps.LatLng(longitud, latitud);
-                                            var mapOptions = {zoom: nivelZoom, center: latlng, mapTypeId: 'roadmap'}
-                                            map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-                                            addMarker(latlng);
-                                            google.maps.event.addListener(map, 'click', function (event) {
-                                                deleteMarkers();
-                                                $("#idCoordenadaX").val(event.latLng.lat());
-                                                $("#idCoordenadaY").val(event.latLng.lng());
-                                                $("#idZoom").val(nivelZoom);
-                                                addMarker(event.latLng);
-                                            })
+                                    <style>
+                                        html,body,#map-canvas{height:100%;
+                                                              margin:0;padding:0
                                         }
-                                        function codeLatLng(x, y, z) {
-                                            $("#idCoordenadaX").val(x);
-                                            $("#idCoordenadaY").val(y);
-                                            $("#idZoom").val(z);
-                                            deleteMarkers();
-                                            var latlng = new google.maps.LatLng(x, y);
-                                            geocoder.geocode({'latLng': latlng}, function (results, status) {
-                                                if (status === google.maps.GeocoderStatus.OK) {
-                                                    if (results[1]) {
-                                                        var mapOptions = {zoom: z, center: latlng, mapTypeId: 'roadmap'}
-                                                        map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-                                                        marker = new google.maps.Marker({position: latlng, center: latlng, map: map});
-                                                        markers.push(marker);
-                                                        google.maps.event.addListener(map, 'click', function (event) {
-                                                            deleteMarkers();
-                                                            $("#idCoordenadaX").val(event.latLng.lat());
-                                                            $("#idCoordenadaY").val(event.latLng.lng());
-                                                            $("#idZoom").val(z);
-                                                            addMarker(event.latLng);
-                                                        });
-                                                    } else {
-                                                        alert('No results found');
-                                                    }
-                                                } else {
-                                                    alert('Geocoder failed due to: ' + status);
+                                        #panel{position:absolute;
+                                               top:5px;left:50%;
+                                               margin-left:-180px;
+                                               z-index:5;
+                                               background-color:#fff;
+                                               padding:5px;
+                                               border:1px solid #999}
+                                        </style>
+                                        <script>
+                                            /*<![CDATA[*/var markers = [];
+                                            var geocoder;
+                                            var map;
+                                            var marker;
+                                            function initialize() {
+                                                var longitud = parseFloat(-10.18997);
+                                                if ($("#idCoordenadaX").val() !== "") {
+                                                    longitud = parseFloat($("#idCoordenadaX").val());
                                                 }
-                                            });
-                                        }
-                                        function addMarker(location) {
-                                            var marker = new google.maps.Marker({position: location, map: map});
-                                            markers.push(marker);
-                                        }
-                                        function setAllMap(map) {
-                                            for (var i = 0; i < markers.length; i++) {
-                                                markers[i].setMap(map);
+                                                var latitud = parseFloat(-75.01515);
+                                                if ($("#idCoordenadaY").val() !== "") {
+                                                    latitud = parseFloat($("#idCoordenadaY").val());
+                                                }
+                                                var nivelZoom = parseInt(6);
+                                                if ($("#idZoom").val() !== "") {
+                                                    nivelZoom = parseInt($("#idZoom").val());
+                                                }
+                                                geocoder = new google.maps.Geocoder();
+                                                var latlng = new google.maps.LatLng(longitud, latitud);
+                                                var mapOptions = {zoom: nivelZoom, center: latlng, mapTypeId: 'roadmap'}
+                                                map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+                                                addMarker(latlng);
+                                                google.maps.event.addListener(map, 'click', function (event) {
+                                                    deleteMarkers();
+                                                    $("#idCoordenadaX").val(event.latLng.lat());
+                                                    $("#idCoordenadaY").val(event.latLng.lng());
+                                                    $("#idZoom").val(nivelZoom);
+                                                    addMarker(event.latLng);
+                                                })
                                             }
-                                        }
-                                        function setAllMap2(map) {
-                                            for (var i = 0; i < marker.length; i++) {
-                                                marker[i].setMap(map);
+                                            function codeLatLng(x, y, z) {
+                                                $("#idCoordenadaX").val(x);
+                                                $("#idCoordenadaY").val(y);
+                                                $("#idZoom").val(z);
+                                                deleteMarkers();
+                                                var latlng = new google.maps.LatLng(x, y);
+                                                geocoder.geocode({'latLng': latlng}, function (results, status) {
+                                                    if (status === google.maps.GeocoderStatus.OK) {
+                                                        if (results[1]) {
+                                                            var mapOptions = {zoom: z, center: latlng, mapTypeId: 'roadmap'}
+                                                            map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+                                                            marker = new google.maps.Marker({position: latlng, center: latlng, map: map});
+                                                            markers.push(marker);
+                                                            google.maps.event.addListener(map, 'click', function (event) {
+                                                                deleteMarkers();
+                                                                $("#idCoordenadaX").val(event.latLng.lat());
+                                                                $("#idCoordenadaY").val(event.latLng.lng());
+                                                                $("#idZoom").val(z);
+                                                                addMarker(event.latLng);
+                                                            });
+                                                        } else {
+                                                            alert('No results found');
+                                                        }
+                                                    } else {
+                                                        alert('Geocoder failed due to: ' + status);
+                                                    }
+                                                });
                                             }
-                                        }
-                                        function clearMarkers() {
-                                            setAllMap(null);
-                                        }
-                                        function deleteMarkers() {
-                                            clearMarkers();
-                                            markers = [];
-                                        }
-                                        google.maps.event.addDomListener(window, 'load', initialize);/*]]>*/</script>
-                                    <div id="map-canvas" style="height:455px;vertical-align:bottom"></div>
+                                            function addMarker(location) {
+                                                var marker = new google.maps.Marker({position: location, map: map});
+                                                markers.push(marker);
+                                            }
+                                            function setAllMap(map) {
+                                                for (var i = 0; i < markers.length; i++) {
+                                                    markers[i].setMap(map);
+                                                }
+                                            }
+                                            function setAllMap2(map) {
+                                                for (var i = 0; i < marker.length; i++) {
+                                                    marker[i].setMap(map);
+                                                }
+                                            }
+                                            function clearMarkers() {
+                                                setAllMap(null);
+                                            }
+                                            function deleteMarkers() {
+                                                clearMarkers();
+                                                markers = [];
+                                            }
+                                            google.maps.event.addDomListener(window, 'load', initialize);/*]]>*/
+                                        </script>
+                                        <div id="map-canvas" style="height:455px;vertical-align:bottom"></div>
                                     <br/>
                                 </div>
                             </td>
                         </tr>
                         <tr>
-                            <td style="padding-right:5px"  jsf:rendered="#{registroController.actividadTemp.tipo == 'AC'}">
+                            <td style="padding-right:5px"  jsf:rendered="#{registroController.actividad.tipo == 'AC'}">
                                 <div class="panel panel-featured-top-primary" style="width:100%;height:250px">
                                     <div class="panel-body">
                                         <div>
                                             <span class="text-resalt-primary">Acuerdos</span>
-                                            <a style="float:right;font-size:large" jsf:action="#{actaAcuerdoController.cargarRegistroAgregarAcuerdo2(registroController.actividadTemp.id, 2)}">
+                                            <a style="float:right;font-size:large" jsf:action="#{actaAcuerdoController.cargarRegistroAgregarAcuerdo2(registroController.actividad.id, 2)}">
                                                 <span class="glyphicon glyphicon-plus"></span>
                                             </a>
                                             <br/><br/>
@@ -492,7 +523,7 @@
                                     <div class="panel-body">
                                         <div>
                                             <span class="text-resalt-primary">Medios de Verificación</span>
-                                            <a style="float:right;font-size:large" jsf:action="#{medioVerificacionController.cargarPagina(registroController.actividadTemp.id)}">
+                                            <a style="float:right;font-size:large" jsf:action="#{medioVerificacionController.cargarPagina(registroController.actividad.id)}">
                                                 <span class="glyphicon glyphicon-plus"></span>
                                             </a>
                                             <br/>
@@ -517,7 +548,7 @@
                                         <div class="panel-body">
                                             <div>
                                                 <span class="text-resalt-primary">Resultado de la violencia</span>
-                                                <a style="float:right;font-size:large" jsf:action="#{victimaViolenciaController.cargarPagina(registroController.actividadTemp.id, 2)}">
+                                                <a style="float:right;font-size:large" jsf:action="#{victimaViolenciaController.cargarPagina(registroController.actividad.id, 2)}">
                                                     <span class="glyphicon glyphicon-plus"></span>
                                                 </a>
                                                 <br/>
@@ -644,7 +675,6 @@
                             }
                         });
                     });/*]]>*/
-
                     function openModal(data) {
                         alert(data.status);
                         if (data.status === 'success') {

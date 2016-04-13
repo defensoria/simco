@@ -952,7 +952,7 @@
                                             if ($('#idForm3\\:idCheckbox').is(':checked')) {
                                             }
                                         });/*]]>*/</script>
-                                    <h:inputHidden id="hidCodActividad" value="#{registroController.actividadTemp.id}" />
+                                    <h:inputHidden id="hidCodActividad" value="#{registroController.actividad.id}" />
                                     <div class="panel-body">
                                         <div id="idDivTxtNombre" class="form-group" style="margin-bottom:7px;width:100%">
                                             <table style="width:100%">
@@ -961,7 +961,7 @@
                                                         <label for="txtNombre" class="control-label">Nombre</label>
                                                     </td>
                                                     <td>
-                                                        <input type="text" id="txtNombre" placeholder="Nombre" jsf:value="#{registroController.actividadTemp.nombre}" style="width:100%" title="Ingrese el nombre" autocomplete="off"/>
+                                                        <input type="text" id="txtNombre" placeholder="Nombre" jsf:value="#{registroController.actividad.nombre}" style="width:100%" title="Ingrese el nombre" autocomplete="off"/>
                                                     </td>
                                                 </tr>
                                             </table>
@@ -974,10 +974,10 @@
                                                             <label for="txtFechaFin" class="control-label">Fecha/Hora de inicio</label>
                                                         </td>
                                                         <td style="width:40%">
-                                                            <gc:calendar value="#{registroController.actividadTemp.fechaRealizacionIni}" id="txtFechaIni"/>
+                                                            <gc:calendar value="#{registroController.actividad.fechaRealizacionIni}" id="txtFechaIni"/>
                                                         </td>
                                                         <td>
-                                                            <gc:time value="#{registroController.actividadTemp.horaRealizacionIni}"/>
+                                                            <gc:time value="#{registroController.actividad.horaRealizacionIni}"/>
                                                         </td>
                                                     </tr>
                                                 </table>
@@ -990,10 +990,10 @@
                                                         <label for="txtFechaFin" class="control-label">Fecha/Hora de fin</label>
                                                     </td>
                                                     <td style="width:40%">
-                                                        <gc:calendar value="#{registroController.actividadTemp.fechaRealizacionFin}" id="txtFechaFin" idDiv="divFechaFin"/>
+                                                        <gc:calendar value="#{registroController.actividad.fechaRealizacionFin}" id="txtFechaFin" idDiv="divFechaFin"/>
                                                     </td>
                                                     <td>
-                                                        <gc:time value="#{registroController.actividadTemp.horaRealizacionFin}" id="txtHoraFin" idDiv="divHoraFin"/>
+                                                        <gc:time value="#{registroController.actividad.horaRealizacionFin}" id="txtHoraFin" idDiv="divHoraFin"/>
                                                     </td>
                                                 </tr>
                                             </table>
@@ -1003,7 +1003,7 @@
                                                 <tr>
                                                     <td style="width:20%"></td>
                                                     <td>
-                                                        <h:selectBooleanCheckbox id="idCheckbox" value="#{registroController.actividadTemp.indCurso}" />Todavía en curso
+                                                        <h:selectBooleanCheckbox id="idCheckbox" value="#{registroController.actividad.indCurso}" />Todavía en curso
                                                     </td>
                                                 </tr>
                                             </table>
@@ -1018,21 +1018,21 @@
                                                         <table style="width:100%">
                                                             <tr>
                                                                 <td style="width:33%">
-                                                                    <h:selectOneMenu value="#{registroController.actividadTemp.idDepartamento}">
+                                                                    <h:selectOneMenu value="#{registroController.actividad.idDepartamento}">
                                                                         <f:selectItem itemLabel="Departamento" itemValue="0"/>
                                                                         <f:selectItems value="#{registroController.listaDepartamento}" var="y" itemLabel="#{y.value}" itemValue="#{y.label}" />
                                                                         <f:ajax listener="#{registroController.comboProvincia()}" render="cmbProvincia1 cmbDistrito1" />
                                                                     </h:selectOneMenu>
                                                                 </td>
                                                                 <td style="width:33%">
-                                                                    <h:selectOneMenu id="cmbProvincia1" value="#{registroController.actividadTemp.idProvincia}">
+                                                                    <h:selectOneMenu id="cmbProvincia1" value="#{registroController.actividad.idProvincia}">
                                                                         <f:selectItem itemLabel="Provincia" itemValue="0"/>
                                                                         <f:selectItems value="#{registroController.listaProvincia}" var="y" itemLabel="#{y.value} #{y.label}" itemValue="#{y.id}" />
                                                                         <f:ajax listener="#{registroController.comboDistrito()}" render="cmbDistrito1"/>
                                                                     </h:selectOneMenu>
                                                                 </td>
                                                                 <td style="width:34%">
-                                                                    <h:selectOneMenu id="cmbDistrito1" value="#{registroController.actividadTemp.idDistrito}">
+                                                                    <h:selectOneMenu id="cmbDistrito1" value="#{registroController.actividad.idDistrito}">
                                                                         <f:selectItem itemLabel="Distrito" itemValue="0"/>
                                                                         <f:selectItems value="#{registroController.listaDistrito}" var="y" itemLabel="#{y.value} #{y.label}" itemValue="#{y.id}" />
                                                                     </h:selectOneMenu>
@@ -1069,10 +1069,10 @@
                                                     <div class="panel panel-default" style="width:100%;background:#F5F5F5">
                                                         <div class="panel-body">
                                                             <span style="color:#0074cc;font-weight:bold">Descripción</span>
-                                                            <textarea rows="2" jsf:value="#{registroController.actividadTemp.descripcion}" style="width:100%;height:130px"/>
+                                                            <textarea rows="2" jsf:value="#{registroController.actividad.descripcion}" style="width:100%;height:130px"/>
                                                             <br/>
                                                             <span style="color:#0074cc;font-weight:bold">Comentarios</span>
-                                                            <textarea rows="2" jsf:value="#{registroController.actividadTemp.comentario}" style="width:100%;height:140px"/>
+                                                            <textarea rows="2" jsf:value="#{registroController.actividad.comentario}" style="width:100%;height:140px"/>
                                                         </div>
                                                     </div>
                                                 </td>
@@ -1105,7 +1105,8 @@
                                                 </td>
                                             </tr>
                                         </table>
-                                        <script>function confirmar1() {
+                                        <script>
+function confirmar1() {
                                                 $(".confirmacion1").modal('show');
                                             }
                                             function confirmar2() {
@@ -1158,7 +1159,8 @@
                                                     $('#txtFechaFin').removeClass('error');
                                                 }
                                                 return true;
-                                            }</script>
+                                            }
+                                                                                    </script>
                                     </div>
                                 </div>
                             </h:form>

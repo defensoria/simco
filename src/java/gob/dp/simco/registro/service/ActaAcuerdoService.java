@@ -6,7 +6,6 @@
 
 package gob.dp.simco.registro.service;
 
-import gob.dp.simco.registro.bean.FiltroActaAcuerdo;
 import gob.dp.simco.registro.entity.ActaAcuerdo;
 import java.util.List;
 
@@ -19,10 +18,6 @@ public interface ActaAcuerdoService {
    public void actaAcuerdoNuevo(ActaAcuerdo actaAcuerdo) throws Exception;
    
    public void actaAcuerdoModificar(ActaAcuerdo actaAcuerdo) throws Exception;
-   
-   public List<ActaAcuerdo> actaAcuerdoBuscar(FiltroActaAcuerdo filtroActaAcuerdo) throws Exception;
-   
-   public Integer actaAcuerdoTotalBuscar(FiltroActaAcuerdo filtroActaAcuerdo) throws Exception;
    
    public List<ActaAcuerdo> actaAcuerdoxActividadBuscar(long idActividad) throws Exception;
    

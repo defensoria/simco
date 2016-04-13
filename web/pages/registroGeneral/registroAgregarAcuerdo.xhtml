@@ -1,4 +1,9 @@
-<html ng-app='accion' xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:jsf="http://xmlns.jcp.org/jsf" xmlns:gc="http://xmlns.jcp.org/jsf/composite/gc">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:h="http://xmlns.jcp.org/jsf/html" 
+      xmlns:f="http://xmlns.jcp.org/jsf/core" 
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets" 
+      xmlns:jsf="http://xmlns.jcp.org/jsf" 
+      xmlns:gc="http://xmlns.jcp.org/jsf/composite/gc">
     <ui:composition template="../template/template.xhtml">
         <ui:define name="content">
             <style>.vacio{display:none}</style>
@@ -101,7 +106,7 @@
                         };
                     }); /*]]>*/
                 </script>
-                <gc:confirmSubmit bean="#{actaAcuerdoController.registrarActaAcuerdoxActividad2(registroController.actividadTemp.id)}" />
+                <gc:confirmSubmit bean="#{actaAcuerdoController.registrarActaAcuerdoxActividad2(registroController.actividad.id)}" />
                 <div class="panel panel-default" style="width:100%;margin:auto;background:#F5F5F5">
                     <div class="panel-heading">
                         <table style="width:100%">
@@ -161,15 +166,15 @@
                                     </td>
                                     <td style="padding-left:5px">
 
-                                                                <label><span style="font-size: large" class="glyphicon glyphicon-paperclip" />Adjuntar archivo:</label>
-                                                                <h:inputFile class="cMedio" value="#{actaAcuerdoController.file1}"/>
-                                                           <br/>
-                                                                <h:panelGroup rendered="#{actaAcuerdoController.actaAcuerdo.ruta != null}">
-                                                                    <a target="_blank" href="/filesystem/#{registroController.actaAcuerdo.ruta}">
-                                                                        <span style="font-size: large" class="glyphicon glyphicon-link" />
-                                                                    </a>
-                                                                </h:panelGroup>
-                                                          
+                                        <label><span style="font-size: large" class="glyphicon glyphicon-paperclip" />Adjuntar archivo:</label>
+                                        <h:inputFile class="cMedio" value="#{actaAcuerdoController.file1}"/>
+                                        <br/>
+                                        <h:panelGroup rendered="#{actaAcuerdoController.actaAcuerdo.ruta != null}">
+                                            <a target="_blank" href="/filesystem/#{registroController.actaAcuerdo.ruta}">
+                                                <span style="font-size: large" class="glyphicon glyphicon-link" />
+                                            </a>
+                                        </h:panelGroup>
+
                                     </td>
                                 </tr>
                                 <tr>
@@ -546,72 +551,20 @@
                         </tr>
                         <tr>
                             <td colspan="3">
-                                <br/>
-                                <div ng-controller="controlador1" class="panel panel-featured-top-primary">
-                                    <div class="panel-body">
-                                        <span class="text-resalt-primary">Destinatarios adicionales - alertas via correo eléctronico</span>
-                                        <div class="input-group" style="width:30%">
-                                            <input type="text" id="idEmail" style="font-size:14px" ng-model="emai" class="form-control" placeholder="Agregar email"/>
-                                            <input type="hidden" id="idCadenaEmail" jsf:value="#{actaAcuerdoController.seguimientoAcuerdo.opcionales}" />
-                                            <span class="input-group-btn">
-                                                <button style="font-size:14px;padding:6px 12px;border-bottom-left-radius:0;border-top-left-radius:0" ng-click="addEmail()" class="btn btn-success" type="button">
-                                                    <span class="glyphicon glyphicon-user" />
-                                                </button>
-                                            </span>
-                                        </div>
-                                        <br/>
-                                        <div class="row" style="padding:20px" id="idEmails">
-                                        </div>
-                                        <div ng-repeat=" email in  listaEmail">
-                                            <div class='col-md-3 alert alert-success fade in' style='margin:2px;color:green'>
-                                                <table style='width:100%'>
-                                                    <tr>
-                                                        <td><span style='font-weight:bold'>{{email.emai}}</span></td>
-                                                        <td style='text-align:right'><a ng-click="removeEmail(email)" style="cursor:pointer"><span class='glyphicon glyphicon-remove remover' style='color:red'/></a>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </div>
-                                        </div>
-                                        <script>/*<![CDATA[*/var miAplicacion = angular.module('accion', []);
-                                                    miAplicacion.controller('controlador1', ['$scope', function ($scope) {
-                                                            var emails = $("#idCadenaEmail").val().split(";");
-                                                            $scope.listaEmail = [];
-                                                            for (var i = 0; i < emails.length; i++) {
-                                                                if (emails[i].length > 0) {
-                                                                    $scope.listaEmail.push({emai: emails[i], id: i})
-                                                                }
-                                                            }
-                                                            $scope.addEmail = function () {
-                                                                if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/.test($("#idEmail").val())) {
-                                                                    i++;
-                                                                    $("#idCadenaEmail").val($("#idCadenaEmail").val() + $scope.emai + ";")
-                                                                    $scope.listaEmail.push({emai: $scope.emai, id: i});
-                                                                    $scope.emai = "";
-                                                                } else {
-                                                                    alertar("Debe de ingresar un email correcto");
-                                                                    $scope.emai = "";
-                                                                }
-                                                            }
-                                                            $scope.removeEmail = function (item) {
-                                                                $("#idCadenaEmail").val($("#idCadenaEmail").val().replace(item.emai + ";", ""))
-                                                                var index = $scope.listaEmail.indexOf(item);
-                                                                $scope.listaEmail.splice(index, 1);
-                                                            }
-                                                        }])/*]]>*/</script>
-                                    </div>
-                                </div>
+
                             </td>
                         </tr>
                     </table>
                     <br/>
-                    <gc:confirmSubmit bean="#{actaAcuerdoController.agregarActaAcuerdoxActividad(registroController.actividadTemp.id)}" classGC="confirmacion1" mensaje="Esta seguro que desea agregar el registro?" />
-                    <script>function confirmar1() {
+                    <gc:confirmSubmit bean="#{actaAcuerdoController.agregarActaAcuerdoxActividad(registroController.actividad.id)}" classGC="confirmacion1" mensaje="Esta seguro que desea agregar el registro?" />
+                    <script>
+                        function confirmar1() {
                             $(".confirmacion1").modal('show');
                         }
                         function confirmar2() {
                             $(".confirmacion2").modal('show');
-                        }</script>
+                        }
+                    </script>
                     <table style="width:100%">
                         <tr>
                             <td>
@@ -680,9 +633,11 @@
                                                     </span>
                                                 </a>
                                                 <gc:confirmRemoveAjax bean="#{actaAcuerdoController.removeActaAcuerdoxActividad(item)}" classGC="confirmacion2#{item.id}" mensaje="Esta seguro que desea eliminar el registro?" />
-                                                <script>function confirmar2#{item.id}() {
+                                                <script>
+                                                    function confirmar2#{item.id}() {
                                                         $(".confirmacion2#{item.id}").modal('show');
-                                                    }</script>
+                                                    }
+                                                </script>
                                             </h:column>
                                         </h:dataTable>
                                     </div>
@@ -691,7 +646,8 @@
                         </tr>
                     </table>
                 </h:panelGroup>
-                <script type="text/javascript">function sumaDias(fecha, dias) {
+                <script>
+                    function sumaDias(fecha, dias) {
                         var fec = converterFecha(fecha);
                         return new Date(fec.valueOf() + (dias * 24 * 3600 * 1000));
                     }
@@ -829,7 +785,7 @@
                                         if (date1 > date2) {
                                             $('#txtFinSeguimiento').addClass('error');
                                             $('#txtInicioSeguimiento').addClass('error');
-                                            alertar("La fecha de inicio de seguimiento no puede mayor que la fecha de fin de seguimiento")
+                                            alertar("La fecha de inicio de seguimiento no puede mayor que la fecha de fin de seguimiento");
                                             return false;
                                         } else {
                                             $('#txtInicioSeguimiento').removeClass('error');
@@ -1018,17 +974,7 @@
                                 $('#txtFinDefinitivo').attr('disabled', true);
                             }
                         });
-                    });</script>
-                <script>
-                    /*<![CDATA[*/function reconstruirEmail() {
-                        $("#idEmails").empty();
-                        var emails = $("#idCadenaEmail").val().split(";");
-                        for (var i = 0; i < emails.length; i++) {
-                            if (emails[i].length > 0) {
-                                $("#idEmails").append('<div class='col - md - 3 alert alert - success fade in' style='margin:2px; color:green'><table style='width:100 % '><tr><td class='tex'><span style='font - weight:bold'>' + emails[i] + '</span></td><td style='text - align:right'><a><span class='glyphicon glyphicon - remove remover' style='color:red'/></a></td></tr></table></div>'); }
-                        }
-                    }/*]]>*/
-
+                    });
                 </script>
             </h:form>
         </ui:define>

@@ -31,7 +31,6 @@
         <typeAlias type="gob.dp.simco.registro.entity.Caso" alias="caso"/>
         <typeAlias type="gob.dp.simco.registro.bean.FiltroCaso" alias="filtroCaso"/>
         <typeAlias type="gob.dp.simco.registro.entity.ActaAcuerdo" alias="actaAcuerdo"/>
-        <typeAlias type="gob.dp.simco.registro.bean.FiltroActaAcuerdo" alias="filtroActaAcuerdo"/>
         <typeAlias type="gob.dp.simco.registro.entity.MedioVerificacion" alias="medioVerificacion"/>
         <typeAlias type="gob.dp.simco.registro.entity.ActividadActor" alias="actividadActor"/>
         <typeAlias type="gob.dp.simco.registro.entity.ActividadActaAcuerdo" alias="actividadActaAcuerdo"/>

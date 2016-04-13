@@ -1373,7 +1373,6 @@ public class ActorController implements Serializable {
         for (Actor a : listaActorSeleccionadoFinal) {
             actividadActor1 = new ActividadActor();
             actividadActor1.setActividad(actividad);
-
             actividadActor1.setActor(a);
             actividadActor1.setComentario(a.getActividadActor().getComentario());
             actividadActor1.setDemanda(a.getActividadActor().getDemanda());

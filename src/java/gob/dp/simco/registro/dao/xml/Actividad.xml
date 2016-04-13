@@ -27,8 +27,7 @@
         <result property="ruta" column="C_RUTA"/>
         <result property="usuarioRegistro" column="C_USUREGISTRO"/>
         <result property="usuarioModificacion" column="C_USUMODIFICACION"/>
-        <result property="tipoActividad.valorParametro" column="PARAM_TIPO_ACTIVIDAD_VAL"/>
-        <result property="tipoActividad.nombreParametro" column="PARAM_TIPO_ACTIVIDAD_NOM"/>
+        <result property="tipoActividad" column="C_TIPO_ACTIVIDAD"/>
         <result property="justificacionIntervencion" column="C_JUSTINTERVENCION"/>
         <result property="actividadActividad.estado" column="C_ESTADOACTACT"/>
         <result property="actividadAcontecimiento.estado" column="C_ESTADO_ACTI_ACONT"/>
@@ -61,7 +60,6 @@
         A.D_FECHAREALIZACIONFIN,
         A.T_HORAREALIZACIONINI,
         A.T_HORAREALIZACIONFIN,
-        --A.C_JUSTINTERVENCION,
         A.C_CODIGOACTIVIDAD,
         A.N_INDCURSO,
         A.C_COMENTARIOACTIVIDAD,
@@ -258,7 +256,9 @@
         <if test="horaRealizacionFin != null">
             T_HORAREALIZACIONFIN,
         </if>
-        C_TIPO_ACTIVIDAD,
+        <if test="tipoActividad != null">
+            C_TIPO_ACTIVIDAD,
+        </if>    
         <if test="fechaRegistro != null">
             D_FECREGISTRO,
         </if>
@@ -274,7 +274,6 @@
         <if test="indCurso != null">
             N_INDCURSO,
         </if>
-        
         <if test="justificacionIntervencion != null">
             C_JUSTINTERVENCION,
         </if>
@@ -328,7 +327,9 @@
         <if test="horaRealizacionFin != null">
             #{horaRealizacionFin}, 
         </if>
-        #{tipoActividad.valorParametro, jdbcType=CHAR},
+        <if test="tipoActividad != null">
+            #{tipoActividad},
+        </if>    
         <if test="fechaRegistro != null">
             #{fechaRegistro},
         </if>
@@ -419,9 +420,6 @@
             <if test="fechaRealizacionFin != null">
                 D_FECHAREALIZACIONFIN = #{fechaRealizacionFin},
             </if>
-            <if test="fechaModificacion != null">
-                D_FECMODIFICACION = #{fechaModificacion},
-            </if>
             <if test="usuarioModificacion != null">
                 C_USUMODIFICACION = #{usuarioModificacion},
             </if>
@@ -446,8 +444,10 @@
             <if test="resultadoViolencia != null">
                 C_RESULTADOVIOLENCIA = #{resultadoViolencia},
             </if>
-            C_TIPO_ACTIVIDAD = #{tipoActividad.valorParametro, jdbcType=CHAR}
-            
+            <if test="tipoActividad != null">
+                C_TIPO_ACTIVIDAD = #{tipoActividad},
+            </if>
+            D_FECMODIFICACION = #{fechaModificacion}
         </set>
         <where>
             N_ID_ACTIVIDAD=#{id}
@@ -477,7 +477,7 @@
     <update id="actividadUpdateDesVincular" parameterType="long">
         UPDATE SIMCO_REG_ACTIVIDAD
         <set>
-            N_INDICEVINCULADO = 0
+            N_INDICEVINCULADO = null
         </set>
         <where>
             N_ID_ACTIVIDAD=#{id}

@@ -14,33 +14,21 @@ import gob.dp.simco.comun.entity.Provincia;
 import gob.dp.simco.comun.service.UbigeoService;
 import gob.dp.simco.noticia.entity.Noticia;
 import gob.dp.simco.noticia.service.NoticiaService;
-import gob.dp.simco.registro.bean.FiltroActividad;
 import gob.dp.simco.registro.constantes.ConstantesUtil;
 import gob.dp.simco.registro.entity.ActaAcuerdo;
 import gob.dp.simco.registro.entity.Actividad;
-import gob.dp.simco.registro.entity.ActividadActaAcuerdo;
-import gob.dp.simco.registro.entity.ActividadActividad;
-import gob.dp.simco.registro.entity.ActividadActor;
 import gob.dp.simco.registro.entity.ActividadCaso;
 import gob.dp.simco.registro.entity.ActividadHistorial;
-import gob.dp.simco.registro.entity.ActividadMedioVerificacion;
 import gob.dp.simco.registro.entity.Actor;
 import gob.dp.simco.registro.entity.Caso;
 import gob.dp.simco.registro.entity.MedioVerificacion;
 import gob.dp.simco.registro.entity.NoticiaRegistro;
-import gob.dp.simco.registro.entity.Parametro;
 import gob.dp.simco.registro.service.ActaAcuerdoDetalleService;
 import gob.dp.simco.registro.service.ActaAcuerdoService;
-import gob.dp.simco.registro.service.ActividadActaAcuerdoService;
-import gob.dp.simco.registro.service.ActividadActividadService;
-import gob.dp.simco.registro.service.ActividadActorService;
 import gob.dp.simco.registro.service.ActividadCasoService;
 import gob.dp.simco.registro.service.ActividadHistorialService;
-import gob.dp.simco.registro.service.ActividadMedioVerificacionService;
 import gob.dp.simco.registro.service.ActividadService;
-import gob.dp.simco.registro.service.ActorService;
 import gob.dp.simco.registro.service.CasoService;
-import gob.dp.simco.registro.service.MedioVerificacionService;
 import gob.dp.simco.registro.service.NoticiaRegistroService;
 import gob.dp.simco.registro.type.HistorialType;
 import java.io.File;
@@ -72,7 +60,7 @@ public class RegistroController implements Serializable {
 
     private static final Logger log = Logger.getLogger(RegistroController.class);
 
-    private ActividadTemp actividadTemp;
+    private Actividad actividad;
 
     private ActorTemp actorTemp;
 
@@ -155,29 +143,16 @@ public class RegistroController implements Serializable {
     private Part file1;
 
     private MessagesUtil msg;
-    
+
     private List<Actividad> listaActividadesPorCaso;
+    
+    private List<Actividad> acontecimientoVinculado;
 
     @Autowired
     private ActividadService actividadService;
 
     @Autowired
-    private ActividadActorService actividadActorService;
-
-    @Autowired
-    private ActorService actorService;
-
-    @Autowired
-    private ActividadActaAcuerdoService actividadActaAcuerdoService;
-
-    @Autowired
     private ActaAcuerdoService actaAcuerdoService;
-
-    @Autowired
-    private ActividadMedioVerificacionService actividadMedioVerificacionService;
-
-    @Autowired
-    private MedioVerificacionService medioVerificacionService;
 
     @Autowired
     private ActividadCasoService actividadCasoService;
@@ -187,9 +162,6 @@ public class RegistroController implements Serializable {
 
     @Autowired
     private ActividadHistorialService actividadHistorialService;
-
-    @Autowired
-    private ActividadActividadService actividadActividadService;
 
     @Autowired
     private UbigeoService ubigeoService;
@@ -204,66 +176,95 @@ public class RegistroController implements Serializable {
     private NoticiaRegistroService noticiaRegistroService;
 
     public String cargarPagina() {
-        msg = new MessagesUtil();
-        usuarioSession();
-        actividadTemp = new ActividadTemp();
-        cambiarPaginaEstado(null);
-        limpiarListasActores();
-        limpiarActaAcuerdo();
-        limpiarMedios();
-        limpiarVictimas();
-        verDetalleRegistro = false;
-        actividadCaso = new ActividadCaso();
-        nombreCaso = null;
-        generarCadenaCasos();
-        caso = new Caso();
-        listaNoticiasRegistros = new ArrayList<>();
-        return "registroNuevo";
+        try {
+            msg = new MessagesUtil();
+            usuarioSession();
+            actividad = new Actividad();
+            limpiarListasActores();
+            limpiarActaAcuerdo();
+            limpiarMedios();
+            limpiarVictimas();
+            verDetalleRegistro = false;
+            actividadCaso = new ActividadCaso();
+            nombreCaso = null;
+            generarCadenaCasos();
+            caso = new Caso();
+            listaNoticiasRegistros = new ArrayList<>();
+            return "registroNuevo";
+        } catch (Exception e) {
+            log.error("ERROR - cargarPagina()" + e);
+        }
+        return null;
     }
 
     public String cargarNoticias(int tipo) {
-        setTip(tipo);
-        noticia = new Noticia();
-        listaNoticias = null;
-        if (tipo == 1) {
-            listaNoticiasRegistro();
+        try {
+            setTip(tipo);
+            noticia = new Noticia();
+            listaNoticias = null;
+            if (tipo == 1) {
+                listaNoticiasRegistro();
+            }
+            verEnlaceNoticia = true;
+            return "noticiaVinculo";
+        } catch (Exception e) {
+            log.error("ERROR - cargarNoticias()" + e);
         }
-
-        verEnlaceNoticia = true;
-        return "noticiaVinculo";
+        return null;
     }
 
     public String cargarNoticiasCaso() {
-        noticia = new Noticia();
-        verEnlaceNoticia = false;
-        listaNoticias = null;
-        return "noticiaVinculo";
+        try {
+            noticia = new Noticia();
+            verEnlaceNoticia = false;
+            listaNoticias = null;
+            return "noticiaVinculo";
+        } catch (Exception e) {
+            log.error("ERROR - cargarNoticiasCaso()" + e);
+        }
+        return null;
     }
 
     private void usuarioSession() {
-        FacesContext context = FacesContext.getCurrentInstance();
-        LoginController loginController = (LoginController) context.getELContext().getELResolver().getValue(context.getELContext(), null, "loginController");
-        usuarioSession = loginController.getUsuarioSesion();
+        try {
+            FacesContext context = FacesContext.getCurrentInstance();
+            LoginController loginController = (LoginController) context.getELContext().getELResolver().getValue(context.getELContext(), null, "loginController");
+            usuarioSession = loginController.getUsuarioSesion();
+        } catch (Exception e) {
+            log.error("ERROR - usuarioSession()" + e);
+        }
     }
 
     private void limpiarMedios() {
-        FacesContext context = FacesContext.getCurrentInstance();
-        MedioVerificacionController medioVerificacionController = (MedioVerificacionController) context.getELContext().getELResolver().getValue(context.getELContext(), null, "medioVerificacionController");
-        medioVerificacionController.limpiarListaMedios();
+        try {
+            FacesContext context = FacesContext.getCurrentInstance();
+            MedioVerificacionController medioVerificacionController = (MedioVerificacionController) context.getELContext().getELResolver().getValue(context.getELContext(), null, "medioVerificacionController");
+            medioVerificacionController.limpiarListaMedios();
+        } catch (Exception e) {
+            log.error("ERROR - limpiarMedios()" + e);
+        }
     }
-    
-    public void cargarActontecimientoPorCaso(){
-        if(caso.getId() != null)
-            listaActividadesPorCaso = actividadService.actividadBusquedaPorCasoAC(caso.getId());
+
+    public void cargarActontecimientoPorCaso() {
+        try {
+            if (caso.getId() != null) {
+                listaActividadesPorCaso = actividadService.actividadBusquedaPorCasoAC(caso.getId());
+            }
+        } catch (Exception e) {
+            log.error("ERROR - cargarActontecimientoPorCaso()" + e);
+        }
     }
-    
-    public void vincularAcontecimientoActuacion(Actividad acontecimiento){
-        Actividad a = new Actividad();
-        a.setId(actividadTemp.getId());
-        a.setIdAcontecimiento(acontecimiento.getId());
-        actividadService.actividadUpdateAcontecimiento(a);
-        actividadService.actividadUpdateVincular(acontecimiento.getId());
-        msg.messageInfo("Se vinculo el acontecimiento", null);
+
+    public void vincularAcontecimientoActuacion(Actividad acontecimiento) {
+        try {
+            actividad.setIdAcontecimiento(acontecimiento.getId());
+            actividadService.actividadUpdateAcontecimiento(actividad);
+            actividadService.actividadUpdateVincular(acontecimiento.getId());
+            cargarAcontecimientoVinculado();
+            msg.messageInfo("Se vinculo el acontecimiento", null);
+        } catch (Exception e) {
+            log.error("ERROR - vincularAcontecimientoActuacion()" + e);
+        }
     }
 
     public String irModificarRegistro(Actividad acti) {
@@ -275,8 +276,9 @@ public class RegistroController implements Serializable {
             medioVerificacionController.listarMedioVerificacion(acti.getId());
             usuarioSession();
             verDetalleRegistro = true;
-            actividadTemp = new ActividadTemp();
-            actividadTemp = actividadHaciaActividadTemp(acti);
+            actividad = new Actividad();
+            actividad = acti;
+            cargarAcontecimientoVinculado();
             generarCadenaCasos();
             caso = new Caso();
             caso.setNombre(acti.getNombreCaso());
@@ -292,16 +294,15 @@ public class RegistroController implements Serializable {
             nroActaAcuerdoDetalle = actaAcuerdoDetalleService.actaAcuerdoDetalleCount(acti.getId());
             actaAcuerdo = new ActaAcuerdo();
             actaAcuerdo = actaAcuerdoService.actaAcuerdoxActividadBuscarOne(acti.getId());
-
             listaNoticiasRegistro();
             limpiarActaAcuerdo();
             limpiarVictimas2();
             msg = new MessagesUtil();
             return "registroEdit";
         } catch (Exception ex) {
-            log.error(ex.getCause());
-            return null;
+            log.error("ERROR - irModificarRegistro()" + ex);
         }
+        return null;
     }
 
     public String irModificarRegistro2(Actividad acti) {
@@ -313,8 +314,9 @@ public class RegistroController implements Serializable {
             medioVerificacionController.listarMedioVerificacion(acti.getId());
             usuarioSession();
             verDetalleRegistro = true;
-            actividadTemp = new ActividadTemp();
-            actividadTemp = actividadHaciaActividadTemp(acti);
+            actividad = new Actividad();
+            actividad = acti;
+            cargarAcontecimientoVinculado();
             generarCadenaCasos();
             caso = new Caso();
             caso.setNombre(acti.getNombreCaso());
@@ -336,9 +338,35 @@ public class RegistroController implements Serializable {
             msg = new MessagesUtil();
             return "registroNuevo";
         } catch (Exception ex) {
-            log.error(ex.getCause());
-            return null;
+            log.error("ERROR - irModificarRegistro2()" + ex);
         }
+        return null;
+    }
+    
+    private void cargarAcontecimientoVinculado(){
+        if(actividad.getIdAcontecimiento() != null){
+            try {
+                Actividad a = actividadService.actividadBuscarOne(actividad.getIdAcontecimiento());
+                if(a != null){
+                    acontecimientoVinculado = new ArrayList<>();
+                    acontecimientoVinculado.add(a);
+                }else{
+                    acontecimientoVinculado = null;
+                }
+            } catch (Exception ex) {
+                log.error("ERROR - cargarAcontecimientoVinculado()" + ex);
+            }
+        }else{
+            acontecimientoVinculado = null;
+        }
+    }
+    
+    public void removeAcontecimientoVinculado(){
+        acontecimientoVinculado = new ArrayList<>();
+        actividadService.actividadUpdateDesVincular(actividad.getIdAcontecimiento());
+        actividad.setIdAcontecimiento(null);
+        actividadService.actividadUpdateAcontecimiento(actividad);
+        msg.messageInfo("Se desvinculo el acontecimiento", null);
     }
 
     public void verDetalleNoticia(String detalle) {
@@ -346,54 +374,70 @@ public class RegistroController implements Serializable {
     }
 
     public Actividad cargarActividadId(long idActividad) {
-        Actividad a = actividadService.actividadxCasoBuscarID(idActividad);
-        if (a != null) {
-            return a;
+        try {
+            Actividad a = actividadService.actividadxCasoBuscarID(idActividad);
+            if (a != null) {
+                return a;
+            }
+        } catch (Exception e) {
+            log.error("ERROR - cargarActividadId()" + e);
         }
         return null;
     }
 
     public void cargarAcontecimientoModal(Caso c, int tipo) {
-        tipoBoton = null;
-        setCaso(c);
-        FacesContext context = FacesContext.getCurrentInstance();
-        ActorController actorController = (ActorController) context.getELContext().getELResolver().getValue(context.getELContext(), null, "actorController");
-        actorController.limpiarListaActorPaginado();
-        actorController.cargarRegistroAgregarActor(c);
-        usuarioSession();
-        actividadCaso = new ActividadCaso();
-        actividadTemp = new ActividadTemp();
-        tipoBoton = tipo == 1;
-        verDetalleRegistro = false;
-        cambiarPaginaEstado(null);
+        try {
+            tipoBoton = null;
+            setCaso(c);
+            FacesContext context = FacesContext.getCurrentInstance();
+            ActorController actorController = (ActorController) context.getELContext().getELResolver().getValue(context.getELContext(), null, "actorController");
+            actorController.limpiarListaActorPaginado();
+            actorController.cargarRegistroAgregarActor(c);
+            usuarioSession();
+            actividadCaso = new ActividadCaso();
+            actividad = new Actividad();
+            tipoBoton = tipo == 1;
+            verDetalleRegistro = false;
+        } catch (Exception e) {
+            log.error("ERROR - cargarAcontecimientoModal()" + e);
+        }
     }
 
     public boolean vinculaNoticia(Noticia noticia) {
-        NoticiaRegistro noticiaRegistro = new NoticiaRegistro();
-        noticiaRegistro.setDescripcion(noticia.getDescripcion());
-        noticiaRegistro.setEmpresa(noticia.getEmpresa());
-        noticiaRegistro.setFechaPublicacion(noticia.getFechaPublica());
-        noticiaRegistro.setFechaRegistro(noticia.getFechaRegistro());
-        noticiaRegistro.setLink(noticia.getLink());
-        noticiaRegistro.setRegion(noticia.getRegion());
-        noticiaRegistro.setTitulo(noticia.getTitulo());
-        noticiaRegistro.setIdActividad(actividadTemp.getId());
-        noticiaRegistro.setEstado("ACT");
-        for (NoticiaRegistro noticia1 : listaNoticiasRegistros) {
-            if (StringUtils.equals(noticia.getTitulo(), noticia1.getTitulo())) {
-                msg.messageAlert("Esta noticia ya fue vinculada", null);
-                return false;
+        try {
+            NoticiaRegistro noticiaRegistro = new NoticiaRegistro();
+            noticiaRegistro.setDescripcion(noticia.getDescripcion());
+            noticiaRegistro.setEmpresa(noticia.getEmpresa());
+            noticiaRegistro.setFechaPublicacion(noticia.getFechaPublica());
+            noticiaRegistro.setFechaRegistro(noticia.getFechaRegistro());
+            noticiaRegistro.setLink(noticia.getLink());
+            noticiaRegistro.setRegion(noticia.getRegion());
+            noticiaRegistro.setTitulo(noticia.getTitulo());
+            noticiaRegistro.setIdActividad(actividad.getId());
+            noticiaRegistro.setEstado("ACT");
+            for (NoticiaRegistro noticia1 : listaNoticiasRegistros) {
+                if (StringUtils.equals(noticia.getTitulo(), noticia1.getTitulo())) {
+                    msg.messageAlert("Esta noticia ya fue vinculada", null);
+                    return false;
+                }
             }
+            listaNoticiasRegistros.add(noticiaRegistro);
+            msg.messageInfo("Se vinculo la noticia", null);
+            return true;
+        } catch (Exception e) {
+            log.error("ERROR - vinculaNoticia()" + e);
         }
-        listaNoticiasRegistros.add(noticiaRegistro);
-        msg.messageInfo("Se vinculo la noticia", null);
-        return true;
+        return false;
     }
 
     public void listaNoticiasRegistro() {
-        List<NoticiaRegistro> list = noticiaRegistroService.noticiaRegistroBuscar(actividadTemp.getId());
-        listaNoticiasRegistros = new ArrayList<>();
-        listaNoticiasRegistros.addAll(list);
+        try {
+            List<NoticiaRegistro> list = noticiaRegistroService.noticiaRegistroBuscar(actividad.getId());
+            listaNoticiasRegistros = new ArrayList<>();
+            listaNoticiasRegistros.addAll(list);
+        } catch (Exception e) {
+            log.error("ERROR - listaNoticiasRegistro()" + e);
+        }
     }
 
     public void eliminarNoticiaRegistro(NoticiaRegistro noticiaRegistro) {
@@ -402,39 +446,49 @@ public class RegistroController implements Serializable {
     }
 
     public String guardarVinculos() {
-        if (listaNoticiasRegistros.isEmpty()) {
-            msg.messageAlert("Debe de enlazar por lo menos una noticia para poder guardar", null);
-            return null;
-        }
-        for (NoticiaRegistro noticiaRegistro : listaNoticiasRegistros) {
-            if (noticiaRegistro.getId() == null) {
-                noticiaRegistroService.noticiaRegistroInsertar(noticiaRegistro);
-            } else {
-                noticiaRegistroService.noticiaRegistroUpdate(noticiaRegistro);
+        try {
+            if (listaNoticiasRegistros.isEmpty()) {
+                msg.messageAlert("Debe de enlazar por lo menos una noticia para poder guardar", null);
+                return null;
             }
+            for (NoticiaRegistro noticiaRegistro : listaNoticiasRegistros) {
+                if (noticiaRegistro.getId() == null) {
+                    noticiaRegistroService.noticiaRegistroInsertar(noticiaRegistro);
+                } else {
+                    noticiaRegistroService.noticiaRegistroUpdate(noticiaRegistro);
+                }
+            }
+            listaNoticiasRegistro();
+            msg.messageInfo("Se han registrado los cambios", null);
+            if (tip == 1) {
+                return "registroNuevo";
+            } else {
+                return "registroEdit";
+            }
+        } catch (Exception e) {
+            log.error("ERROR - guardarVinculos()" + e);
         }
-        listaNoticiasRegistro();
-        msg.messageInfo("Se han registrado los cambios", null);
-        if (tip == 1) {
-            return "registroNuevo";
-        } else {
-            return "registroEdit";
-        }
+        return null;
     }
 
     private void generarCadenaCasos() {
         try {
             cadenaAutocomplete = casoService.casoBuscarAutocomplete();
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            log.error("ERROR - generarCadenaCasos()" + ex);
         }
     }
 
-    public String generarCodigoAD() {
-        SimpleDateFormat formato = new SimpleDateFormat("yyyyMM");
-        String codigo = formato.format(new Date());
-        String numero = String.format("%2s", actividadService.actividadADCodigoGenerado().toString()).replace(' ', '0');
-        return "AC" + codigo + numero;
+    private String generarCodigoAD() {
+        try {
+            SimpleDateFormat formato = new SimpleDateFormat("yyyyMM");
+            String codigo = formato.format(new Date());
+            String numero = String.format("%2s", actividadService.actividadADCodigoGenerado().toString()).replace(' ', '0');
+            return "AC" + codigo + numero;
+        } catch (Exception e) {
+            log.error("ERROR - generarCodigoAD()" + e);
+        }
+        return null;
     }
 
     public void buscarNoticia(Long pagina) {
@@ -459,8 +513,7 @@ public class RegistroController implements Serializable {
                 }
 
             } catch (Exception e) {
-                log.error(e);
-
+                log.error("ERROR - buscarNoticia()" + e);
             }
         }
     }
@@ -474,98 +527,89 @@ public class RegistroController implements Serializable {
         try {
             casos = casoService.casoBuscar(caso);
         } catch (Exception ex) {
-            log.error("ERROR : CasoController.buscarCaso" + ex.getMessage());
+            log.error("ERROR - buscarCaso()" + ex);
         }
     }
 
     private void limpiarListasActores() {
-        FacesContext context = FacesContext.getCurrentInstance();
-        ActorController actorController = (ActorController) context.getELContext().getELResolver().getValue(context.getELContext(), null, "actorController");
-        actorController.limpiarListas();
+        try {
+            FacesContext context = FacesContext.getCurrentInstance();
+            ActorController actorController = (ActorController) context.getELContext().getELResolver().getValue(context.getELContext(), null, "actorController");
+            actorController.limpiarListas();
+        } catch (Exception e) {
+            log.error("ERROR - limpiarListasActores()" + e);
+        }
     }
 
     private void limpiarActaAcuerdo() {
-        FacesContext context = FacesContext.getCurrentInstance();
-        ActaAcuerdoController actaAcuerdoController = (ActaAcuerdoController) context.getELContext().getELResolver().getValue(context.getELContext(), null, "actaAcuerdoController");
-        actaAcuerdoController.limpiarActaAcuerdo();
+        try {
+            FacesContext context = FacesContext.getCurrentInstance();
+            ActaAcuerdoController actaAcuerdoController = (ActaAcuerdoController) context.getELContext().getELResolver().getValue(context.getELContext(), null, "actaAcuerdoController");
+            actaAcuerdoController.limpiarActaAcuerdo();
+        } catch (Exception e) {
+            log.error("ERROR - limpiarActaAcuerdo()" + e);
+        }
     }
 
     private void limpiarVictimas() {
-        FacesContext context = FacesContext.getCurrentInstance();
-        VictimaViolenciaController victimaViolenciaController = (VictimaViolenciaController) context.getELContext().getELResolver().getValue(context.getELContext(), null, "victimaViolenciaController");
-        victimaViolenciaController.limpiarVictimas();
+        try {
+            FacesContext context = FacesContext.getCurrentInstance();
+            VictimaViolenciaController victimaViolenciaController = (VictimaViolenciaController) context.getELContext().getELResolver().getValue(context.getELContext(), null, "victimaViolenciaController");
+            victimaViolenciaController.limpiarVictimas();
+        } catch (Exception e) {
+            log.error("ERROR - limpiarVictimas()" + e);
+        }
     }
 
     private void limpiarVictimas2() {
-        FacesContext context = FacesContext.getCurrentInstance();
-        VictimaViolenciaController victimaViolenciaController = (VictimaViolenciaController) context.getELContext().getELResolver().getValue(context.getELContext(), null, "victimaViolenciaController");
-        victimaViolenciaController.limpiarVictimasEdit(actividadTemp.getId());
-    }
-
-    public String cargarPaginaRetornoActividad(int tipo) {
-        actividadTemp = new ActividadTemp();
-        actorTemp = new ActorTemp();
-        cambiarPaginaEstado(null);
-        verVinculosMantenimientoActividad = false;
-        return "registroNuevo";
+        try {
+            FacesContext context = FacesContext.getCurrentInstance();
+            VictimaViolenciaController victimaViolenciaController = (VictimaViolenciaController) context.getELContext().getELResolver().getValue(context.getELContext(), null, "victimaViolenciaController");
+            victimaViolenciaController.limpiarVictimasEdit(actividad.getId());
+        } catch (Exception e) {
+            log.error("ERROR - limpiarVictimas2()" + e);
+        }
     }
 
     public String cargarPaginaBusqueda(int tipo) {
-        log.debug("METODO : ActividadController.cargarPaginaBusqueda");
         actividadBusquedaTemp = new ActividadBusquedaTemp();
-        //definelink(tipo);
-        return "actividadBusqueda";
-    }
-
-    public String regresarPaginaBusqueda() {
-        log.debug("METODO : ActividadController.regresarPaginaBusqueda");
         return "actividadBusqueda";
     }
 
     public String regresarDeNoticias() {
-        listaNoticiasRegistro();
-        if (tip == 1) {
-            return "registroNuevo";
-        } else {
-            return "registroEdit";
+        try {
+            listaNoticiasRegistro();
+            if (tip == 1) {
+                return "registroNuevo";
+            } else {
+                return "registroEdit";
+            }
+        } catch (Exception e) {
+            log.error("ERROR - regresarDeNoticias()" + e);
         }
-    }
-
-    public String cargarPaginaCrearActor() {
-        actorTemp.setIndicadorActorExiste(false);
-        return "";
-    }
-
-    private void cambiarPaginaEstado(String estado) {
-        if (estado == null) {
-            actividadTemp.setIsIndicadorActividadExiste(false);
-        }
+        return null;
     }
 
     public void registrarActividad() {
-        Actividad actividad;
-        actividad = actividadTempHaciaActividad(actividadTemp);
         String ruta = uploadArchiveImage();
         if (StringUtils.isNoneBlank(ruta)) {
             actividad.setRuta(ruta);
         }
         try {
             String accionHistorial;
-            if (actividadTemp.isIsIndicadorActividadExiste()) {
+            if (actividad.getId() != null) {
                 actividad.setFechaModificacion(new Date());
                 actividad.setUsuarioModificacion(usuarioSession.getCodigo());
                 actividadService.actividadModificar(actividad);
                 if (caso.getId() != null) {
                     insertaUpdateActividadCaso(setearActividadCaso(actividad, caso));
                 }
-                actividadTemp = actividadHaciaActividadTemp(actividad);
                 accionHistorial = HistorialType.HISTORIAL_ACTUALIZACION.getKey();
             } else {
                 actividad.setFechaRegistro(new Date());
                 actividad.setUsuarioRegistro(usuarioSession.getCodigo());
                 actividad.setCodigoActividad(generarCodigoAD());
                 actividadService.actividadNuevo(actividad);
-                actividadTemp = actividadHaciaActividadTemp(actividad);
                 accionHistorial = HistorialType.HISTORIAL_CREACION.getKey();
                 if (caso != null) {
                     if (caso.getId() != null) {
@@ -574,19 +618,23 @@ public class RegistroController implements Serializable {
                 }
                 verDetalleRegistro = true;
             }
-            historialActividad(accionHistorial, actividadTemp.getId());
+            historialActividad(accionHistorial, actividad.getId());
             msg.messageInfo("Se realizadon los cambios", null);
         } catch (Exception e) {
-            log.error(e);
+            log.error("ERROR - registrarActividad()" + e);
         }
     }
 
     private void insertaUpdateActividadCaso(ActividadCaso ac) {
-        int count = actividadCasoService.actividadCasoValida(ac.getActividad().getId());
-        if (count == 0) {
-            actividadCasoService.actividadCasoInsertar(ac);
-        } else {
-            actividadCasoService.actividadCasoUpdate(ac);
+        try {
+            int count = actividadCasoService.actividadCasoValida(ac.getActividad().getId());
+            if (count == 0) {
+                actividadCasoService.actividadCasoInsertar(ac);
+            } else {
+                actividadCasoService.actividadCasoUpdate(ac);
+            }
+        } catch (Exception e) {
+            log.error("ERROR - insertaUpdateActividadCaso()" + e);
         }
     }
 
@@ -605,7 +653,6 @@ public class RegistroController implements Serializable {
                     extencion = ".gif";
                     break;
             }
-
             DateFormat fechaHora = new SimpleDateFormat("yyyyMMddHHmmss");
             String formato = fechaHora.format(new Date());
             String ruta = formato + extencion;
@@ -613,7 +660,7 @@ public class RegistroController implements Serializable {
             try (InputStream input = file1.getInputStream()) {
                 Files.copy(input, file.toPath());
             } catch (IOException ex) {
-                log.error(ex.getCause());
+                log.error("ERROR - uploadArchiveImage()" + ex);
             }
             return ruta;
         }
@@ -621,18 +668,20 @@ public class RegistroController implements Serializable {
     }
 
     private static String getFilename(Part part) {
-        for (String cd : part.getHeader("content-disposition").split(";")) {
-            if (cd.trim().startsWith("filename")) {
-                String filename = cd.substring(cd.indexOf("=") + 1).trim().replace("\"", "");
-                return filename.substring(filename.lastIndexOf('/') + 1).substring(filename.lastIndexOf('\\') + 1);
+        try {
+            for (String cd : part.getHeader("content-disposition").split(";")) {
+                if (cd.trim().startsWith("filename")) {
+                    String filename = cd.substring(cd.indexOf("=") + 1).trim().replace("\"", "");
+                    return filename.substring(filename.lastIndexOf('/') + 1).substring(filename.lastIndexOf('\\') + 1);
+                }
             }
+        } catch (Exception e) {
+            log.error("ERROR - getFilename()" + e);
         }
         return null;
     }
 
     public void registrarActividadModal(int tipo) {
-        Actividad actividad;
-        actividad = actividadTempHaciaActividad(actividadTemp);
         if (tipo == 1) {
             actividad.setTipo("AC");
         }
@@ -642,7 +691,7 @@ public class RegistroController implements Serializable {
         FacesContext context = FacesContext.getCurrentInstance();
         try {
             String accionHistorial;
-            if (actividadTemp.isIsIndicadorActividadExiste()) {
+            if (actividad.getId() != null) {
                 actividad.setFechaModificacion(new Date());
                 actividad.setUsuarioModificacion(usuarioSession.getCodigo());
                 actividadService.actividadModificar(actividad);
@@ -652,305 +701,69 @@ public class RegistroController implements Serializable {
 
                 ActorController actorController = (ActorController) context.getELContext().getELResolver().getValue(context.getELContext(), null, "actorController");
                 actorController.actividadUnionActorModal(actividad.getId());
-                //addInfo(getMessage("registro.actividad.actualizo.ok"));
                 accionHistorial = HistorialType.HISTORIAL_ACTUALIZACION.getKey();
             } else {
                 actividad.setFechaRegistro(new Date());
                 actividad.setUsuarioRegistro(usuarioSession.getCodigo());
                 actividad.setCodigoActividad(generarCodigoAD());
                 actividadService.actividadNuevo(actividad);
-                actividadTemp = actividadHaciaActividadTemp(actividad);
-                //addInfo(getMessage("registro.actividad.guardar.ok"));
                 accionHistorial = HistorialType.HISTORIAL_CREACION.getKey();
                 if (caso != null) {
                     if (caso.getId() != null) {
                         actividadCasoService.actividadCasoInsertar(setearActividadCaso(actividad, caso));
                     }
-
                 }
                 verDetalleRegistro = true;
             }
             CasoController casoController = (CasoController) context.getELContext().getELResolver().getValue(context.getELContext(), null, "casoController");
             casoController.contarActividades();
-            historialActividad(accionHistorial, actividadTemp.getId());
+            historialActividad(accionHistorial, actividad.getId());
         } catch (Exception e) {
-            log.error(e.getCause());
+            log.error("ERROR - registrarActividadModal()" + e);
         }
     }
 
     private ActividadCaso setearActividadCaso(Actividad a, Caso c) {
-        actividadCaso = new ActividadCaso();
-        actividadCaso.setCaso(c);
-        actividadCaso.setActividad(a);
-        actividadCaso.setEstado("ACT");
-        return actividadCaso;
-    }
-    
-    private ActividadTemp actividadHaciaActividadTemp(Actividad actividad) {
-        ActividadTemp out = new ActividadTemp();
-        out.setId(actividad.getId());
-        out.setNombre(actividad.getNombre());
-        out.setDescripcion(actividad.getDescripcion());
-        out.setLugarRealizacion(actividad.getLugarRealizacion());
-        out.setFechaRealizacionIni(actividad.getFechaRealizacionIni());
-        out.setFechaRealizacionFin(actividad.getFechaRealizacionFin());
-        out.setHoraRealizacionIni(actividad.getHoraRealizacionIni());
-        out.setHoraRealizacionFin(actividad.getHoraRealizacionFin());
-        out.setIsIndicadorActividadExiste(true);
-        out.setCodigoActividad(actividad.getCodigoActividad());
-        out.setComentario(actividad.getComentario());
-        out.setIdDepartamento(actividad.getIdDepartamento());
-        out.setIdProvincia(actividad.getIdProvincia());
-        out.setIdDistrito(actividad.getIdDistrito());
-        out.setCoordenadaX(actividad.getCoordenadaX());
-        out.setCoordenadaY(actividad.getCoordenadaY());
-        out.setZoom(actividad.getZoom());
-        out.setTipo(actividad.getTipo());
-        out.setRuta(actividad.getRuta());
-        out.setTipoAcontecimiento(actividad.getTipoAcontecimiento());
-        out.setTipoViolencia(actividad.getTipoViolencia());
-        out.setResultadoViolencia(actividad.getResultadoViolencia());
-        if (actividad.getIndCurso() == 1) {
-            out.setIndCurso(true);
-        } else {
-            out.setIndCurso(false);
-        }
-        out.setTipoActividad(actividad.getTipoActividad() == null ? null : actividad.getTipoActividad().getValorParametro());
-        out.setTipoActividadNombre(actividad.getTipoActividad() == null ? null : actividad.getTipoActividad().getNombreParametro());
-        out.setJustificacionIntervencion(actividad.getJustificacionIntervencion());
-        out.setIdAcontecimiento(actividad.getIdAcontecimiento());
-        out.setIndiceVinculado(actividad.getIndiceVinculado());
-        return out;
-    }
-
-    private Actividad actividadTempHaciaActividad(ActividadTemp actividadTemp) {
-        Actividad out = new Actividad();
-        out.setId(actividadTemp.getId());
-        out.setNombre(actividadTemp.getNombre());
-        out.setDescripcion(actividadTemp.getDescripcion());
-        out.setLugarRealizacion(actividadTemp.getLugarRealizacion());
-        out.setFechaRealizacionIni(actividadTemp.getFechaRealizacionIni());
-        out.setFechaRealizacionFin(actividadTemp.getFechaRealizacionFin());
-        out.setHoraRealizacionIni(actividadTemp.getHoraRealizacionIni());
-        out.setHoraRealizacionFin(actividadTemp.getHoraRealizacionFin());
-        out.setCodigoActividad(actividadTemp.getCodigoActividad());
-        out.setComentario(actividadTemp.getComentario());
-        out.setIdDepartamento(actividadTemp.getIdDepartamento());
-        out.setIdProvincia(actividadTemp.getIdProvincia());
-        out.setIdDistrito(actividadTemp.getIdDistrito());
-        out.setCoordenadaX(actividadTemp.getCoordenadaX());
-        out.setCoordenadaY(actividadTemp.getCoordenadaY());
-        out.setZoom(actividadTemp.getZoom());
-        out.setTipo(actividadTemp.getTipo());
-        out.setRuta(actividadTemp.getRuta());
-        out.setTipoAcontecimiento(actividadTemp.getTipoAcontecimiento());
-        out.setTipoViolencia(actividadTemp.getTipoViolencia());
-        out.setResultadoViolencia(actividadTemp.getResultadoViolencia());
-        if (actividadTemp.getIndCurso()) {
-            out.setIndCurso(1);
-        } else {
-            out.setIndCurso(0);
-        }
-
-        Parametro p = new Parametro();
-        Parametro p1 = new Parametro();
-        p.setValorParametro(actividadTemp.getTipoActividad());
-        p.setNombreParametro(actividadTemp.getTipoActividadNombre());
-        p1.setValorParametro(actividadTemp.getTipoParticipacionDefensoria());
-        p1.setNombreParametro(actividadTemp.getTipoParticipacionDefensoriaNombre());
-        out.setTipoActividad(p);
-        out.setJustificacionIntervencion(actividadTemp.getJustificacionIntervencion());
-        out.setIdAcontecimiento(actividadTemp.getIdAcontecimiento());
-        out.setIndiceVinculado(actividadTemp.getIndiceVinculado());
-        return out;
-    }
-
-    public List<Actividad> buscarActividad() {
-        log.debug("METODO : ActividadController.buscarActividad");
-        List<Actividad> lst = null;
         try {
-            FiltroActividad filtro = busquedaActividadTempHaciaFiltroActividad(actividadBusquedaTemp);
+            actividadCaso = new ActividadCaso();
+            actividadCaso.setCaso(c);
+            actividadCaso.setActividad(a);
+            actividadCaso.setEstado("ACT");
+            return actividadCaso;
         } catch (Exception e) {
-            log.error("ERROR : ActividadController.buscarActividad: " + e.getMessage());
+            log.error("ERROR - setearActividadCaso()" + e);
         }
-        return lst;
-    }
-
-    private FiltroActividad busquedaActividadTempHaciaFiltroActividad(ActividadBusquedaTemp bean) {
-        FiltroActividad filtro = new FiltroActividad();
-        if (!StringUtils.isBlank(bean.getNombre())) {
-            filtro.setNombre(bean.getNombre().trim());
-        }
-        return filtro;
-    }
-
-    public String actividadUnionActor(Long idActor) {
-        log.debug("METODO : ActividadController.actividadUnionActor");
-        Actividad actividad = new Actividad();
-        // String care = actividadActorTemp.getTipoParticipacion();
-        Actor actor = new Actor();
-
-        actividad.setId(actividadTemp.getId());
-        actor.setId(idActor);
-        ActividadActor actividadActor = new ActividadActor(actividad, actor, "TMP");
-        try {
-            actividadActorService.actividadActorInsertar(actividadActor);
-            listaActoresxActividadTotal = listarActoresActividadTotal();
-//            historialActorActividad(HistorialType.HISTORIAL_VINCULACION.getKey(), HistorialType.ENTIDAD_ACTIVIDAD.getKey(), actividadTemp.getId(), idActor);
-        } catch (Exception e) {
-            log.error("ERROR : ActividadController.actividadUnionActor: " + e.getMessage());
-        }
-        return "actividadDetalle";
-    }
-
-    public String actividadUnionActividad(Long idActividad) {
-        log.debug("METODO : ActividadController.actividadUnionActividad");
-        Actividad padre = new Actividad();
-        Actividad hijo = new Actividad();
-
-        padre.setId(actividadTemp.getId());
-        hijo.setId(idActividad);
-        ActividadActividad actividadActividad = new ActividadActividad(padre, hijo, "TMP");
-        try {
-            actividadActividadService.actividadActividadInsertar(actividadActividad);
-            listaActividadxActividadTotal = listarActividadActividadTotal();
-        } catch (Exception e) {
-            log.error("ERROR : ActividadController.actividadUnionActividad: " + e.getMessage());
-        }
-        return "actividadDetalle";
-    }
-
-    private List<Actor> listarActoresActividadTotal() {
-        List<Actor> list = null;
-        try {
-            list = actorService.actorxActividadBuscarTotal(actividadTemp.getId());
-        } catch (Exception e) {
-            log.error("ERROR : ActividadController.listarActoresActividad: " + e.getMessage());
-        }
-        return list;
-    }
-
-    private List<Actividad> listarActividadActividadTotal() {
-        List<Actividad> list = null;
-        try {
-            list = actividadService.actividadxActividadBuscarTotal(actividadTemp.getId());
-        } catch (Exception e) {
-            log.error("ERROR : ActividadController.listarActividadActividadTotal: " + e.getMessage());
-        }
-        return list;
-    }
-
-    public String actividadUnionActa(Long idActaAcuerdo) {
-        log.debug("METODO : ActividadController.actividadUnionActa");
-        ActividadActaAcuerdo actividadActaAcuerdo = new ActividadActaAcuerdo();
-        ActaAcuerdo actaAc = new ActaAcuerdo();
-        Actividad actividad = new Actividad();
-        actividad.setId(actividadTemp.getId());
-        actaAc.setId(idActaAcuerdo);
-        actividadActaAcuerdo.setActividad(actividad);
-        actividadActaAcuerdo.setActaAcuerdo(actaAc);
-        actividadActaAcuerdo.setEstado("TMP");
-        try {
-            listaActaAcuerdoxActividadTotal = listarActaAcuerdoActividadTotal();
-        } catch (Exception e) {
-            log.error("ERROR : ActividadController.actividadUnionActa: " + e.getMessage());
-        }
-        return "actividadDetalle";
-
-    }
-
-    public List<ActaAcuerdo> listarActaAcuerdoActividad() {
-        List<ActaAcuerdo> list = null;
-        try {
-            list = actaAcuerdoService.actaAcuerdoxActividadBuscar(actividadTemp.getId());
-        } catch (Exception e) {
-            log.error("ERROR : ActividadController.listarActaAcuerdoActividad: " + e.getMessage());
-        }
-        return list;
-    }
-
-    public List<ActaAcuerdo> listarActaAcuerdoActividadTotal() {
-        List<ActaAcuerdo> list = null;
-        try {
-            list = actaAcuerdoService.actaAcuerdoxActividadBuscarTotal(actividadTemp.getId());
-        } catch (Exception e) {
-            log.error("ERROR : ActividadController.listarActaAcuerdoActividadTotal: " + e.getMessage());
-        }
-        return list;
-    }
-
-    public String actividadUnionMedioVerificacion(Long idMedioVerificacion) {
-        log.debug("METODO : ActividadController.actividadUnionMedioVerificacion");
-        ActividadMedioVerificacion actividadMedioVerificacion = new ActividadMedioVerificacion();
-        MedioVerificacion medioVerificacion = new MedioVerificacion();
-        Actividad actividad = new Actividad();
-        actividad.setId(actividadTemp.getId());
-        medioVerificacion.setId(idMedioVerificacion);
-        actividadMedioVerificacion.setActividad(actividad);
-        actividadMedioVerificacion.setMedioVerificacion(medioVerificacion);
-        actividadMedioVerificacion.setEstado("TMP");
-        try {
-            actividadMedioVerificacionService.actividadMedioVerificacionInsertar(actividadMedioVerificacion);
-            listaMedioVerificacionxActividadTotal = listarMedioVerificacionActividadTotal();
-        } catch (Exception e) {
-            log.error("ERROR : ActividadController.actividadUnionMedioVerificacion: " + e.getMessage());
-        }
-        return "actividadDetalle";
-    }
-
-    private List<MedioVerificacion> listarMedioVerificacionActividadTotal() {
-        List<MedioVerificacion> list = null;
-        try {
-            list = medioVerificacionService.medioVerificacionxActividadBuscarTotal(actividadTemp.getId());
-        } catch (Exception e) {
-            log.error("ERROR : ActividadController.listarMedioVerificacionActividadTotal: " + e.getMessage());
-        }
-        return list;
-    }
-
-    public String actividadUnionCaso(Long idCaso) {
-        log.debug("METODO : ActividadController.actividadUnionCaso");
-        ActividadCaso actividadCaso1 = new ActividadCaso();
-        Actividad actividad1 = new Actividad();
-        Caso caso1 = new Caso();
-
-        actividad1.setId(actividadTemp.getId());
-        caso1.setId(idCaso);
-        actividadCaso1.setActividad(actividad1);
-        actividadCaso1.setCaso(caso1);
-        actividadCaso1.setEstado("TMP");
-        try {
-            actividadCasoService.actividadCasoInsertar(actividadCaso1);
-            listaCasoxActividadTotal = listarCasoActividadTotal();
-        } catch (Exception e) {
-            log.error("ERROR : ActividadController.actividadUnionCaso: " + e.getMessage());
-        }
-        return "actividadDetalle";
+        return null;
     }
 
     public void comboProvincia() {
-        listaProvincia = new ArrayList<>();
-        listaDistrito = new ArrayList<>();
-        int id = actividadTemp.getIdDepartamento();
-        if (id == 0) {
-            listaProvincia.clear();
-        } else {
-            List<Provincia> list = ubigeoService.provinciaLista(id);
-            if (list.size() > 0) {
-                for (Provincia provincia : list) {
-                    listaProvincia.add(new SelectItem(provincia.getId(), provincia.getDescripcion()));
+        try {
+            listaProvincia = new ArrayList<>();
+            listaDistrito = new ArrayList<>();
+            int id = actividad.getIdDepartamento();
+            if (id == 0) {
+                listaProvincia.clear();
+            } else {
+                List<Provincia> list = ubigeoService.provinciaLista(id);
+                if (list.size() > 0) {
+                    for (Provincia provincia : list) {
+                        listaProvincia.add(new SelectItem(provincia.getId(), provincia.getDescripcion()));
+                    }
                 }
+                Departamento dep = ubigeoService.departamentoOne(id);
+                cordenadax = dep.getCoordenadax();
+                cordenaday = dep.getCoordenaday();
+                zoom = dep.getZoom();
             }
-            Departamento dep = ubigeoService.departamentoOne(id);
-            cordenadax = dep.getCoordenadax();
-            cordenaday = dep.getCoordenaday();
-            zoom = dep.getZoom();
+        } catch (Exception e) {
+            log.error("ERROR - comboProvincia()" + e);
         }
     }
 
     public void comboDistrito() {
-        listaDistrito = new ArrayList<>();
-        int id = actividadTemp.getIdProvincia();
+        try {
+            listaDistrito = new ArrayList<>();
+        int id = actividad.getIdProvincia();
         if (id == 0) {
             listaDistrito.clear();
         } else {
@@ -960,118 +773,28 @@ public class RegistroController implements Serializable {
                     listaDistrito.add(new SelectItem(distrito.getId(), distrito.getDescripcion()));
                 }
             }
-            Provincia prov = ubigeoService.provinciaOne(actividadTemp.getIdProvincia());
+            Provincia prov = ubigeoService.provinciaOne(actividad.getIdProvincia());
             cordenadax = prov.getCoordenadax();
             cordenaday = prov.getCoordenaday();
             zoom = prov.getZoom();
         }
+        } catch (Exception e) {
+            log.error("ERROR - comboDistrito()" + e);
+        }
     }
 
     public void coordenadasDistrito() {
-        Integer idDistrito = actividadTemp.getIdDistrito();
-        if (idDistrito != null) {
-            Distrito dist = ubigeoService.distritoOne(idDistrito);
-            cordenadax = dist.getCoordenadax();
-            cordenaday = dist.getCoordenaday();
-            zoom = dist.getZoom();
-        }
-
-    }
-
-    private List<Caso> listarCasoActividadTotal() {
-        List<Caso> list = null;
         try {
-            list = casoService.casoxActividadBuscarTotal(actividadTemp.getId());
+            Integer idDistrito = actividad.getIdDistrito();
+            if (idDistrito != null) {
+                Distrito dist = ubigeoService.distritoOne(idDistrito);
+                cordenadax = dist.getCoordenadax();
+                cordenaday = dist.getCoordenaday();
+                zoom = dist.getZoom();
+            }
         } catch (Exception e) {
-            log.error("ERROR : ActividadController.listarCasoActividadTotal: " + e.getMessage());
+            log.error("ERROR - coordenadasDistrito()" + e);
         }
-        return list;
-    }
-
-    public void eliminarActorActividad(Long idActor) {
-        log.debug("METODO : ActividadController.eliminarActorActividad");
-        Actividad actividad = new Actividad();
-        Actor actor = new Actor();
-
-        actividad.setId(actividadTemp.getId());
-        actor.setId(idActor);
-        ActividadActor actividadActor = new ActividadActor(actividad, actor, null);
-        try {
-            actividadActorService.actividadActorDelete(actividadActor);
-            listaActoresxActividadTotal = listarActoresActividadTotal();
-//            historialActorActividad(HistorialType.HISTORIAL_DESVINCULACION.getKey(), HistorialType.ENTIDAD_ACTIVIDAD.getKey(), actividadTemp.getId(), idActor);
-        } catch (Exception e) {
-            log.error("METODO : ActividadController.eliminarActorActividad" + e.getMessage());
-        }
-    }
-
-    public void eliminarActaAcuerdoActividad(Long idActaAcuerdo) {
-        log.debug("METODO : ActividadController.eliminarActaAcuerdoActividad");
-        Actividad actividad = new Actividad();
-        ActaAcuerdo actaAc = new ActaAcuerdo();
-
-        actividad.setId(actividadTemp.getId());
-        actaAc.setId(idActaAcuerdo);
-        ActividadActaAcuerdo actividadActaAcuerdo = new ActividadActaAcuerdo(actividad, actaAc, null);
-        try {
-            actividadActaAcuerdoService.actividadActaAcuerdoDelete(actividadActaAcuerdo);
-            listaActaAcuerdoxActividadTotal = listarActaAcuerdoActividadTotal();
-        } catch (Exception e) {
-            log.error("METODO : ActividadController.eliminarActaAcuerdoActividad" + e.getMessage());
-        }
-    }
-
-    public void eliminarActividadActividad(Long idActividad) {
-        log.debug("METODO : ActividadController.eliminarActividadActividad");
-
-        Actividad padre = new Actividad();
-        Actividad hijo = new Actividad();
-
-        padre.setId(actividadTemp.getId());
-        hijo.setId(idActividad);
-        ActividadActividad actividadActividad = new ActividadActividad(padre, hijo, "ACT");
-        try {
-            actividadActividadService.actividadActividadDelete(actividadActividad);
-            listaActividadxActividadTotal = listarActividadActividadTotal();
-        } catch (Exception e) {
-            log.error("METODO : ActividadController.eliminarActividadActividad" + e.getMessage());
-        }
-    }
-
-    public void eliminarMedioVerificacionActividad(Long idMedioVerificacion) {
-        log.debug("METODO : ActividadController.eliminarMedioVerificacionActividad");
-        Actividad actividad = new Actividad();
-        MedioVerificacion medioVerificacion = new MedioVerificacion();
-
-        actividad.setId(actividadTemp.getId());
-        medioVerificacion.setId(idMedioVerificacion);
-        ActividadMedioVerificacion actividadMedioVerificacion = new ActividadMedioVerificacion(actividad, medioVerificacion, null);
-        try {
-            actividadMedioVerificacionService.actividadMedioVerificacionDelete(actividadMedioVerificacion);
-            listaMedioVerificacionxActividadTotal = listarMedioVerificacionActividadTotal();
-        } catch (Exception e) {
-            log.error("METODO : ActividadController.eliminarMedioVerificacionActividad" + e.getMessage());
-        }
-    }
-
-    public void eliminarCasoActividad(Long idCaso) {
-        log.debug("METODO : ActividadController.eliminarCasoActividad");
-        Actividad actividad = new Actividad();
-        Caso c = new Caso();
-        actividad.setId(actividadTemp.getId());
-        c.setId(idCaso);
-        ActividadCaso actaAc = new ActividadCaso(actividad, c, null);
-        try {
-            actividadCasoService.actividadCasoDelete(actaAc);
-            listaCasoxActividadTotal = listarCasoActividadTotal();
-        } catch (Exception e) {
-            log.error("METODO : ActividadController.eliminarCasoActividad" + e.getMessage());
-        }
-    }
-
-    public String fichaActividad(Long idActividad) {
-        log.debug("METODO : ActividadController.fichaActividad");
-        return "actividadFicha";
     }
 
     private void historialActividad(String accion, Long idActividad) {
@@ -1085,26 +808,16 @@ public class RegistroController implements Serializable {
         try {
             actividadHistorialService.actividadHistorialInsertar(historial);
         } catch (Exception e) {
-            log.error("METODO : ActividadController.historialActividad" + e.getMessage());
+            log.error("ERROR - cargarPagina()" + e);
         }
     }
 
-    public List<ActividadHistorial> listarActividadHistorial() {
-        List<ActividadHistorial> list = null;
-        try {
-            list = actividadHistorialService.actividadHistorialBuscarList(actividadTemp.getId());
-        } catch (Exception e) {
-            log.error("ERROR : ActividadController.listarActividadHistorial: " + e.getMessage());
-        }
-        return list;
+    public Actividad getActividad() {
+        return actividad;
     }
 
-    public ActividadTemp getActividadTemp() {
-        return actividadTemp;
-    }
-
-    public void setActividadTemp(ActividadTemp actividadTemp) {
-        this.actividadTemp = actividadTemp;
+    public void setActividad(Actividad actividad) {
+        this.actividad = actividad;
     }
 
     public ActorTemp getActorTemp() {
@@ -1444,6 +1157,13 @@ public class RegistroController implements Serializable {
     public void setListaActividadesPorCaso(List<Actividad> listaActividadesPorCaso) {
         this.listaActividadesPorCaso = listaActividadesPorCaso;
     }
-    
-    
+
+    public List<Actividad> getAcontecimientoVinculado() {
+        return acontecimientoVinculado;
+    }
+
+    public void setAcontecimientoVinculado(List<Actividad> acontecimientoVinculado) {
+        this.acontecimientoVinculado = acontecimientoVinculado;
+    }
+
 }
