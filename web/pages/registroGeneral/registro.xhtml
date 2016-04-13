@@ -24,18 +24,18 @@
                                          padding:0}
                     </style>
                     <script>
-                    /*<![CDATA[*/$(function () {#{registroController.cadenaAutocomplete}
-                        $("#nombreCaso").autocomplete({minLength: 3, source: projects, focus: function (event, ui) {
-                                $("#nombreCaso").val(ui.item.label);
-                                return false;
-                            }, select: function (event, ui) {
-                                $("#nombreCaso").val(ui.item.label);
-                                $("#idCaso").val(ui.item.value);
-                                return false;
-                            }}).data("ui-autocomplete")._renderItem = function (ul, item) {
-                            return $("<li/>").append("<a>" + item.label + "<br/>" + item.desc + "</a>").appendTo(ul);
-                        };
-                    });/*]]>*/
+                        /*<![CDATA[*/$(function () {#{registroController.cadenaAutocomplete}
+                            $("#nombreCaso").autocomplete({minLength: 3, source: projects, focus: function (event, ui) {
+                                    $("#nombreCaso").val(ui.item.label);
+                                    return false;
+                                }, select: function (event, ui) {
+                                    $("#nombreCaso").val(ui.item.label);
+                                    $("#idCaso").val(ui.item.value);
+                                    return false;
+                                }}).data("ui-autocomplete")._renderItem = function (ul, item) {
+                                return $("<li/>").append("<a>" + item.label + "<br/>" + item.desc + "</a>").appendTo(ul);
+                            };
+                        });/*]]>*/
                     </script>
                     <h:commandButton action="#{utilBean.correo()}" value="enviar" rendered="false"/>
                     <h:inputHidden id="hidCodActividad" value="#{registroController.actividad.id}" />
@@ -352,7 +352,21 @@
                                         </table>
                                     </h:panelGroup>
                                     <br/>
-                                    <style>html,body,#map-canvas{height:100%;margin:0;padding:0}#panel{position:absolute;top:5px;left:50%;margin-left:-180px;z-index:5;background-color:#fff;padding:5px;border:1px solid #999}</style>
+                                    <style>
+                                        html,body,#map-canvas{height:100%;
+                                                              margin:0;
+                                                              padding:0;
+                                                            }
+                                        #panel{position:absolute;
+                                               top:5px;
+                                               left:50%;
+                                               margin-left:-180px;
+                                               z-index:5;
+                                               background-color:#fff;
+                                               padding:5px;
+                                               border:1px solid #999
+                                               }
+                                    </style>
                                     <script>/*<![CDATA[*/var markers = [];
                                         var geocoder;
                                         var map;
@@ -381,7 +395,7 @@
                                                 $("#idCoordenadaY").val(event.latLng.lng());
                                                 $("#idZoom").val(nivelZoom);
                                                 addMarker(event.latLng);
-                                            })
+                                            });
                                         }
                                         function codeLatLng(x, y, z) {
                                             $("#idCoordenadaX").val(x);

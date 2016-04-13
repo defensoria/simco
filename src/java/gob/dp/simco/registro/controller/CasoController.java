@@ -385,6 +385,8 @@ public class CasoController implements Serializable {
 
     public void eliminarActividadCaso(Actividad a) {
         try {
+            FacesContext context = FacesContext.getCurrentInstance();
+            RegistroController registroController = (RegistroController) context.getELContext().getELResolver().getValue(context.getELContext(), null, "registroController");
             String tipo = a.getTipo();
             ActividadCaso actividCaso = new ActividadCaso();
             actividCaso.setActividad(a);
@@ -392,8 +394,10 @@ public class CasoController implements Serializable {
             actividadCasoService.actividadCasoDelete(actividCaso);
             contarActividades();
             if (tipo.equals("AD")) {
+                registroController.removeAcontecimientoVinculadoFichaAD(a);
                 msg.messageInfo("Se elimino la Actuacion Defensorial", null);
             } else {
+                registroController.removeAcontecimientoVinculadoFichaAC(a);
                 msg.messageInfo("Se elimino el Acontecimiento", null);
             }
         } catch (Exception ex) {

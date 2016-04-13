@@ -70,4 +70,8 @@ public interface ActividadDao {
    
    public void actividadUpdateDesVincular(long idActividad);
    
+   public void actividadUpdateAcontecimientoQuitar(long idActividad);
+   
+   public Actividad actividadBusquedaPorAcontecimiento(long idAcontecimiento);
+   
 }

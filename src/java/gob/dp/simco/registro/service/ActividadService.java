@@ -69,4 +69,8 @@ public interface ActividadService {
    public void actividadUpdateVincular(long idActividad);
    
    public void actividadUpdateDesVincular(long idActividad);
+   
+   public void actividadUpdateAcontecimientoQuitar(long idActividad);
+   
+   public Actividad actividadBusquedaPorAcontecimiento(long idAcontecimiento);
 }

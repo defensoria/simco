@@ -257,6 +257,9 @@ public class RegistroController implements Serializable {
 
     public void vincularAcontecimientoActuacion(Actividad acontecimiento) {
         try {
+            if(actividad.getIdAcontecimiento() != null){
+                removeAcontecimientoVinculado();
+            }
             actividad.setIdAcontecimiento(acontecimiento.getId());
             actividadService.actividadUpdateAcontecimiento(actividad);
             actividadService.actividadUpdateVincular(acontecimiento.getId());
@@ -362,11 +365,33 @@ public class RegistroController implements Serializable {
     }
     
     public void removeAcontecimientoVinculado(){
-        acontecimientoVinculado = new ArrayList<>();
+        try {
+            acontecimientoVinculado = new ArrayList<>();
         actividadService.actividadUpdateDesVincular(actividad.getIdAcontecimiento());
-        actividad.setIdAcontecimiento(null);
-        actividadService.actividadUpdateAcontecimiento(actividad);
+        actividadService.actividadUpdateAcontecimientoQuitar(actividad.getId());
         msg.messageInfo("Se desvinculo el acontecimiento", null);
+        } catch (Exception e) {
+            log.error("ERROR - removeAcontecimientoVinculado()" + e);
+        }
+    }
+    
+    public void removeAcontecimientoVinculadoFichaAD(Actividad activi){
+        try {
+            actividadService.actividadUpdateDesVincular(activi.getIdAcontecimiento());
+            actividadService.actividadUpdateAcontecimientoQuitar(activi.getId());
+        } catch (Exception e) {
+            log.error("ERROR - removeAcontecimientoVinculadoFicha()" + e);
+        }
+    }
+    
+    public void removeAcontecimientoVinculadoFichaAC(Actividad activi){
+        try {
+            actividadService.actividadUpdateDesVincular(activi.getId());
+            Actividad actividadAconte = actividadService.actividadBusquedaPorAcontecimiento(activi.getId());
+            actividadService.actividadUpdateAcontecimientoQuitar(actividadAconte.getId());
+        } catch (Exception e) {
+            log.error("ERROR - removeAcontecimientoVinculadoFicha2()" + e);
+        }
     }
 
     public void verDetalleNoticia(String detalle) {
@@ -590,7 +615,7 @@ public class RegistroController implements Serializable {
         return null;
     }
 
-    public void registrarActividad() {
+    public String registrarActividad() {
         String ruta = uploadArchiveImage();
         if (StringUtils.isNoneBlank(ruta)) {
             actividad.setRuta(ruta);
@@ -620,9 +645,15 @@ public class RegistroController implements Serializable {
             }
             historialActividad(accionHistorial, actividad.getId());
             msg.messageInfo("Se realizadon los cambios", null);
+            if (caso.getId() != null) {
+                return "registroEdit";
+            }else{
+                return "registroNuevo";
+            }
         } catch (Exception e) {
             log.error("ERROR - registrarActividad()" + e);
         }
+        return null;
     }
 
     private void insertaUpdateActividadCaso(ActividadCaso ac) {

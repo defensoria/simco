@@ -23,6 +23,37 @@
                             </td>
                             <td style="width:50%;text-align:right">
                                 <input type="hidden" id="idCaso" jsf:value="#{registroController.caso.id}"/>
+                                
+                                <script>
+                                    function openModalBusquedaSinCaso(data) {
+                                        if (data.status === 'success') {
+                                            $("#loadModal").modal('hide');
+                                            $('body').removeClass('modal-open');
+                                            $(".modal-backdrop").removeClass("modal-backdrop");
+                                            $("#idModalAcontecimientoBusqueda").modal('show');
+                                        }
+                                    }
+                                </script>
+                                <h:outputText rendered="#{registroController.caso.id != null and registroController.actividad.tipo == 'AD'}" class="text-resalt-primary" value="Vincular acontecimiento:" />
+                                <a jsf:action="#{registroController.cargarActontecimientoPorCaso()}" jsf:rendered="#{registroController.caso.id != null and registroController.actividad.tipo == 'AD'}" jsf:onclick="loadingModal()">
+                                    <span style="font-size:large" class="glyphicon glyphicon-search"></span>
+                                    <f:ajax render="idPanelGroupAcontecimientoBusqueda" onevent="openModalBusquedaSinCaso" />
+                                </a>
+                                <br/>
+                                <div style="float: right">
+                                    <h:dataTable value="#{registroController.acontecimientoVinculado}" var="acont" class="table table-hover"
+                                                 rendered="#{registroController.acontecimientoVinculado.size() > 0}">
+                                        <h:column>
+                                            <f:facet name="header">Acontecimiento</f:facet>
+                                            <h:outputText value="#{acont.nombre}" />
+                                        </h:column>
+                                        <h:column>
+                                            <a jsf:action="#{registroController.removeAcontecimientoVinculado()}">
+                                                <span class="glyphicon glyphicon-remove" style="color: red"/>
+                                            </a>
+                                        </h:column>
+                                    </h:dataTable>
+                                </div>
                             </td>
                         </tr>
                         <tr>
@@ -102,36 +133,7 @@
                                 </script>
                             </td>
                             <td style="text-align: right; padding-right: 20px">
-                                <script>
-                                    function openModalBusquedaSinCaso(data) {
-                                        if (data.status === 'success') {
-                                            $("#loadModal").modal('hide');
-                                            $('body').removeClass('modal-open');
-                                            $(".modal-backdrop").removeClass("modal-backdrop");
-                                            $("#idModalAcontecimientoBusqueda").modal('show');
-                                        }
-                                    }
-                                </script>
-                                <h:outputText rendered="#{registroController.caso.id != null and registroController.actividad.tipo == 'AC'}" class="text-resalt-primary" value="Vincular acontecimiento:" />
-                                <a jsf:action="#{registroController.cargarActontecimientoPorCaso()}" jsf:rendered="#{registroController.caso.id != null and registroController.actividad.tipo == 'AC'}" jsf:onclick="loadingModal()">
-                                    <span style="font-size:large" class="glyphicon glyphicon-search"></span>
-                                    <f:ajax render="idPanelGroupAcontecimientoBusqueda" onevent="openModalBusquedaSinCaso" />
-                                </a>
-                                <br/>
-                                <div style="float: right">
-                                    <h:dataTable value="#{registroController.acontecimientoVinculado}" var="acont" class="table table-hover"
-                                                 rendered="#{registroController.acontecimientoVinculado.size() > 0}">
-                                        <h:column>
-                                            <f:facet name="header">Acontecimiento</f:facet>
-                                            <h:outputText value="#{acont.nombre}" />
-                                        </h:column>
-                                        <h:column>
-                                            <a jsf:action="#{registroController.removeAcontecimientoVinculado()}">
-                                                <span class="glyphicon glyphicon-remove" style="color: red"/>
-                                            </a>
-                                        </h:column>
-                                    </h:dataTable>
-                                </div>
+                                
                             </td>
                         </tr>
                     </table>
@@ -143,8 +145,7 @@
                                         <a type="button" class="close" data-dismiss="modal">
                                             <span style="color:red" class="glyphicon glyphicon-remove"></span>
                                         </a>
-                                        <h:outputText class="text-primary" style="font-weight:bold;font-size:1.4em" value="Buscar Actuaciones defensoriales" rendered="#{!casoController.verTitulo}"/>
-                                        <h:outputText class="text-primary" style="font-weight:bold;font-size:1.4em" value="Buscar Acontecimientos" rendered="#{casoController.verTitulo}"/>
+                                        <h:outputText class="text-primary" style="font-weight:bold;font-size:1.4em" value="Buscar Acontecimientos"/>
                                     </div>
                                     <div class="modal-body">
                                         <h:dataTable style="width:100%" value="#{registroController.listaActividadesPorCaso}" var="act" class="table table-striped">

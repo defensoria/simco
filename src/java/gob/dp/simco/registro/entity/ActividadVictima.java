@@ -53,6 +53,8 @@ public class ActividadVictima implements Serializable{
     private String ruta;
     
     private String nombreTipo;
+    
+    private Boolean noIdentificado;
 
     public Long getId() {
         return id;
@@ -212,6 +214,14 @@ public class ActividadVictima implements Serializable{
 
     public void setNombreTipo(String nombreTipo) {
         this.nombreTipo = nombreTipo;
+    }
+
+    public Boolean getNoIdentificado() {
+        return noIdentificado;
+    }
+
+    public void setNoIdentificado(Boolean noIdentificado) {
+        this.noIdentificado = noIdentificado;
     }
     
 }

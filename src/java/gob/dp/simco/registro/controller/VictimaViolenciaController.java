@@ -83,6 +83,17 @@ public class VictimaViolenciaController implements Serializable{
         mapearTipos();
     }
     
+    public void seleccionarNoIdentificados(){
+        if(actividadVictima.getNoIdentificado()){
+            actividadVictima.setNombre(null);
+            actividadVictima.setApellidoPaterno(null);
+            actividadVictima.setApellidoMaterno(null);
+            actividadVictima.setDni(null);
+            actividadVictima.setEdad(null);
+        }
+        
+    }
+    
     public void mapearTipos(){
         tiposVictima = new HashMap();
         int nroMuertos = 0;

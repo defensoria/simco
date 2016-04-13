@@ -839,7 +839,7 @@
                                     if (fec1 > fec2) {
                                         $('#txtInicioDefinitivo').addClass('error');
                                         $('#txtFinDefinitivo').addClass('error');
-                                        alertar("La fecha de inicio no puede ser mayor que la fecha de fin")
+                                        alertar("La fecha de inicio no puede ser mayor que la fecha de fin");
                                         return false;
                                     } else {
                                         $('#txtInicioDefinitivo').removeClass('error');
@@ -855,7 +855,7 @@
                             }
                             if (i === 0) {
                             } else {
-                                alertar("Debe completar todos los campos resaltados de la programacion de las alertas")
+                                alertar("Debe completar todos los campos resaltados de la programacion de las alertas");
                                 return false;
                             }
                         }

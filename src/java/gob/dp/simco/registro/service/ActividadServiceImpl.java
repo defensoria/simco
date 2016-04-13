@@ -209,5 +209,15 @@ public class ActividadServiceImpl implements ActividadService{
     public void actividadUpdateAcontecimiento(Actividad actividad) {
         actividadDao.actividadUpdateAcontecimiento(actividad);
     }
+
+    @Override
+    public void actividadUpdateAcontecimientoQuitar(long idActividad) {
+        actividadDao.actividadUpdateAcontecimientoQuitar(idActividad);
+    }
+
+    @Override
+    public Actividad actividadBusquedaPorAcontecimiento(long idAcontecimiento) {
+        return actividadDao.actividadBusquedaPorAcontecimiento(idAcontecimiento);
+    }
     
 }

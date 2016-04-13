@@ -52,7 +52,7 @@
                             confirmar();
                             return false;
                         });
-                    });/*]]>*/       
+                    });/*]]>*/
                 </script>
                 <div>
                     <a jsf:rendered="#{casoController.caso.id != null}" jsf:actionListener="#{casoController.pdf()}">
@@ -87,24 +87,24 @@
                                     </div>
                                     <br/>
                                     <h:dataTable value="#{casoController.listaAdjuntiasDefensoriales}" var="ad" width="100%">
-                                                    <h:column>
-                                                        
-                                                            <div class="alert fade in alert-info" role="alert" style="padding-bottom:5px;padding-top:5px;margin-bottom:3px">
-                                                                <strong>
-                                                                    <h:outputText value="#{ad.nombre}" />
-                                                                    <h:outputText value="&#160;&#160;&#160;" />
-                                                                </strong>
-                                                            </div>
-                                                        
-                                                    </h:column>
-                                                    <h:column>
-                                                        <h:outputText value="&#160;&#160;&#160;" />
-                                                        <a jsf:action="#{casoController.removeListaAdjuntias(ad)}" style="text-decoration: none">
-                                                            <span style="color:red;font-size:large" class="glyphicon glyphicon-remove"></span>
-                                                            <f:ajax render="@form"/>
-                                                        </a>
-                                                    </h:column>
-                                                </h:dataTable>
+                                        <h:column>
+
+                                            <div class="alert fade in alert-info" role="alert" style="padding-bottom:5px;padding-top:5px;margin-bottom:3px">
+                                                <strong>
+                                                    <h:outputText value="#{ad.nombre}" />
+                                                    <h:outputText value="&#160;&#160;&#160;" />
+                                                </strong>
+                                            </div>
+
+                                        </h:column>
+                                        <h:column>
+                                            <h:outputText value="&#160;&#160;&#160;" />
+                                            <a jsf:action="#{casoController.removeListaAdjuntias(ad)}" style="text-decoration: none">
+                                                <span style="color:red;font-size:large" class="glyphicon glyphicon-remove"></span>
+                                                <f:ajax render="@form"/>
+                                            </a>
+                                        </h:column>
+                                    </h:dataTable>
                                 </td>
                             </tr>
                         </table>
@@ -479,15 +479,15 @@
                                                         </h:column>
                                                         <h:column>
                                                             <h:panelGroup rendered="#{region.principal != 'A'}">
-                                                            <a onclick="confirmar6#{region.id}()" style="cursor:pointer">
-                                                                <span class="glyphicon glyphicon-ok" style="color:red;font-size:medium" />
-                                                            </a>
+                                                                <a onclick="confirmar6#{region.id}()" style="cursor:pointer">
+                                                                    <span class="glyphicon glyphicon-ok" style="color:red;font-size:medium" />
+                                                                </a>
                                                             </h:panelGroup>
-                                                            
+
                                                             <h:panelGroup rendered="#{region.principal == 'A'}">
-                                                            <a style="cursor:pointer">
-                                                                <span class="glyphicon glyphicon-ok" style="color:red;font-size:medium; color: green" />
-                                                            </a>
+                                                                <a style="cursor:pointer">
+                                                                    <span class="glyphicon glyphicon-ok" style="color:red;font-size:medium; color: green" />
+                                                                </a>
                                                             </h:panelGroup>
                                                             &#160;&#160;
                                                             <a onclick="confirmar5#{region.id}()" style="cursor:pointer">
@@ -589,7 +589,7 @@
                                                                                                         <h:outputText style="font-weight:bold;color: #007ACC" value="#{time.nombre}" />
                                                                                                         <br/><br/>
                                                                                                     </td>
-                                                                                                    
+
                                                                                                 </tr>
                                                                                                 <tr>
                                                                                                     <td style="color: grey">
@@ -732,7 +732,8 @@
                                                     <a id="addActuacion4" style="cursor:pointer">
                                                         <span id="spanAddActuacion4" class="glyphicon glyphicon-circle-arrow-down" style="font-size:medium;"></span>
                                                     </a>
-                                                    <script>var l = 1;
+                                                    <script>
+                var l = 1;
                                                         $("#addActuacion4").click(function () {
                                                             if (l === 1)
                                                             {
@@ -745,7 +746,8 @@
                                                                 $("#spanAddActuacion4").removeClass("glyphicon-circle-arrow-up").addClass("glyphicon-circle-arrow-down");
                                                                 l = 1;
                                                             }
-                                                        });</script>
+                                                        });
+                                                    </script>
                                                 </td>
                                                 <td style="text-align:right">
                                                     <a jsf:action="#{casoController.cargarListaActividadesSinCaso(2)}" jsf:onclick="loadingModal()">
@@ -781,9 +783,11 @@
                                                 <a onclick="confirmar1#{AD.id}()">
                                                     <span style="font-size:large;color:red;cursor:pointer" class="glyphicon glyphicon-remove"></span>
                                                 </a>
-                                                <script>function confirmar1#{AD.id}() {
+                                                <script>
+            function confirmar1#{AD.id}() {
                                                         $(".confirmacion1#{AD.id}").modal('show');
-                                                    }</script>
+                                                    }
+                                                                                                    </script>
                                                 <gc:confirmSubmit classGC="confirmacion1#{AD.id}" bean="#{casoController.eliminarActividadCaso(AD)}"/>
                                             </h:column>
                                         </h:dataTable>
@@ -814,7 +818,7 @@
                                                                 $("#spanAddActuacion5").removeClass("glyphicon-circle-arrow-up").addClass("glyphicon-circle-arrow-down");
                                                                 s = 1;
                                                             }
-                                                        });                                               
+                                                        });
                                                     </script>
                                                 </td>
                                                 <td style="text-align:right">
@@ -1106,7 +1110,7 @@
                                             </tr>
                                         </table>
                                         <script>
-function confirmar1() {
+                                            function confirmar1() {
                                                 $(".confirmacion1").modal('show');
                                             }
                                             function confirmar2() {
@@ -1160,7 +1164,7 @@ function confirmar1() {
                                                 }
                                                 return true;
                                             }
-                                                                                    </script>
+                                        </script>
                                     </div>
                                 </div>
                             </h:form>

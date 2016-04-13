@@ -176,5 +176,15 @@ public class ActividadDaoImpl extends SqlSessionDaoSupport implements ActividadD
     public void actividadUpdateDesVincular(long idActividad) {
         getSqlSession().update("gob.dp.simco.registro.dao.ActividadDao.actividadUpdateDesVincular", idActividad);
     }
+
+    @Override
+    public void actividadUpdateAcontecimientoQuitar(long idActividad) {
+        getSqlSession().update("gob.dp.simco.registro.dao.ActividadDao.actividadUpdateAcontecimientoQuitar", idActividad);
+    }
+
+    @Override
+    public Actividad actividadBusquedaPorAcontecimiento(long idAcontecimiento) {
+        return getSqlSession().selectOne("gob.dp.simco.registro.dao.ActividadDao.actividadBusquedaPorAcontecimiento",idAcontecimiento);
+    }
     
 }

@@ -464,6 +464,16 @@
         </where>
     </update>
     
+    <update id="actividadUpdateAcontecimientoQuitar" parameterType="long">
+        UPDATE SIMCO_REG_ACTIVIDAD
+        <set>
+            N_ID_ACONTECIMIENTO = null
+        </set>
+        <where>
+            N_ID_ACTIVIDAD = #{id}
+        </where>
+    </update>
+    
     <update id="actividadUpdateVincular" parameterType="long">
         UPDATE SIMCO_REG_ACTIVIDAD
         <set>
@@ -811,7 +821,11 @@
         SELECT A.* FROM SIMCO_REG_ACTIVIDAD A
         INNER JOIN SIMCO_REG_CASO_ACTIVIDAD B ON A.N_ID_ACTIVIDAD = B.N_ID_ACTIVIDAD AND B.C_ESTADOACTCASO = 'ACT'
         INNER JOIN SIMCO_REG_CASO C ON B.N_ID_CASO = C.N_ID_CASO AND C.C_INDVIGENTE = 'A'
-        WHERE nvl(A.N_INDICEVINCULADO, 0) != 1 AND C.N_ID_CASO = #{id}
+        WHERE nvl(A.N_INDICEVINCULADO, 0) != 1 AND A.C_TIPO = 'AC' AND C.N_ID_CASO = #{id}
+    </select>
+    
+    <select id="actividadBusquedaPorAcontecimiento" resultMap="actividadMap" parameterType="long">
+        SELECT * FROM SIMCO_REG_ACTIVIDAD A WHERE N_ID_ACONTECIMIENTO = #{id}
     </select>
     
     <select id="actividadBusquedaSinCasoAD" resultMap="actividadMap">
