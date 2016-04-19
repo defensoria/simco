@@ -29,10 +29,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 
 
-/**
- *
- * @author Administrador
- */
 @Named
 @Scope("session")
 public class MenuController implements Serializable{
@@ -219,8 +215,9 @@ public class MenuController implements Serializable{
         }
         
         if(codigoPagina == 32){
+            AnalisisController analisisController = (AnalisisController) context.getELContext().getELResolver().getValue(context.getELContext(), null, "analisisController");
             menuHijo = menuService.menuHijo(8);
-            return "contexto";
+            return analisisController.cargarContexto();
         }
         
         if(codigoPagina == 18){

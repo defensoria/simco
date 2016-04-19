@@ -65,6 +65,9 @@
         <typeAlias type="gob.dp.simco.analisis.entity.AnalisisRelacion" alias="analisisRelacion"/>
         <typeAlias type="gob.dp.simco.analisis.entity.Problema" alias="problema"/>
         <typeAlias type="gob.dp.simco.analisis.entity.ProblemaDetalle" alias="problemaDetalle"/>
+        <typeAlias type="gob.dp.simco.analisis.entity.Contexto" alias="contexto"/>
+        <typeAlias type="gob.dp.simco.analisis.entity.Contexto" alias="contextoPregunta"/>
+        <typeAlias type="gob.dp.simco.analisis.entity.Contexto" alias="contextoTipo"/>
         
         <typeAlias type="gob.dp.simco.intervencion.entity.Intervencion" alias="intervencion"/>
         <typeAlias type="gob.dp.simco.intervencion.entity.IntervencionAccion" alias="intervencionAccion"/>
@@ -127,6 +130,8 @@
         <mapper resource="gob/dp/simco/registro/dao/xml/SegundoNivel.xml" />
         <mapper resource="gob/dp/simco/registro/dao/xml/TercerNivel.xml" />
         <mapper resource="gob/dp/simco/registro/dao/xml/CasoRegion.xml" />
+        
+        
         <mapper resource="gob/dp/simco/seguimiento/dao/xml/SeguimientoAcuerdo.xml" />
         <mapper resource="gob/dp/simco/seguimiento/dao/xml/Alerta.xml" />
         
@@ -137,6 +142,9 @@
         <mapper resource="gob/dp/simco/analisis/dao/xml/AnalisisRelacion.xml" />
         <mapper resource="gob/dp/simco/analisis/dao/xml/Problema.xml" />
         <mapper resource="gob/dp/simco/analisis/dao/xml/ProblemaDetalle.xml" />
+        <mapper resource="gob/dp/simco/analisis/dao/xml/Contexto.xml" />
+        <mapper resource="gob/dp/simco/analisis/dao/xml/ContextoPregunta.xml" />
+        <mapper resource="gob/dp/simco/analisis/dao/xml/ContextoTipo.xml" />
         
         <mapper resource="gob/dp/simco/intervencion/dao/xml/Intervencion.xml" />
         <mapper resource="gob/dp/simco/intervencion/dao/xml/IntervencionAccion.xml" />

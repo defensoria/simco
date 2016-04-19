@@ -181,6 +181,11 @@ public class AnalisisController implements Serializable {
         limpiarListas();
         msg = new MessagesUtil();
     }
+    
+    public String cargarContexto(){
+        
+        return "contexto";
+    }
 
     public String cargarPaginaProblemas() {
         actividadActors = null;
@@ -246,7 +251,6 @@ public class AnalisisController implements Serializable {
             problemaDatos(c);
             listarTemas(c.getId());
             limpiarCanvasActores();
-            //msg.messageInfo("Se ha cargado el analisis del caso " + c.getNombre(), null);
         } else {
             msg.messageAlert("Debe seleccionar un caso registrado", null);
         }
@@ -267,7 +271,6 @@ public class AnalisisController implements Serializable {
             problemaDatos(caso);
             listarTemas(caso.getId());
             limpiarCanvasActores();
-            //msg.messageInfo("Se ha cargado el analisis del caso " + c.getNombre(), null);
         } else {
             msg.messageAlert("Debe seleccionar un caso registrado", null);
         }
@@ -296,7 +299,6 @@ public class AnalisisController implements Serializable {
                     analisisActorIntensidads = null;
                     analisisActorIntensidads = analisisActorIntensidadService.analisisActorIntensidadBuscar(c.getId());
                     cargarListasRelacion(c);
-                    //msg.messageInfo("Se ha cargado el analisis del caso " + c.getNombre(), null);
                 } else {
                     msg.messageAlert("Debe seleccionar un caso registrado", null);
                 }
@@ -517,7 +519,6 @@ public class AnalisisController implements Serializable {
     private void insertUpdateAnalisisActor(AnalisisActor aa) {
         AnalisisActor aa1 = analisisActorService.analisisActorxcasoBuscarOne(aa);
         if (aa1 == null) {
-            aa1 = new AnalisisActor();
             analisisActor.setFechaRegistro(new Date());
             analisisActorService.analisisActorInsertar(analisisActor);
         } else {
@@ -758,8 +759,6 @@ public class AnalisisController implements Serializable {
                     }
                     ac.setAnalisisActorIntensidad(aai);
                 }
-                //listaActoresXCasoIntensidad = actorService.actorxCasoIntensidadBuscar(caso.getId());
-                //casoService.casoModificar(caso);
                 msg.messageInfo("Se han registrado los cambios", null);
             } catch (Exception ex) {
                 log.error(ex);
@@ -966,42 +965,6 @@ public class AnalisisController implements Serializable {
         }
     }
 
-    private String validaRelacion(Actor act1, Actor act2) {
-        String retorno = "";
-        AnalisisRelacion relacion = new AnalisisRelacion();
-        AnalisisRelacion relacion1;
-        relacion.setActor1(act1);
-        relacion.setActor2(act2);
-        relacion.setCaso(caso);
-        relacion1 = analisisRelacionService.analisisRelacionBuscarOne(relacion);
-        if (relacion1 != null) {
-            retorno = relacion1.getTipo();
-        }
-        String mensajeRetorno = null;
-        switch (retorno) {
-            case "ALI":
-                mensajeRetorno = "Alianza";
-                break;
-
-            case "CER":
-                mensajeRetorno = "Vinculo Cercano";
-                break;
-
-            case "DEB":
-                mensajeRetorno = "Vinculo Debil";
-                break;
-
-            case "TEN":
-                mensajeRetorno = "Tension";
-                break;
-
-            case "CON":
-                mensajeRetorno = "Conflicto";
-                break;
-        }
-        return mensajeRetorno;
-    }
-
     private void limpiarRelaciones() {
         initRelacionActorVOAlianza();
         initRelacionActorVOConflicto();
@@ -1061,8 +1024,6 @@ public class AnalisisController implements Serializable {
             listaActorAlianza.add(relacionActorVOAlianza);
         } else {
             if (relacionActorVOAlianza.getActor2().getNombre() == null) {
-                /*String mensaje = validaRelacion(relacionActorVOAlianza.getActor1(), actor);
-                 if (StringUtils.isBlank(mensaje)) {*/
                 boolean valid = validaRelacionExiste(actor, relacionActorVOAlianza);
                 if (!valid) {
                     return false;
@@ -1070,10 +1031,6 @@ public class AnalisisController implements Serializable {
                 relacionActorVOAlianza.setActor2(actor);
                 msg.messageInfo("Se ha agregado la relacion de Alianzas", null);
                 indicador++;
-                /*} else {
-                 msg.messageAlert("Esta relacion ya existe en " + mensaje, null);
-                 return false;
-                 }*/
             }
         }
         if (indicador > 0) {
@@ -1090,8 +1047,6 @@ public class AnalisisController implements Serializable {
             listaActorVinculoCercano.add(relacionActorVOVinculoCercano);
         } else {
             if (relacionActorVOVinculoCercano.getActor2().getNombre() == null) {
-                /*String mensaje = validaRelacion(relacionActorVOVinculoCercano.getActor1(), actor);
-                 if (StringUtils.isBlank(mensaje)) {*/
                 boolean valid = validaRelacionExiste(actor, relacionActorVOVinculoCercano);
                 if (!valid) {
                     return false;
@@ -1099,10 +1054,6 @@ public class AnalisisController implements Serializable {
                 relacionActorVOVinculoCercano.setActor2(actor);
                 msg.messageInfo("Se ha agregado la relacion de Vinculo Cercano", null);
                 indicador++;
-                /*} else {
-                 msg.messageAlert("Esta relacion ya existe en " + mensaje, null);
-                 return false;
-                 }*/
             }
         }
         if (indicador > 0) {
@@ -1119,8 +1070,6 @@ public class AnalisisController implements Serializable {
             listaActorVinculoDebil.add(relacionActorVOVinculoDebil);
         } else {
             if (relacionActorVOVinculoDebil.getActor2().getNombre() == null) {
-                /*String mensaje = validaRelacion(relacionActorVOVinculoDebil.getActor1(), actor);
-                 if (StringUtils.isBlank(mensaje)) {*/
                 boolean valid = validaRelacionExiste(actor, relacionActorVOVinculoDebil);
                 if (!valid) {
                     return false;
@@ -1128,10 +1077,6 @@ public class AnalisisController implements Serializable {
                 relacionActorVOVinculoDebil.setActor2(actor);
                 msg.messageInfo("Se ha agregado la relacion de Vinculo Debil", null);
                 indicador++;
-                /*} else {
-                 msg.messageAlert("Esta relacion ya existe en " + mensaje, null);
-                 return false;
-                 }*/
             }
         }
         if (indicador > 0) {
@@ -1148,8 +1093,6 @@ public class AnalisisController implements Serializable {
             listaActorTension.add(relacionActorVOTension);
         } else {
             if (relacionActorVOTension.getActor2().getNombre() == null) {
-                /*String mensaje = validaRelacion(relacionActorVOTension.getActor1(), actor);
-                 if (StringUtils.isBlank(mensaje)) {*/
                 boolean valid = validaRelacionExiste(actor, relacionActorVOTension);
                 if (!valid) {
                     return false;
@@ -1157,10 +1100,6 @@ public class AnalisisController implements Serializable {
                 relacionActorVOTension.setActor2(actor);
                 msg.messageInfo("Se ha agregado la relacion de Tension", null);
                 indicador++;
-                /*} else {
-                 msg.messageAlert("Esta relacion ya existe en " + mensaje, null);
-                 return false;
-                 }*/
             }
         }
         if (indicador > 0) {
@@ -1177,8 +1116,6 @@ public class AnalisisController implements Serializable {
             listaActorConflicto.add(relacionActorVOConflicto);
         } else {
             if (relacionActorVOConflicto.getActor2().getNombre() == null) {
-                /*String mensaje = validaRelacion(relacionActorVOConflicto.getActor1(), actor);
-                 if (StringUtils.isBlank(mensaje)) {*/
                 boolean valid = validaRelacionExiste(actor, relacionActorVOConflicto);
                 if (!valid) {
                     return false;
@@ -1186,10 +1123,6 @@ public class AnalisisController implements Serializable {
                 relacionActorVOConflicto.setActor2(actor);
                 msg.messageInfo("Se ha agregado la relacion de Conflicto", null);
                 indicador++;
-                /*} else {
-                 msg.messageAlert("Esta relacion ya existe en " + mensaje, null);
-                 return false;
-                 }*/
             }
         }
         if (indicador > 0) {
