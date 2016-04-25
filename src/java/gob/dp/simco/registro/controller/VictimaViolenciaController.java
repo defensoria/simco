@@ -33,32 +33,32 @@ import org.springframework.context.annotation.Scope;
  */
 @Named
 @Scope("session")
-public class VictimaViolenciaController implements Serializable{
-    
+public class VictimaViolenciaController implements Serializable {
+
     private static final Logger log = Logger.getLogger(RegistroController.class);
-    
+
     private ActividadVictima actividadVictima;
-    
+
     private int tipo = 0;
-    
+
     private MessagesUtil msg;
-    
+
     private Part file1;
-    
+
     private List<ActividadVictima> listaVictimas;
-    
+
     private Long idActividad;
-    
+
     private Map tiposVictima;
-    
+
     @Autowired
     private ActividadVictimaService actividadVictimaService;
 
     public VictimaViolenciaController() {
         msg = new MessagesUtil();
     }
-    
-    public String cargarPagina(long idActivid, int tip){
+
+    public String cargarPagina(long idActivid, int tip) {
         tipo = tip;
         idActividad = idActivid;
         try {
@@ -66,35 +66,34 @@ public class VictimaViolenciaController implements Serializable{
             actividadVictima.setIdActividad(idActividad);
             listarVictimas(idActividad);
             mapearTipos();
-        return "victimaViolencia";
+            return "victimaViolencia";
         } catch (Exception e) {
             log.error(e);
             return null;
         }
     }
-    
-    public void limpiarVictimas(){
+
+    public void limpiarVictimas() {
         listaVictimas = null;
         mapearTipos();
     }
-    
-    public void limpiarVictimasEdit(long idActividad){
+
+    public void limpiarVictimasEdit(long idActividad) {
         listarVictimas(idActividad);
         mapearTipos();
     }
-    
-    public void seleccionarNoIdentificados(){
-        if(actividadVictima.getNoIdentificado()){
+
+    public void seleccionarNoIdentificados() {
+        if (actividadVictima.getNoIdentificado()) {
             actividadVictima.setNombre(null);
             actividadVictima.setApellidoPaterno(null);
             actividadVictima.setApellidoMaterno(null);
             actividadVictima.setDni(null);
             actividadVictima.setEdad(null);
         }
-        
     }
-    
-    public void mapearTipos(){
+
+    public void mapearTipos() {
         tiposVictima = new HashMap();
         int nroMuertos = 0;
         int nroSecuestrados = 0;
@@ -102,20 +101,30 @@ public class VictimaViolenciaController implements Serializable{
         int nroDetenidos = 0;
         int nroOtros = 0;
         int nroDesaparecidos = 0;
-        if(listaVictimas != null){
-            for(ActividadVictima av : listaVictimas){
-                if(StringUtils.equals(av.getTipo(), "01"))
+        int nN = 0;
+        if (listaVictimas != null) {
+            for (ActividadVictima av : listaVictimas) {
+                if (StringUtils.equals(av.getTipo(), "01")) {
                     nroMuertos++;
-                if(StringUtils.equals(av.getTipo(), "02"))
+                }
+                if (StringUtils.equals(av.getTipo(), "02")) {
                     nroHerido++;
-                if(StringUtils.equals(av.getTipo(), "03"))
+                }
+                if (StringUtils.equals(av.getTipo(), "03")) {
                     nroSecuestrados++;
-                if(StringUtils.equals(av.getTipo(), "04"))
+                }
+                if (StringUtils.equals(av.getTipo(), "04")) {
                     nroDetenidos++;
-                if(StringUtils.equals(av.getTipo(), "05"))
+                }
+                if (StringUtils.equals(av.getTipo(), "05")) {
                     nroDesaparecidos++;
-                if(StringUtils.equals(av.getTipo(), "06"))
+                }
+                if (StringUtils.equals(av.getTipo(), "06")) {
                     nroOtros++;
+                }
+                if (StringUtils.equals(av.getTipo(), "0")) {
+                    nN++;
+                }
             }
         }
         tiposVictima.put("Muertos", nroMuertos);
@@ -124,48 +133,55 @@ public class VictimaViolenciaController implements Serializable{
         tiposVictima.put("Detenidos", nroDetenidos);
         tiposVictima.put("Desaparecidos", nroDesaparecidos);
         tiposVictima.put("Otros", nroOtros);
+        tiposVictima.put("NN", nN);
     }
-    
-    public void nuevo(){
+
+    public void nuevo() {
         long id = actividadVictima.getIdActividad();
         actividadVictima = new ActividadVictima();
         actividadVictima.setIdActividad(id);
     }
-    
-    public String regresar(){
-        if(tipo == 1)
+
+    public String regresar() {
+        if (tipo == 1) {
             return "registroNuevo";
-        if(tipo == 2)
+        }
+        if (tipo == 2) {
             return "registroEdit";
-        
+        }
         return null;
     }
-    
-    public void guardarVictima(){
+
+    public void guardarVictima() {
         try {
             remonbrarArchivo();
-        if(actividadVictima.getId() == null){
-            actividadVictima.setFechaRegistro(new Date());
-            actividadVictimaService.actividadVictimaInsertar(actividadVictima);
-            msg.messageInfo("Se registro la victima", null);
-        }else{
-            actividadVictima.setFechaModificacion(new Date());
-            actividadVictimaService.actividadVictimaUpdate(actividadVictima);
-            msg.messageInfo("Se actualizo la victima", null);
-        }
+            if (actividadVictima.getId() == null) {
+                actividadVictima.setFechaRegistro(new Date());
+                actividadVictimaService.actividadVictimaInsertar(actividadVictima);
+                msg.messageInfo("Se registro la victima", null);
+            } else {
+                actividadVictima.setFechaModificacion(new Date());
+                actividadVictimaService.actividadVictimaUpdate(actividadVictima);
+                msg.messageInfo("Se actualizo la victima", null);
+            }
         } catch (Exception e) {
-             System.out.println(e);
+            log.error(e);
         }
-        listarVictimas(actividadVictima.getIdActividad());
+        long idActivida = actividadVictima.getIdActividad();
+        listarVictimas(idActivida);
         mapearTipos();
+        
+                actividadVictima = new ActividadVictima();
+                actividadVictima.setIdActividad(idActivida);
+        msg.messageInfo("Se agrego la víctima", null);
     }
-    
-    private void listarVictimas(long idActivida){
+
+    private void listarVictimas(long idActivida) {
         listaVictimas = actividadVictimaService.actividadVictimaBuscar(idActivida);
     }
-    
-    private void remonbrarArchivo(){
-        if(file1.getSize() > 0){
+
+    private void remonbrarArchivo() {
+        if (file1.getSize() > 0) {
             DateFormat fechaHora = new SimpleDateFormat("yyyyMMddHHmmss");
             String formato = fechaHora.format(new Date());
             String ruta = formato + getFileExtension(getFilename(file1));
@@ -178,13 +194,13 @@ public class VictimaViolenciaController implements Serializable{
             actividadVictima.setRuta(ruta);
         }
     }
-    
-    public void setearVictima(ActividadVictima av){
+
+    public void setearVictima(ActividadVictima av) {
         setActividadVictima(av);
         actividadVictima.setIdActividad(idActividad);
     }
-    
-    public void eliminarVictima(long idVictima){
+
+    public void eliminarVictima(long idVictima) {
         try {
             actividadVictimaService.actividadVictimaEliminar(idVictima);
             listarVictimas(idActividad);
@@ -195,7 +211,7 @@ public class VictimaViolenciaController implements Serializable{
         }
         mapearTipos();
     }
-    
+
     private String getFileExtension(String name) {
         try {
             return name.substring(name.lastIndexOf("."));
@@ -205,7 +221,7 @@ public class VictimaViolenciaController implements Serializable{
             return "";
         }
     }
-    
+
     private static String getFilename(Part part) {
         for (String cd : part.getHeader("content-disposition").split(";")) {
             if (cd.trim().startsWith("filename")) {

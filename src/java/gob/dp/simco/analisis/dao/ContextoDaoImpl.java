@@ -25,5 +25,10 @@ public class ContextoDaoImpl extends SqlSessionDaoSupport implements ContextoDao
     public void contextoUpdate(Contexto contexto) {
         getSqlSession().update("gob.dp.simco.analisis.dao.ContextoDao.contextoUpdate", contexto);
     }
+
+    @Override
+    public Contexto contextoBuscar(Contexto contexto) {
+        return getSqlSession().selectOne("gob.dp.simco.analisis.dao.ContextoDao.contextoBuscar", contexto);
+    }
     
 }

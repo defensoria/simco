@@ -19,7 +19,8 @@
                                          padding:0}
                     </style>
                     <script>
-                        /*<![CDATA[*/sessionStorage.setItem('menuHijoSession', 'Actores');
+                        /*<![CDATA[*/
+                        sessionStorage.setItem('menuHijoSession', 'Analisis');
                         sessionStorage.setItem('menuNietoSession', 'Actores');
                         $(function () {#{analisisController.cadenaAutocomplete}
                             $("#nombreCaso").autocomplete({minLength: 3, source: projects, focus: function (event, ui) {
@@ -32,7 +33,8 @@
                                 }}).data("ui-autocomplete")._renderItem = function (ul, item) {
                                 return $("<li/>").append("<a>" + item.label + "<br/>" + item.desc + "</a>").appendTo(ul);
                             };
-                        });/*]]>*/
+                        });
+                        /*]]>*/
                     </script>
                     <table style="width:100%">
                     <tr>

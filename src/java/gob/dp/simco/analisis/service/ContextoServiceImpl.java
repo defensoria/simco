@@ -29,5 +29,10 @@ public class ContextoServiceImpl implements ContextoService{
     public void contextoUpdate(Contexto contexto) {
         contextoDao.contextoUpdate(contexto);
     }
+
+    @Override
+    public Contexto contextoBuscar(Contexto contexto) {
+        return contextoDao.contextoBuscar(contexto);
+    }
     
 }

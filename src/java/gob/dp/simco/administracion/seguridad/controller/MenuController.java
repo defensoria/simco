@@ -28,304 +28,302 @@ import javax.faces.context.FacesContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 
-
 @Named
 @Scope("session")
-public class MenuController implements Serializable{
-    
+public class MenuController implements Serializable {
+
     private List<Menu> menuPadre;
-    
+
     private List<Menu> menuHijo;
-    
+
     private List<Menu> menuNieto;
-    
+
     private Caso caso;
-    
+
     private Usuario usuarioSession;
-    
+
     private List<Alerta> listaAlertaEjecutadas;
-    
+
     private List<ActaAcuerdoDetalle> acuerdoDetalles;
-    
+
     @Autowired
     private MenuService menuService;
-    
+
     @Autowired
     private AlertaService alertaService;
-    
+
     @Autowired
     private ActaAcuerdoDetalleService actaAcuerdoDetalleService;
 
-    public void cargarMenu(){
+    public void cargarMenu() {
         cargarBusquedaGeneral();
         caso = new Caso();
         menuPadre = menuService.menuPadre();
         cargarPagina(0);
     }
-    
-    private void cargarBusquedaGeneral(){
+
+    private void cargarBusquedaGeneral() {
         FacesContext context = FacesContext.getCurrentInstance();
         BusquedaController busquedaController = (BusquedaController) context.getELContext().getELResolver().getValue(context.getELContext(), null, "busquedaController");
         busquedaController.inicioBusqueda();
     }
-    
+
     public String cargarAlertasCabecera() {
         usuarioSession();
         listaAlertaEjecutadas = new ArrayList<>();
         ActaAcuerdoDetalle ad = new ActaAcuerdoDetalle();
         ad.setUsuarioRegistro(usuarioSession.getCodigo());
         acuerdoDetalles = actaAcuerdoDetalleService.actaAcuerdoDetalleSeguimiento(ad);
-        for(ActaAcuerdoDetalle aad : acuerdoDetalles){
+        for (ActaAcuerdoDetalle aad : acuerdoDetalles) {
             verAlertas(aad);
         }
         return "seguimientoAcuerdo";
     }
-    
+
     public void verAlertas(ActaAcuerdoDetalle acuerdoDetalle) {
         listaAlertaEjecutadas.addAll(alertaService.alertaBuscarUsuario(acuerdoDetalle.getId()));
     }
-    
-    private void usuarioSession(){
+
+    private void usuarioSession() {
         FacesContext context = FacesContext.getCurrentInstance();
         LoginController loginController = (LoginController) context.getELContext().getELResolver().getValue(context.getELContext(), null, "loginController");
         usuarioSession = loginController.getUsuarioSesion();
     }
-    
+
     public String cargarPagina(int codigoPagina) {
-        if(codigoPagina == 0)
+        if (codigoPagina == 0) {
             cargarAlertasCabecera();
-        
+        }
+
         FacesContext context = FacesContext.getCurrentInstance();
         menuHijo = null;
         menuNieto = new ArrayList<>();
-        if(codigoPagina == 0){
+        if (codigoPagina == 0) {
             SessionStorageController sessionStorageController = (SessionStorageController) context.getELContext().getELResolver().getValue(context.getELContext(), null, "sessionStorageController");
             sessionStorageController.cargarPagina();
         }
-        
-        if(codigoPagina == 1){
+
+        if (codigoPagina == 1) {
             RegistroController registroController = (RegistroController) context.getELContext().getELResolver().getValue(context.getELContext(), null, "registroController");
             return registroController.cargarPagina();
         }
-        
-        if(codigoPagina == 2){
+
+        if (codigoPagina == 2) {
             ActorController actorController = (ActorController) context.getELContext().getELResolver().getValue(context.getELContext(), null, "actorController");
             menuHijo = menuService.menuHijo(2);
             return actorController.cargarPagina();
         }
-        
-        if(codigoPagina == 3){
+
+        if (codigoPagina == 3) {
             ActorController actorController = (ActorController) context.getELContext().getELResolver().getValue(context.getELContext(), null, "actorController");
             menuHijo = menuService.menuHijo(2);
             return actorController.cargarPagina();
         }
-        
-        if(codigoPagina == 4){
+
+        if (codigoPagina == 4) {
             ActorController actorController = (ActorController) context.getELContext().getELResolver().getValue(context.getELContext(), null, "actorController");
             menuHijo = menuService.menuHijo(2);
             return actorController.cargarPaginaBusqueda();
         }
-        
-        if(codigoPagina == 11){
+
+        if (codigoPagina == 11) {
             ActorController actorController = (ActorController) context.getELContext().getELResolver().getValue(context.getELContext(), null, "actorController");
             menuHijo = menuService.menuHijo(2);
             return actorController.cargarPaginaActoresSigues();
         }
-        
-        if(codigoPagina == 5){
+
+        if (codigoPagina == 5) {
             CasoController casoController = (CasoController) context.getELContext().getELResolver().getValue(context.getELContext(), null, "casoController");
             menuHijo = menuService.menuHijo(5);
             return casoController.cargarPaginaCasosSigues();
         }
-        
-        if(codigoPagina == 6){
+
+        if (codigoPagina == 6) {
             IntervencionController intervencionController = (IntervencionController) context.getELContext().getELResolver().getValue(context.getELContext(), null, "intervencionController");
             return intervencionController.cargarPaginaIntervencion();
         }
-        
-        if(codigoPagina == 7){
+
+        if (codigoPagina == 7) {
             SeguimientoAcuerdoController seguimientoAcuerdoController = (SeguimientoAcuerdoController) context.getELContext().getELResolver().getValue(context.getELContext(), null, "seguimientoAcuerdoController");
             return seguimientoAcuerdoController.cargarPagina();
         }
-        
-        if(codigoPagina == 8){
+
+        if (codigoPagina == 8) {
             AnalisisController analisisController = (AnalisisController) context.getELContext().getELResolver().getValue(context.getELContext(), null, "analisisController");
             menuHijo = menuService.menuHijo(8);
             return analisisController.cargarPagina();
         }
-        
-        if(codigoPagina == 9){
+
+        if (codigoPagina == 9) {
             AnalisisController analisisController = (AnalisisController) context.getELContext().getELResolver().getValue(context.getELContext(), null, "analisisController");
             menuHijo = menuService.menuHijo(8);
             return analisisController.cargarPagina();
         }
-        
-        if(codigoPagina == 10){
+
+        if (codigoPagina == 10) {
             AnalisisController analisisController = (AnalisisController) context.getELContext().getELResolver().getValue(context.getELContext(), null, "analisisController");
             menuHijo = menuService.menuHijo(8);
             return analisisController.cargarPaginaProblemas();
         }
-        
-        if(codigoPagina == 12){
+
+        if (codigoPagina == 12) {
             BusquedaUsuarioController busquedaUsuarioController = (BusquedaUsuarioController) context.getELContext().getELResolver().getValue(context.getELContext(), null, "busquedaUsuarioController");
             menuHijo = menuService.menuHijo(12);
             return busquedaUsuarioController.cargarPagina();
         }
-        
-        if(codigoPagina == 13){
+
+        if (codigoPagina == 13) {
             BusquedaUsuarioController busquedaUsuarioController = (BusquedaUsuarioController) context.getELContext().getELResolver().getValue(context.getELContext(), null, "busquedaUsuarioController");
             menuHijo = menuService.menuHijo(12);
             return busquedaUsuarioController.cargarPagina();
         }
-        
-        if(codigoPagina == 14){
+
+        if (codigoPagina == 14) {
             RolController rolController = (RolController) context.getELContext().getELResolver().getValue(context.getELContext(), null, "rolController");
             menuHijo = menuService.menuHijo(12);
             return rolController.cargarPagina();
         }
-        
-        if(codigoPagina == 15){
+
+        if (codigoPagina == 15) {
             CatalogoController catalogoController = (CatalogoController) context.getELContext().getELResolver().getValue(context.getELContext(), null, "catalogoController");
             menuHijo = menuService.menuHijo(15);
             return catalogoController.cargarPagina();
         }
-        
-        if(codigoPagina == 33){
+
+        if (codigoPagina == 33) {
             CatalogoController catalogoController = (CatalogoController) context.getELContext().getELResolver().getValue(context.getELContext(), null, "catalogoController");
             menuHijo = menuService.menuHijo(15);
             return catalogoController.cargarPagina();
         }
-        
-        if(codigoPagina == 34){
+
+        if (codigoPagina == 34) {
             CatalogoController catalogoController = (CatalogoController) context.getELContext().getELResolver().getValue(context.getELContext(), null, "catalogoController");
             menuHijo = menuService.menuHijo(15);
             return catalogoController.cargarPaginaDerivados();
         }
-        
-        if(codigoPagina == 16){
+
+        if (codigoPagina == 16) {
             CasoController casoController = (CasoController) context.getELContext().getELResolver().getValue(context.getELContext(), null, "casoController");
             menuHijo = menuService.menuHijo(5);
             return casoController.cargarPaginaCasosSigues();
         }
-        
-        if(codigoPagina == 17){
+
+        if (codigoPagina == 17) {
             GraficController graficController = (GraficController) context.getELContext().getELResolver().getValue(context.getELContext(), null, "graficController");
             menuHijo = menuService.menuHijo(8);
             return graficController.cargarPaginaRelacion();
         }
-        
-        if(codigoPagina == 32){
+
+        if (codigoPagina == 32) {
             AnalisisController analisisController = (AnalisisController) context.getELContext().getELResolver().getValue(context.getELContext(), null, "analisisController");
-            menuHijo = menuService.menuHijo(8);
-            return analisisController.cargarContexto();
+            menuHijo = menuService.menuHijo(27);
+            menuNieto = menuService.menuHijo(26);
+            return analisisController.cargarContexto(caso);
         }
-        
-        if(codigoPagina == 18){
+
+        if (codigoPagina == 18) {
             GraficController graficController = (GraficController) context.getELContext().getELResolver().getValue(context.getELContext(), null, "graficController");
             menuHijo = menuService.menuHijo(8);
             return graficController.cargarPaginasRelacionTemas();
         }
-        
-        if(codigoPagina == 19){
+
+        if (codigoPagina == 19) {
             InvestigacionController investigacionController = (InvestigacionController) context.getELContext().getELResolver().getValue(context.getELContext(), null, "investigacionController");
             menuHijo = menuService.menuHijo(19);
             return investigacionController.cargarCrearInvestigacion();
         }
-        
-        if(codigoPagina == 20){
+
+        if (codigoPagina == 20) {
             InvestigacionController investigacionController = (InvestigacionController) context.getELContext().getELResolver().getValue(context.getELContext(), null, "investigacionController");
             menuHijo = menuService.menuHijo(19);
             return investigacionController.cargarCrearInvestigacion();
         }
-        
-        if(codigoPagina == 21){
+
+        if (codigoPagina == 21) {
             InvestigacionController investigacionController = (InvestigacionController) context.getELContext().getELResolver().getValue(context.getELContext(), null, "investigacionController");
             menuHijo = menuService.menuHijo(19);
             return investigacionController.cargarSigues();
         }
-        
-        if(codigoPagina == 22){
+
+        if (codigoPagina == 22) {
             CasoController casoController = (CasoController) context.getELContext().getELResolver().getValue(context.getELContext(), null, "casoController");
             menuHijo = menuService.menuHijo(27);
             //return casoController.cargarPanel();
             return casoController.cargarPanel(caso.getId());
-            
+
         }
-        
-        if(codigoPagina == 23){
+
+        if (codigoPagina == 23) {
             AnalisisController analisisController = (AnalisisController) context.getELContext().getELResolver().getValue(context.getELContext(), null, "analisisController");
             menuHijo = menuService.menuHijo(27);
             menuNieto = menuService.menuHijo(26);
             return analisisController.cargarPaginaCaso(caso);
 
         }
-        
-        if(codigoPagina == 24){
+
+        if (codigoPagina == 24) {
             RegistroController registroController = (RegistroController) context.getELContext().getELResolver().getValue(context.getELContext(), null, "registroController");
             menuHijo = menuService.menuHijo(27);
             return registroController.cargarNoticiasCaso();
         }
-        
-        if(codigoPagina == 25){
+
+        if (codigoPagina == 25) {
             IntervencionController intervencionController = (IntervencionController) context.getELContext().getELResolver().getValue(context.getELContext(), null, "intervencionController");
             menuHijo = menuService.menuHijo(27);
             return intervencionController.cargarPaginaIntervencionDetalleCaso(caso.getId());
         }
-        
-        if(codigoPagina == 26){
+
+        if (codigoPagina == 26) {
             SeguimientoAcuerdoController seguimientoAcuerdoController = (SeguimientoAcuerdoController) context.getELContext().getELResolver().getValue(context.getELContext(), null, "seguimientoAcuerdoController");
             menuHijo = menuService.menuHijo(27);
             return seguimientoAcuerdoController.cargarPaginaCaso(caso.getId());
         }
-        
-        if(codigoPagina == 27){
+
+        if (codigoPagina == 27) {
             menuHijo = menuService.menuHijo(27);
             return null;
         }
-        
-        if(codigoPagina == 28){
+
+        if (codigoPagina == 28) {
             AnalisisController analisisController = (AnalisisController) context.getELContext().getELResolver().getValue(context.getELContext(), null, "analisisController");
             menuHijo = menuService.menuHijo(27);
             menuNieto = menuService.menuHijo(26);
             return analisisController.cargarPaginaCaso(caso);
         }
-        
-        if(codigoPagina == 29){
+
+        if (codigoPagina == 29) {
             AnalisisController analisisController = (AnalisisController) context.getELContext().getELResolver().getValue(context.getELContext(), null, "analisisController");
             menuHijo = menuService.menuHijo(27);
             menuNieto = menuService.menuHijo(26);
             return analisisController.cargarPaginaProblemasCaso(caso);
         }
-        
-        if(codigoPagina == 30){
+
+        if (codigoPagina == 30) {
             GraficController graficController = (GraficController) context.getELContext().getELResolver().getValue(context.getELContext(), null, "graficController");
             menuHijo = menuService.menuHijo(27);
             menuNieto = menuService.menuHijo(26);
             return graficController.cargarPaginaRelacionCaso2(caso);
         }
-        
-        if(codigoPagina == 31){
+
+        if (codigoPagina == 31) {
             GraficController graficController = (GraficController) context.getELContext().getELResolver().getValue(context.getELContext(), null, "graficController");
             menuHijo = menuService.menuHijo(27);
             menuNieto = menuService.menuHijo(26);
             return graficController.cargarPaginasRelacionTemasCaso(caso);
         }
-        
-        if(codigoPagina == 35){
+
+        if (codigoPagina == 35) {
             ReporteGeneralController reporteGeneralController = (ReporteGeneralController) context.getELContext().getELResolver().getValue(context.getELContext(), null, "reporteGeneralController");
             return reporteGeneralController.reporte();
         }
-        
-        if(codigoPagina == 36){
+
+        if (codigoPagina == 36) {
             ReporteGeneralController reporteGeneralController = (ReporteGeneralController) context.getELContext().getELResolver().getValue(context.getELContext(), null, "reporteGeneralController");
             return reporteGeneralController.reportePublic();
         }
-        
-        
-            return null;
+
+        return null;
     }
-    
-    
 
     public List<Menu> getMenuPadre() {
         return menuPadre;
@@ -382,5 +380,5 @@ public class MenuController implements Serializable{
     public void setAcuerdoDetalles(List<ActaAcuerdoDetalle> acuerdoDetalles) {
         this.acuerdoDetalles = acuerdoDetalles;
     }
-    
+
 }

@@ -6,6 +6,7 @@
 package gob.dp.simco.analisis.entity;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  *
@@ -18,6 +19,8 @@ public class ContextoTipo implements Serializable{
     private String detalle;
     
     private String estado;
+    
+    private List<Contexto> respuesta;
 
     public Long getId() {
         return id;
@@ -42,5 +45,14 @@ public class ContextoTipo implements Serializable{
     public void setEstado(String estado) {
         this.estado = estado;
     }
+
+    public List<Contexto> getRespuesta() {
+        return respuesta;
+    }
+
+    public void setRespuesta(List<Contexto> respuesta) {
+        this.respuesta = respuesta;
+    }
+
     
 }

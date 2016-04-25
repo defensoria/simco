@@ -6,7 +6,6 @@
 
 package gob.dp.simco.registro.dao;
 
-import gob.dp.simco.registro.bean.FiltroActividad;
 import gob.dp.simco.registro.entity.Actividad;
 import java.util.List;
 
@@ -19,10 +18,6 @@ public interface ActividadDao {
    public void actividadInsertar(Actividad actividad) throws Exception;
    
    public void actividadUpdate(Actividad actividad) throws Exception;
-   
-   public List<Actividad> actividadBuscar(FiltroActividad filtroActividad) throws Exception;
-   
-   public Integer actividadTotalBuscar(FiltroActividad filtroActividad) throws Exception;
    
    public Actividad actividadBuscarOne(Actividad actividad) throws Exception;
    
@@ -52,7 +47,7 @@ public interface ActividadDao {
    
    public List<Actividad> actividadxMedioVerificacionBuscarTotal(Long idMedioVerificacion) throws Exception;
    
-   public List<Actividad> actividadBusquedaPaginado(FiltroActividad filtroActividad) throws Exception;
+   public List<Actividad> actividadBusquedaPaginado() throws Exception;
    
    public List<Actividad> actividadBusquedaSinCasoAC();
    

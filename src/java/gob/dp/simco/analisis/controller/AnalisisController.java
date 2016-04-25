@@ -9,6 +9,9 @@ import gob.dp.simco.analisis.entity.AnalisisActor;
 import gob.dp.simco.analisis.entity.AnalisisActorIntensidad;
 import gob.dp.simco.analisis.entity.AnalisisActorTema;
 import gob.dp.simco.analisis.entity.AnalisisRelacion;
+import gob.dp.simco.analisis.entity.Contexto;
+import gob.dp.simco.analisis.entity.ContextoPregunta;
+import gob.dp.simco.analisis.entity.ContextoTipo;
 import gob.dp.simco.analisis.entity.Problema;
 import gob.dp.simco.analisis.entity.ProblemaDetalle;
 import gob.dp.simco.analisis.entity.Tema;
@@ -16,6 +19,9 @@ import gob.dp.simco.analisis.service.AnalisisActorIntensidadService;
 import gob.dp.simco.analisis.service.AnalisisActorService;
 import gob.dp.simco.analisis.service.AnalisisActorTemaService;
 import gob.dp.simco.analisis.service.AnalisisRelacionService;
+import gob.dp.simco.analisis.service.ContextoPreguntaService;
+import gob.dp.simco.analisis.service.ContextoService;
+import gob.dp.simco.analisis.service.ContextoTipoService;
 import gob.dp.simco.analisis.service.ProblemaDetalleService;
 import gob.dp.simco.analisis.service.ProblemaService;
 import gob.dp.simco.analisis.service.TemaService;
@@ -144,6 +150,8 @@ public class AnalisisController implements Serializable {
 
     MessagesUtil msg;
 
+    private List<ContextoTipo> listaTipoContexto;
+
     @Autowired
     private ActorService actorService;
 
@@ -177,14 +185,58 @@ public class AnalisisController implements Serializable {
     @Autowired
     private CasoActorService casoActorService;
 
+    @Autowired
+    private ContextoTipoService contextoTipoService;
+
+    @Autowired
+    private ContextoPreguntaService contextoPreguntaService;
+
+    @Autowired
+    private ContextoService contextoService;
+
     public AnalisisController() {
         limpiarListas();
         msg = new MessagesUtil();
     }
-    
-    public String cargarContexto(){
-        
+
+    public String cargarContexto(Caso caso) {
+        setCaso(caso);
+        listaTipoContexto = contextoTipoService.contextoTipoBuscar();
+        for (ContextoTipo tipo : listaTipoContexto) {
+            List<Contexto> list = new ArrayList<>();
+            List<ContextoPregunta> preguntas = contextoPreguntaService.contextoPreguntaBuscar(tipo.getId());
+            for (ContextoPregunta pregunta : preguntas) {
+                Contexto filtro = new Contexto();
+                filtro.setIdCaso(caso.getId());
+                filtro.setIdPregunta(pregunta.getId());
+                Contexto contexto;
+                contexto = contextoService.contextoBuscar(filtro);
+                if(contexto == null){
+                    contexto = new Contexto();
+                    contexto.setIdPregunta(pregunta.getId());
+                    contexto.setIdCaso(caso.getId());
+                }
+                contexto.setPregunta(pregunta.getDetalle());
+                list.add(contexto);
+            }
+            tipo.setRespuesta(list);
+        }
         return "contexto";
+    }
+
+    public void guardarContexto() {
+        for (ContextoTipo tipo : listaTipoContexto) {
+            for (Contexto contex : tipo.getRespuesta()) {
+                if (StringUtils.isNotBlank(contex.getRespuesta())) {
+                    if (contex.getId() == null) {
+                        contextoService.contextoInsertar(contex);
+                    } else {
+                        contextoService.contextoUpdate(contex);
+                    }
+                }
+            }
+        }
+        msg.messageInfo("Se realizaron los cambios", null);
     }
 
     public String cargarPaginaProblemas() {
@@ -219,14 +271,14 @@ public class AnalisisController implements Serializable {
             }
         }
     }
-    
-    public String verActividad(long idActividad){
+
+    public String verActividad(long idActividad) {
         FacesContext context = FacesContext.getCurrentInstance();
-        RegistroController  registroController= (RegistroController) context.getELContext().getELResolver().getValue(context.getELContext(), null, "registroController");
+        RegistroController registroController = (RegistroController) context.getELContext().getELResolver().getValue(context.getELContext(), null, "registroController");
         Actividad a = registroController.cargarActividadId(idActividad);
-        if(a.getIdCaso() == null){
+        if (a.getIdCaso() == null) {
             return registroController.irModificarRegistro2(a);
-        }else{
+        } else {
             return registroController.irModificarRegistro(a);
         }
     }
@@ -255,25 +307,25 @@ public class AnalisisController implements Serializable {
             msg.messageAlert("Debe seleccionar un caso registrado", null);
         }
     }
-    
-    public void filtarXactor(){
-        if(idActor == 0){
+
+    public void filtarXactor() {
+        if (idActor == 0) {
             cargarComboActoresXcaso(caso);
-        }else{
-            if (caso.getId() != null) {
-            AnalisisActor aa1 = new AnalisisActor();
-            aa1.setCaso(caso);
-            Actor a = new Actor();
-            a.setId(idActor);
-            aa1.setActor(a);
-            listaActoresXCaso = actorService.actorxCasoBuscar(caso.getId());
-            analisisActors = analisisActorService.analisisActorxcasoBuscarxActor(aa1);
-            problemaDatos(caso);
-            listarTemas(caso.getId());
-            limpiarCanvasActores();
         } else {
-            msg.messageAlert("Debe seleccionar un caso registrado", null);
-        }
+            if (caso.getId() != null) {
+                AnalisisActor aa1 = new AnalisisActor();
+                aa1.setCaso(caso);
+                Actor a = new Actor();
+                a.setId(idActor);
+                aa1.setActor(a);
+                listaActoresXCaso = actorService.actorxCasoBuscar(caso.getId());
+                analisisActors = analisisActorService.analisisActorxcasoBuscarxActor(aa1);
+                problemaDatos(caso);
+                listarTemas(caso.getId());
+                limpiarCanvasActores();
+            } else {
+                msg.messageAlert("Debe seleccionar un caso registrado", null);
+            }
         }
     }
 
@@ -438,7 +490,7 @@ public class AnalisisController implements Serializable {
                     pd.setEstado("ACT");
                     pd.setIdProblema(problema.getId());
                     problemaDetalleService.problemaDetalleInsertar(pd);
-                }else{
+                } else {
                     problemaDetalleService.problemaDetalleUpdateDatos(pd);
                 }
             }
@@ -526,8 +578,8 @@ public class AnalisisController implements Serializable {
             analisisActorService.analisisActorxcasoUpdate(analisisActor);
         }
     }
-    
-    public void deleteAnalisisActor(AnalisisActor aa){
+
+    public void deleteAnalisisActor(AnalisisActor aa) {
         try {
             deleteTemasxActor(aa);
             analisisActorService.analisisActorDelete(aa);
@@ -536,24 +588,24 @@ public class AnalisisController implements Serializable {
             log.error(e);
         }
     }
-    
-    public void archivarAnalisisActor(AnalisisActor aa){
+
+    public void archivarAnalisisActor(AnalisisActor aa) {
         aa.setArchivado(1);
         analisisActorService.analisisActorArchivar(aa);
         msg.messageInfo("Se ha archivado el resumen de la demanda", null);
     }
-    
-    public void desarchivarTodas(){
-        if(analisisActors.size() > 0){
-            for(AnalisisActor aa : analisisActors){
+
+    public void desarchivarTodas() {
+        if (analisisActors.size() > 0) {
+            for (AnalisisActor aa : analisisActors) {
                 aa.setArchivado(0);
                 analisisActorService.analisisActorArchivar(aa);
             }
         }
         msg.messageInfo("Se ha habilitado la visualizacion de todos los resumen de demandas", null);
     }
-    
-    private void deleteTemasxActor(AnalisisActor aa){
+
+    private void deleteTemasxActor(AnalisisActor aa) {
         AnalisisActorTema aat1 = new AnalisisActorTema();
         aat1.setCaso(aa.getCaso());
         aat1.setActor(aa.getActor());
@@ -1520,6 +1572,14 @@ public class AnalisisController implements Serializable {
 
     public void setListaActoresXCasoNivelAD(List<Actor> listaActoresXCasoNivelAD) {
         this.listaActoresXCasoNivelAD = listaActoresXCasoNivelAD;
+    }
+
+    public List<ContextoTipo> getListaTipoContexto() {
+        return listaTipoContexto;
+    }
+
+    public void setListaTipoContexto(List<ContextoTipo> listaTipoContexto) {
+        this.listaTipoContexto = listaTipoContexto;
     }
 
 }

@@ -4,7 +4,7 @@
     
     <resultMap id="contextoMap" type="contexto">
         <result property="id" column="N_ID_CONTEXTO" />
-        <result property="idCasp" column="N_ID_CASO"/>
+        <result property="idCaso" column="N_ID_CASO"/>
         <result property="idPregunta" column="N_ID_PREGUNTA"/>
         <result property="respuesta" column="C_RESPUESTA"/>
     </resultMap>
@@ -22,7 +22,7 @@
         SEQ_SIMCO_REG_CONTEXTO.NextVal,
         #{idCaso},
         #{idPregunta},
-        #{respuesta},
+        #{respuesta}
         )
         
         <selectKey keyProperty="id" resultType="Long">
@@ -39,5 +39,9 @@
             N_ID_CONTEXTO=#{id}
         </where>
     </update>
+    
+    <select id="contextoBuscar" parameterType="contexto" resultMap="contextoMap">
+        SELECT * from SIMCO_REG_CONTEXTO WHERE N_ID_CASO = #{idCaso} and N_ID_PREGUNTA = #{idPregunta}
+    </select>
     
 </mapper>

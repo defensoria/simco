@@ -25,7 +25,6 @@
         <typeAlias type="gob.dp.simco.administracion.parametro.bean.FiltroCatalogo" alias="filtroCatalogo"/>
                          
         <typeAlias type="gob.dp.simco.registro.entity.Actividad" alias="actividad"/>
-        <typeAlias type="gob.dp.simco.registro.bean.FiltroActividad" alias="filtroActividad"/>
         <typeAlias type="gob.dp.simco.registro.entity.Actor" alias="actor"/>
         <typeAlias type="gob.dp.simco.registro.bean.FiltroActor" alias="filtroActor"/>
         <typeAlias type="gob.dp.simco.registro.entity.Caso" alias="caso"/>
@@ -66,8 +65,8 @@
         <typeAlias type="gob.dp.simco.analisis.entity.Problema" alias="problema"/>
         <typeAlias type="gob.dp.simco.analisis.entity.ProblemaDetalle" alias="problemaDetalle"/>
         <typeAlias type="gob.dp.simco.analisis.entity.Contexto" alias="contexto"/>
-        <typeAlias type="gob.dp.simco.analisis.entity.Contexto" alias="contextoPregunta"/>
-        <typeAlias type="gob.dp.simco.analisis.entity.Contexto" alias="contextoTipo"/>
+        <typeAlias type="gob.dp.simco.analisis.entity.ContextoPregunta" alias="contextoPregunta"/>
+        <typeAlias type="gob.dp.simco.analisis.entity.ContextoTipo" alias="contextoTipo"/>
         
         <typeAlias type="gob.dp.simco.intervencion.entity.Intervencion" alias="intervencion"/>
         <typeAlias type="gob.dp.simco.intervencion.entity.IntervencionAccion" alias="intervencionAccion"/>

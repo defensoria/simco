@@ -17,4 +17,6 @@ public interface ContextoService {
     
     public void contextoUpdate(Contexto contexto);
     
+    public Contexto contextoBuscar(Contexto contexto);
+    
 }

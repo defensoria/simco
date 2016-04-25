@@ -1222,17 +1222,6 @@ public class ActorController implements Serializable {
         }
     }
 
-    public List<Actor> buscarActor() {
-        log.debug("METODO : ActorController.buscarActor");
-        List<Actor> lst = null;
-        try {
-            FiltroActor filtro = busquedaActorTempHaciaFiltroActor(actorBusquedaTemp);
-        } catch (Exception e) {
-            log.error("ERROR : ActorController.buscarActor: " + e.getMessage());
-        }
-        return lst;
-    }
-
     public void listarPaginado(Long pagina) {
         nroPagina = pagina;
         int paginado = ConstantesUtil.PAGINADO_ACTORES_5;
@@ -1250,20 +1239,6 @@ public class ActorController implements Serializable {
         } catch (Exception e) {
             log.error("ERROR : ActividadController.listarPaginado: " + e.getMessage());
         }
-    }
-
-    private FiltroActor busquedaActorTempHaciaFiltroActor(ActorBusquedaTemp bean) {
-        FiltroActor filtro = new FiltroActor();
-        if (!StringUtils.isBlank(bean.getNombre())) {
-            filtro.setNombre(bean.getNombre().trim());
-        }
-        if (!StringUtils.isBlank(bean.getApellido())) {
-            filtro.setApellido(bean.getApellido().trim());
-        }
-        if (!StringUtils.isBlank(bean.getDni())) {
-            filtro.setDni(bean.getDni().trim());
-        }
-        return filtro;
     }
 
     public void historialActor(String accion, String entidad, Long idEntidad, Long idActor) {

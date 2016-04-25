@@ -6,7 +6,6 @@
 
 package gob.dp.simco.registro.dao;
 
-import gob.dp.simco.registro.bean.FiltroActividad;
 import gob.dp.simco.registro.entity.Actividad;
 import java.util.List;
 import org.apache.log4j.Logger;
@@ -32,18 +31,6 @@ public class ActividadDaoImpl extends SqlSessionDaoSupport implements ActividadD
     public void actividadUpdate(Actividad actividad) throws Exception {
         log.debug("METODO : ActividadDaoImpl.actividadUpdate");
         getSqlSession().update("gob.dp.simco.registro.dao.ActividadDao.actividadUpdate", actividad);
-    }
-
-    @Override
-    public List<Actividad> actividadBuscar(FiltroActividad filtroActividad) throws Exception {
-        log.debug("METODO : ActividadDaoImpl.actividadBuscar");
-        return getSqlSession().selectList("gob.dp.simco.registro.dao.ActividadDao.actividadBuscar",filtroActividad);
-    }
-
-    @Override
-    public Integer actividadTotalBuscar(FiltroActividad filtroActividad) throws Exception {
-        log.debug("METODO : ActividadDaoImpl.actividadTotalBuscar");
-        return getSqlSession().selectOne("gob.dp.simco.registro.dao.ActividadDao.actividadTotalBuscar",filtroActividad);
     }
 
     @Override
@@ -113,9 +100,9 @@ public class ActividadDaoImpl extends SqlSessionDaoSupport implements ActividadD
     }
 
     @Override
-    public List<Actividad> actividadBusquedaPaginado(FiltroActividad filtroActividad) throws Exception {
+    public List<Actividad> actividadBusquedaPaginado() throws Exception {
         log.debug("METODO : ActividadDaoImpl.actividadBusquedaPaginado");
-        return getSqlSession().selectList("gob.dp.simco.registro.dao.ActividadDao.actividadBusquedaPaginado",filtroActividad);
+        return getSqlSession().selectList("gob.dp.simco.registro.dao.ActividadDao.actividadBusquedaPaginado");
     }
 
     @Override

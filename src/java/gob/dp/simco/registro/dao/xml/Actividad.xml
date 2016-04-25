@@ -203,35 +203,9 @@
         INNER JOIN SIMCO_REG_ACTIVIDAD_ACTOR D ON A.N_ID_ACTIVIDAD = D.N_ID_ACTIVIDAD
         WHERE D.N_ID_ACTOR =#{id}
     </select>
-   
-    <select id="actividadTotalBuscar" parameterType="filtroActividad" resultType="java.lang.Integer" >
-        SELECT COUNT(*) FROM (
-        <include refid="sqlBuscarActividad"/>
-        ) TABLA_COUNT
-    </select>    
 
     <select id="actividadBuscarOne" resultMap="actividadMap" parameterType="actividad">
         <include refid="sqlBuscarActividad"/>
-    </select> 
-
-    <select id="actividadBuscar" resultMap="actividadMap" parameterType="filtroActividad">
-        SELECT T2.* FROM
-        (
-        SELECT  ROWNUM R, T1.* FROM
-        (
-        <include refid="sqlBuscarActividad"/>
-        ) T1
-        <where>
-            <if test="numeroRegistroFinal != null">
-                ROWNUM  <![CDATA[<=]]>  #{numeroRegistroFinal}
-            </if>
-        </where>
-        ) T2
-        <where>
-            <if test="numeroRegistroInicial != null">
-                T2.R <![CDATA[>]]>   #{numeroRegistroInicial}
-            </if>
-        </where>
     </select>          
 
     <insert id="actividadInsertar" parameterType="actividad">
@@ -782,7 +756,7 @@
     </select>
     
     
-    <select id="actividadBusquedaPaginado" resultMap="actividadMap" parameterType="filtroActividad">
+    <select id="actividadBusquedaPaginado" resultMap="actividadMap">
         select  A.N_ID_ACTIVIDAD,
         A.C_NOMACTIVIDAD,
         A.C_DESCRIPACTIVIDAD,
@@ -800,7 +774,6 @@
         A.N_ID_ACONTECIMIENTO,
         A.N_INDICEVINCULADO
         from simco_reg_actividad A
-            
     </select>
     
     <select id="actividadBusquedaSinCasoAC" resultMap="actividadMap">

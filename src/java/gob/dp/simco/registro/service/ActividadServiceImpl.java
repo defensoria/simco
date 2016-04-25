@@ -6,7 +6,6 @@
 
 package gob.dp.simco.registro.service;
 
-import gob.dp.simco.registro.bean.FiltroActividad;
 import gob.dp.simco.registro.dao.ActividadDao;
 import gob.dp.simco.registro.entity.Actividad;
 import java.util.List;
@@ -36,18 +35,6 @@ public class ActividadServiceImpl implements ActividadService{
     public void actividadModificar(Actividad actividad) throws Exception {
         log.debug("METODO : ActividadServiceImpl.actividadModificar");
         actividadDao.actividadUpdate(actividad);
-    }
-
-    @Override
-    public List<Actividad> actividadBuscar(FiltroActividad filtroActividad) throws Exception {
-        log.debug("METODO : ActividadServiceImpl.actividadBuscar");
-        return actividadDao.actividadBuscar(filtroActividad);
-    }
-
-    @Override
-    public Integer actividadTotalBuscar(FiltroActividad filtroActividad) throws Exception {
-        log.debug("METODO : ActividadServiceImpl.actividadTotalBuscar");
-        return actividadDao.actividadTotalBuscar(filtroActividad);
     }
 
     @Override
@@ -119,9 +106,9 @@ public class ActividadServiceImpl implements ActividadService{
     }
 
     @Override
-    public List<Actividad> actividadBusquedaPaginado(FiltroActividad filtroActividad) throws Exception {
+    public List<Actividad> actividadBusquedaPaginado() throws Exception {
         log.debug("METODO : ActividadServiceImpl.actividadBusquedaPaginado");
-        return actividadDao.actividadBusquedaPaginado(filtroActividad);
+        return actividadDao.actividadBusquedaPaginado();
     }
 
     @Override
@@ -130,8 +117,7 @@ public class ActividadServiceImpl implements ActividadService{
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("var projects2 = [");
         int i = 0;
-        FiltroActividad fa = new FiltroActividad();
-        for(Actividad a:actividadDao.actividadBusquedaPaginado(fa)){
+        for(Actividad a:actividadDao.actividadBusquedaPaginado()){
             if(i > 0)
             stringBuilder.append(",");    
             stringBuilder.append("{value: ").append(a.getId()).append(",");

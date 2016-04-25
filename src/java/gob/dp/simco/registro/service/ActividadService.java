@@ -6,7 +6,6 @@
 
 package gob.dp.simco.registro.service;
 
-import gob.dp.simco.registro.bean.FiltroActividad;
 import gob.dp.simco.registro.entity.Actividad;
 import java.util.List;
 
@@ -19,10 +18,6 @@ public interface ActividadService {
    public void actividadNuevo(Actividad actividad) throws Exception;
    
    public void actividadModificar(Actividad actividad) throws Exception;
-   
-   public List<Actividad> actividadBuscar(FiltroActividad filtroActividad) throws Exception;
-   
-   public Integer actividadTotalBuscar(FiltroActividad filtroActividad) throws Exception;
    
    public Actividad actividadBuscarOne(Long idActividad) throws Exception;
    
@@ -48,7 +43,7 @@ public interface ActividadService {
    
    public List<Actividad> actividadxMedioVerificacionBuscarTotal(Long idMedioVerificacion) throws Exception;
    
-   public List<Actividad> actividadBusquedaPaginado(FiltroActividad filtroActividad) throws Exception;
+   public List<Actividad> actividadBusquedaPaginado() throws Exception;
    
    public String actividadBusquedaPaginadoAutocompletar() throws Exception;
    

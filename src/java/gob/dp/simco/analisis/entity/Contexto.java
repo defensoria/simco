@@ -5,7 +5,6 @@
  */
 package gob.dp.simco.analisis.entity;
 
-import gob.dp.simco.registro.entity.*;
 import java.io.Serializable;
 
 /**
@@ -21,6 +20,8 @@ public class Contexto implements Serializable{
     private Long idPregunta;
     
     private String respuesta;
+    
+    private String pregunta;
 
     public Long getId() {
         return id;
@@ -52,6 +53,14 @@ public class Contexto implements Serializable{
 
     public void setRespuesta(String respuesta) {
         this.respuesta = respuesta;
+    }
+
+    public String getPregunta() {
+        return pregunta;
+    }
+
+    public void setPregunta(String pregunta) {
+        this.pregunta = pregunta;
     }
     
     

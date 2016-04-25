@@ -23,6 +23,7 @@
         <result property="fechaModificacion" column="D_FECHAMODIFICACOIN"/>
         <result property="ruta" column="C_RUTA"/>
         <result property="nombreTipo" column="NOMBRE_PARAMETRO"/>
+        <result property="noIdentificado" column="N_NOIDENTIFICADO"/>
     </resultMap>  
 
     <insert id="actividadVictimaInsertar" parameterType="actividadVictima">
@@ -54,7 +55,6 @@
         <if test="descripcion != null">
             C_DESCRIPCIONVICTIMA,
         </if>
-        
         <if test="causaMuerte != null">
             C_CAUSAMUERTE,
         </if>
@@ -75,6 +75,9 @@
         </if>
         <if test="ruta != null">
             C_RUTA,
+        </if>
+        <if test="noIdentificado != null">
+            N_NOIDENTIFICADO,
         </if>
         D_FECHAREGISTRO
         )
@@ -126,6 +129,9 @@
         </if>
         <if test="ruta != null">
             #{ruta},
+        </if>
+        <if test="noIdentificado != null">
+            #{noIdentificado},
         </if>
         #{fechaRegistro}
         )
@@ -183,6 +189,9 @@
             <if test="ruta != null">
                 C_RUTA = #{ruta},
             </if>
+            <if test="noIdentificado != null">
+                N_NOIDENTIFICADO = #{noIdentificado},
+            </if>
             D_FECHAMODIFICACOIN = #{fechaModificacion}
         </set>
         <where>
@@ -211,10 +220,11 @@
         A.D_FECHAREGISTRO,
         A.D_FECHAMODIFICACOIN,
         A.C_RUTA,
+        A.N_NOIDENTIFICADO,
         B.NOMBRE_PARAMETRO
         FROM
         SIMCO_REG_ACTIVIDAD_VICTIMA A 
-        INNER JOIN SIMCO_PARAMETRO B ON TRIM(A.C_TIPO) = TRIM(B.VALOR_PARAMETRO)
+        LEFT JOIN SIMCO_PARAMETRO B ON TRIM(A.C_TIPO) = TRIM(B.VALOR_PARAMETRO)
         AND B.PADRE_PARAMETRO = 200
         WHERE A.N_ID_ACTIVIDAD = #{id}
     </select>

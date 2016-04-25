@@ -17,6 +17,7 @@ public interface ContextoDao {
     
     public void contextoUpdate(Contexto contexto);
     
+    public Contexto contextoBuscar(Contexto contexto);
 }
 
 
