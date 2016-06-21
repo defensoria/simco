@@ -25,25 +25,25 @@
                     #project-description{margin:0;
                                          padding:0
                     }
-                    </style>
-                    <script>
-                        /*<![CDATA[*/
-                        $(function () {#{registroController.cadenaAutocomplete}
-                            $("#nombreCaso").autocomplete({minLength: 3, source: projects, focus: function (event, ui) {
-                                    $("#nombreCaso").val(ui.item.label);
-                                    return false;
-                                }, select: function (event, ui) {
-                                    $("#nombreCaso").val(ui.item.label);
-                                    $("#idCaso").val(ui.item.value);
-                                    return false;
-                                }}).data("ui-autocomplete")._renderItem = function (ul, item) {
-                                return $("<li/>").append("<a>" + item.label + "<br/>" + item.desc + "</a>").appendTo(ul);
-                            };
-                        });
-                        /*]]>*/
-                    </script>
-                    <h:commandButton action="#{utilBean.correo()}" value="enviar" rendered="false"/>
-                    <h:inputHidden id="hidCodActividad" value="#{registroController.actividad.id}" />
+                </style>
+                <script>
+                    /*<![CDATA[*/
+                    $(function () {#{registroController.cadenaAutocomplete}
+                        $("#nombreCaso").autocomplete({minLength: 3, source: projects, focus: function (event, ui) {
+                                $("#nombreCaso").val(ui.item.label);
+                                return false;
+                            }, select: function (event, ui) {
+                                $("#nombreCaso").val(ui.item.label);
+                                $("#idCaso").val(ui.item.value);
+                                return false;
+                            }}).data("ui-autocomplete")._renderItem = function (ul, item) {
+                            return $("<li/>").append("<a>" + item.label + "<br/>" + item.desc + "</a>").appendTo(ul);
+                        };
+                    });
+                    /*]]>*/
+                </script>
+                <h:commandButton action="#{utilBean.correo()}" value="enviar" rendered="false"/>
+                <h:inputHidden id="hidCodActividad" value="#{registroController.actividad.id}" />
                 <input type="hidden" id="idTipoRegistro" jsf:value="#{registroController.actividad.tipo}" />
                 <div class="panel panel-featured-top-primary">
                     <br/>
@@ -75,8 +75,19 @@
                                         </div>
                                     </div>
                                 </div>
-                                <style>.alink:hover{text-decoration:none}.alink:link{text-decoration:none}.alink:active{text-decoration:none}</style>
-                                <script>$('.trigger').popover({html: true, placement: 'bottom', tabindex: '0', trigger: 'focus', title: function () {
+                                <style>
+                                    .alink:hover{
+                                        text-decoration:none
+                                    }
+                                    .alink:link{
+                                        text-decoration:none
+                                    }
+                                    .alink:active{
+                                        text-decoration:none
+                                    }
+                                </style>
+                                <script>
+                                    $('.trigger').popover({html: true, placement: 'bottom', tabindex: '0', trigger: 'focus', title: function () {
                                             return $(this).parent().find('.head').html();
                                         }, content: function () {
                                             return $(this).parent().find('.content').html();
@@ -116,7 +127,8 @@
                                             }
                                             $("#idTextoRegistro").css("color", "#3071A9");
                                         }
-                                    });</script>
+                                    });
+                                </script>
                             </td>
                             <td>
                                 <input type="text" id="nombreCaso" jsf:value="#{registroController.caso.nombre}" style="width:80%" placeholder="vincular a caso" />
@@ -361,7 +373,7 @@
                                         html,body,#map-canvas{height:100%;
                                                               margin:0;
                                                               padding:0;
-                                                            }
+                                        }
                                         #panel{position:absolute;
                                                top:5px;
                                                left:50%;
@@ -370,7 +382,7 @@
                                                background-color:#fff;
                                                padding:5px;
                                                border:1px solid #999
-                                               }
+                                        }
                                     </style>
                                     <script>/*<![CDATA[*/var markers = [];
                                         var geocoder;
@@ -527,7 +539,7 @@
                     </table>
                 </h:panelGroup>
                 <script>/*<![CDATA[*/
-        $('.datepicker').datetimepicker({pickTime: false});
+                    $('.datepicker').datetimepicker({pickTime: false});
                     $(".datepicker").on("changeDate", function (ev) {
                         $(this).datetimepicker("hide");
                     });

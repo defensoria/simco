@@ -236,7 +236,7 @@
                                         } else {
                                             $("#idPanelBody").slideUp(300).delay(800);
                                             $("#spanAddUser").removeClass("glyphicon-minus").addClass("glyphicon-plus");
-                                            i = 1
+                                            i = 1;
                                         }
                                     });
                                 </script>
@@ -412,7 +412,7 @@
                     function soloNumbero(a) {
                         var b = window.event ? window.event.keyCode : a.which;
                         if ((b === 8) || (b === 46)) {
-                            return true
+                            return true;
                         }
                         return/\d/.test(String.fromCharCode(b))
                     }
