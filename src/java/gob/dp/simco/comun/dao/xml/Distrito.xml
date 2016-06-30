@@ -3,34 +3,29 @@
 <mapper namespace="gob.dp.simco.comun.dao.DistritoDao">
     
     <resultMap id="distritoMap" type="distrito">
-        <id property="id" column="N_ID_DSTRO" />
-        <result property="provincia" column="N_ID_PROV"/>
+        <id property="idDistrito" column="C_ID_DSTRO" />
+        <id property="idProvincia" column="C_ID_PROV" />
+        <id property="idDepartamento" column="C_ID_DPTO" />
         <result property="descripcion" column="C_DESCDSTRO"/>
         <result property="coordenadax" column="C_COORDENADAX"/>
         <result property="coordenaday" column="C_COORDENADAY"/>
         <result property="zoom" column="N_ZOOM"/>
     </resultMap>  
 
-    <select id="distritoLista" resultMap="distritoMap" parameterType="long">
+    <select id="distritoLista" resultMap="distritoMap" parameterType="distrito">
         select 
-        N_ID_DSTRO, 
-        N_ID_PROV,  
-        C_DESCDSTRO
+        *
         FROM SIMCO_UBIGEO_DSTRO
-        WHERE N_ID_PROV = #{id}
-        ORDER BY C_DESCDSTRO
+        WHERE C_ID_PROV = #{idProvincia}
+        AND C_ID_DPTO = #{idDepartamento}
     </select>   
     
-    <select id="distritoOne" resultMap="distritoMap" parameterType="long">
+    <select id="distritoOne" resultMap="distritoMap" parameterType="distrito">
         select 
-        N_ID_DSTRO, 
-        N_ID_PROV,  
-        C_DESCDSTRO,
-        C_COORDENADAX,
-        C_COORDENADAY,
-        N_ZOOM
+        *
         FROM SIMCO_UBIGEO_DSTRO
-        WHERE N_ID_DSTRO = #{id}
-        ORDER BY C_DESCDSTRO
-    </select>  
+        WHERE C_ID_DSTRO = #{idDistrito}
+        AND C_ID_PROV = #{idProvincia}
+        AND C_ID_DPTO = #{idDepartamento}
+    </select>    
 </mapper>

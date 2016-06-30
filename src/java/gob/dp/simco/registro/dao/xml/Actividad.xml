@@ -13,9 +13,9 @@
         <result property="horaRealizacionFin" column="T_HORAREALIZACIONFIN"/>
         <result property="comentario" column="C_COMENTARIOACTIVIDAD"/>
         <result property="codigoActividad" column="C_CODIGOACTIVIDAD"/>
-        <result property="idDepartamento" column="NIDDEPART"/>
-        <result property="idProvincia" column="NIDPROV"/>
-        <result property="idDistrito" column="NIDDISTR"/>
+        <result property="idDepartamento" column="CIDDEPART"/>
+        <result property="idProvincia" column="CIDPROV"/>
+        <result property="idDistrito" column="CIDDISTR"/>
         <result property="indCurso" column="N_INDCURSO"/>
         <result property="fechaRegistro" column="D_FECREGISTRO"/>
         <result property="fechaModificacion" column="D_FECMODIFICACION"/>
@@ -258,13 +258,13 @@
             C_COMENTARIOACTIVIDAD,
         </if>
         <if test="idDepartamento != null">
-            NIDDEPART,
+            CIDDEPART,
         </if>
         <if test="idProvincia != null">
-            NIDPROV,
+            CIDPROV,
         </if>
         <if test="idDistrito != null">
-            NIDDISTR,
+            CIDDISTR,
         </if>
         <if test="ruta != null">
             C_RUTA,
@@ -380,13 +380,13 @@
                 T_HORAREALIZACIONFIN = #{horaRealizacionFin},
             </if>
             <if test="idDepartamento != null">
-                NIDDEPART= #{idDepartamento},
+                CIDDEPART= #{idDepartamento},
             </if>
             <if test="idProvincia != null">
-                NIDPROV= #{idProvincia},
+                CIDPROV= #{idProvincia},
             </if>
             <if test="idDistrito != null">
-                NIDDISTR= #{idDistrito},
+                CIDDISTR= #{idDistrito},
             </if>
             <if test="fechaRealizacionIni != null">
                 D_FECHAREALIZACIONINI= #{fechaRealizacionIni}, 
@@ -486,9 +486,9 @@
         D.NOMBRE_PARAMETRO AS PARAM_TIPO_ACTIVIDAD_NOM,
         C.C_NOMCASO,
         C.N_ID_CASO,
-        A.NIDDEPART,
-        A.NIDPROV,
-        A.NIDDISTR,
+        A.CIDDEPART,
+        A.CIDPROV,
+        A.CIDDISTR,
         A.N_COORDENADAX,
         A.N_COORDENADAY,
         A.N_ZOOM,
@@ -536,9 +536,9 @@
         D.NOMBRE_PARAMETRO AS PARAM_TIPO_ACTIVIDAD_NOM,
         C.C_NOMCASO,
         C.N_ID_CASO,
-        A.NIDDEPART,
-        A.NIDPROV,
-        A.NIDDISTR,
+        A.CIDDEPART,
+        A.CIDPROV,
+        A.CIDDISTR,
         A.N_COORDENADAX,
         A.N_COORDENADAY,
         A.N_ZOOM,
@@ -583,9 +583,9 @@
         A.N_INDCURSO,
         D.VALOR_PARAMETRO AS PARAM_TIPO_ACTIVIDAD_VAL, 
         D.NOMBRE_PARAMETRO AS PARAM_TIPO_ACTIVIDAD_NOM,
-        A.NIDDEPART,
-        A.NIDPROV,
-        A.NIDDISTR,
+        A.CIDDEPART,
+        A.CIDPROV,
+        A.CIDDISTR,
         A.N_COORDENADAX,
         A.N_COORDENADAY,
         A.N_ZOOM,

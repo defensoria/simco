@@ -650,10 +650,10 @@ public class ActorController implements Serializable {
                 actor = new Actor();
                 actor.setDni(dni);
             } else {
-                if (actor.getIdProvincia() != null && actor.getIdProvincia() != 0) {
+                if (StringUtils.isNotBlank(actor.getIdProvincia()) && StringUtils.isNotBlank(actor.getIdProvincia())) {
                     comboProvincia();
                 }
-                if (actor.getIdDistrito() != null && actor.getIdDistrito() != 0) {
+                if (StringUtils.isNotBlank(actor.getIdDistrito()) && StringUtils.isNotBlank(actor.getIdDistrito())) {
                     comboDistrito();
                 }
             }
@@ -695,10 +695,10 @@ public class ActorController implements Serializable {
         entidad = new Actor();
         if (StringUtils.equals(a.getTipoGeneral(), "PE")) {
             setActor(a);
-            if (actor.getIdProvincia() != null && actor.getIdProvincia() != 0) {
+            if (StringUtils.isNotBlank(actor.getIdProvincia()) && StringUtils.isNotBlank(actor.getIdProvincia())) {
                 comboProvincia();
             }
-            if (actor.getIdDistrito() != null && actor.getIdDistrito() != 0) {
+            if (StringUtils.isNotBlank(actor.getIdDistrito()) && StringUtils.isNotBlank(actor.getIdDistrito())) {
                 comboDistrito();
             }
             listaMiembros = new ArrayList<>();
@@ -716,10 +716,10 @@ public class ActorController implements Serializable {
         }
         if (StringUtils.equals(a.getTipoGeneral(), "EM")) {
             setEmpresa(a);
-            if (empresa.getIdProvincia() != null && empresa.getIdProvincia() != 0) {
+            if (StringUtils.isNotBlank(empresa.getIdProvincia()) && StringUtils.isNotBlank(empresa.getIdProvincia())) {
                 comboProvinciaEmpresa();
             }
-            if (empresa.getIdDistrito() != null && empresa.getIdDistrito() != 0) {
+            if (StringUtils.isNotBlank(empresa.getIdDistrito()) && StringUtils.isNotBlank(empresa.getIdDistrito())) {
                 comboDistritoEmpresa();
             }
             listaMiembros = new ArrayList<>();
@@ -743,10 +743,10 @@ public class ActorController implements Serializable {
         }
         if (StringUtils.equals(a.getTipoGeneral(), "EN")) {
             setEntidad(a);
-            if (entidad.getIdProvincia() != null && entidad.getIdProvincia() != 0) {
+            if (StringUtils.isNotBlank(entidad.getIdProvincia()) && StringUtils.isNotBlank(entidad.getIdProvincia())) {
                 comboProvinciaEntidad();
             }
-            if (entidad.getIdDistrito() != null && entidad.getIdDistrito() != 0) {
+            if (StringUtils.isNotBlank(entidad.getIdDistrito()) && StringUtils.isNotBlank(entidad.getIdDistrito())) {
                 comboDistritoEntidad();
             }
             listaMiembros = new ArrayList<>();
@@ -873,15 +873,15 @@ public class ActorController implements Serializable {
 
     public void comboProvincia() {
         listaProvincia = new ArrayList<>();
-        int id = actor.getIdDepartamento();
-        if (id == 0) {
+        String id = actor.getIdDepartamento();
+        if (StringUtils.equals(id, "0")) {
             listaProvincia.clear();
             listaDistrito.clear();
         } else {
             List<Provincia> list = ubigeoService.provinciaLista(id);
             if (list.size() > 0) {
                 for (Provincia provincia : list) {
-                    listaProvincia.add(new SelectItem(provincia.getId(), provincia.getDescripcion()));
+                    listaProvincia.add(new SelectItem(provincia.getIdProvincia(), provincia.getDescripcion()));
                 }
             }
         }
@@ -889,15 +889,14 @@ public class ActorController implements Serializable {
 
     public void comboProvinciaEmpresa() {
         listaProvincia = new ArrayList<>();
-        Integer id = empresa.getIdDepartamento();
-
+        String id = empresa.getIdDepartamento();
         listaProvincia = new ArrayList<>();
         listaDistrito = new ArrayList<>();
-        if (id != null) {
+        if (StringUtils.equals(id, "0")) {
             List<Provincia> list = ubigeoService.provinciaLista(id);
             if (list.size() > 0) {
                 for (Provincia provincia : list) {
-                    listaProvincia.add(new SelectItem(provincia.getId(), provincia.getDescripcion()));
+                    listaProvincia.add(new SelectItem(provincia.getIdProvincia(), provincia.getDescripcion()));
                 }
             }
         }
@@ -905,15 +904,14 @@ public class ActorController implements Serializable {
 
     public void comboProvinciaEntidad() {
         listaProvincia = new ArrayList<>();
-        Integer id = entidad.getIdDepartamento();
-
+        String id = entidad.getIdDepartamento();
         listaProvincia = new ArrayList<>();
         listaDistrito = new ArrayList<>();
-        if (id != null) {
+        if (StringUtils.equals(id, "0")) {
             List<Provincia> list = ubigeoService.provinciaLista(id);
             if (list.size() > 0) {
                 for (Provincia provincia : list) {
-                    listaProvincia.add(new SelectItem(provincia.getId(), provincia.getDescripcion()));
+                    listaProvincia.add(new SelectItem(provincia.getIdProvincia(), provincia.getDescripcion()));
                 }
             }
         }
@@ -921,14 +919,18 @@ public class ActorController implements Serializable {
 
     public void comboDistrito() {
         listaDistrito = new ArrayList<>();
-        int id = actor.getIdProvincia();
-        if (id == 0) {
+        String idDepartamento = actor.getIdDepartamento();
+        String idProvincia = actor.getIdProvincia();
+        if (StringUtils.equals(idDepartamento, "0") || StringUtils.equals(idProvincia, "0")) {
             listaDistrito.clear();
         } else {
-            List<Distrito> list = ubigeoService.distritoLista(id);
+            Distrito d = new Distrito();
+            d.setIdDepartamento(idDepartamento);
+            d.setIdProvincia(idProvincia);
+            List<Distrito> list = ubigeoService.distritoLista(d);
             if (list.size() > 0) {
                 for (Distrito distrito : list) {
-                    listaDistrito.add(new SelectItem(distrito.getId(), distrito.getDescripcion()));
+                    listaDistrito.add(new SelectItem(distrito.getIdDistrito(), distrito.getDescripcion()));
                 }
             }
         }
@@ -936,14 +938,18 @@ public class ActorController implements Serializable {
 
     public void comboDistritoEmpresa() {
         listaDistrito = new ArrayList<>();
-        int id = empresa.getIdProvincia();
-        if (id == 0) {
+        String idDepartamento = actor.getIdDepartamento();
+        String idProvincia = actor.getIdProvincia();
+        if (StringUtils.equals(idDepartamento, "0") || StringUtils.equals(idProvincia, "0")) {
             listaDistrito.clear();
         } else {
-            List<Distrito> list = ubigeoService.distritoLista(id);
+            Distrito d = new Distrito();
+            d.setIdDepartamento(idDepartamento);
+            d.setIdProvincia(idProvincia);
+            List<Distrito> list = ubigeoService.distritoLista(d);
             if (list.size() > 0) {
                 for (Distrito distrito : list) {
-                    listaDistrito.add(new SelectItem(distrito.getId(), distrito.getDescripcion()));
+                    listaDistrito.add(new SelectItem(distrito.getIdDistrito(), distrito.getDescripcion()));
                 }
             }
         }
@@ -951,14 +957,18 @@ public class ActorController implements Serializable {
 
     public void comboDistritoEntidad() {
         listaDistrito = new ArrayList<>();
-        int id = entidad.getIdProvincia();
-        if (id == 0) {
+        String idDepartamento = actor.getIdDepartamento();
+        String idProvincia = actor.getIdProvincia();
+        if (StringUtils.equals(idDepartamento, "0") || StringUtils.equals(idProvincia, "0")) {
             listaDistrito.clear();
         } else {
-            List<Distrito> list = ubigeoService.distritoLista(id);
+            Distrito d = new Distrito();
+            d.setIdDepartamento(idDepartamento);
+            d.setIdProvincia(idProvincia);
+            List<Distrito> list = ubigeoService.distritoLista(d);
             if (list.size() > 0) {
                 for (Distrito distrito : list) {
-                    listaDistrito.add(new SelectItem(distrito.getId(), distrito.getDescripcion()));
+                    listaDistrito.add(new SelectItem(distrito.getIdDistrito(), distrito.getDescripcion()));
                 }
             }
         }
@@ -1644,7 +1654,7 @@ public class ActorController implements Serializable {
         List<Departamento> list = ubigeoService.departamentoLista();
         if (list.size() > 0) {
             for (Departamento departamento : list) {
-                listaDepartamento.add(new SelectItem(departamento.getId(), departamento.getDescripcion()));
+                listaDepartamento.add(new SelectItem(departamento.getIdDepartamento(), departamento.getDescripcion()));
             }
         }
         return listaDepartamento;

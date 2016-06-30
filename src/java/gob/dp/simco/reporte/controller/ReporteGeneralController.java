@@ -1016,79 +1016,79 @@ public class ReporteGeneralController implements Serializable {
 
             for (Caso cs : listaCasosFl) {
                 if(cs.getIdDepartamento() != null){
-                if (cs.getIdDepartamento() == 1) {
+                if (StringUtils.equals(cs.getIdDepartamento(), "1")) {
                     amazonas++;
                 }
-                if (cs.getIdDepartamento() == 2) {
+                if (StringUtils.equals(cs.getIdDepartamento(), "2")) {
                     ancash++;
                 }
-                if (cs.getIdDepartamento() == 3) {
+                if (StringUtils.equals(cs.getIdDepartamento(), "3")) {
                     apurimac++;
                 }
-                if (cs.getIdDepartamento() == 4) {
+                if (StringUtils.equals(cs.getIdDepartamento(), "4")) {
                     arequipa++;
                 }
-                if (cs.getIdDepartamento() == 5) {
+                if (StringUtils.equals(cs.getIdDepartamento(), "5")) {
                     ayacucho++;
                 }
-                if (cs.getIdDepartamento() == 6) {
+                if (StringUtils.equals(cs.getIdDepartamento(), "6")) {
                     cajamarca++;
                 }
-                if (cs.getIdDepartamento() == 7) {
+                if (StringUtils.equals(cs.getIdDepartamento(), "7")) {
                     cusco++;
                 }
-                if (cs.getIdDepartamento() == 8) {
+                if (StringUtils.equals(cs.getIdDepartamento(), "8")) {
                     huancavelica++;
                 }
-                if (cs.getIdDepartamento() == 9) {
+                if (StringUtils.equals(cs.getIdDepartamento(), "9")) {
                     huanuco++;
                 }
-                if (cs.getIdDepartamento() == 10) {
+                if (StringUtils.equals(cs.getIdDepartamento(), "10")) {
                     ica++;
                 }
-                if (cs.getIdDepartamento() == 11) {
+                if (StringUtils.equals(cs.getIdDepartamento(), "11")) {
                     junin++;
                 }
-                if (cs.getIdDepartamento() == 12) {
+                if (StringUtils.equals(cs.getIdDepartamento(), "12")) {
                     laLibertad++;
                 }
-                if (cs.getIdDepartamento() == 13) {
+                if (StringUtils.equals(cs.getIdDepartamento(), "13")) {
                     lambayeque++;
                 }
-                if (cs.getIdDepartamento() == 14) {
+                if (StringUtils.equals(cs.getIdDepartamento(), "14")) {
                     lima++;
                 }
-                if (cs.getIdDepartamento() == 15) {
+                if (StringUtils.equals(cs.getIdDepartamento(), "15")) {
                     loreto++;
                 }
-                if (cs.getIdDepartamento() == 16) {
+                if (StringUtils.equals(cs.getIdDepartamento(), "16")) {
                     madreDeDios++;
                 }
-                if (cs.getIdDepartamento() == 17) {
+                if (StringUtils.equals(cs.getIdDepartamento(), "17")) {
                     moquegua++;
                 }
-                if (cs.getIdDepartamento() == 18) {
+                if (StringUtils.equals(cs.getIdDepartamento(), "18")) {
                     pasco++;
                 }
-                if (cs.getIdDepartamento() == 19) {
+                if (StringUtils.equals(cs.getIdDepartamento(), "19")) {
                     piura++;
                 }
-                if (cs.getIdDepartamento() == 20) {
+                if (StringUtils.equals(cs.getIdDepartamento(), "20")) {
                     puno++;
                 }
-                if (cs.getIdDepartamento() == 20) {
+                if (StringUtils.equals(cs.getIdDepartamento(), "21")) {
                     sanMartin++;
                 }
-                if (cs.getIdDepartamento() == 20) {
+                if (StringUtils.equals(cs.getIdDepartamento(), "22")) {
                     tacna++;
                 }
-                if (cs.getIdDepartamento() == 20) {
+                if (StringUtils.equals(cs.getIdDepartamento(), "23")) {
                     tumbes++;
                 }
-                if (cs.getIdDepartamento() == 20) {
+                if (StringUtils.equals(cs.getIdDepartamento(), "24")) {
                     callao++;
                 }
-                if (cs.getIdDepartamento() == 20) {
+                if (StringUtils.equals(cs.getIdDepartamento(), "25")) {
                     ucayali++;
                 }
                 }
@@ -1921,7 +1921,7 @@ public class ReporteGeneralController implements Serializable {
         Filter<Caso, String> filter = new Filter<Caso, String>() {
             public boolean isMatched(Caso object, String text) {
                 if(object.getIdDepartamento() != null){
-                    String entero = Integer.toString(object.getIdDepartamento());
+                    String entero = object.getIdDepartamento();
                     return entero.startsWith(String.valueOf(text));
                 }
                 return false;
@@ -2015,7 +2015,7 @@ public class ReporteGeneralController implements Serializable {
         List<Departamento> list = ubigeoService.departamentoLista();
         if (list.size() > 0) {
             for (Departamento departamento : list) {
-                listaDepartamento.add(new SelectItem(departamento.getId(), departamento.getDescripcion()));
+                listaDepartamento.add(new SelectItem(departamento.getIdDepartamento(), departamento.getDescripcion()));
             }
         }
         return listaDepartamento;

@@ -286,10 +286,10 @@ public class RegistroController implements Serializable {
             caso = new Caso();
             caso.setNombre(acti.getNombreCaso());
             caso.setId(acti.getIdCaso());
-            if (acti.getIdDepartamento() != 0) {
+            if (!StringUtils.equals(acti.getIdDepartamento(), "0")) {
                 comboProvincia();
             }
-            if (acti.getIdProvincia() != 0) {
+            if (!StringUtils.equals(acti.getIdProvincia(), "0")) {
                 comboDistrito();
             }
             actorController.listarActoresXcaso(acti.getId());
@@ -324,10 +324,10 @@ public class RegistroController implements Serializable {
             caso = new Caso();
             caso.setNombre(acti.getNombreCaso());
             caso.setId(acti.getIdCaso());
-            if (acti.getIdDepartamento() != 0) {
+            if (!StringUtils.equals(acti.getIdDepartamento(),"0")) {
                 comboProvincia();
             }
-            if (acti.getIdProvincia() != 0) {
+            if (!StringUtils.equals(acti.getIdProvincia(),"0")) {
                 comboDistrito();
             }
             actorController.listarActoresXcaso(acti.getId());
@@ -771,14 +771,14 @@ public class RegistroController implements Serializable {
         try {
             listaProvincia = new ArrayList<>();
             listaDistrito = new ArrayList<>();
-            int id = actividad.getIdDepartamento();
-            if (id == 0) {
+            String id = actividad.getIdDepartamento();
+            if (StringUtils.equals(id,"0")) {
                 listaProvincia.clear();
             } else {
                 List<Provincia> list = ubigeoService.provinciaLista(id);
                 if (list.size() > 0) {
                     for (Provincia provincia : list) {
-                        listaProvincia.add(new SelectItem(provincia.getId(), provincia.getDescripcion()));
+                        listaProvincia.add(new SelectItem(provincia.getIdProvincia(), provincia.getDescripcion()));
                     }
                 }
                 Departamento dep = ubigeoService.departamentoOne(id);
@@ -794,17 +794,24 @@ public class RegistroController implements Serializable {
     public void comboDistrito() {
         try {
             listaDistrito = new ArrayList<>();
-        int id = actividad.getIdProvincia();
-        if (id == 0) {
+        String idDepartamento = actividad.getIdDepartamento();
+        String idProvincia = actividad.getIdProvincia();
+        if (StringUtils.equals(idDepartamento, "0") || StringUtils.equals(idProvincia, "0")) {
             listaDistrito.clear();
         } else {
-            List<Distrito> list = ubigeoService.distritoLista(id);
+            Distrito d = new Distrito();
+            d.setIdDepartamento(idDepartamento);
+            d.setIdProvincia(idProvincia);
+            List<Distrito> list = ubigeoService.distritoLista(d);
             if (list.size() > 0) {
                 for (Distrito distrito : list) {
-                    listaDistrito.add(new SelectItem(distrito.getId(), distrito.getDescripcion()));
+                    listaDistrito.add(new SelectItem(distrito.getIdDistrito(), distrito.getDescripcion()));
                 }
             }
-            Provincia prov = ubigeoService.provinciaOne(actividad.getIdProvincia());
+            Provincia p = new Provincia();
+            p.setIdDepartamento(idDepartamento);
+            p.setIdProvincia(idProvincia);
+            Provincia prov = ubigeoService.provinciaOne(p);
             cordenadax = prov.getCoordenadax();
             cordenaday = prov.getCoordenaday();
             zoom = prov.getZoom();
@@ -816,9 +823,13 @@ public class RegistroController implements Serializable {
 
     public void coordenadasDistrito() {
         try {
-            Integer idDistrito = actividad.getIdDistrito();
+            String idDistrito = actividad.getIdDistrito();
             if (idDistrito != null) {
-                Distrito dist = ubigeoService.distritoOne(idDistrito);
+                Distrito d = new Distrito();
+                d.setIdDepartamento(actividad.getIdDepartamento());
+                d.setIdProvincia(actividad.getIdProvincia());
+                d.setIdDistrito(actividad.getIdDistrito());
+                Distrito dist = ubigeoService.distritoOne(d);
                 cordenadax = dist.getCoordenadax();
                 cordenaday = dist.getCoordenaday();
                 zoom = dist.getZoom();
@@ -1027,7 +1038,7 @@ public class RegistroController implements Serializable {
         List<Departamento> list = ubigeoService.departamentoLista();
         if (list.size() > 0) {
             for (Departamento departamento : list) {
-                listaDepartamento.add(new SelectItem(departamento.getId(), departamento.getDescripcion()));
+                listaDepartamento.add(new SelectItem(departamento.getIdDepartamento(), departamento.getDescripcion()));
             }
         }
         return listaDepartamento;

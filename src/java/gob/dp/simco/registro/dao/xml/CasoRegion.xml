@@ -5,9 +5,9 @@
     <resultMap id="casoRegionMap" type="casoRegion">
         <id property="id" column="N_IDCASOREGION" />
         <result property="idCaso" column="N_ID_CASO"/>
-        <result property="idDepartamento" column="N_IDDEPARTAMENTO"/>
-        <result property="idProvincia" column="N_IDPROVINCIA"/>
-        <result property="idDistrito" column="N_IDDISTRITO"/>
+        <result property="idDepartamento" column="C_IDDEPARTAMENTO"/>
+        <result property="idProvincia" column="C_IDPROVINCIA"/>
+        <result property="idDistrito" column="C_IDDISTRITO"/>
         <result property="estado" column="C_ESTADO"/>
         <result property="principal" column="C_PRINCIPAL"/>
     </resultMap>  
@@ -17,8 +17,8 @@
         SELECT *
         FROM SIMCO_REG_CASOREGION
         WHERE
-            N_ID_CASO=#{id}
-            AND C_ESTADO = 'ACT'
+        N_ID_CASO=#{id}
+        AND C_ESTADO = 'ACT'
         ORDER BY N_IDCASOREGION    
     </select>
     
@@ -28,13 +28,13 @@
         N_IDCASOREGION,
         N_ID_CASO,
         <if test="idDepartamento != null">
-            N_IDDEPARTAMENTO,
+            C_IDDEPARTAMENTO,
         </if>
         <if test="idProvincia != null">
-            N_IDPROVINCIA,
+            C_IDPROVINCIA,
         </if>
         <if test="idDistrito != null">
-            N_IDDISTRITO,
+            C_IDDISTRITO,
         </if>
         <if test="principal != null">
             C_PRINCIPAL,
@@ -68,7 +68,7 @@
     <update id="casoRegionUpdate" parameterType="long">
         UPDATE SIMCO_REG_CASOREGION
         <set>
-                C_ESTADO = 'INA'
+            C_ESTADO = 'INA'
         </set>    
         <where>
             N_IDCASOREGION=#{id}
@@ -78,7 +78,7 @@
     <update id="casoRegionUpdatePrincipal" parameterType="long">
         UPDATE SIMCO_REG_CASOREGION
         <set>
-                C_PRINCIPAL = 'A'
+            C_PRINCIPAL = 'A'
         </set>    
         <where>
             N_IDCASOREGION=#{id}

@@ -23,11 +23,11 @@ public class DepartamentoDaoImpl extends SqlSessionDaoSupport implements Departa
     @Override
     public List<Departamento> departamentoLista() {
         log.debug("METODO : DepartamentoDaoImpl.departamentoLista");
-        return getSqlSession().selectList("gob.dp.simco.comun.dao.DepartamentoDao.departamentoLista",1);
+        return getSqlSession().selectList("gob.dp.simco.comun.dao.DepartamentoDao.departamentoLista");
     }
 
     @Override
-    public Departamento departamentoOne(long idDepartamento) {
+    public Departamento departamentoOne(String idDepartamento) {
         return getSqlSession().selectOne("gob.dp.simco.comun.dao.DepartamentoDao.departamentoOne",idDepartamento);
     }
     

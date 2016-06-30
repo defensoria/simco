@@ -25,9 +25,9 @@
         <result property="tipoDialogo" column="C_TIPODIALOGO"/>
         <result property="tipoMecanismo" column="C_TIPOMECANISMO"/>
         <result property="tipoParticipacionCaso" column="C_TIPOPARTICIPACION"/>
-        <result property="idDepartamento" column="N_IDDEPART"/>
-        <result property="idProvincia" column="N_IDPROV"/>
-        <result property="idDistrito" column="N_IDDISTR"/>
+        <result property="idDepartamento" column="C_IDDEPART"/>
+        <result property="idProvincia" column="C_IDPROV"/>
+        <result property="idDistrito" column="C_IDDISTR"/>
         <result property="subTipo" column="C_SUBTIPOCASO"/>
         <result property="primerNivel" column="C_PRIMERNIVEL"/>
         <result property="segundoNivel" column="C_SEGUNDONIVEL"/>
@@ -55,9 +55,9 @@
         A.C_TIPODIALOGO,
         A.C_TIPOMECANISMO,
         A.C_TIPOPARTICIPACION,
-        A.N_IDDEPART,
-        A.N_IDPROV,
-        A.N_IDDISTR,
+        A.C_IDDEPART,
+        A.C_IDPROV,
+        A.C_IDDISTR,
         A.C_SUBTIPOCASO,
         A.C_PRIMERNIVEL,
         A.C_SEGUNDONIVEL,
@@ -154,13 +154,13 @@
             C_TIPOPARTICIPACION,
         </if>
         <if test="idDepartamento != null">
-            N_IDDEPART,
+            C_IDDEPART,
         </if>
         <if test="idProvincia != null">
-            N_IDPROV,
+            C_IDPROV,
         </if>
         <if test="idDistrito != null">
-            N_IDDISTR,
+            C_IDDISTR,
         </if>
         <if test="subTipo != null">
             C_SUBTIPOCASO,
@@ -326,13 +326,13 @@
                 C_TIPOPARTICIPACION = #{tipoParticipacionCaso},
             </if>
             <if test="idDepartamento != null">
-                N_IDDEPART = #{idDepartamento},
+                C_IDDEPART = #{idDepartamento},
             </if>
             <if test="idProvincia != null">
-                N_IDPROV = #{idProvincia},
+                C_IDPROV = #{idProvincia},
             </if>
             <if test="idDistrito != null">
-                N_IDDISTR = #{idDistrito},
+                C_IDDISTR = #{idDistrito},
             </if>
             <if test="subTipo != null">
                 C_SUBTIPOCASO = #{subTipo},

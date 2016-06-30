@@ -18,9 +18,9 @@
         <result property="telefono" column="C_TELEFONOACTOR"/>
         <result property="email" column="C_EMAILACTOR"/>
         <result property="anexo" column="C_ANEXOACTOR"/>
-        <result property="idDepartamento" column="N_IDDEPARTAMENTO"/>
-        <result property="idProvincia" column="N_IDPROVINCIA"/>
-        <result property="idDistrito" column="N_IDDISTRITO"/>
+        <result property="idDepartamento" column="C_IDDEPARTAMENTO"/>
+        <result property="idProvincia" column="C_IDPROVINCIA"/>
+        <result property="idDistrito" column="C_IDDISTRITO"/>
         <result property="empresaTipo" column="C_EMPRESATIPO"/>
         <result property="empresaAmbito" column="C_EMPRESAAMBITO"/>
         <result property="observaciones" column="C_OBSERVACIONES"/>
@@ -82,9 +82,9 @@
         A.C_EMPRESAAMBITO,
         A.C_OBSERVACIONES,
         A.C_ENTIDADTIPO,
-        A.N_IDDEPARTAMENTO,
-        A.N_IDPROVINCIA,
-        A.N_IDDISTRITO,
+        A.C_IDDEPARTAMENTO,
+        A.C_IDPROVINCIA,
+        A.C_IDDISTRITO,
         A.C_TIPOPOBLACION,
         A.C_SUBTIPO1POBLACION,
         A.C_SUBTIPO2POBLACION,
@@ -258,13 +258,13 @@
             C_CARGOACTOR,
         </if>
         <if test="idDepartamento != null">
-            N_IDDEPARTAMENTO,
+            C_IDDEPARTAMENTO,
         </if>
         <if test="idProvincia != null">
-            N_IDPROVINCIA,
+            C_IDPROVINCIA,
         </if>
         <if test="idDistrito != null">
-            N_IDDISTRITO,
+            C_IDDISTRITO,
         </if>
         <if test="empresaTipo != null">
             C_EMPRESATIPO,
@@ -487,13 +487,13 @@
                 C_CARGOACTOR= #{cargo},
             </if>
             <if test="idDepartamento != null">
-                N_IDDEPARTAMENTO = #{idDepartamento},
+                C_IDDEPARTAMENTO = #{idDepartamento},
             </if>
             <if test="idProvincia != null">
-                N_IDPROVINCIA = #{idProvincia},
+                C_IDPROVINCIA = #{idProvincia},
             </if>
             <if test="idDistrito != null">
-                N_IDDISTRITO = #{idDistrito},
+                C_IDDISTRITO = #{idDistrito},
             </if>
             <if test="empresaTipo != null">
                 C_EMPRESATIPO = #{empresaTipo},
@@ -692,9 +692,9 @@
         C_ANEXOACTOR,
         C_LUGNACIMIENTOACTOR,
         C_CARGOACTOR,
-        N_IDDEPARTAMENTO,
-        N_IDPROVINCIA,
-        N_IDDISTRITO,
+        C_IDDEPARTAMENTO,
+        C_IDPROVINCIA,
+        C_IDDISTRITO,
         C_NOMACTOR
         FROM SIMCO_REG_ACTOR 
         <where>

@@ -42,11 +42,11 @@ public class Actividad implements Serializable{
     
     private Boolean indCurso;
     
-    private int idDepartamento;
+    private String idDepartamento;
     
-    private int idProvincia;
+    private String idProvincia;
     
-    private int idDistrito;
+    private String idDistrito;
     
     private Date fechaRegistro;
     
@@ -232,27 +232,27 @@ public class Actividad implements Serializable{
         this.indCurso = indCurso;
     }
 
-    public int getIdDepartamento() {
+    public String getIdDepartamento() {
         return idDepartamento;
     }
 
-    public void setIdDepartamento(int idDepartamento) {
+    public void setIdDepartamento(String idDepartamento) {
         this.idDepartamento = idDepartamento;
     }
 
-    public int getIdProvincia() {
+    public String getIdProvincia() {
         return idProvincia;
     }
 
-    public void setIdProvincia(int idProvincia) {
+    public void setIdProvincia(String idProvincia) {
         this.idProvincia = idProvincia;
     }
 
-    public int getIdDistrito() {
+    public String getIdDistrito() {
         return idDistrito;
     }
 
-    public void setIdDistrito(int idDistrito) {
+    public void setIdDistrito(String idDistrito) {
         this.idDistrito = idDistrito;
     }  
 

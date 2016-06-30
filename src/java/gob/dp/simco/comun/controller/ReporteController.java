@@ -450,7 +450,7 @@ public class ReporteController implements Serializable {
         List<Departamento> list = ubigeoService.departamentoLista();
         if (list.size() > 0) {
             for (Departamento departamento : list) {
-                listaDepartamento.add(new SelectItem(departamento.getId(), departamento.getDescripcion()));
+                listaDepartamento.add(new SelectItem(departamento.getIdDepartamento(), departamento.getDescripcion()));
             }
         }
         return listaDepartamento;

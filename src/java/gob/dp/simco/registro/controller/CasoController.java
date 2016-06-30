@@ -247,7 +247,7 @@ public class CasoController implements Serializable {
 
     public boolean addRegion() {
         try {
-            if (casoRegion.getIdDepartamento() != null && casoRegion.getIdDepartamento() != 0) {
+            if (StringUtils.isNotBlank(casoRegion.getIdDepartamento()) && StringUtils.isNotBlank(casoRegion.getIdDepartamento())) {
                 casoRegion.setEstado("ACT");
                 casoRegion.setIdCaso(caso.getId());
                 casoRegionService.casoRegionInsertar(casoRegion);
@@ -255,21 +255,27 @@ public class CasoController implements Serializable {
                 msg.messageAlert("Debe de ingresar como minimo un departamento", null);
                 return false;
             }
-            if (casoRegion.getIdDepartamento() != null && casoRegion.getIdDepartamento() != 0) {
+            if (StringUtils.isNotBlank(casoRegion.getIdDepartamento()) && StringUtils.isNotBlank(casoRegion.getIdDepartamento())) {
                 String depar = ubigeoService.departamentoOne(casoRegion.getIdDepartamento()).getDescripcion();
                 casoRegion.setNombreDepartamento(depar);
             }
-            if (casoRegion.getIdProvincia() != null && casoRegion.getIdProvincia() != 0) {
-                String prov = ubigeoService.provinciaOne(casoRegion.getIdProvincia()).getDescripcion();
+            if (StringUtils.isNotBlank(casoRegion.getIdProvincia()) && StringUtils.isNotBlank(casoRegion.getIdProvincia())) {
+                Provincia p = new Provincia();
+                p.setIdDepartamento(casoRegion.getIdDepartamento());
+                p.setIdProvincia(casoRegion.getIdProvincia());
+                String prov = ubigeoService.provinciaOne(p).getDescripcion();
                 casoRegion.setNombreProvincia(prov);
             }
-            if (casoRegion.getIdDistrito() != null && casoRegion.getIdDistrito() != 0) {
-                String dist = ubigeoService.distritoOne(casoRegion.getIdDistrito()).getDescripcion();
+            if (StringUtils.isNotBlank(casoRegion.getIdDistrito()) && StringUtils.isNotBlank(casoRegion.getIdDistrito())) {
+                Distrito d = new Distrito();
+                d.setIdDepartamento(casoRegion.getIdDepartamento());
+                d.setIdProvincia(casoRegion.getIdProvincia());
+                d.setIdDistrito(casoRegion.getIdDistrito());
+                String dist = ubigeoService.distritoOne(d).getDescripcion();
                 casoRegion.setNombreDistrito(dist);
             }
             listaCasoRegion.add(casoRegion);
             casoRegion = new CasoRegion();
-
         } catch (Exception e) {
             log.error(e);
         }
@@ -292,7 +298,6 @@ public class CasoController implements Serializable {
             updateRelacionActividadCaso(a);
             actividadCasoService.actividadCasoInsertar(ac);
         }
-        
         for(Actividad a : listaActividadesCasoAC){
             ActividadCaso ac = new ActividadCaso();
             ac.setActividad(a);
@@ -323,13 +328,11 @@ public class CasoController implements Serializable {
             caso.setIdDepartamento(region.getIdDepartamento());
             caso.setIdProvincia(region.getIdProvincia());
             caso.setIdDistrito(region.getIdDistrito());
-            //casoService.casoModificar(caso);
             for(CasoRegion cr : listaCasoRegion){
-                if(Objects.equals(cr.getId(), region.getId())){
+                if(Objects.equals(cr.getId(), region.getId()))
                     cr.setPrincipal("A");
-                }else{
+                else
                     cr.setPrincipal("I");
-                }
             }
         } catch (Exception ex) {
             log.error(ex);
@@ -342,18 +345,25 @@ public class CasoController implements Serializable {
             listaCasoRegion = new ArrayList<>();
             List<CasoRegion> list = casoRegionService.casoRegionBuscar(caso.getId());
             for (CasoRegion cr : list) {
-                if (cr.getIdDepartamento() != null && cr.getIdDepartamento() != 0) {
+                if (StringUtils.isNotBlank(cr.getIdDepartamento()) && StringUtils.isNotBlank(cr.getIdDepartamento())) {
                     String depar = ubigeoService.departamentoOne(cr.getIdDepartamento()).getDescripcion();
                     cr.setNombreDepartamento(depar);
                 }
-                if (cr.getIdProvincia() != null && cr.getIdProvincia() != 0) {
-                    String prov = ubigeoService.provinciaOne(cr.getIdProvincia()).getDescripcion();
+                if (StringUtils.isNotBlank(cr.getIdProvincia()) && StringUtils.isNotBlank(cr.getIdProvincia())) {
+                    Provincia p = new Provincia();
+                    p.setIdDepartamento(cr.getIdDepartamento());
+                    p.setIdProvincia(cr.getIdProvincia());
+                    String prov = ubigeoService.provinciaOne(p).getDescripcion();
                     cr.setNombreProvincia(prov);
                 } else {
                     cr.setNombreProvincia("");
                 }
-                if (cr.getIdDistrito() != null && cr.getIdDistrito() != 0) {
-                    String dist = ubigeoService.distritoOne(cr.getIdDistrito()).getDescripcion();
+                if (StringUtils.isNotBlank(cr.getIdDistrito()) && StringUtils.isNotBlank(cr.getIdDistrito())) {
+                    Distrito d = new Distrito();
+                    d.setIdDepartamento(cr.getIdDepartamento());
+                    d.setIdProvincia(cr.getIdProvincia());
+                    d.setIdDistrito(cr.getIdDistrito());
+                    String dist = ubigeoService.distritoOne(d).getDescripcion();
                     cr.setNombreDistrito(dist);
                 } else {
                     cr.setNombreDistrito("");
@@ -619,8 +629,15 @@ public class CasoController implements Serializable {
                 radvo.setFechaInicio(a.getFechaRealizacionIni() == null ? "" : simpleDateFormat.format(a.getFechaRealizacionIni()));
                 radvo.setFechaFin(a.getFechaRealizacionFin() == null ? "" : simpleDateFormat.format(a.getFechaRealizacionFin()));
                 Departamento departamen = ubigeoService.departamentoOne(a.getIdDepartamento());
-                Provincia provin = ubigeoService.provinciaOne(a.getIdProvincia());
-                Distrito distri = ubigeoService.distritoOne(a.getIdDistrito());
+                Provincia p = new Provincia();
+                p.setIdDepartamento(a.getIdDepartamento());
+                p.setIdProvincia(a.getIdProvincia());
+                Provincia provin = ubigeoService.provinciaOne(p);
+                Distrito d = new Distrito();
+                d.setIdDepartamento(a.getIdDepartamento());
+                d.setIdProvincia(a.getIdProvincia());
+                d.setIdDistrito(a.getIdDistrito());
+                Distrito distri = ubigeoService.distritoOne(d);
                 radvo.setDepartamento(departamen == null ? "" : departamen.getDescripcion());
                 radvo.setProvincia(provin == null ? "" : provin.getDescripcion());
                 radvo.setDistrito(distri == null ? "" : distri.getDescripcion());
@@ -640,8 +657,15 @@ public class CasoController implements Serializable {
                 radvo.setFechaInicio(a.getFechaRealizacionIni() == null ? "" : simpleDateFormat.format(a.getFechaRealizacionIni()));
                 radvo.setFechaFin(a.getFechaRealizacionFin() == null ? "" : simpleDateFormat.format(a.getFechaRealizacionFin()));
                 Departamento departamen = ubigeoService.departamentoOne(a.getIdDepartamento());
-                Provincia provin = ubigeoService.provinciaOne(a.getIdProvincia());
-                Distrito distri = ubigeoService.distritoOne(a.getIdDistrito());
+                Provincia p = new Provincia();
+                p.setIdDepartamento(a.getIdDepartamento());
+                p.setIdProvincia(a.getIdProvincia());
+                Provincia provin = ubigeoService.provinciaOne(p);
+                Distrito d = new Distrito();
+                d.setIdDepartamento(a.getIdDepartamento());
+                d.setIdProvincia(a.getIdProvincia());
+                d.setIdDistrito(a.getIdDistrito());
+                Distrito distri = ubigeoService.distritoOne(d);
                 radvo.setDepartamento(departamen == null ? "" : departamen.getDescripcion());
                 radvo.setProvincia(provin == null ? "" : provin.getDescripcion());
                 radvo.setDistrito(distri == null ? "" : distri.getDescripcion());
@@ -865,14 +889,14 @@ public class CasoController implements Serializable {
     public void comboProvincia() {
         listaProvincia = new ArrayList<>();
         listaDistrito = new ArrayList<>();
-        Integer id = casoRegion.getIdDepartamento();
-        if (id == 0) {
+        String id = casoRegion.getIdDepartamento();
+        if (StringUtils.equals(id, "0")) {
             listaDistrito.clear();
         } else {
             List<Provincia> list = ubigeoService.provinciaLista(id);
             if (list.size() > 0) {
                 for (Provincia provincia : list) {
-                    listaProvincia.add(new SelectItem(provincia.getId(), provincia.getDescripcion()));
+                    listaProvincia.add(new SelectItem(provincia.getIdProvincia(), provincia.getDescripcion()));
                 }
             }
         }
@@ -880,14 +904,18 @@ public class CasoController implements Serializable {
 
     public void comboDistrito() {
         listaDistrito = new ArrayList<>();
-        Integer id = casoRegion.getIdProvincia();
-        if (id == 0) {
+        String idDepartamento = casoRegion.getIdDepartamento();
+        String idProvincia = casoRegion.getIdProvincia();
+        if (StringUtils.equals(idDepartamento, "0") || StringUtils.equals(idProvincia, "0")) {
             listaDistrito.clear();
         } else {
-            List<Distrito> list = ubigeoService.distritoLista(id);
+            Distrito d = new Distrito();
+            d.setIdDepartamento(idDepartamento);
+            d.setIdProvincia(idProvincia);
+            List<Distrito> list = ubigeoService.distritoLista(d);
             if (list.size() > 0) {
                 for (Distrito distrito : list) {
-                    listaDistrito.add(new SelectItem(distrito.getId(), distrito.getDescripcion()));
+                    listaDistrito.add(new SelectItem(distrito.getIdDistrito(), distrito.getDescripcion()));
                 }
             }
         }
@@ -1030,7 +1058,7 @@ public class CasoController implements Serializable {
         List<Departamento> list = ubigeoService.departamentoLista();
         if (list.size() > 0) {
             for (Departamento departamento : list) {
-                listaDepartamento.add(new SelectItem(departamento.getId(), departamento.getDescripcion()));
+                listaDepartamento.add(new SelectItem(departamento.getIdDepartamento(), departamento.getDescripcion()));
             }
         }
         return listaDepartamento;
