@@ -11,7 +11,6 @@ import gob.dp.simco.administracion.seguridad.entity.Rol;
 import gob.dp.simco.administracion.seguridad.entity.Usuario;
 import gob.dp.simco.comun.MEncript;
 import java.util.List;
-import java.util.logging.Level;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.apache.log4j.Logger;
@@ -51,17 +50,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public void insertarUsuario(Usuario usuario, List<Rol> listaRol) throws Exception {
-        // 2013-08-19- Comentado para cambiar el algoritmo de encriptacion
-        //String encPass = CryptoAES.getInstance().encriptar(usuario.getClave().trim());
-        String encPass = MEncript.getStringMessageDigest(usuario.getClave().trim());
-        // 2013-08-19- Comentado para permitir generar el codigo de usuario
-        //usuario.setCodigo(usuarioDao.generarCodigoUsuario());
-        //usuario.setClave(encPass);
-        usuario.setClave(encPass);
         usuarioDao.insertarUsuario(usuario);
-        /**
-         * Auditoria
-         */
         auditoriaService.auditar(ConstantesAuditoria.SEGURIDAD_REGISTRAR_USUARIO, "Registrar Usu:" + usuario.getCodigo());
         rolService.asignarRolUsuario(usuario, listaRol);
     }
@@ -96,19 +85,12 @@ public class UsuarioServiceImpl implements UsuarioService {
         // 2013-08-16 Linea incorporada para validar desde la vista de usuarios simco_vw_usuario, que apunta a la tabla siga.usuario
         String encPass = MEncript.getStringMessageDigest(usuario.getClave().trim());
         usuario.setClave(encPass);
-        log.debug("METODO : UsuarioServiceImpl.loginUsuario,  Usuario    : " + usuario.getCodigo());
-        log.debug("METODO : UsuarioServiceImpl.loginUsuario,  Contraseña : " + usuario.getClave().trim());
-        log.debug("METODO : UsuarioServiceImpl.loginUsuario,  Encriptada : " + encPass);
-        log.debug("METODO : UsuarioServiceImpl.loginUsuario,  Resultado  : " + usuarioDao.loginUsuario(usuario));
         return usuarioDao.loginUsuario(usuario);
     }
 
     @Override
     public Usuario consultarUsuario(FiltroUsuario filtro) throws Exception {
-        log.debug("METODO XXXXXXXX : UsuarioServiceImpl.consultarUsuario");
-        log.debug("METODO XXXXXXXX : UsuarioServiceImpl.consultarUsuario");
         Usuario u = usuarioDao.consultarUsuario(filtro);
-        log.debug("METODO XXXXXXXX : UsuarioServiceImpl.consultarUsuario");
         if (u != null) {
             if (filtro.isIncluirLstRol()) {
                 u.setListaRol(rolService.buscarRolSegunUsuario(u));
@@ -119,14 +101,11 @@ public class UsuarioServiceImpl implements UsuarioService {
             if (filtro.isIncluirMapRecurso()) {
                 u.setMapRecurso(recursoService.buscarMapRecursoSegunUsuario(u));
             }
-
         }
-
         return u;
     }
 
     public void setAuditoriaService(AuditoriaService auditoriaService) {
-        log.debug("METODO XXXXXXXX : UsuarioServiceImpl.setAuditoriaService");
         this.auditoriaService = auditoriaService;
     }
 
@@ -153,7 +132,6 @@ public class UsuarioServiceImpl implements UsuarioService {
             stringBuilder.append("label: '").append(a.getNombre()+" "+a.getApellidoPaterno()+" "+a.getApellidoMaterno()+" - "+a.getCargo()).append("' ,");
             stringBuilder.append("desc: ").append("''").append(",");
             stringBuilder.append("icon: ").append("'' },");
-            
         }
         stringBuilder.append("];");
         return stringBuilder.toString();
@@ -166,6 +144,11 @@ public class UsuarioServiceImpl implements UsuarioService {
         } catch (Exception ex) {
             log.error(ex.getCause());
         }
+    }
+    
+    @Override
+    public Integer listaUsuarioCount(String codigoUsuario) {
+        return usuarioDao.listaUsuarioCount(codigoUsuario);
     }
 
 }

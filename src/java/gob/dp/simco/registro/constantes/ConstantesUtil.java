@@ -20,6 +20,10 @@ public class ConstantesUtil {
     
     public static final int PAGINADO_15=15;
     
+    public static final int PAGINADO_5=5;
+    
+    public static final int PAGINADO_20=20;
+    
     public static final String FILE_SYSTEM="C:/server/glassfish-4.0/glassfish4/glassfish/domains/domain1/docroot/filesystem/";
     /**LINUX*/
     //public static final String FILE_SYSTEM="/usr/local/glassfish4/glassfish/domains/domain1/docroot/filesystem/";

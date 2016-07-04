@@ -18,10 +18,9 @@ public interface UsuarioDao {
 
     public void cambiarClaveUsuario(Usuario usuario) throws Exception;
 
-    public String generarCodigoUsuario();
-
     public Integer loginUsuario(Usuario usuario);
 
     public Integer getTotalBuscarUsuario(FiltroUsuario filtro);
 
+    public Integer listaUsuarioCount(String codigoUsuario);
 }

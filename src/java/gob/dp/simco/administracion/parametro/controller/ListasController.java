@@ -35,7 +35,7 @@ public class ListasController extends AbstractManagedBean implements Serializabl
         try {
             lst = catalogoService.listarCatalogoPadre();
         } catch (Exception e) {
-            addError(e.getMessage()+":"+e.getCause());
+            e.printStackTrace();
         }
         if (lst==null) return null;
 

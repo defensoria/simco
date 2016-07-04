@@ -2,10 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD iBatis Mapper 3.0 //EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
 <mapper namespace="usuarioDao">
 
-    <select id="generarCodigoUsuario" resultType="java.lang.String" >
-        select 'SIMCO'||lpad(to_char(SEQ_SIMCO_SEG_USUARIO.NEXTVAL),4,'0') from dual
-    </select>
-
     <sql id="sqlBuscarUsuario">
         select codigo_usuario     as codigo,
         nom_usuario        as nombre,
@@ -180,9 +176,7 @@
         (codigo_usuario,
         nom_usuario,
         ape_paterno,
-       
         num_dni,
-        est_usuario,
         <if test="email!=null">
             des_email,
         </if>
@@ -192,10 +186,6 @@
         <if test="telefonoFijo!=null">
             tel_fijo,
         </if>
-        <if test="flagClaveInicial!=null">
-            flag_clave_inicial,
-        </if>
-        <!--clave_usuario-->
         ape_materno
         )
         values
@@ -203,9 +193,7 @@
         #{codigo},
         UPPER(#{nombre}),
         UPPER(#{apellidoPaterno}),
-       
         #{dni},
-        #{estado},
         <if test="email!=null">
             #{email},
         </if>
@@ -215,10 +203,6 @@
         <if test="telefonoFijo!=null">
             #{telefonoFijo},
         </if>
-        <if test="flagClaveInicial!=null">
-            #{flagClaveInicial},
-        </if>
-        <!--#{clave}-->
         #{apellidoMaterno}
         )
     </insert>
@@ -234,14 +218,12 @@
         u.des_email          as email,
         u.tel_movil          as telefonoMovil,
         u.tel_fijo           as telefonoFijo,
-        u.flag_clave_inicial as flagClaveInicial,
         u.c_cargo            as cargo,
         u.c_ruta             as ruta
         from 
         simco_seg_usuario u
         <where>
-            est_usuario='A'
-               
+            1 = 1
             <if test="codigo!=null">
                 and  upper(codigo_usuario)=UPPER(#{codigo})
             </if>
@@ -260,5 +242,8 @@
         </where>
     </select>
 
+    <select id="listaUsuarioCount" resultType="java.lang.Integer" parameterType="String">
+        SELECT COUNT(*) FROM SIMCO_SEG_USUARIO WHERE CODIGO_USUARIO = #{value}
+    </select>
 
 </mapper>

@@ -27,31 +27,12 @@ public class UsuarioDaoImpl extends SqlSessionDaoSupport implements UsuarioDao {
 
     @Override
     public void modificarUsuario(Usuario usuario) throws Exception {
-
-        log.debug("Nombre:" + usuario.getNombre());
-        log.debug("Ap paterno:" + usuario.getApellidoPaterno());
-        log.debug("Ap materno:" + usuario.getApellidoMaterno());
-        log.debug("email:" + usuario.getEmail());
-        log.debug("telefono fijo:" + usuario.getTelefonoFijo());
-        log.debug("telefono movil:" + usuario.getTelefonoMovil());
-        log.debug("estado:" + usuario.getEstado());
-        log.debug("clave:" + usuario.getClave());
-        log.debug("dni:" + usuario.getDni());
-        log.debug("codigo:" + usuario.getCodigo());
-
         getSqlSession().update("usuarioDao.modificarUsuario", usuario);
     }
 
     @Override
     public void cambiarClaveUsuario(Usuario usuario) throws Exception {
         getSqlSession().update("usuarioDao.cambiarClaveUsuario", usuario);
-    }
-
-    @Override
-    public String generarCodigoUsuario() {
-        String codigo = getSqlSession().selectOne("usuarioDao.generarCodigoUsuario");
-        log.debug("codigo usuario generado:" + codigo);
-        return codigo;
     }
 
     @Override
@@ -77,5 +58,10 @@ public class UsuarioDaoImpl extends SqlSessionDaoSupport implements UsuarioDao {
     @Override
     public List<Usuario> buscarUsuarioTotal() {
         return getSqlSession().selectList("usuarioDao.buscarUsuarioTotal");
+    }
+    
+    @Override
+    public Integer listaUsuarioCount(String codigoUsuario) {
+        return getSqlSession().selectOne("usuarioDao.listaUsuarioCount",codigoUsuario);
     }
 }

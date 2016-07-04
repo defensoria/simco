@@ -141,7 +141,7 @@ public class CatalogoController extends AbstractManagedBean implements Serializa
             filtroCatalogo.setNumParametro((busquedaCatalogoTemp.getNumParametro() == null || busquedaCatalogoTemp.getNumParametro().equals(new Integer(0))) ? null : busquedaCatalogoTemp.getNumParametro());
             listarPaginado(filtroCatalogo, page);
         } catch (Exception e) {
-            addError(e.getMessage() + ":" + e.getMessage());
+            e.printStackTrace();
         }
         return "catalogoPadreList";
     }
@@ -177,7 +177,7 @@ public class CatalogoController extends AbstractManagedBean implements Serializa
             setCatalogoPadre(catalogoService.viewCatalogoPadre(getCatalogoPadre()));
             this.habilitado = getCatalogoPadre().getCodEstado().equals(Constantes.ESTADO_ACTIVO);
         } catch (Exception e) {
-            addError(e.getMessage());
+            e.printStackTrace();
         }
         return "catalogoPadreUpdate";
     }
@@ -203,7 +203,7 @@ public class CatalogoController extends AbstractManagedBean implements Serializa
             catalogoService.updateCatalogoPadre(getCatalogoPadre());
             msg.messageInfo("Se realizacion los cambios correctamente", null);
         } catch (Exception e) {
-            addError(e.getMessage());
+            e.printStackTrace();
         }
         return "catalogoPadreUpdate";
     }
@@ -254,7 +254,7 @@ public class CatalogoController extends AbstractManagedBean implements Serializa
             }
             listarPaginadoHijo(filtroCatalogo, page);
         } catch (Exception e) {
-            addError(e.getMessage());
+            e.printStackTrace();
         }
         padreParametro = padreParam;
         return "catalogoHijoListVer";
@@ -270,7 +270,7 @@ public class CatalogoController extends AbstractManagedBean implements Serializa
             filtroCatalogo.setNumParametro((busquedaCatalogoTemp.getNumParametro() == null || busquedaCatalogoTemp.getNumParametro().equals(new Integer(0))) ? null : busquedaCatalogoTemp.getNumParametro());
             listarPaginadoHijo(filtroCatalogo, page);
         } catch (Exception e) {
-            addError(e.getMessage());
+            e.printStackTrace();
         }
         return "catalogoHijoList";
     }
@@ -306,7 +306,7 @@ public class CatalogoController extends AbstractManagedBean implements Serializa
             setCatalogoHijo(catalogoService.viewCatalogoHijo(getCatalogoHijo()));
             this.habilitado = getCatalogoHijo().getCodEstado().equals(Constantes.ESTADO_ACTIVO);
         } catch (Exception e) {
-            addError(e.getMessage());
+            e.printStackTrace();
         }
         return "catalogoHijoUpdate";
     }
@@ -328,7 +328,7 @@ public class CatalogoController extends AbstractManagedBean implements Serializa
             catalogoService.updateCatalogoHijo(getCatalogoHijo());
             msg.messageInfo("Se realizaron los cambios correctamente", null);
         } catch (Exception e) {
-            addError(e.getMessage());
+            e.printStackTrace();
         }
         return "catalogoHijoUpdate";
     }
@@ -356,7 +356,7 @@ public class CatalogoController extends AbstractManagedBean implements Serializa
             this.verGuardar = false;
             msg.messageInfo("Se registraron los cambios correctamente", null);
         } catch (Exception ex) {
-            addError(ex.getMessage());
+            ex.printStackTrace();
         }
         return "catalogoHijoNuevo";
     }

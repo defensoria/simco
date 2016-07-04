@@ -2,14 +2,16 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package gob.dp.simco.administracion.seguridad.controller;
+
 import gob.dp.simco.administracion.seguridad.bean.FiltroUsuario;
 import gob.dp.simco.administracion.seguridad.constantes.ConstantesAuditoria;
 import gob.dp.simco.administracion.seguridad.entity.Usuario;
+import gob.dp.simco.administracion.seguridad.entity.UsuarioLogin;
 import gob.dp.simco.administracion.seguridad.service.AuditoriaService;
+import gob.dp.simco.administracion.seguridad.service.UsuarioLoginService;
 import gob.dp.simco.administracion.seguridad.service.UsuarioService;
-import gob.dp.simco.comun.MessagesUtil;
+import gob.dp.simco.comun.MEncript;
 import gob.dp.simco.comun.SessionUtil;
 import gob.dp.simco.comun.mb.AbstractManagedBean;
 import java.io.Serializable;
@@ -20,7 +22,6 @@ import javax.inject.Named;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
-
 
 /**
  *
@@ -34,69 +35,50 @@ public class LoginController extends AbstractManagedBean implements Serializable
 
     private Usuario usuario;
 
-    private String mensaje="";
-    
-    private MessagesUtil msg;
-
     @Autowired
     private UsuarioService usuarioService;
-    
+
     @Autowired
     private AuditoriaService auditoriaService;
 
-    public String ingresarSistema(){
-        msg= new MessagesUtil();
-     try{ 
-    	 if (usuario.getCodigo()!=null)
-    		 usuario.setCodigo(usuario.getCodigo().toUpperCase());
-    	 
-         FiltroUsuario filtro=new FiltroUsuario();
-         filtro.setCodigo(usuario.getCodigo());
-         filtro.setIncluirLstRol(true);
-         filtro.setIncluirMapRol(true);
-         filtro.setIncluirMapRecurso(true);
-         Usuario objUsuario=usuarioService.consultarUsuario(filtro);
-         log.debug("Entrando a ingresarSistema 1 ");
+    @Autowired
+    private UsuarioLoginService usuarioLoginService;
 
-        if(objUsuario!=null){
-             //String encPass = CryptoAES.getInstance().encriptar(usuario.getClave().trim());
-            log.debug("Entrando a ingresarSistema 2 ");
-            log.debug("Entrando a ingresarSistema 2 : Clave a encriptar : "+usuario.getClave().trim());
-            String clave1 = usuario.getClave().trim();
-           // String encPass = new String(MEncript.getStringMessageDigest(usuario.getClave().trim()));
-            String encPass = usuario.getClave().trim();
-            
-            log.debug("Entrando a ingresarSistema 3 ");
-            if(objUsuario.getClave().trim().equals(encPass))
-            {
-            	log.debug("Clave correcta, creando sesion");
-            	
-              SessionUtil.setUsuario(objUsuario);
-              //auditoriaService.auditar(ConstantesAuditoria.SEGURIDAD_LOGIN_CORRECTO, "Login correcto");
-              
-              this.mensaje="";
-              cargarMenu();
-              return "ingresarSistema";
+    public String ingresarSistema() {
+        try {
+            if (usuario.getCodigo() != null) {
+                usuario.setCodigo(usuario.getCodigo().toUpperCase());
             }
-            else{
-                  msg.messageAlert("El usuario o contraseña no existen", null);
-                  auditoriaService.auditar(ConstantesAuditoria.SEGURIDAD_LOGIN_INCORRECTO, "Login incorrecto",objUsuario);
-                  return "login";
+            FiltroUsuario filtro = new FiltroUsuario();
+            filtro.setCodigo(usuario.getCodigo());
+            filtro.setIncluirLstRol(true);
+            filtro.setIncluirMapRol(true);
+            filtro.setIncluirMapRecurso(true);
+            UsuarioLogin login = new UsuarioLogin();
+            login.setCodigo(usuario.getCodigo());
+            String encPass = MEncript.getStringMessageDigest(usuario.getClave().trim());
+            login.setClave(encPass);
+            Integer val = usuarioLoginService.loginUsuario(login);
+            if (val > 0) {
+                Usuario objUsuario = usuarioService.consultarUsuario(filtro);
+                if(objUsuario != null){
+                    SessionUtil.setUsuario(objUsuario);
+                    auditoriaService.auditar(ConstantesAuditoria.SEGURIDAD_LOGIN_CORRECTO, "Login correcto");
+                    cargarMenu();
+                    return "ingresarSistema";
+                }
+            } else {
+                msg.messageAlert("El usuario o la contraseña no coinciden", null);
+                auditoriaService.auditar(ConstantesAuditoria.SEGURIDAD_LOGIN_INCORRECTO, "Login incorrecto", usuario);
+                return "login";
             }
-        } else{
-            msg.messageAlert("El usuario o contraseña no existen", null);
-            return "login";     
+        } catch (Exception ex) {
+            log.error("Ocurrió un error", ex);
         }
-               
-     } catch (Exception ex) {
-           log.error("Ocurrió un error", ex);
-           this.mensaje="Ocurrió un Error: "+ex.getMessage();
-           return null;
-       }
-        
+        return null;
     }
-    
-    private void cargarMenu(){
+
+    private void cargarMenu() {
         FacesContext context = FacesContext.getCurrentInstance();
         MenuController menuController = (MenuController) context.getELContext().getELResolver().getValue(context.getELContext(), null, "menuController");
         menuController.cargarMenu();
@@ -107,8 +89,8 @@ public class LoginController extends AbstractManagedBean implements Serializable
     }
 
     public Usuario getUsuario() {
-        if(this.usuario==null){
-            this.usuario=new Usuario();
+        if (this.usuario == null) {
+            this.usuario = new Usuario();
         }
         return usuario;
     }
@@ -117,28 +99,11 @@ public class LoginController extends AbstractManagedBean implements Serializable
         this.usuario = usuario;
     }
 
-    public String getMensaje() {
-        return mensaje;
+    public Usuario getUsuarioSesion() {
+        return SessionUtil.getUsuario();
     }
 
-    public void setMensaje(String mensaje) {
-        this.mensaje = mensaje;
-    }
-
-   public Usuario getUsuarioSesion() {    
-           return SessionUtil.getUsuario();
-    }
-
-     public void setAuditoriaService(AuditoriaService auditoriaService) {
+    public void setAuditoriaService(AuditoriaService auditoriaService) {
         this.auditoriaService = auditoriaService;
     }
-
-    public MessagesUtil getMsg() {
-        return msg;
-    }
-
-    public void setMsg(MessagesUtil msg) {
-        this.msg = msg;
-    }
-
 }

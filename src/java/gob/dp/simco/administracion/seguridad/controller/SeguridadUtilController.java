@@ -36,7 +36,6 @@ public class SeguridadUtilController {
     public void setRolService(RolService rolService) {
         this.rolService = rolService;
     }
-
     
     public boolean tieneRecurso(String codigoRecurso){
     	 Usuario usuario=SessionUtil.getUsuario();
@@ -45,10 +44,8 @@ public class SeguridadUtilController {
     }
     
     public boolean tieneRol(String codigoRol){
-      
         Usuario usuario=SessionUtil.getUsuario();
         Map map=rolService.buscarMapRolSegunUsuario(usuario);
         return map.get(codigoRol)!=null;
-
     }
 }

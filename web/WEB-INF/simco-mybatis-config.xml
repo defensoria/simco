@@ -16,6 +16,7 @@
     <typeAliases>
         <typeAlias type="gob.dp.simco.administracion.seguridad.entity.Usuario" alias="usuario"/>
         <typeAlias type="gob.dp.simco.administracion.seguridad.entity.UsuarioRol" alias="usuarioRol"/>
+        <typeAlias type="gob.dp.simco.administracion.seguridad.entity.UsuarioLogin" alias="usuarioLogin"/>
         <typeAlias type="gob.dp.simco.administracion.seguridad.entity.Rol" alias="rol"/>
         <typeAlias type="gob.dp.simco.administracion.seguridad.entity.Recurso" alias="recurso"/>
         <typeAlias type="gob.dp.simco.administracion.seguridad.entity.RolRecurso" alias="rolRecurso"/>
@@ -102,6 +103,7 @@
         <mapper resource="gob/dp/simco/administracion/seguridad/dao/xml/Rol.xml" />
         <mapper resource="gob/dp/simco/administracion/seguridad/dao/xml/Recurso.xml" />
         <mapper resource="gob/dp/simco/administracion/seguridad/dao/xml/Auditoria.xml" />
+        <mapper resource="gob/dp/simco/administracion/seguridad/dao/xml/UsuarioLogin.xml" />
         
         <mapper resource="gob/dp/simco/administracion/parametro/dao/xml/Catalogo.xml" />
         

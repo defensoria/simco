@@ -2,13 +2,12 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package gob.dp.simco.administracion.seguridad.controller;
-
 
 import gob.dp.simco.administracion.seguridad.bean.FiltroUsuario;
 import gob.dp.simco.administracion.seguridad.entity.Rol;
 import gob.dp.simco.administracion.seguridad.entity.Usuario;
+import gob.dp.simco.administracion.seguridad.entity.UsuarioLogin;
 import gob.dp.simco.administracion.seguridad.service.RolService;
 import gob.dp.simco.administracion.seguridad.service.UsuarioService;
 import gob.dp.simco.comun.MessagesUtil;
@@ -32,6 +31,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+
 /**
  *
  * @author Administrador
@@ -44,154 +44,237 @@ public class UsuarioDetalleController extends AbstractManagedBean implements Ser
     private static final Logger log = Logger.getLogger(UsuarioDetalleController.class);
 
     private Usuario usuario;
-    
+
     private String mensaje;
 
     private List<SelectItem> lstRoles;
-    
+
+    private String rolSeleccionado;
+
+    private boolean verGuardar = true;
+
+    private boolean habilitado = true;
+
     private List<String> lstRolesSeleccionados;
-    
-    private boolean verGuardar=true;
-    
-    private boolean habilitado=true;
-    
+
     private Part file1;
-    
+
     MessagesUtil msg;
 
     @Autowired
     private UsuarioService usuarioService;
-    
+
     @Autowired
     private RolService rolService;
 
     public UsuarioDetalleController() {
         msg = new MessagesUtil();
     }
-    
-    public String verDetalleUsuario(String codigo){
-        log.debug("verDetalleUsuario");        
 
-        this.verGuardar=true;
-        this.mensaje="";      
-        FiltroUsuario filter=new FiltroUsuario();
-        filter.setCodigo(codigo);
-    
-        usuario=usuarioService.buscarUsuario(filter).get(0);      
-
-        List<Rol> lstRolesTodos=rolService.buscarRol(new Rol());
-        SelectItem item;
-        this.lstRoles=new ArrayList<>();
-        for(Rol obj:lstRolesTodos){
-            item=new SelectItem(obj.getCodigo(), obj.getNombre());
-            this.getLstRoles().add(item);
+    public String verDetalleUsuario(UsuarioLogin usuarioLogin) {
+        FiltroUsuario filter = new FiltroUsuario();
+        filter.setCodigo(usuarioLogin.getCodigo());
+        Integer contador = usuarioService.listaUsuarioCount(usuarioLogin.getCodigo());
+        if (contador > 0) {
+            usuario = usuarioService.buscarUsuario(filter).get(0);
+            List<Rol> lstRolesTodos = rolService.buscarRol(new Rol());
+            SelectItem item;
+            this.lstRoles = new ArrayList<>();
+            for (Rol obj : lstRolesTodos) {
+                item = new SelectItem(obj.getCodigo(), obj.getNombre());
+                this.getLstRoles().add(item);
+            }
+            Usuario filter2 = new Usuario();
+            filter2.setCodigo(usuarioLogin.getCodigo());
+            List<Rol> lstRolUsuario = rolService.buscarRolSegunUsuario(filter2);
+            this.lstRolesSeleccionados = new ArrayList<>();
+            for (Rol obj : lstRolUsuario) {
+                rolSeleccionado = obj.getCodigo();
+            }
+        } else {
+            usuario = new Usuario();
+            usuario.setCodigo(usuarioLogin.getCodigo());
+            usuario.setNombre(usuarioLogin.getNombre());
+            usuario.setApellidoPaterno(usuarioLogin.getApellidoPaterno());
+            usuario.setApellidoMaterno(usuarioLogin.getApellidoMaterno());
+            usuario.setDni(usuarioLogin.getDocumento());
+            List<Rol> lstRolesTodos = rolService.buscarRol(new Rol());
+            SelectItem item;
+            this.lstRoles = new ArrayList<>();
+            for (Rol obj : lstRolesTodos) {
+                item = new SelectItem(obj.getCodigo(), obj.getNombre());
+                this.getLstRoles().add(item);
+            }
+            rolSeleccionado = null;
         }
 
-        Usuario filter2=new Usuario();
-        filter2.setCodigo(codigo);
-        List<Rol> lstRolUsuario=rolService.buscarRolSegunUsuario(filter2);
-        this.lstRolesSeleccionados=new ArrayList<>();
-         for(Rol obj:lstRolUsuario){
-            this.getLstRolesSeleccionados().add(obj.getCodigo());
-        }         
         return "usuarioDetalle";
     }
-    
-    public String verDetallePerfil(){
+
+    public String verDetallePerfil() {
         FacesContext context = FacesContext.getCurrentInstance();
         LoginController loginController = (LoginController) context.getELContext().getELResolver().getValue(context.getELContext(), null, "loginController");
         Usuario usuarioSession = loginController.getUsuarioSesion();
-        verDetalleUsuario(usuarioSession.getCodigo());
+        UsuarioLogin usuarioLogin = new UsuarioLogin();
+        usuarioLogin.setCodigo(usuarioSession.getCodigo());
+        verDetalleUsuario(usuarioLogin);
         return "perfil";
     }
 
-   public void guardar(){      
-        Usuario filter=new Usuario();
+    public String guardarUsuario() {
+        Integer contador = usuarioService.listaUsuarioCount(usuario.getCodigo().toUpperCase());
+        if(StringUtils.isBlank(rolSeleccionado)){
+            msg.messageAlert("Debe seleccionar el rol del usuario", null);
+            return null;
+        }
+        if (contador > 0) {
+            guardar();
+        } else {
+            insertarUsuario();
+        }
+        FacesContext context = FacesContext.getCurrentInstance();
+        BusquedaUsuarioController busquedaUsuarioController = (BusquedaUsuarioController) context.getELContext().getELResolver().getValue(context.getELContext(), null, "busquedaUsuarioController");
+        busquedaUsuarioController.limpiarBusqueda();
+        return "usuarioLista";
+    }
+
+    private void guardar() {
+        Usuario filter = new Usuario();
         this.llenarFiltro(filter);
-        try{
-            List<Rol> lstRolSel=new ArrayList<>();
-            Rol rol=null;
-            for(String codigo:this.getLstRolesSeleccionados()){
-                log.debug("Rol seleccionado:"+codigo);
-                rol=new Rol();
-                rol.setCodigo(codigo);
-                lstRolSel.add(rol);
-            }
-            usuarioService.modificarUsuario(filter,lstRolSel);
+        try {
+            List<Rol> lstRolSel = new ArrayList<>();
+            Rol rol = new Rol(rolSeleccionado);
+            lstRolSel.add(rol);
+            usuarioService.modificarUsuario(filter, lstRolSel);
             msg.messageInfo("Se realizaron los cambios correctamente", null);
-        }catch(Exception ex){
-            mensaje="Ocurrió un error:"+ex.getMessage();
+        } catch (Exception ex) {
+            mensaje = "Ocurrió un error:" + ex.getMessage();
             log.error("Ocurrió un error", ex);
         }
-
     }
 
-    public String regresar(){
-         return "usuarioLista";
-     }
+    private void insertarUsuario() {
 
-   private void llenarFiltro(Usuario filter){
+        Usuario filter = new Usuario();
+        this.llenarFiltro(filter);
+        try {
+            List<Rol> lstRolSel = new ArrayList<>();
+            Rol rol;
+            //for (String codigo : this.getLstRolesSeleccionados()) {
+            rol = new Rol();
+            rol.setCodigo(rolSeleccionado);
+            lstRolSel.add(rol);
+            //}
+            usuarioService.insertarUsuario(filter, lstRolSel);
+            usuario.setCodigo(filter.getCodigo());
+            Usuario usu = usuario;
+            rolSeleccionado = null;
+            usuario = new Usuario();
+            FacesContext context = FacesContext.getCurrentInstance();
+            BusquedaUsuarioController busquedaUsuarioController = (BusquedaUsuarioController) context.getELContext().getELResolver().getValue(context.getELContext(), null, "busquedaUsuarioController");
+            msg.messageInfo("Se registro el usuario", null);
+            busquedaUsuarioController.addUsuarioLista(usu);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
-        if(usuario.getCodigo()!=null && !usuario.getCodigo().trim().equals("")){
+    public String regresar() {
+        return "usuarioLista";
+    }
+
+    private void llenarFiltro(Usuario filter) {
+
+        if (usuario.getCodigo() != null && !usuario.getCodigo().trim().equals("")) {
             filter.setCodigo(usuario.getCodigo().trim());
         }
-        if(usuario.getClave()!=null && !usuario.getClave().trim().equals("")){
+        if (usuario.getClave() != null && !usuario.getClave().trim().equals("")) {
             filter.setClave(usuario.getClave().trim());
         }
-        if(usuario.getConfirmacionClave()!=null && !usuario.getConfirmacionClave().trim().equals("")){
+        if (usuario.getConfirmacionClave() != null && !usuario.getConfirmacionClave().trim().equals("")) {
             filter.setConfirmacionClave(usuario.getConfirmacionClave().trim());
         }
-        if(usuario.getDni()!=null&&!usuario.getDni().trim().equals("")){
+        if (usuario.getDni() != null && !usuario.getDni().trim().equals("")) {
             filter.setDni(usuario.getDni().trim());
         }
-        if(usuario.getNombre()!=null && !usuario.getNombre().trim().equals("")){
+        if (usuario.getNombre() != null && !usuario.getNombre().trim().equals("")) {
             filter.setNombre(usuario.getNombre().trim());
         }
-        if(usuario.getApellidoPaterno()!=null&&!usuario.getApellidoPaterno().trim().equals("")){
+        if (usuario.getApellidoPaterno() != null && !usuario.getApellidoPaterno().trim().equals("")) {
             filter.setApellidoPaterno(usuario.getApellidoPaterno().trim());
         }
-        if(usuario.getApellidoMaterno()!=null&&!usuario.getApellidoMaterno().trim().equals("")){
+        if (usuario.getApellidoMaterno() != null && !usuario.getApellidoMaterno().trim().equals("")) {
             filter.setApellidoMaterno(usuario.getApellidoMaterno().trim());
         }
-        if(usuario.getEmail()!=null && !usuario.getEmail().trim().equals("")){
+        if (usuario.getEmail() != null && !usuario.getEmail().trim().equals("")) {
             filter.setEmail(usuario.getEmail().trim());
         }
-        if(usuario.getTelefonoMovil()!=null && !usuario.getTelefonoMovil().trim().equals("")){
+        if (usuario.getTelefonoMovil() != null && !usuario.getTelefonoMovil().trim().equals("")) {
             filter.setTelefonoMovil(usuario.getTelefonoMovil().trim());
         }
-        if(usuario.getTelefonoFijo()!=null && !usuario.getTelefonoFijo().trim().equals("")){
+        if (usuario.getTelefonoFijo() != null && !usuario.getTelefonoFijo().trim().equals("")) {
             filter.setTelefonoFijo(usuario.getTelefonoFijo().trim());
         }
+        
+        if (StringUtils.isNotBlank(rolSeleccionado)) {
+            if (StringUtils.equals(rolSeleccionado, "ROL0000001")) {
+                filter.setCargo("Comisionado");
+            }
+            if (StringUtils.equals(rolSeleccionado, "ROL0000002")) {
+                filter.setCargo("Jefe");
+            }
+            if (StringUtils.equals(rolSeleccionado, "ROL0000003")) {
+                filter.setCargo("Comisionado");
+            }
+            if (StringUtils.equals(rolSeleccionado, "ROL0000004")) {
+                filter.setCargo("Adjunto");
+            }
+            if (StringUtils.equals(rolSeleccionado, "ROL0000005")) {
+                filter.setCargo("Practicante/Secigra");
+            }
+            if (StringUtils.equals(rolSeleccionado, "ROL0000006")) {
+                filter.setCargo("Practicante/Secigra");
+            }
+            if (StringUtils.equals(rolSeleccionado, "ROL0000007")) {
+                filter.setCargo("Comisionado");
+            }
+            if (StringUtils.equals(rolSeleccionado, "ROL0000008")) {
+                filter.setCargo("Comisionado");
+            }
+        }
     }
-   
-    public void agregarImagen(){
+
+    public void agregarImagen() {
         String nameArchive = getFilename(file1);
         String extencion = "";
-        if(StringUtils.isNoneBlank(nameArchive)){
+        if (StringUtils.isNotBlank(nameArchive)) {
             switch (file1.getContentType()) {
-            case "image/png":  extencion = ".png";
-                     break;
-            case "image/jpeg":  extencion = ".jpg";
-                     break;
-            case "image/gif":  extencion = ".gif";
-                     break;                     
+                case "image/png":
+                    extencion = ".png";
+                    break;
+                case "image/jpeg":
+                    extencion = ".jpg";
+                    break;
+                case "image/gif":
+                    extencion = ".gif";
+                    break;
             }
-            
+
             DateFormat fechaHora = new SimpleDateFormat("yyyyMMddHHmmss");
             String formato = fechaHora.format(new Date());
             String ruta = formato + extencion;
-            File file = new File(ConstantesUtil.FILE_SYSTEM+ruta);
+            File file = new File(ConstantesUtil.FILE_SYSTEM + ruta);
             try (InputStream input = file1.getInputStream()) {
                 Files.copy(input, file.toPath());
             } catch (IOException ex) {
-                log.error(ex.getCause());
+                log.error("agregarImagen()" + ex);
             }
-            usuario.setRuta("/filesystem/"+ruta);
+            usuario.setRuta("/filesystem/" + ruta);
             usuarioService.modificarUsuarioSimple(usuario);
             verDetallePerfil();
         }
     }
-    
+
     private static String getFilename(Part part) {
         for (String cd : part.getHeader("content-disposition").split(";")) {
             if (cd.trim().startsWith("filename")) {
@@ -219,25 +302,14 @@ public class UsuarioDetalleController extends AbstractManagedBean implements Ser
     }
 
     public List<SelectItem> getLstRoles() {
-        if(this.lstRoles==null){
-            this.lstRoles=new ArrayList<>();
+        if (this.lstRoles == null) {
+            this.lstRoles = new ArrayList<>();
         }
         return lstRoles;
     }
 
     public void setLstRoles(List<SelectItem> lstRoles) {
         this.lstRoles = lstRoles;
-    }
-
-    public List<String> getLstRolesSeleccionados() {
-       if(this.lstRolesSeleccionados==null){
-            this.lstRolesSeleccionados=new ArrayList<>();
-        }
-        return lstRolesSeleccionados;
-    }
-
-    public void setLstRolesSeleccionados(List<String> lstRolesSeleccionados) {
-        this.lstRolesSeleccionados = lstRolesSeleccionados;
     }
 
     public String getMensaje() {
@@ -249,8 +321,8 @@ public class UsuarioDetalleController extends AbstractManagedBean implements Ser
     }
 
     public Usuario getUsuario() {
-        if(this.usuario==null){
-            this.usuario=new Usuario();
+        if (this.usuario == null) {
+            this.usuario = new Usuario();
         }
         return usuario;
     }
@@ -275,4 +347,19 @@ public class UsuarioDetalleController extends AbstractManagedBean implements Ser
         this.file1 = file1;
     }
 
+    public String getRolSeleccionado() {
+        return rolSeleccionado;
+    }
+
+    public void setRolSeleccionado(String rolSeleccionado) {
+        this.rolSeleccionado = rolSeleccionado;
+    }
+
+    public List<String> getLstRolesSeleccionados() {
+        return lstRolesSeleccionados;
+    }
+
+    public void setLstRolesSeleccionados(List<String> lstRolesSeleccionados) {
+        this.lstRolesSeleccionados = lstRolesSeleccionados;
+    }
 }

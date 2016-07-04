@@ -35,4 +35,6 @@ public interface UsuarioService {
     public Integer getTotalBuscarUsuario(FiltroUsuario filtro);
     
     public void modificarUsuarioSimple(Usuario usuario);
+    
+    public Integer listaUsuarioCount(String codigoUsuario);
 }
