@@ -14,10 +14,10 @@ import gob.dp.simco.registro.entity.ActividadMedioVerificacion;
  */
 public interface ActividadMedioVerificacionService {
     
-   public void actividadMedioVerificacionInsertar(ActividadMedioVerificacion actividadMedioVerificacion) throws Exception;
+   public void actividadMedioVerificacionInsertar(ActividadMedioVerificacion actividadMedioVerificacion);
    
-   public void actividadMedioVerificacionUpdate(ActividadMedioVerificacion actividadMedioVerificacion) throws Exception;
+   public void actividadMedioVerificacionUpdate(ActividadMedioVerificacion actividadMedioVerificacion);
    
-   public void actividadMedioVerificacionDelete(ActividadMedioVerificacion actividadMedioVerificacion) throws Exception;
+   public void actividadMedioVerificacionDelete(ActividadMedioVerificacion actividadMedioVerificacion);
     
 }

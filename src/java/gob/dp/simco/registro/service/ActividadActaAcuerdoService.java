@@ -14,10 +14,10 @@ import gob.dp.simco.registro.entity.ActividadActaAcuerdo;
  */
 public interface ActividadActaAcuerdoService {
     
-   public void actividadActaAcuerdoInsertarUpdate(ActividadActaAcuerdo actividadActaAcuerdo) throws Exception;
+   public void actividadActaAcuerdoInsertarUpdate(ActividadActaAcuerdo actividadActaAcuerdo);
    
-   public void actividadActaAcuerdoUpdate(ActividadActaAcuerdo actividadActaAcuerdo) throws Exception;
+   public void actividadActaAcuerdoUpdate(ActividadActaAcuerdo actividadActaAcuerdo);
    
-   public void actividadActaAcuerdoDelete(ActividadActaAcuerdo actividadActaAcuerdo) throws Exception;
+   public void actividadActaAcuerdoDelete(ActividadActaAcuerdo actividadActaAcuerdo);
     
 }

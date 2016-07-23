@@ -45,10 +45,10 @@
                                     </h4>
                                 </td>
                                 <td>
-                                    <button jsf:rendered="#{!actorController.tip}" class="btn btn-danger" jsf:action="registroNuevo" style="float:right">
+                                    <button jsf:rendered="#{!actorController.tip}" class="btn btn-danger" jsf:action="#{registroController.retornarActividad()}" style="float:right">
                                         <span class="glyphicon glyphicon-share"/>Regresar
                                     </button>
-                                    <button jsf:rendered="#{actorController.tip}" class="btn btn-danger" jsf:action="registroEdit" style="float:right">
+                                    <button jsf:rendered="#{actorController.tip}" class="btn btn-danger" jsf:action="#{registroController.retornarActividad()}" style="float:right">
                                         <span class="glyphicon glyphicon-share"/>Regresar
                                     </button>
                                 </td>
@@ -60,7 +60,7 @@
                             <table style="width:100%">
                                 <tr>
                                     <td style="width:50%">
-                                        <div ng-controller="controlador1" class="panel panel-default" style="overflow-y:auto;height:370px">
+                                        <div class="panel panel-default" style="overflow-y:auto;height:370px">
                                             <div class="panel-body">
                                                 <span class="text-resalt-primary">Búsqueda de Actores</span>
                                                 <div class="form-group has-feedback" style="width:100%;margin:auto">

@@ -7,7 +7,6 @@ package gob.dp.simco.comun.dao;
 
 import gob.dp.simco.comun.entity.Menu;
 import java.util.List;
-import org.apache.log4j.Logger;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.springframework.stereotype.Repository;
 
@@ -18,17 +17,13 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class MenuDaoImpl extends SqlSessionDaoSupport implements MenuDao{
     
-    private static final Logger log = Logger.getLogger(MenuDaoImpl.class);
-
     @Override
     public List<Menu> menuPadre() {
-        log.debug("METODO : MenuDaoImpl.menuPadre");
         return getSqlSession().selectList("gob.dp.simco.comun.dao.MenuDao.menuPadre");
     }
 
     @Override
     public List<Menu> menuHijo(int padre) {
-        log.debug("METODO : MenuDaoImpl.menuHijo");
         return getSqlSession().selectList("gob.dp.simco.comun.dao.MenuDao.menuHijo", padre);
     }
     

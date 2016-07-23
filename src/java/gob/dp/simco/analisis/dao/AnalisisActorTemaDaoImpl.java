@@ -7,7 +7,6 @@ package gob.dp.simco.analisis.dao;
 
 import gob.dp.simco.analisis.entity.AnalisisActorTema;
 import java.util.List;
-import org.apache.log4j.Logger;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.springframework.stereotype.Repository;
 
@@ -18,29 +17,23 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class AnalisisActorTemaDaoImpl extends SqlSessionDaoSupport implements AnalisisActorTemaDao {
     
-    private static final Logger log = Logger.getLogger(AnalisisActorTemaDaoImpl.class);
-
     @Override
     public void analisisActorTemaInsertar(AnalisisActorTema analisisActorTema) {
-        log.debug("METODO : AnalisisActorTemaDaoImpl.analisisActorTemaInsertar");
         getSqlSession().insert("gob.dp.simco.analisis.dao.AnalisisActorTemaDao.analisisActorTemaInsertar", analisisActorTema);
     }
 
     @Override
     public List<AnalisisActorTema> analisisActorTemaXactorBuscar(Long idTema) {
-        log.debug("METODO : AnalisisActorTemaDaoImpl.analisisActorTemaXactorBuscar");
         return getSqlSession().selectList("gob.dp.simco.analisis.dao.AnalisisActorTemaDao.analisisActorTemaXactorBuscar", idTema);
     }
 
     @Override
     public void analisisActorTemaUpdate(AnalisisActorTema analisisActorTema) {
-        log.debug("METODO : AnalisisActorTemaDaoImpl.analisisActorTemaUpdate");
         getSqlSession().update("gob.dp.simco.analisis.dao.AnalisisActorTemaDao.analisisActorTemaUpdate", analisisActorTema);
     }
 
     @Override
     public Integer analisisActorTemaXactorValida(AnalisisActorTema analisisActorTema) {
-        log.debug("METODO : AnalisisActorTemaDaoImpl.analisisActorTemaXactorValida");
         return getSqlSession().selectOne("gob.dp.simco.analisis.dao.AnalisisActorTemaDao.analisisActorTemaXactorValida", analisisActorTema);
     }
 

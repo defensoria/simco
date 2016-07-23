@@ -15,17 +15,17 @@ import java.util.List;
  */
 public interface ActaAcuerdoService {
     
-   public void actaAcuerdoNuevo(ActaAcuerdo actaAcuerdo) throws Exception;
+   public void actaAcuerdoNuevo(ActaAcuerdo actaAcuerdo);
    
-   public void actaAcuerdoModificar(ActaAcuerdo actaAcuerdo) throws Exception;
+   public void actaAcuerdoModificar(ActaAcuerdo actaAcuerdo);
    
-   public List<ActaAcuerdo> actaAcuerdoxActividadBuscar(long idActividad) throws Exception;
+   public List<ActaAcuerdo> actaAcuerdoxActividadBuscar(long idActividad);
    
-   public List<ActaAcuerdo> actaAcuerdoxActividadBuscarTotal(long idActividad) throws Exception;
+   public List<ActaAcuerdo> actaAcuerdoxActividadBuscarTotal(long idActividad);
 
-   public ActaAcuerdo actaAcuerdoBuscarOne(Long idActaAcuerdo) throws Exception;
+   public ActaAcuerdo actaAcuerdoBuscarOne(Long idActaAcuerdo);
     
-   public ActaAcuerdo actaAcuerdoxActividadBuscarOne(long idActividad) throws Exception;
+   public ActaAcuerdo actaAcuerdoxActividadBuscarOne(long idActividad);
    
    public Integer actaAcuerdoCodigoGenerado();
 }

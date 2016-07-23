@@ -14,13 +14,13 @@ import gob.dp.simco.registro.entity.ActorAcuerdo;
  */
 public interface ActorAcuerdoService {
     
-   public void actorAcuerdoInsertar(ActorAcuerdo actorAcuerdo) throws Exception;
+   public void actorAcuerdoInsertar(ActorAcuerdo actorAcuerdo);
    
-   public void actorAcuerdoUpdate(ActorAcuerdo actorAcuerdo) throws Exception;
+   public void actorAcuerdoUpdate(ActorAcuerdo actorAcuerdo);
    
-   public Integer actorAcuerdoValida(ActorAcuerdo actorAcuerdo) throws Exception;
+   public Integer actorAcuerdoValida(ActorAcuerdo actorAcuerdo);
    
-   public void actorAcuerdoDelete(Long idActaAcuerdoDetalle) throws Exception;
+   public void actorAcuerdoDelete(Long idActaAcuerdoDetalle);
    
    public void actorAcuerdoAnular(Long idActaAcuerdoDetalle);
     

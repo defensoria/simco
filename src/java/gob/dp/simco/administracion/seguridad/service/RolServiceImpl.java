@@ -44,7 +44,7 @@ public class RolServiceImpl implements RolService
     }
 
     @Override
-    public void asignarRolUsuario(Usuario usuario, List<Rol> listaRolSeleccionado)throws Exception{
+    public void asignarRolUsuario(Usuario usuario, List<Rol> listaRolSeleccionado){
 	List<Rol> lstRolesNuevos=new ArrayList<Rol>();
 	//Buscamos los roles asignados actualmente
 	List<Rol> lstRolesBD=rolDao.buscarRolSegunUsuario(usuario);
@@ -85,7 +85,6 @@ public class RolServiceImpl implements RolService
      		 */
              sbDetalle.append("Usu:").append(usuario.getCodigo()).append(",Asignar Rol:").append(rol.getCodigo());
              auditoriaService.auditar(ConstantesAuditoria.SEGURIDAD_ASIGNAR_ROL, sbDetalle.toString());
-             log.debug("Rol Nuevo:"+rol.getCodigo());
          }
         //Eliminamos los que sobran        
         for(int i=0;i<lstRolesBD.size();i++){
@@ -100,7 +99,6 @@ public class RolServiceImpl implements RolService
     		 */
             sbDetalle.append("Usu:").append(usuario.getCodigo()).append(", Quitar Rol:").append(rol.getCodigo());
             auditoriaService.auditar(ConstantesAuditoria.SEGURIDAD_QUITAR_ROL, sbDetalle.toString());
-            log.debug("Rol Eliminado:"+rol.getCodigo());
          }
     }
 	@Override

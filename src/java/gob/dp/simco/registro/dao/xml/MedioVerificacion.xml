@@ -9,10 +9,11 @@
         <result property="titulo" column="C_TITULOMEDIO"/>
         <result property="descripcion" column="C_DESCMEDIO"/>
         <result property="codigo" column="C_CODIGOMEDIO"/>
-        <result property="tipoArchivo" column="TIPOARCHIVO"/>
-        <result property="tipoSoporte" column="TIPOSOPORTE"/>
+        <result property="tipoArchivo" column="C_TIPOARCHIVO"/>
+        <result property="tipoSoporte" column="C_TIPOSOPORTE"/>
         <result property="ruta" column="C_RUTA"/>
-        <result property="registro" column="D_FECREGISTRO"/>
+        <result property="fechaRegistro" column="D_FECREGISTRO"/>
+        <result property="fechaModificacion" column="D_FECMODIFICACION"/>
         <result property="ubicacion" column="C_UBICACIONFISICA"/>
         <result property="actividadMedioVerificacion.estado" column="C_ESTADOACTMEDIO"/>
         
@@ -48,33 +49,15 @@
         SELECT COUNT(*) FROM (
         <include refid="sqlMedioVerificacion"/>
         ) TABLA_COUNT
-    </select>    
-
-    <select id="medioVerificacionBuscar" resultMap="medioVerificacionMap" parameterType="filtroMedioVerificacion">
-        SELECT T2.* FROM
-        (
-        SELECT  ROWNUM R, T1.* FROM
-        (
-        <include refid="sqlMedioVerificacion"/>
-        ) T1
-        <where>
-            <if test="numeroRegistroFinal != null">
-                ROWNUM  <![CDATA[<=]]>  #{numeroRegistroFinal}
-            </if>
-        </where>
-        ) T2
-        <where>
-            <if test="numeroRegistroInicial != null">
-                T2.R <![CDATA[>]]>   #{numeroRegistroInicial}
-            </if>
-        </where>
-    </select> 
+    </select>
     
     <insert id="medioVerificacionInsertar" parameterType="medioVerificacion">
         INSERT INTO SIMCO_REG_MEDIO_VERIFICACION
         (
         N_ID_MEDIO,
-        C_DESCMEDIO,
+        <if test="descripcion != null">
+            C_DESCMEDIO,
+        </if>
         <if test="tipoArchivo != null">
             C_TIPOARCHIVO,
         </if>
@@ -93,7 +76,7 @@
         <if test="ubicacion != null">
             C_UBICACIONFISICA,
         </if>
-        <if test="ubicacion != null">
+        <if test="palabraClave != null">
             C_PALABRASCLAVE,
         </if>
         D_FECREGISTRO,
@@ -102,7 +85,9 @@
         VALUES 
         (
         SEQ_SIMCO_REG_MEDIO_VERIFI.NextVal,
-        #{descripcion},
+        <if test="descripcion != null">
+            #{descripcion},
+        </if>
         <if test="tipoArchivo != null">
             #{tipoArchivo},
         </if>
@@ -124,7 +109,7 @@
         <if test="palabraClave != null">
             #{palabraClave},
         </if>
-        #{registro},
+        #{fechaRegistro},
         #{titulo}
         )
         <selectKey keyProperty="id" resultType="Long">
@@ -135,9 +120,31 @@
     <update id="medioVerificacionUpdate" parameterType="medioVerificacion">
         UPDATE SIMCO_REG_MEDIO_VERIFICACION
         <set>
-            C_OBSMEDIO=#{observacion},
-            C_PALABRASCLAVE=#{palabraClave},
-            C_TIPO_MEDIO=#{tipo.valorParametro, jdbcType=CHAR}
+            <if test="titulo != null">
+            C_TITULOMEDIO = #{titulo},
+        </if>
+            <if test="tipoArchivo != null">
+            C_TIPOARCHIVO = #{tipoArchivo},
+        </if>
+        <if test="tipoSoporte != null">
+            C_TIPOSOPORTE = #{tipoSoporte},
+        </if>
+        <if test="ruta != null">
+            C_RUTA = #{ruta},
+        </if>
+        <if test="observacion != null">
+            C_OBSMEDIO = #{observacion},
+        </if>
+        <if test="descripcion != null">
+            C_DESCMEDIO = #{descripcion},
+        </if>
+        <if test="ubicacion != null">
+            C_UBICACIONFISICA = #{ubicacion},
+        </if>
+        <if test="palabraClave != null">
+            C_PALABRASCLAVE = #{palabraClave},
+        </if>
+        D_FECMODIFICACION = #{fechaModificacion}
         </set>
         <where>
             N_ID_MEDIO=#{id}
@@ -146,17 +153,7 @@
  
     <select id="medioVerificacionxActividadBuscar" resultMap="medioVerificacionMap" parameterType="long">
         SELECT 
-        A.N_ID_MEDIO,
-        A.C_DESCMEDIO,
-        A.C_TIPOARCHIVO,
-        A.C_TIPOSOPORTE,
-        A.C_RUTA,
-        A.C_CODIGOMEDIO,
-        A.C_OBSMEDIO,
-        A.C_UBICACIONFISICA,
-        A.C_PALABRASCLAVE,
-        A.D_FECREGISTRO,
-        A.C_TITULOMEDIO
+        A.*
         FROM SIMCO_REG_MEDIO_VERIFICACION A
         INNER JOIN SIMCO_REG_ACTIVIDAD_MEDIOS C
         ON A.N_ID_MEDIO = C.N_ID_MEDIO

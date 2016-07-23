@@ -8,7 +8,6 @@ package gob.dp.simco.registro.dao;
 
 import gob.dp.simco.registro.entity.ActorHistorial;
 import java.util.List;
-import org.apache.log4j.Logger;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.springframework.stereotype.Repository;
 
@@ -19,17 +18,13 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class ActorHistorialDaoImpl extends SqlSessionDaoSupport implements ActorHistorialDao{
     
-    private static final Logger log = Logger.getLogger(ActorHistorialDaoImpl.class);
-
     @Override
-    public void actorHistorialInsertar(ActorHistorial historial) throws Exception {
-        log.debug("METODO : ActorHistorialDaoImpl.actorHistorialInsertar");
+    public void actorHistorialInsertar(ActorHistorial historial) {
         getSqlSession().insert("gob.dp.simco.registro.dao.ActorHistorialDao.actorHistorialInsertar", historial);
     }
 
     @Override
-    public List<ActorHistorial> actorHistorialBuscarList(Long idActor) throws Exception {
-        log.debug("METODO : ActorHistorialDaoImpl.actorHistorialBuscarList");
+    public List<ActorHistorial> actorHistorialBuscarList(Long idActor) {
         return getSqlSession().selectList("gob.dp.simco.registro.dao.ActorHistorialDao.actorHistorialBuscarList",idActor);
     }
     

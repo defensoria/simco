@@ -7,7 +7,6 @@ package gob.dp.simco.analisis.dao;
 
 import gob.dp.simco.analisis.entity.AnalisisActor;
 import java.util.List;
-import org.apache.log4j.Logger;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.springframework.stereotype.Repository;
 
@@ -18,17 +17,13 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class AnalisisActorDaoImpl extends SqlSessionDaoSupport implements AnalisisActorDao{
     
-    private static final Logger log = Logger.getLogger(AnalisisActorDaoImpl.class);
-
     @Override
     public void analisisActorInsertar(AnalisisActor analisisActor) {
-        log.debug("METODO : AnalisisActorDaoImpl.analisisActorInsertar");
         getSqlSession().insert("gob.dp.simco.analisis.dao.AnalisisActorDao.analisisActorInsertar", analisisActor);
     }
 
     @Override
     public List<AnalisisActor> analisisActorxcasoBuscar(long idCaso) {
-        log.debug("METODO : AnalisisActorDaoImpl.analisisActorxcasoBuscar");
         return getSqlSession().selectList("gob.dp.simco.analisis.dao.AnalisisActorDao.analisisActorxcasoBuscar", idCaso);
     }
 

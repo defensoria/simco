@@ -12,7 +12,6 @@ import gob.dp.simco.comun.entity.Departamento;
 import gob.dp.simco.comun.entity.Distrito;
 import gob.dp.simco.comun.entity.Provincia;
 import java.util.List;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,8 +21,6 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class UbigeoServiceImpl implements UbigeoService{
-    
-    private static final Logger log = Logger.getLogger(UbigeoServiceImpl.class);
     
     @Autowired
     private DepartamentoDao departamentoDao;
@@ -37,19 +34,16 @@ public class UbigeoServiceImpl implements UbigeoService{
     
     @Override
     public List<Departamento> departamentoLista() {
-        log.debug("METODO : UbigeoServiceImpl.departamentoLista");
         return departamentoDao.departamentoLista();
     }
 
     @Override
     public List<Provincia> provinciaLista(String idDepartamento) {
-        log.debug("METODO : UbigeoServiceImpl.provinciaLista");
         return provinciaDao.provinciaLista(idDepartamento);
     }
 
     @Override
     public List<Distrito> distritoLista(Distrito distrito) {
-        log.debug("METODO : UbigeoServiceImpl.distritoLista");
         return distritoDao.distritoLista(distrito);
     }
 

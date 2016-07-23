@@ -57,8 +57,6 @@ public class ActaAcuerdoController implements Serializable {
 
     private ActaAcuerdoDetalle actaAcuerdoDetalle;
 
-    private ActaAcuerdoBusquedaTemp actaAcuerdoBusquedaTemp;
-
     private SeguimientoAcuerdo seguimientoAcuerdo;
 
     private Usuario usuarioSession;
@@ -155,7 +153,6 @@ public class ActaAcuerdoController implements Serializable {
             }
             verBotonEditar = false;
             cadenaAutocomplete = actorService.actorXactividadSimpleBuscar(idActividad);
-            //setearListasActoresAcuerdos();
             cargarUsuariosSistema();
             return "registroAgregarAcuerdo";
         } catch (Exception ex) {
@@ -631,14 +628,6 @@ public class ActaAcuerdoController implements Serializable {
 
     public void setActaAcuerdoService(ActaAcuerdoService actaAcuerdoService) {
         this.actaAcuerdoService = actaAcuerdoService;
-    }
-
-    public ActaAcuerdoBusquedaTemp getActaAcuerdoBusquedaTemp() {
-        return actaAcuerdoBusquedaTemp;
-    }
-
-    public void setActaAcuerdoBusquedaTemp(ActaAcuerdoBusquedaTemp actaAcuerdoBusquedaTemp) {
-        this.actaAcuerdoBusquedaTemp = actaAcuerdoBusquedaTemp;
     }
 
     public List<Actividad> getListaActividadxActaAcuerdo() {

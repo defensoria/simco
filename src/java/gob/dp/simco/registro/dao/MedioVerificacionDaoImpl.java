@@ -9,7 +9,6 @@ package gob.dp.simco.registro.dao;
 import gob.dp.simco.registro.bean.FiltroMedioVerificacion;
 import gob.dp.simco.registro.entity.MedioVerificacion;
 import java.util.List;
-import org.apache.log4j.Logger;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.springframework.stereotype.Repository;
 
@@ -19,48 +18,34 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public class MedioVerificacionDaoImpl extends SqlSessionDaoSupport implements MedioVerificacionDao {
-    
-    private static final Logger log = Logger.getLogger(MedioVerificacionDaoImpl.class);
 
     @Override
-    public void medioVerificacionInsertar(MedioVerificacion medioVerificacion) throws Exception {
-        log.debug("METODO : MedioVerificacionDaoImpl.medioVerificacionInsertar");
+    public void medioVerificacionInsertar(MedioVerificacion medioVerificacion){
         getSqlSession().insert("gob.dp.simco.registro.dao.MedioVerificacionDao.medioVerificacionInsertar", medioVerificacion);
     }
 
     @Override
-    public void medioVerificacionUpdate(MedioVerificacion medioVerificacion) throws Exception {
-        log.debug("METODO : MedioVerificacionDaoImpl.medioVerificacionUpdate");
+    public void medioVerificacionUpdate(MedioVerificacion medioVerificacion) {
         getSqlSession().update("gob.dp.simco.registro.dao.MedioVerificacionDao.medioVerificacionUpdate", medioVerificacion);
     }
 
     @Override
-    public List<MedioVerificacion> medioVerificacionBuscar(FiltroMedioVerificacion filtroMedioVerificacion) throws Exception {
-        log.debug("METODO : MedioVerificacionDaoImpl.medioVerificacionBuscar");
-        return getSqlSession().selectList("gob.dp.simco.registro.dao.MedioVerificacionDao.medioVerificacionBuscar",filtroMedioVerificacion);
-    }
-
-    @Override
-    public Integer medioVerificacionTotalBuscar(FiltroMedioVerificacion filtroMedioVerificacion) throws Exception {
-        log.debug("METODO : MedioVerificacionDaoImpl.medioVerificacionTotalBuscar");
+    public Integer medioVerificacionTotalBuscar(FiltroMedioVerificacion filtroMedioVerificacion){
         return getSqlSession().selectOne("gob.dp.simco.registro.dao.MedioVerificacionDao.medioVerificacionTotalBuscar",filtroMedioVerificacion);
     }
 
     @Override
-    public List<MedioVerificacion> medioVerificacionxActividadBuscar(long idActividad) throws Exception {
-        log.debug("METODO : MedioVerificacionDaoImpl.medioVerificacionxActividadBuscar");
+    public List<MedioVerificacion> medioVerificacionxActividadBuscar(long idActividad) {
         return getSqlSession().selectList("gob.dp.simco.registro.dao.MedioVerificacionDao.medioVerificacionxActividadBuscar",idActividad);
     }
 
     @Override
-    public List<MedioVerificacion> medioVerificacionxActividadBuscarTotal(long idActividad) throws Exception {
-        log.debug("METODO : MedioVerificacionDaoImpl.medioVerificacionxActividadBuscarTotal");
+    public List<MedioVerificacion> medioVerificacionxActividadBuscarTotal(long idActividad) {
         return getSqlSession().selectList("gob.dp.simco.registro.dao.MedioVerificacionDao.medioVerificacionxActividadBuscarTotal",idActividad);
     }
 
     @Override
-    public MedioVerificacion medioVerificacionBuscarOne(MedioVerificacion medioVerificacion) throws Exception {
-        log.debug("METODO : MedioVerificacionDaoImpl.medioVerificacionBuscarOne");
+    public MedioVerificacion medioVerificacionBuscarOne(MedioVerificacion medioVerificacion){
         return getSqlSession().selectOne("gob.dp.simco.registro.dao.MedioVerificacionDao.medioVerificacionBuscarOne",medioVerificacion);
     }
 

@@ -533,7 +533,7 @@
                                             <h:dataTable value="#{medioVerificacionController.medioVerificacions}" var="med" rendered="#{medioVerificacionController.medioVerificacions.size() > 0}" class="table table-striped">
                                                 <h:column>
                                                     <h:outputText value="#{med.titulo} - "/>
-                                                    <h:outputText value="#{med.registro}">
+                                                    <h:outputText value="#{med.fechaRegistro}">
                                                         <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Lima" />
                                                     </h:outputText>
                                                     <h:outputText value=" (#{med.codigo}) "/>

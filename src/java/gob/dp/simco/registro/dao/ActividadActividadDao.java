@@ -14,10 +14,10 @@ import gob.dp.simco.registro.entity.ActividadActividad;
  */
 public interface ActividadActividadDao {
     
-   public void actividadActividadInsertar(ActividadActividad actividadActividad) throws Exception;
+   public void actividadActividadInsertar(ActividadActividad actividadActividad);
    
-   public void actividadActividadUpdate(ActividadActividad actividadActividad) throws Exception;
+   public void actividadActividadUpdate(ActividadActividad actividadActividad);
    
-   public void actividadActividadDelete(ActividadActividad actividadActividad) throws Exception;
+   public void actividadActividadDelete(ActividadActividad actividadActividad);
     
 }

@@ -20,7 +20,7 @@ public interface RecursoDao {
     public Map<String, Recurso> buscarMapRecursoSegunUsuario(Usuario filtro);
     public List<Recurso> buscarRecursoSegunRol(Rol filtro);
     
-    public void insertarRolRecurso(RolRecurso rolRecurso)throws Exception;
-    public void deleteRolRecurso(RolRecurso rolRecurso)throws Exception;
+    public void insertarRolRecurso(RolRecurso rolRecurso);
+    public void deleteRolRecurso(RolRecurso rolRecurso);
  
 }

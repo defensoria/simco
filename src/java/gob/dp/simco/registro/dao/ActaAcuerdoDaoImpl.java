@@ -8,7 +8,6 @@ package gob.dp.simco.registro.dao;
 
 import gob.dp.simco.registro.entity.ActaAcuerdo;
 import java.util.List;
-import org.apache.log4j.Logger;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.springframework.stereotype.Repository;
 
@@ -19,47 +18,38 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class ActaAcuerdoDaoImpl extends SqlSessionDaoSupport implements ActaAcuerdoDao {
     
-    private static final Logger log = Logger.getLogger(ActaAcuerdoDaoImpl.class);
-
     @Override
-    public void actaAcuerdoInsertar(ActaAcuerdo actaAcuerdo) throws Exception {
-        log.debug("METODO : ActaAcuerdoDaoImpl.actaAcuerdoInsertar");
+    public void actaAcuerdoInsertar(ActaAcuerdo actaAcuerdo) {
         getSqlSession().insert("gob.dp.simco.registro.dao.ActaAcuerdoDao.actaAcuerdoInsertar", actaAcuerdo);
     }
 
     @Override
-    public void actaAcuerdoUpdate(ActaAcuerdo actaAcuerdo) throws Exception {
-        log.debug("METODO : ActaAcuerdoDaoImpl.actaAcuerdoUpdate");
+    public void actaAcuerdoUpdate(ActaAcuerdo actaAcuerdo) {
         getSqlSession().update("gob.dp.simco.registro.dao.ActaAcuerdoDao.actaAcuerdoUpdate", actaAcuerdo);
     }
     
     @Override
-    public List<ActaAcuerdo> actaAcuerdoxActividadBuscar(long idActividad) throws Exception {
-        log.debug("METODO : ActaAcuerdoDaoImpl.actaAcuerdoxActividadBuscar");
+    public List<ActaAcuerdo> actaAcuerdoxActividadBuscar(long idActividad) {
         return getSqlSession().selectList("gob.dp.simco.registro.dao.ActaAcuerdoDao.actaAcuerdoxActividadBuscar",idActividad);
     }
 
     @Override
-    public List<ActaAcuerdo> actaAcuerdoxActividadBuscarTotal(long idActividad) throws Exception {
-        log.debug("METODO : ActaAcuerdoDaoImpl.actaAcuerdoxActividadBuscarTotal");
+    public List<ActaAcuerdo> actaAcuerdoxActividadBuscarTotal(long idActividad) {
         return getSqlSession().selectList("gob.dp.simco.registro.dao.ActaAcuerdoDao.actaAcuerdoxActividadBuscarTotal",idActividad);
     }
 
     @Override
-    public ActaAcuerdo actaAcuerdoBuscarOne(ActaAcuerdo actaAcuerdo) throws Exception {
-        log.debug("METODO : ActaAcuerdoDaoImpl.actaAcuerdoBuscarOne");
+    public ActaAcuerdo actaAcuerdoBuscarOne(ActaAcuerdo actaAcuerdo) {
         return getSqlSession().selectOne("gob.dp.simco.registro.dao.ActaAcuerdoDao.actaAcuerdoBuscarOne",actaAcuerdo);
     }
 
     @Override
-    public ActaAcuerdo actaAcuerdoxActividadBuscarOne(long idActividad) throws Exception {
-        log.debug("METODO : ActaAcuerdoDaoImpl.actaAcuerdoxActividadBuscarOne");
+    public ActaAcuerdo actaAcuerdoxActividadBuscarOne(long idActividad) {
         return getSqlSession().selectOne("gob.dp.simco.registro.dao.ActaAcuerdoDao.actaAcuerdoxActividadBuscarOne",idActividad);
     }
 
     @Override
     public Integer actaAcuerdoCodigoGenerado() {
-        log.debug("METODO : ActaAcuerdoDaoImpl.actaAcuerdoCodigoGenerado");
         return getSqlSession().selectOne("gob.dp.simco.registro.dao.ActaAcuerdoDao.actaAcuerdoCodigoGenerado");
     }
     

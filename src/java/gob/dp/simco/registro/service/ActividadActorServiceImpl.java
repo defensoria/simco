@@ -10,7 +10,6 @@ import gob.dp.simco.registro.bean.FiltroCasoActor;
 import gob.dp.simco.registro.dao.ActividadActorDao;
 import gob.dp.simco.registro.entity.ActividadActor;
 import java.util.List;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,33 +20,27 @@ import org.springframework.stereotype.Service;
 @Service
 public class ActividadActorServiceImpl implements ActividadActorService{
     
-    private static final Logger log = Logger.getLogger(ActividadActorServiceImpl.class);
-    
     @Autowired
     private ActividadActorDao actividadActorDao;
 
     @Override
-    public void actividadActorInsertar(ActividadActor actividadActor) throws Exception {
-        log.debug("METODO : ActividadActorServiceImpl.actividadActorInsertar");
+    public void actividadActorInsertar(ActividadActor actividadActor) {
         actividadActor.setEstado("ACT");
         actividadActorDao.actividadActorInsertar(actividadActor);
     }
 
     @Override
-    public void actividadActorUpdate(ActividadActor actividadActor) throws Exception {
-        log.debug("METODO : ActividadActorServiceImpl.actividadActorUpdate");
+    public void actividadActorUpdate(ActividadActor actividadActor) {
         actividadActorDao.actividadActorUpdate(actividadActor);
     }
 
     @Override
-    public void actividadActorDelete(ActividadActor actividadActor) throws Exception {
-        log.debug("METODO : ActividadActorServiceImpl.actividadActorDelete");
+    public void actividadActorDelete(ActividadActor actividadActor) {
         actividadActorDao.actividadActorDelete(actividadActor);
     }
 
     @Override
-    public void saveOrUpdate(ActividadActor actividadActor) throws Exception {
-        log.debug("METODO : ActividadActorServiceImpl.saveOrUpdate");
+    public void saveOrUpdate(ActividadActor actividadActor) {
         Integer count = actividadActorDao.actividadActorBuscarOne(actividadActor);
         if(count == 0)
             actividadActorInsertar(actividadActor);
@@ -57,7 +50,6 @@ public class ActividadActorServiceImpl implements ActividadActorService{
 
     @Override
     public List<ActividadActor> actividadActorXcaso(FiltroCasoActor filtroCasoActor) {
-        log.debug("METODO : ActividadActorServiceImpl.actividadActorXcaso");
         return actividadActorDao.actividadActorXcaso(filtroCasoActor);
     }
 

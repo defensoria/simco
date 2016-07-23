@@ -17,21 +17,21 @@ import java.util.List;
  */
 public interface ActorDao {
     
-    public void actorInsertar(Actor actor) throws Exception;
+    public void actorInsertar(Actor actor);
     
-    public void actorUpdate(Actor actor) throws Exception;
+    public void actorUpdate(Actor actor);
     
-    public List<Actor> actorBuscar(FiltroActor filtroActor) throws Exception;
+    public List<Actor> actorBuscar(FiltroActor filtroActor);
    
-    public Integer actorTotalBuscar(FiltroActor filtroActor) throws Exception;
+    public Integer actorTotalBuscar(FiltroActor filtroActor);
     
-    public List<Actor> actorxActividadBuscar(Long idActividad) throws Exception;
+    public List<Actor> actorxActividadBuscar(Long idActividad);
     
-    public List<Actor> actorxActividadBuscarTotal(Long idActividad) throws Exception;
+    public List<Actor> actorxActividadBuscarTotal(Long idActividad);
     
-    public Actor actorBuscarOne(Actor actor) throws Exception;
+    public Actor actorBuscarOne(Actor actor);
     
-    public List<Actor> actorBuscarPaginado(FiltroActor filtroActor) throws Exception;
+    public List<Actor> actorBuscarPaginado(FiltroActor filtroActor);
     
     public List<Actor> actorxAcuerdoDetalleBusqueda(Long idAcuerdoDetalle);
     

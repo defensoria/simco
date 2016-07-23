@@ -80,6 +80,10 @@ public class CacheServiceImpl implements CacheService{
     private static final Integer CACHE_PARAMETRO_DEPARTAMENTO = 290;
     
     private static final Integer CACHE_PARAMETRO_TIPO_INVESTIGACION = 300;
+    
+    private static final Integer CACHE_PARAMETRO_TIPO_ARCHIVO = 310;
+    
+    private static final Integer CACHE_PARAMETRO_TIPO_SOPORTE = 320;
 
     private volatile HashMap<Integer, Object> contenedor = null;
 
@@ -252,6 +256,16 @@ public class CacheServiceImpl implements CacheService{
     @Override
     public List<Parametro> buscarTipoInvestigacion() {
         return buscarParametro(CACHE_PARAMETRO_TIPO_INVESTIGACION, CACHE_PARAMETRO_TIPO_INVESTIGACION);
+    }
+    
+    @Override
+    public List<Parametro> buscarTipoArchivo() {
+        return buscarParametro(CACHE_PARAMETRO_TIPO_ARCHIVO, CACHE_PARAMETRO_TIPO_ARCHIVO);
+    }
+
+    @Override
+    public List<Parametro> buscarTipoSoporte() {
+        return buscarParametro(CACHE_PARAMETRO_TIPO_SOPORTE, CACHE_PARAMETRO_TIPO_SOPORTE);
     }
     
     private Object getElemento(Integer key) {

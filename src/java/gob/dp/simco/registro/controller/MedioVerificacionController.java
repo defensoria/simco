@@ -7,6 +7,7 @@ package gob.dp.simco.registro.controller;
 
 import gob.dp.simco.comun.MessagesUtil;
 import gob.dp.simco.registro.constantes.ConstantesUtil;
+import gob.dp.simco.registro.constantes.FunctionUtil;
 import gob.dp.simco.registro.entity.Actividad;
 import gob.dp.simco.registro.entity.ActividadMedioVerificacion;
 import gob.dp.simco.registro.entity.MedioVerificacion;
@@ -58,23 +59,23 @@ public class MedioVerificacionController implements Serializable {
     }
 
     public String cargarPagina(Long idActividad) {
-        medioVerificacion = new MedioVerificacion();
-        actividad = new Actividad();
-        actividad.setId(idActividad);
-        listarMedioVerificacion(idActividad);
-        return "medioVerificacionNuevo";
+        try {
+            medioVerificacion = new MedioVerificacion();
+            actividad = new Actividad();
+            actividad.setId(idActividad);
+            listarMedioVerificacion(idActividad);
+            return "medioVerificacionNuevo";
+        } catch (Exception e) {
+            log.error("ERROR - cargarPagina()" + e);
+        }
+        return null;
     }
 
     public void listarMedioVerificacion(Long idActividad) {
         try {
-            DateFormat fechaHora = new SimpleDateFormat("dd/MM/yyyy");
             medioVerificacions = medioVerificacionService.medioVerificacionxActividadBuscar(idActividad);
-            for (MedioVerificacion mv : medioVerificacions) {
-                String fec = fechaHora.format(mv.getRegistro());
-                mv.setFechaRegistro(fec);
-            }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            log.error("ERROR - cargarPagina()" + ex);
         }
     }
 
@@ -84,38 +85,30 @@ public class MedioVerificacionController implements Serializable {
 
     public boolean saveMedioVerificacion() {
         try {
-            if (medioVerificacion.getId() != null) 
-                return false;
-            DateFormat fechaHora = new SimpleDateFormat("yyyyMMddHHmmss");
-            String formato = fechaHora.format(new Date());
-            String ruta = formato + getFileExtension(getFilename(file1));
-            File file = new File(ConstantesUtil.FILE_SYSTEM + ruta);
-            try (InputStream input = file1.getInputStream()) {
-                Files.copy(input, file.toPath());
-            }
+            String ruta = FunctionUtil.uploadArchive(file1);
             medioVerificacion.setRuta(ruta);
-            medioVerificacion.setRegistro(new Date());
-            medioVerificacion.setCodigo(generarCodigoMedioVerificacion());
-            medioVerificacionService.medioVerificacionNuevo(medioVerificacion);
-            saveMedioVerificacionActividad(medioVerificacion);
+            if (medioVerificacion.getId() != null) {
+                medioVerificacionService.medioVerificacionModificar(medioVerificacion);
+                msg.messageInfo("Se ha modificado el medio", null);
+            } else {
+                medioVerificacion.setFechaRegistro(new Date());
+                medioVerificacion.setCodigo(generarCodigoMedioVerificacion());
+                medioVerificacionService.medioVerificacionNuevo(medioVerificacion);
+                saveMedioVerificacionActividad(medioVerificacion);
+                msg.messageInfo("Se ha registro el nuevo medio", null);
+            }
             listarMedioVerificacion(actividad.getId());
-            msg.messageInfo("Se ha registro el nuevo medio", null);
-        } catch (Exception ex) {
-            log.error(ex.getMessage());
-        } finally {
             medioVerificacion = new MedioVerificacion();
+        } catch (Exception ex) {
+            log.error("ERROR - saveMedioVerificacion()" + ex);
         }
         return true;
     }
 
-    private String getFileExtension(String name) {
-        try {
-            return name.substring(name.lastIndexOf("."));
-        } catch (Exception e) {
-            return "";
-        }
+    public void setearMedioVerificacion(MedioVerificacion mv) {
+        setMedioVerificacion(mv);
     }
-
+    
     public String generarCodigoMedioVerificacion() {
         SimpleDateFormat formato = new SimpleDateFormat("yyyyMM");
         String codigo = formato.format(new Date());
@@ -131,7 +124,7 @@ public class MedioVerificacionController implements Serializable {
             actividadMedioVerificacion.setEstado("ACT");
             actividadMedioVerificacionService.actividadMedioVerificacionInsertar(actividadMedioVerificacion);
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            log.error("ERROR - saveMedioVerificacionActividad()" + ex);
         }
     }
 
@@ -145,18 +138,8 @@ public class MedioVerificacionController implements Serializable {
             listarMedioVerificacion(actividad.getId());
             msg.messageInfo("Se ha eliminado el medio", null);
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            log.error("ERROR - removeMedioVerificacion()" + ex);
         }
-    }
-
-    private static String getFilename(Part part) {
-        for (String cd : part.getHeader("content-disposition").split(";")) {
-            if (cd.trim().startsWith("filename")) {
-                String filename = cd.substring(cd.indexOf("=") + 1).trim().replace("\"", "");
-                return filename.substring(filename.lastIndexOf('/') + 1).substring(filename.lastIndexOf('\\') + 1);
-            }
-        }
-        return null;
     }
 
     public MedioVerificacion getMedioVerificacion() {
@@ -198,5 +181,4 @@ public class MedioVerificacionController implements Serializable {
     public void setMsg(MessagesUtil msg) {
         this.msg = msg;
     }
-
 }

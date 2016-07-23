@@ -33,7 +33,7 @@ public interface CasoDao {
    
    public Integer casoCodigoGenerado();
    
-   public Caso casoxActaAcuerdoDetalle(long idActaAcuerdoDetalle) throws Exception;
+   public Caso casoxActaAcuerdoDetalle(long idActaAcuerdoDetalle);
    
    public void casoUpdateIndicador(Caso caso);
    

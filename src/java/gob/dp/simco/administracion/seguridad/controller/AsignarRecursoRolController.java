@@ -61,7 +61,6 @@ public class AsignarRecursoRolController implements Serializable {
     }
 
     public String verAsignarRecursoRol(String codigo) {
-        log.debug("Entrando a verAsignarRecurso:" + codigo);
         this.mensaje = "";
         Rol filter = new Rol();
         filter.setCodigo(codigo);

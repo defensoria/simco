@@ -4,6 +4,6 @@ import gob.dp.simco.comun.Auditoria;
 
 public interface AuditoriaDao {
 
-    public void insertarAuditoria(Auditoria filter) throws Exception;
+    public void insertarAuditoria(Auditoria filter);
 
 }

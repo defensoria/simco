@@ -1102,25 +1102,21 @@ public class ActorController implements Serializable {
     }
 
     public String cargarPaginaBusqueda(int tipo) {
-        log.debug("METODO : ActorController.cargarPaginaBusqueda");
         actorBusquedaTemp = new ActorBusquedaTemp();
         return "actorBusqueda";
     }
 
     public String cargarPaginaBusquedaVinculoActividad() {
-        log.debug("METODO : ActorController.cargarPaginaBusqueda");
         actorBusquedaTemp = new ActorBusquedaTemp();
         return "actorBusqueda";
     }
 
     public String cargarPaginaActividadActor() {
-        log.debug("METODO : ActorController.cargarPaginaBusqueda");
         actorBusquedaTemp = new ActorBusquedaTemp();
         return "actividadActor";
     }
 
     public void registrarActor() {
-        log.debug("METODO : ActorController.registrarActor");
         try {
             if (validaDNI(actor.getDni())) {
                 int cont = actorService.actorBuscarTotalSimpleCount(actor);
@@ -1148,7 +1144,6 @@ public class ActorController implements Serializable {
     }
 
     public void actualizarActor() {
-        log.debug("METODO : ActorController.registrarActor");
         try {
             actorService.actorModificar(actor);
             msg.messageInfo("Se ha actualizado la informacion de la persona", null);
@@ -1158,7 +1153,6 @@ public class ActorController implements Serializable {
     }
 
     public void registrarActorEmpresa() {
-        log.debug("METODO : ActorController.registrarActorEmpresa");
         try {
             if (empresa.getRuc() != null && !StringUtils.equals(empresa.getRuc(), "")) {
                 int cont = actorService.actorBuscarTotalSimpleCountRUC(empresa);
@@ -1197,7 +1191,6 @@ public class ActorController implements Serializable {
     }
 
     public void registrarActorEntidad() {
-        log.debug("METODO : ActorController.registrarActorEntidad");
         try {
             if (entidad.getRuc() != null && !StringUtils.equals(entidad.getRuc(), "")) {
                 int cont = actorService.actorBuscarTotalSimpleCountRUC(entidad);
@@ -1305,7 +1298,6 @@ public class ActorController implements Serializable {
     }
 
     public String actividadUnionActor(Long idActividad) {
-        log.debug("METODO : ActorController.actividadUnionActor");
         ActividadActor actividadActor1;
         Actividad actividad = new Actividad();
 
@@ -1343,7 +1335,6 @@ public class ActorController implements Serializable {
     }
 
     public String actividadUnionActor2(Long idActividad) {
-        log.debug("METODO : ActorController.actividadUnionActor");
         ActividadActor actividadActor1;
         Actividad actividad = new Actividad();
 
@@ -1390,7 +1381,6 @@ public class ActorController implements Serializable {
     }
 
     public void eliminarActividadActor(Long idActividad) {
-        log.debug("METODO : ActorController.eliminarActividadActor");
         Actividad actividad = new Actividad();
         Actor actor1 = new Actor();
 

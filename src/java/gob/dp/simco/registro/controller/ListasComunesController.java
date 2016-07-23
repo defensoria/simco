@@ -142,6 +142,14 @@ public class ListasComunesController {
     public List<Parametro> buscarTipoInvestigacion(boolean insertarTODOS, boolean insertarNINGUNO, boolean insertarSELECCIONE) {
         return insertarValoresDefectoParametro(cacheService.buscarTipoInvestigacion(), insertarTODOS, insertarNINGUNO, insertarSELECCIONE);
     }
+    
+    public List<Parametro> buscarTipoArchivo(boolean insertarTODOS, boolean insertarNINGUNO, boolean insertarSELECCIONE) {
+        return insertarValoresDefectoParametro(cacheService.buscarTipoArchivo(), insertarTODOS, insertarNINGUNO, insertarSELECCIONE);
+    }
+
+    public List<Parametro> buscarTipoSoporte(boolean insertarTODOS, boolean insertarNINGUNO, boolean insertarSELECCIONE) {
+        return insertarValoresDefectoParametro(cacheService.buscarTipoArchivo(), insertarTODOS, insertarNINGUNO, insertarSELECCIONE);
+    }
 
     private List insertarValoresDefectoParametro(List lst, boolean insertarTODOS, boolean insertarNINGUNO, boolean insertarSELECCIONE) {
         if (insertarTODOS) {

@@ -16,19 +16,17 @@ import java.util.List;
  */
 public interface MedioVerificacionDao {
     
-   public void medioVerificacionInsertar(MedioVerificacion medioVerificacion) throws Exception;
+   public void medioVerificacionInsertar(MedioVerificacion medioVerificacion);
    
-   public void medioVerificacionUpdate(MedioVerificacion medioVerificacion) throws Exception;
- 
-   public List<MedioVerificacion> medioVerificacionBuscar(FiltroMedioVerificacion filtroMedioVerificacion) throws Exception;
+   public void medioVerificacionUpdate(MedioVerificacion medioVerificacion);
    
-   public Integer medioVerificacionTotalBuscar(FiltroMedioVerificacion filtroMedioVerificacion) throws Exception;   
+   public Integer medioVerificacionTotalBuscar(FiltroMedioVerificacion filtroMedioVerificacion);   
    
-   public List<MedioVerificacion> medioVerificacionxActividadBuscar(long idActividad) throws Exception;
+   public List<MedioVerificacion> medioVerificacionxActividadBuscar(long idActividad);
    
-   public List<MedioVerificacion> medioVerificacionxActividadBuscarTotal(long idActividad) throws Exception;
+   public List<MedioVerificacion> medioVerificacionxActividadBuscarTotal(long idActividad);
    
    public int medioVerificacionCodigoGenerado();
    
-   public MedioVerificacion medioVerificacionBuscarOne(MedioVerificacion medioVerificacion) throws Exception;
+   public MedioVerificacion medioVerificacionBuscarOne(MedioVerificacion medioVerificacion);
 }

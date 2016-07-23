@@ -16,19 +16,17 @@ import java.util.List;
  */
 public interface MedioVerificacionService {
     
-   public void medioVerificacionNuevo(MedioVerificacion medioVerificacion) throws Exception;
+   public void medioVerificacionNuevo(MedioVerificacion medioVerificacion);
    
-   public void medioVerificacionModificar(MedioVerificacion medioVerificacion) throws Exception;
+   public void medioVerificacionModificar(MedioVerificacion medioVerificacion);
    
-   public List<MedioVerificacion> medioVerificacionBuscar(FiltroMedioVerificacion filtroMedioVerificacion) throws Exception;
+   public Integer medioVerificacionTotalBuscar(FiltroMedioVerificacion filtroMedioVerificacion);    
    
-   public Integer medioVerificacionTotalBuscar(FiltroMedioVerificacion filtroMedioVerificacion) throws Exception;    
+   public List<MedioVerificacion> medioVerificacionxActividadBuscar(long idActividad);
    
-   public List<MedioVerificacion> medioVerificacionxActividadBuscar(long idActividad) throws Exception;
-   
-   public List<MedioVerificacion> medioVerificacionxActividadBuscarTotal(long idActividad) throws Exception;
+   public List<MedioVerificacion> medioVerificacionxActividadBuscarTotal(long idActividad);
 
-   public MedioVerificacion medioVerificacionBuscarOne(long idMedioVerificacion) throws Exception;
+   public MedioVerificacion medioVerificacionBuscarOne(long idMedioVerificacion);
    
    public Integer medioVerificacionCodigoGenerado();
 }

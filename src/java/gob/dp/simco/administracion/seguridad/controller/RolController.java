@@ -25,8 +25,6 @@ public class RolController {
     public String cargarPagina()
     {
         listaRol=rolService.buscarRol(new Rol());
-        log.debug("METODO : RolController.cargarPagina");
-       
         return "rolLista";
     }
 	 

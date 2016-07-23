@@ -30,7 +30,6 @@ public class ListasController extends AbstractManagedBean implements Serializabl
     private CatalogoService catalogoService;
 
     public List<Catalogo> listarCatalogoPadre(){
-        log.debug("METODO : ListasComunesController.listarCatalogoPadre");
         List <Catalogo> lst =null;
         try {
             lst = catalogoService.listarCatalogoPadre();

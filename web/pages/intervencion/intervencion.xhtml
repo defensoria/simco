@@ -10,27 +10,30 @@
                 <style>
                     #project-label{display:block;
                                    font-weight:bold;
-                                   margin-bottom:1em}
+                                   margin-bottom:1em
+                    }
                     #project-icon{float:left;
                                   height:32px;
-                                  width:32px}
+                                  width:32px
+                    }
                     #project-description{margin:0;
-                                         padding:0}
+                                         padding:0
+                    }
                 </style>
                 <script>
                     /*<![CDATA[*/$(function () {#{intervencionController.cadenaAutocomplete}
-        $("#nombreCaso").autocomplete({minLength: 3, source: projects, focus: function (event, ui) {
-                $("#nombreCaso").val(ui.item.label);
-                return false;
-            }, select: function (event, ui) {
-                $("#nombreCaso").val(ui.item.label);
-                $("#idCaso").val(ui.item.value);
-                return false;
-            }}).data("ui-autocomplete")._renderItem = function (ul, item) {
-            return $("<li/>").append("<a>" + item.label + "<br/>" + item.desc + "</a>").appendTo(ul);
-        };
-    });/*]]>*/
-        </script>
+                        $("#nombreCaso").autocomplete({minLength: 3, source: projects, focus: function (event, ui) {
+                                $("#nombreCaso").val(ui.item.label);
+                                return false;
+                            }, select: function (event, ui) {
+                                $("#nombreCaso").val(ui.item.label);
+                                $("#idCaso").val(ui.item.value);
+                                return false;
+                            }}).data("ui-autocomplete")._renderItem = function (ul, item) {
+                            return $("<li/>").append("<a>" + item.label + "<br/>" + item.desc + "</a>").appendTo(ul);
+                        };
+                    });/*]]>*/
+                </script>
                 <div class="panel panel-featured-top-primary">
                     <div class="panel-body">
                         <table style="width:100%">
@@ -188,8 +191,15 @@
                     </div>
                 </div>
             </h:form>
-            <style>.start{font-size:large}.startClick{font-size:large;color:#fded37}</style>
-            <script>function openModal(data) {
+            <style>
+                .start{font-size:large
+                }
+                .startClick{font-size:large;
+                            color:#fded37
+                }
+            </style>
+            <script>
+                function openModal(data) {
                     if (data.status === 'success') {
                         $('#idModal').modal('show');
                     }
@@ -231,11 +241,12 @@
                         }
                         else
                         {
-                $('#idImagen3').addClass('glyphicon glyphicon-chevron-up');
-                i = 1;
-            }
-        });
-    });</script>
+                            $('#idImagen3').addClass('glyphicon glyphicon-chevron-up');
+                            i = 1;
+                        }
+                    });
+                });
+            </script>
         </ui:define>
     </ui:composition>
 </html>

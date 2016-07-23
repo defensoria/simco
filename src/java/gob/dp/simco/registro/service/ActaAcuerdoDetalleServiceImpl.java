@@ -13,7 +13,6 @@ import gob.dp.simco.registro.entity.Actor;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,8 +23,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class ActaAcuerdoDetalleServiceImpl implements ActaAcuerdoDetalleService{
     
-    private static final Logger log = Logger.getLogger(ActaAcuerdoDetalleServiceImpl.class);
-    
     @Autowired
     private ActaAcuerdoDetalleDao actaAcuerdoDetalleDao;
     
@@ -34,26 +31,22 @@ public class ActaAcuerdoDetalleServiceImpl implements ActaAcuerdoDetalleService{
 
     @Override
     public void actaAcuerdoDetalleInsertar(ActaAcuerdoDetalle actaAcuerdoDetalle) {
-        log.debug("METODO : ActaAcuerdoDetalleServiceImpl.actaAcuerdoDetalleInsertar");
         actaAcuerdoDetalle.setFechaRegistro(new Date());
         actaAcuerdoDetalleDao.actaAcuerdoDetalleInsertar(actaAcuerdoDetalle);
     }
 
     @Override
     public void actaAcuerdoDetalleUpdate(ActaAcuerdoDetalle actaAcuerdoDetalle) {
-        log.debug("METODO : ActaAcuerdoDetalleServiceImpl.actaAcuerdoDetalleInsertar");
         actaAcuerdoDetalleDao.actaAcuerdoDetalleUpdate(actaAcuerdoDetalle);
     }
 
     @Override
     public List<ActaAcuerdoDetalle> actaAcuerdoDetalleBuscarxActa(Long idActaAcuerdoDetalle) {
-        log.debug("METODO : ActaAcuerdoDetalleServiceImpl.actaAcuerdoDetalleBuscarxActa");
         return actaAcuerdoDetalleDao.actaAcuerdoDetalleBuscarxActa(idActaAcuerdoDetalle);
     }
 
     @Override
     public List<ActaAcuerdoDetalle> actaAcuerdoDetalleSeguimiento(ActaAcuerdoDetalle actaAcuerdoDetalle) {
-        log.debug("METODO : ActaAcuerdoDetalleServiceImpl.actaAcuerdoDetalleSeguimiento");
         List<ActaAcuerdoDetalle> acuerdoDetalles = actaAcuerdoDetalleDao.actaAcuerdoDetalleSeguimiento(actaAcuerdoDetalle);
         List<ActaAcuerdoDetalle> aads = new ArrayList<>();
         for(ActaAcuerdoDetalle aad : acuerdoDetalles){
@@ -66,19 +59,16 @@ public class ActaAcuerdoDetalleServiceImpl implements ActaAcuerdoDetalleService{
 
     @Override
     public void actaAcuerdoDetalleDelete(long id) {
-        log.debug("METODO : ActaAcuerdoDetalleServiceImpl.actaAcuerdoDetalleDelete");
         actaAcuerdoDetalleDao.actaAcuerdoDetalleDelete(id);
     }
 
     @Override
     public void actaAcuerdoDetalleUpdateColor(ActaAcuerdoDetalle aad) {
-        log.debug("METODO : ActaAcuerdoDetalleServiceImpl.actaAcuerdoDetalleUpdateColor");
         actaAcuerdoDetalleDao.actaAcuerdoDetalleUpdateColor(aad);
     }
 
     @Override
     public List<ActaAcuerdoDetalle> actaAcuerdoDetalleListaxActa(Long idActaAcuerdo) {
-        log.debug("METODO : ActaAcuerdoDetalleServiceImpl.actaAcuerdoDetalleListaxActa");
         return actaAcuerdoDetalleDao.actaAcuerdoDetalleListaxActa(idActaAcuerdo);
     }
 

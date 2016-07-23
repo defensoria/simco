@@ -15,39 +15,39 @@ import java.util.List;
  */
 public interface ActividadDao {
     
-   public void actividadInsertar(Actividad actividad) throws Exception;
+   public void actividadInsertar(Actividad actividad);
    
-   public void actividadUpdate(Actividad actividad) throws Exception;
+   public void actividadUpdate(Actividad actividad);
    
-   public Actividad actividadBuscarOne(Actividad actividad) throws Exception;
+   public Actividad actividadBuscarOne(Actividad actividad);
    
-   public List<Actividad> actividadxActividadBuscar(Long idActividad) throws Exception;
+   public List<Actividad> actividadxActividadBuscar(Long idActividad);
     
-   public List<Actividad> actividadxActividadBuscarTotal(Long idActividad) throws Exception;
+   public List<Actividad> actividadxActividadBuscarTotal(Long idActividad);
    
-   public List<Actividad> actividadxActorBuscar(Long idActor) throws Exception;
+   public List<Actividad> actividadxActorBuscar(Long idActor);
    
-   public List<Actividad> actividadxActorBuscarTotal(Long idActor) throws Exception;
+   public List<Actividad> actividadxActorBuscarTotal(Long idActor);
    
-   public List<Actividad> actividadxCasoBuscar(Long idCaso) throws Exception;
+   public List<Actividad> actividadxCasoBuscar(Long idCaso);
    
-   public List<Actividad> actividadxCasoBuscarTotal(Long idCaso) throws Exception;
+   public List<Actividad> actividadxCasoBuscarTotal(Long idCaso);
    
-   public List<Actividad> actividadxCasoBuscarTotalAC(Long idCaso) throws Exception;
+   public List<Actividad> actividadxCasoBuscarTotalAC(Long idCaso);
    
-   public List<Actividad> actividadxCasoBuscarTotalAD(Long idCaso) throws Exception;
+   public List<Actividad> actividadxCasoBuscarTotalAD(Long idCaso);
    
-   public List<Actividad> actividadxCodigoCasoBuscarTotal(String codigo) throws Exception;
+   public List<Actividad> actividadxCodigoCasoBuscarTotal(String codigo);
    
-   public List<Actividad> actividadxActaAcuerdoBuscar(Long idActaAcuerdo) throws Exception;
+   public List<Actividad> actividadxActaAcuerdoBuscar(Long idActaAcuerdo);
    
-   public List<Actividad> actividadxActaAcuerdoBuscarTotal(Long idActaAcuerdo) throws Exception;
+   public List<Actividad> actividadxActaAcuerdoBuscarTotal(Long idActaAcuerdo);
    
-   public List<Actividad> actividadxMedioVerificacionBuscar(Long idMedioVerificacion) throws Exception;
+   public List<Actividad> actividadxMedioVerificacionBuscar(Long idMedioVerificacion) ;
    
-   public List<Actividad> actividadxMedioVerificacionBuscarTotal(Long idMedioVerificacion) throws Exception;
+   public List<Actividad> actividadxMedioVerificacionBuscarTotal(Long idMedioVerificacion);
    
-   public List<Actividad> actividadBusquedaPaginado() throws Exception;
+   public List<Actividad> actividadBusquedaPaginado();
    
    public List<Actividad> actividadBusquedaSinCasoAC();
    

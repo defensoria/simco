@@ -21,7 +21,8 @@
                     }#project-description{margin:0;padding:0}
                 </style>
                 <script>
-                    /*<![CDATA[*/sessionStorage.setItem('menuHijoSession', 'Panel');
+                    /*<![CDATA[*/
+                    sessionStorage.setItem('menuHijoSession', 'Panel');
                     sessionStorage.setItem('idCaso', '#{casoController.caso.id}');
                     sessionStorage.setItem('nombreCaso', '#{casoController.caso.nombre}');
                     $(function () {#{casoController.cadenaAdjuntiaAutocomplete}
@@ -141,11 +142,13 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <script>$('.triggerEstado').popover({html: true, placement: 'bottom', tabindex: '0', trigger: 'focus', title: function () {
+                                                    <script>
+                                                        $('.triggerEstado').popover({html: true, placement: 'bottom', tabindex: '0', trigger: 'focus', title: function () {
                                                                 return $(this).parent().find('.head').html();
                                                             }, content: function () {
                                                                 return $(this).parent().find('.content').html();
-                                                            }});</script>
+                                                            }});
+                                                    </script>
                                                 </td>
                                             </tr>
                                         </table>
@@ -179,11 +182,13 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <script>$('.triggerCompetencia').popover({html: true, placement: 'bottom', tabindex: '0', trigger: 'focus', title: function () {
+                                                <script>
+                                                    $('.triggerCompetencia').popover({html: true, placement: 'bottom', tabindex: '0', trigger: 'focus', title: function () {
                                                             return $(this).parent().find('.head').html();
                                                         }, content: function () {
                                                             return $(this).parent().find('.content').html();
-                                                        }});</script>
+                                                        }});
+                                                </script>
                                             </td>
                                         </table>
                                     </td>
@@ -197,7 +202,8 @@
                                         <table style="width:100%">
                                             <tr>
                                                 <td style="width:90%">
-                                                    <script>$(document).ready(function () {
+                                                    <script>
+                                                        $(document).ready(function () {
                                                             if ($(".cTipoEstado").val() === "04" || $(".cTipoEstado").val() === "01" || $(".cTipoEstado").val() === "02") {
                                                                 $(".TipoDialogo").css("display", "");
                                                             } else {
@@ -212,7 +218,6 @@
 
                                                                 $(".TipoDialogo").css("display", "none");
                                                             }
-
                                                             $(".cTipoEstado").on("change", function () {
                                                                 if ($(".cTipoEstado").val() === "04" || $(".cTipoEstado").val() === "01" || $(".cTipoEstado").val() === "02") {
                                                                     $(".TipoDialogo").css("display", "");
@@ -270,7 +275,8 @@
                                                                     $(this).css("background", "#F1C232").css("color", "BLACK");
                                                                 }
                                                             });
-                                                        });</script>
+                                                        });
+                                                    </script>
                                                     <label class="TipoDialogo">Fase</label>
                                                     <h:selectOneMenu value="#{casoController.caso.tipoDialogo}" class="TipoDialogo tipoFace" style="width:100%">
                                                         <f:selectItem itemLabel="--Seleccione--" itemValue="0"/>
@@ -297,11 +303,13 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <script>$('.triggerFase').popover({html: true, placement: 'bottom', tabindex: '0', trigger: 'focus', title: function () {
+                                                    <script>
+                                                        $('.triggerFase').popover({html: true, placement: 'bottom', tabindex: '0', trigger: 'focus', title: function () {
                                                                 return $(this).parent().find('.head').html();
                                                             }, content: function () {
                                                                 return $(this).parent().find('.content').html();
-                                                            }});</script>
+                                                            }});
+                                                    </script>
                                                 </td>
                                             </tr>
                                         </table>
@@ -369,11 +377,13 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <script>$('.triggerTipo').popover({html: true, placement: 'bottom', tabindex: '0', trigger: 'focus', title: function () {
+                                                    <script>
+                                                        $('.triggerTipo').popover({html: true, placement: 'bottom', tabindex: '0', trigger: 'focus', title: function () {
                                                                 return $(this).parent().find('.head').html();
                                                             }, content: function () {
                                                                 return $(this).parent().find('.content').html();
-                                                            }});</script>
+                                                            }});
+                                                    </script>
                                                 </td>
                                             </tr>
                                         </table>
@@ -529,7 +539,8 @@
                                         </td>
                                     </tr>
                                 </table>
-                                <script>var f = 1;
+                                <script>
+                                    var f = 1;
                                     $("#addActuacion1").click(function () {
                                         if (f === 1)
                                         {
@@ -542,7 +553,8 @@
                                             $("#spanAddActuacion1").removeClass("glyphicon-circle-arrow-up").addClass("glyphicon-circle-arrow-down");
                                             f = 1;
                                         }
-                                    });</script>
+                                    });
+                                </script>
                                 <div class="panel-body">
                                     <div class="panel panel-featured-success">
                                         <div class="panel-body" id="idPanelBodyActuacion1">
@@ -654,7 +666,8 @@
                                         </td>
                                     </tr>
                                 </table>
-                                <script>var i = 1;
+                                <script>
+                                    var i = 1;
                                     $("#addActuacion").click(function () {
                                         if (i === 1)
                                         {
@@ -667,7 +680,8 @@
                                             $("#spanAddActuacion").removeClass("glyphicon-circle-arrow-up").addClass("glyphicon-circle-arrow-down");
                                             i = 1;
                                         }
-                                    });</script>
+                                    });
+                                </script>
                                 <div class="panel-body" id="idPanelBodyActuacion">
                                     <style>.col1{width:60%}.col2{width:40%}</style>
                                     <h:dataTable value="#{casoController.listCasoActor}" var="actor" class="table table-striped" style="width:100%" rendered="#{not empty casoController.listaActoresXcaso}" columnClasses="col1, col2">
@@ -697,7 +711,8 @@
                                         </td>
                                     </tr>
                                 </table>
-                                <script>var k = 1;
+                                <script>
+                                    var k = 1;
                                     $("#addActuacion2").click(function () {
                                         if (k === 1)
                                         {
@@ -710,7 +725,8 @@
                                             $("#spanAddActuacion2").removeClass("glyphicon-circle-arrow-up").addClass("glyphicon-circle-arrow-down");
                                             k = 1;
                                         }
-                                    });</script>
+                                    });
+                                </script>
                                 <div class="panel-body" id="idPanelBodyActuacion2">
                                     <span class="text-primary" style="font-size: 1.5em">Descripción</span>
                                     <textarea placeholder="Descripción" rows="6" jsf:value="#{casoController.caso.descripcionPreliminar}" style="width:100%" maxlength="1300"/>
@@ -733,7 +749,7 @@
                                                         <span id="spanAddActuacion4" class="glyphicon glyphicon-circle-arrow-down" style="font-size:medium;"></span>
                                                     </a>
                                                     <script>
-                var l = 1;
+                                                        var l = 1;
                                                         $("#addActuacion4").click(function () {
                                                             if (l === 1)
                                                             {
@@ -784,10 +800,10 @@
                                                     <span style="font-size:large;color:red;cursor:pointer" class="glyphicon glyphicon-remove"></span>
                                                 </a>
                                                 <script>
-            function confirmar1#{AD.id}() {
+                                                    function confirmar1#{AD.id}() {
                                                         $(".confirmacion1#{AD.id}").modal('show');
                                                     }
-                                                                                                    </script>
+                                                </script>
                                                 <gc:confirmSubmit classGC="confirmacion1#{AD.id}" bean="#{casoController.eliminarActividadCaso(AD)}"/>
                                             </h:column>
                                         </h:dataTable>
@@ -855,9 +871,11 @@
                                                 <a onclick="confirmar2#{AC.id}()">
                                                     <span style="font-size:large;color:red;cursor:pointer" class="glyphicon glyphicon-remove"></span>
                                                 </a>
-                                                <script>function confirmar2#{AC.id}() {
+                                                <script>
+                                                    function confirmar2#{AC.id}() {
                                                         $(".confirmacion2#{AC.id}").modal('show');
-                                                    }</script>
+                                                    }
+                                                </script>
                                                 <gc:confirmSubmit classGC="confirmacion2#{AC.id}" bean="#{casoController.eliminarActividadCaso(AC)}"/>
                                             </h:column>
                                         </h:dataTable>
@@ -911,8 +929,22 @@
                                     </div>
                                 </div>
                                 <div class="modal-body" style="padding:5px">
-                                    <style>#project-label{display:block;font-weight:bold;margin-bottom:1em}#project-icon{float:left;height:32px;width:32px}#project-description{margin:0;padding:0}.ui-autocomplete{z-index:2147483647}</style>
-                                    <script>/*<![CDATA[*/$(function () {#{actorController.cadenaAutocomplete}
+                                    <style>
+                                        #project-label{display:block;
+                                                       font-weight:bold;
+                                                       margin-bottom:1em
+                                        }
+                                        #project-icon{float:left;
+                                                      height:32px;
+                                                      width:32px
+                                        }#project-description{margin:0;
+                                                              padding:0
+                                        }
+                                        .ui-autocomplete{z-index:2147483647
+                                        }
+                                    </style>
+                                    <script>
+                                        /*<![CDATA[*/$(function () {#{actorController.cadenaAutocomplete}
                                             $("#actor").autocomplete({minLength: 3, source: projects, focus: function (event, ui) {
                                                     $("#actor").val(ui.item.label);
                                                     return false;
@@ -955,7 +987,8 @@
                                         $('#idForm3\\:idCheckbox').on('click', function () {
                                             if ($('#idForm3\\:idCheckbox').is(':checked')) {
                                             }
-                                        });/*]]>*/</script>
+                                        });/*]]>*/
+                                    </script>
                                     <h:inputHidden id="hidCodActividad" value="#{registroController.actividad.id}" />
                                     <div class="panel-body">
                                         <div id="idDivTxtNombre" class="form-group" style="margin-bottom:7px;width:100%">
@@ -1060,12 +1093,14 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <script>function informar(data) {
+                                    <script>
+                                        function informar(data) {
                                             if (data.status === 'success') {
                                                 $("#idMensajeInfo").css('display', '');
                                                 $("#idMensajeInfo").delay(2000).toggle("explode");
                                             }
-                                        }</script>
+                                        }
+                                    </script>
                                     <div id="idPanelGroupRegistro" style="display:#{registroController.verDetalleRegistro == true? '':'none'}">
                                         <table style="width:100%;vertical-align:top">
                                             <tr>

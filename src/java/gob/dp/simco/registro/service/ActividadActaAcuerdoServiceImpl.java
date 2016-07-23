@@ -8,7 +8,6 @@ package gob.dp.simco.registro.service;
 
 import gob.dp.simco.registro.dao.ActividadActaAcuerdoDao;
 import gob.dp.simco.registro.entity.ActividadActaAcuerdo;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,14 +18,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class ActividadActaAcuerdoServiceImpl implements ActividadActaAcuerdoService{
     
-    private static final Logger log = Logger.getLogger(ActividadActorServiceImpl.class);
-    
     @Autowired
     private ActividadActaAcuerdoDao actividadActaAcuerdoDao;
 
     @Override
-    public void actividadActaAcuerdoInsertarUpdate(ActividadActaAcuerdo actividadActaAcuerdo) throws Exception {
-        log.debug("METODO : ActividadActaAcuerdoServiceImpl.actividadActaAcuerdoInsertar");
+    public void actividadActaAcuerdoInsertarUpdate(ActividadActaAcuerdo actividadActaAcuerdo) {
         if(validaActividadActaAcuerdo(actividadActaAcuerdo) == 0){
             actividadActaAcuerdoDao.actividadActaAcuerdoInsertar(actividadActaAcuerdo);
         }else{
@@ -41,14 +37,12 @@ public class ActividadActaAcuerdoServiceImpl implements ActividadActaAcuerdoServ
     }
 
     @Override
-    public void actividadActaAcuerdoUpdate(ActividadActaAcuerdo actividadActaAcuerdo) throws Exception {
-        log.debug("METODO : ActividadActaAcuerdoServiceImpl.actividadActaAcuerdoUpdate");
+    public void actividadActaAcuerdoUpdate(ActividadActaAcuerdo actividadActaAcuerdo) {
         actividadActaAcuerdoDao.actividadActaAcuerdoUpdate(actividadActaAcuerdo);
     }
 
     @Override
-    public void actividadActaAcuerdoDelete(ActividadActaAcuerdo actividadActaAcuerdo) throws Exception {
-        log.debug("METODO : ActividadActaAcuerdoServiceImpl.actividadActaAcuerdoDelete");
+    public void actividadActaAcuerdoDelete(ActividadActaAcuerdo actividadActaAcuerdo) {
         actividadActaAcuerdoDao.actividadActaAcuerdoDelete(actividadActaAcuerdo);
     }
     

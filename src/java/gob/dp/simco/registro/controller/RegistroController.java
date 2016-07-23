@@ -454,6 +454,15 @@ public class RegistroController implements Serializable {
         }
         return false;
     }
+    
+    public String retornarActividad(){
+        Actividad a = cargarActividadId(actividad.getId());
+            if(a.getIdCaso() == null){
+                return irModificarRegistro2(a);
+            }else{
+                return irModificarRegistro(a);
+            }
+    }
 
     public void listaNoticiasRegistro() {
         try {

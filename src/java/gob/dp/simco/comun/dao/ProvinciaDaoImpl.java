@@ -17,12 +17,9 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public class ProvinciaDaoImpl extends SqlSessionDaoSupport implements ProvinciaDao{
-    
-    private static final Logger log = Logger.getLogger(ProvinciaDaoImpl.class);
 
     @Override
     public List<Provincia> provinciaLista(String idDepartamento) {
-        log.debug("METODO : ProvinciaDaoImpl.provinciaLista");
         return getSqlSession().selectList("gob.dp.simco.comun.dao.ProvinciaDao.provinciaLista",idDepartamento);
     }
 

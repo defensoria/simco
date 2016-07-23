@@ -15,20 +15,30 @@ import java.util.List;
  * @author Administrador
  */
 public interface CatalogoService {
-    public List<Catalogo> buscarCatalogoPadre(FiltroCatalogo filtroCatalogo) throws Exception;
-    public Integer getTotalBuscarCatalogoPadre(FiltroCatalogo filtroCatalogo) throws Exception;
-    public List<Catalogo> buscarCatalogoHijo(FiltroCatalogo filtroCatalogo) throws Exception;
-    public Integer getTotalBuscarCatalogoHijo(FiltroCatalogo filtroCatalogo) throws Exception;
-    public List<Catalogo> listarCatalogoPadre() throws Exception;
-
-    public Catalogo viewCatalogoPadre(Catalogo catalogo) throws Exception;
-    public Catalogo viewCatalogoHijo(Catalogo catalogo) throws Exception;
-    public void nuevoCatalogoPadre(Catalogo catalogo) throws Exception;
-    public void nuevoCatalogoHijo(Catalogo catalogo) throws Exception;
     
-    public void updateCatalogoPadre(Catalogo catalogo) throws Exception;
-    public void updateCatalogoHijo(Catalogo catalogo) throws Exception;
-    public void updateEstadoCatalogoHijo(Catalogo catalogo) throws Exception;   
+    public List<Catalogo> buscarCatalogoPadre(FiltroCatalogo filtroCatalogo);
+    
+    public Integer getTotalBuscarCatalogoPadre(FiltroCatalogo filtroCatalogo);
+    
+    public List<Catalogo> buscarCatalogoHijo(FiltroCatalogo filtroCatalogo);
+    
+    public Integer getTotalBuscarCatalogoHijo(FiltroCatalogo filtroCatalogo);
+    
+    public List<Catalogo> listarCatalogoPadre();
+    
+    public Catalogo viewCatalogoPadre(Catalogo catalogo);
+    
+    public Catalogo viewCatalogoHijo(Catalogo catalogo);
+    
+    public void nuevoCatalogoPadre(Catalogo catalogo);
+    
+    public void nuevoCatalogoHijo(Catalogo catalogo);
+    
+    public void updateCatalogoPadre(Catalogo catalogo);
+    
+    public void updateCatalogoHijo(Catalogo catalogo);
+    
+    public void updateEstadoCatalogoHijo(Catalogo catalogo); 
     
     public List<Catalogo> parametroPorPadre(long idPadre);
     

@@ -7,7 +7,6 @@
 package gob.dp.simco.registro.dao;
 
 import gob.dp.simco.registro.entity.ActividadMedioVerificacion;
-import org.apache.log4j.Logger;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.springframework.stereotype.Repository;
 
@@ -18,23 +17,18 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class ActividadMedioVerificacionDaoImpl extends SqlSessionDaoSupport implements ActividadMedioVerificacionDao{
     
-    private static final Logger log = Logger.getLogger(ActividadMedioVerificacionDaoImpl.class);
-
     @Override
-    public void actividadMedioVerificacionInsertar(ActividadMedioVerificacion actividadMedioVerificacion) throws Exception {
-        log.debug("METODO : ActividadMedioVerificacionDaoImpl.actividadMedioVerificacionInsertar");
+    public void actividadMedioVerificacionInsertar(ActividadMedioVerificacion actividadMedioVerificacion) {
         getSqlSession().insert("gob.dp.simco.registro.dao.ActividadMedioVerificacionDao.actividadMedioVerificacionInsertar", actividadMedioVerificacion);
     }
 
     @Override
-    public void actividadMedioVerificacionUpdate(ActividadMedioVerificacion actividadMedioVerificacion) throws Exception {
-        log.debug("METODO : ActividadMedioVerificacionDaoImpl.actividadMedioVerificacionUpdate");
+    public void actividadMedioVerificacionUpdate(ActividadMedioVerificacion actividadMedioVerificacion) {
         getSqlSession().update("gob.dp.simco.registro.dao.ActividadMedioVerificacionDao.actividadMedioVerificacionUpdate", actividadMedioVerificacion);
     }
 
     @Override
-    public void actividadMedioVerificacionDelete(ActividadMedioVerificacion actividadMedioVerificacion) throws Exception {
-        log.debug("METODO : ActividadMedioVerificacionDaoImpl.actividadMedioVerificacionDelete");
+    public void actividadMedioVerificacionDelete(ActividadMedioVerificacion actividadMedioVerificacion) {
         getSqlSession().delete("gob.dp.simco.registro.dao.ActividadMedioVerificacionDao.actividadMedioVerificacionDelete", actividadMedioVerificacion);
     }
     

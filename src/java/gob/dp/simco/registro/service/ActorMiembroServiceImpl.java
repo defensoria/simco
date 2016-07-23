@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package gob.dp.simco.registro.dao;
+package gob.dp.simco.registro.service;
 
+import gob.dp.simco.registro.dao.ActorMiembroDao;
 import gob.dp.simco.registro.entity.ActorMiembro;
-import gob.dp.simco.registro.service.ActorMiembroService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -48,11 +48,7 @@ public class ActorMiembroServiceImpl implements ActorMiembroService{
 
     @Override
     public List<ActorMiembro> actorMiembroBuscarTodosxActor(long idActor) {
-        try {
-            return actorMiembroDao.actorMiembroBuscarTodosxActor(idActor);
-        } catch (Exception e) {
-            return null;
-        }
+        return actorMiembroDao.actorMiembroBuscarTodosxActor(idActor);
     }
     
 }

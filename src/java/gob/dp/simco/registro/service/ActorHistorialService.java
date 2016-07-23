@@ -15,7 +15,7 @@ import java.util.List;
  */
 public interface ActorHistorialService {
     
-    public void actorHistorialInsertar(ActorHistorial historial) throws Exception;
+    public void actorHistorialInsertar(ActorHistorial historial);
     
-    public List<ActorHistorial> actorHistorialBuscarList(Long idActor) throws Exception;
+    public List<ActorHistorial> actorHistorialBuscarList(Long idActor);
 }

@@ -7,7 +7,6 @@
 package gob.dp.simco.registro.dao;
 
 import gob.dp.simco.registro.entity.ActorAcuerdo;
-import org.apache.log4j.Logger;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.springframework.stereotype.Repository;
 
@@ -18,35 +17,28 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class ActorAcuerdoDaoImpl extends SqlSessionDaoSupport implements ActorAcuerdoDao{
     
-    private static final Logger log = Logger.getLogger(ActorAcuerdoDaoImpl.class);
-
     @Override
-    public void actorAcuerdoInsertar(ActorAcuerdo actorAcuerdo) throws Exception {
-        log.debug("METODO : ActorAcuerdoDaoImpl.actorAcuerdoInsertar");
+    public void actorAcuerdoInsertar(ActorAcuerdo actorAcuerdo) {
         getSqlSession().insert("gob.dp.simco.registro.dao.ActorAcuerdoDao.actorAcuerdoInsertar", actorAcuerdo);
     }
 
     @Override
-    public void actorAcuerdoUpdate(ActorAcuerdo actorAcuerdo) throws Exception {
-        log.debug("METODO : ActorAcuerdoDaoImpl.actorAcuerdoUpdate");
+    public void actorAcuerdoUpdate(ActorAcuerdo actorAcuerdo) {
         getSqlSession().update("gob.dp.simco.registro.dao.ActorAcuerdoDao.actorAcuerdoUpdate", actorAcuerdo);
     }
 
     @Override
-    public Integer actorAcuerdoValida(ActorAcuerdo actorAcuerdo) throws Exception {
-        log.debug("METODO : ActorAcuerdoDaoImpl.actorAcuerdoValida");
+    public Integer actorAcuerdoValida(ActorAcuerdo actorAcuerdo) {
         return getSqlSession().selectOne("gob.dp.simco.registro.dao.ActorAcuerdoDao.actorAcuerdoValida", actorAcuerdo);
     }
 
     @Override
-    public void actorAcuerdoDelete(Long idActaAcuerdoDetalle) throws Exception {
-        log.debug("METODO : ActorAcuerdoDaoImpl.actorAcuerdoDelete");
+    public void actorAcuerdoDelete(Long idActaAcuerdoDetalle) {
         getSqlSession().delete("gob.dp.simco.registro.dao.ActorAcuerdoDao.actorAcuerdoDelete", idActaAcuerdoDetalle);
     }
 
     @Override
     public void actorAcuerdoAnular(Long idActaAcuerdoDetalle) {
-        log.debug("METODO : ActorAcuerdoDaoImpl.actorAcuerdoAnular");
         getSqlSession().update("gob.dp.simco.registro.dao.ActorAcuerdoDao.actorAcuerdoAnular", idActaAcuerdoDetalle);
     }
 }

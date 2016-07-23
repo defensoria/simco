@@ -47,7 +47,6 @@ private MessagesUtil msg;
     private RolService rolService;
 
       public String verUsuarioNuevo(){
-        log.debug("Entrando a verUsuarioNuevo");
         this.verGuardar=true;
         this.habilitado=true;
 
@@ -109,7 +108,6 @@ private MessagesUtil msg;
 
       public void insertarUsuario(){
           msg = new MessagesUtil();
-        log.debug("Entrando a insertarUsuario");
         Usuario filter=new Usuario();
         this.llenarFiltro(filter);
         
@@ -117,7 +115,6 @@ private MessagesUtil msg;
             List<Rol> lstRolSel=new ArrayList<>();
             Rol rol=null;
             for(String codigo:this.getLstRolesSeleccionados()){
-                log.debug("Rol seleccionado:"+codigo);
                 rol=new Rol();
                 rol.setCodigo(codigo);
                 lstRolSel.add(rol);

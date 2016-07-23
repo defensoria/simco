@@ -335,7 +335,6 @@ public class SeguimientoAcuerdoController implements Serializable {
                 }
             }
         } catch (Exception e) {
-            log.debug(e.getMessage());
         }
         return listaTiempo;
     }
@@ -356,7 +355,6 @@ public class SeguimientoAcuerdoController implements Serializable {
                 }
             }
         } catch (Exception e) {
-            log.debug(e.getMessage());
         }
         return listaAntesDespues;
     }
@@ -377,7 +375,6 @@ public class SeguimientoAcuerdoController implements Serializable {
                 }
             }
         } catch (Exception e) {
-            log.debug(e.getMessage());
         }
         return listaRepeticion;
     }
@@ -446,7 +443,6 @@ public class SeguimientoAcuerdoController implements Serializable {
                 }
             }
         } catch (Exception e) {
-            log.debug(e.getMessage());
         }
         return listaProximosDias;
     }
@@ -467,7 +463,6 @@ public class SeguimientoAcuerdoController implements Serializable {
                 }
             }
         } catch (Exception e) {
-            log.debug(e.getMessage());
         }
         return listaUltimosDias;
     }

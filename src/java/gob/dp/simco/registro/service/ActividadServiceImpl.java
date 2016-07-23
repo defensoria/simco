@@ -9,7 +9,6 @@ package gob.dp.simco.registro.service;
 import gob.dp.simco.registro.dao.ActividadDao;
 import gob.dp.simco.registro.entity.Actividad;
 import java.util.List;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,100 +19,83 @@ import org.springframework.stereotype.Service;
 @Service
 public class ActividadServiceImpl implements ActividadService{
     
-    private static final Logger log = Logger.getLogger(ActividadServiceImpl.class);
-    
     @Autowired
     private ActividadDao actividadDao;
 
     @Override
-    public void actividadNuevo(Actividad actividad) throws Exception {
-        log.debug("METODO : ActividadServiceImpl.actividadNuevo");
+    public void actividadNuevo(Actividad actividad) {
         actividadDao.actividadInsertar(actividad);
     }
 
     @Override
-    public void actividadModificar(Actividad actividad) throws Exception {
-        log.debug("METODO : ActividadServiceImpl.actividadModificar");
+    public void actividadModificar(Actividad actividad) {
         actividadDao.actividadUpdate(actividad);
     }
 
     @Override
-    public Actividad actividadBuscarOne(Long idActividad) throws Exception {
-        log.debug("METODO : ActividadServiceImpl.actividadBuscarOne");
+    public Actividad actividadBuscarOne(Long idActividad) {
         Actividad actividad = new Actividad();
         actividad.setId(idActividad);
         return actividadDao.actividadBuscarOne(actividad);
     }
 
     @Override
-    public List<Actividad> actividadxActividadBuscar(Long idActividad) throws Exception {
-        log.debug("METODO : ActividadServiceImpl.actividadxActividadBuscar");
+    public List<Actividad> actividadxActividadBuscar(Long idActividad) {
         return actividadDao.actividadxActividadBuscar(idActividad);
     }
 
     @Override
-    public List<Actividad> actividadxActividadBuscarTotal(Long idActividad) throws Exception {
-        log.debug("METODO : ActividadServiceImpl.actividadxActividadBuscarTotal");
+    public List<Actividad> actividadxActividadBuscarTotal(Long idActividad) {
         return actividadDao.actividadxActividadBuscarTotal(idActividad);
     }
 
     @Override
-    public List<Actividad> actividadxActorBuscar(Long idActor) throws Exception {
-        log.debug("METODO : ActividadServiceImpl.actividadxActorBuscar");
+    public List<Actividad> actividadxActorBuscar(Long idActor) {
         return actividadDao.actividadxActorBuscar(idActor);
     }
 
     @Override
-    public List<Actividad> actividadxActorBuscarTotal(Long idActor) throws Exception {
-        log.debug("METODO : ActividadServiceImpl.actividadxActorBuscarTotal");
+    public List<Actividad> actividadxActorBuscarTotal(Long idActor) {
         return actividadDao.actividadxActorBuscarTotal(idActor);
     }
 
     @Override
-    public List<Actividad> actividadxCasoBuscar(Long idCaso) throws Exception {
-        log.debug("METODO : ActividadServiceImpl.actividadxCasoBuscar");
+    public List<Actividad> actividadxCasoBuscar(Long idCaso) {
         return actividadDao.actividadxCasoBuscar(idCaso);
     }
 
     @Override
-    public List<Actividad> actividadxCasoBuscarTotal(Long idCaso) throws Exception {
-        log.debug("METODO : ActividadServiceImpl.actividadxCasoBuscarTotal");
+    public List<Actividad> actividadxCasoBuscarTotal(Long idCaso) {
         return actividadDao.actividadxCasoBuscarTotal(idCaso);
     }
 
     @Override
-    public List<Actividad> actividadxActaAcuerdoBuscar(Long idActaAcuerdo) throws Exception {
-        log.debug("METODO : ActividadServiceImpl.actividadxActaAcuerdoBuscar");
+    public List<Actividad> actividadxActaAcuerdoBuscar(Long idActaAcuerdo) {
         return actividadDao.actividadxActaAcuerdoBuscar(idActaAcuerdo);
     }
 
     @Override
-    public List<Actividad> actividadxActaAcuerdoBuscarTotal(Long idActaAcuerdo) throws Exception {
-        log.debug("METODO : ActividadServiceImpl.actividadxActaAcuerdoBuscarTotal");
+    public List<Actividad> actividadxActaAcuerdoBuscarTotal(Long idActaAcuerdo) {
         return actividadDao.actividadxActaAcuerdoBuscarTotal(idActaAcuerdo);
     }
 
     @Override
-    public List<Actividad> actividadxMedioVerificacionBuscar(Long idMedioVerificacion) throws Exception {
-        log.debug("METODO : ActividadServiceImpl.actividadxMedioVerificacionBuscar");
+    public List<Actividad> actividadxMedioVerificacionBuscar(Long idMedioVerificacion) {
         return actividadDao.actividadxMedioVerificacionBuscar(idMedioVerificacion);
     }
 
     @Override
-    public List<Actividad> actividadxMedioVerificacionBuscarTotal(Long idMedioVerificacion) throws Exception {
-        log.debug("METODO : ActividadServiceImpl.actividadxMedioVerificacionBuscarTotal");
+    public List<Actividad> actividadxMedioVerificacionBuscarTotal(Long idMedioVerificacion) {
         return actividadDao.actividadxMedioVerificacionBuscarTotal(idMedioVerificacion);
     }
 
     @Override
-    public List<Actividad> actividadBusquedaPaginado() throws Exception {
-        log.debug("METODO : ActividadServiceImpl.actividadBusquedaPaginado");
+    public List<Actividad> actividadBusquedaPaginado() {
         return actividadDao.actividadBusquedaPaginado();
     }
 
     @Override
-    public String actividadBusquedaPaginadoAutocompletar() throws Exception {
-        log.debug("METODO : ActividadServiceImpl.actividadBusquedaPaginadoAutocompletar");
+    public String actividadBusquedaPaginadoAutocompletar() {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("var projects2 = [");
         int i = 0;
@@ -132,7 +114,6 @@ public class ActividadServiceImpl implements ActividadService{
 
     @Override
     public List<Actividad> actividadBusquedaSinCaso(int tipo) {
-        log.debug("METODO : ActividadServiceImpl.actividadBusquedaSinCaso");
         if(tipo == 1){
             return actividadDao.actividadBusquedaSinCasoAC();
         }else{
@@ -143,22 +124,12 @@ public class ActividadServiceImpl implements ActividadService{
 
     @Override
     public List<Actividad> actividadxCasoBuscarTotalAC(Long idCaso) {
-        try {
-            return actividadDao.actividadxCasoBuscarTotalAC(idCaso);
-        } catch (Exception ex) {
-            log.error(ex.getCause());
-        }
-        return null;
+        return actividadDao.actividadxCasoBuscarTotalAC(idCaso);
     }
 
     @Override
     public List<Actividad> actividadxCasoBuscarTotalAD(Long idCaso) {
-        try {
-            return actividadDao.actividadxCasoBuscarTotalAD(idCaso);
-        } catch (Exception ex) {
-            log.error(ex.getCause());
-        }
-        return null;
+        return actividadDao.actividadxCasoBuscarTotalAD(idCaso);
     }
 
     @Override
@@ -172,7 +143,7 @@ public class ActividadServiceImpl implements ActividadService{
     }
 
     @Override
-    public List<Actividad> actividadxCodigoCasoBuscarTotal(String codigo) throws Exception {
+    public List<Actividad> actividadxCodigoCasoBuscarTotal(String codigo) {
         return actividadDao.actividadxCodigoCasoBuscarTotal(codigo);
     }
 

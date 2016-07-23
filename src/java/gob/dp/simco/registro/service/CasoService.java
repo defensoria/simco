@@ -16,21 +16,21 @@ import java.util.List;
  */
 public interface CasoService {
     
-   public void casoNuevo(Caso caso) throws Exception;
+   public void casoNuevo(Caso caso);
    
-   public void casoModificar(Caso caso) throws Exception;
+   public void casoModificar(Caso caso);
    
-   public List<Caso> casoBuscar(Caso caso) throws Exception;
+   public List<Caso> casoBuscar(Caso caso);
    
-   public Integer casoTotalBuscar(FiltroCaso filtroCaso) throws Exception;
+   public Integer casoTotalBuscar(FiltroCaso filtroCaso);
    
-   public List<Caso> casoxActividadBuscar(long idActividad) throws Exception;
+   public List<Caso> casoxActividadBuscar(long idActividad);
    
-   public List<Caso> casoxActividadBuscarTotal(long idActividad) throws Exception;
+   public List<Caso> casoxActividadBuscarTotal(long idActividad);
    
-   public Caso casoBuscarOne(Long idCaso) throws Exception;
+   public Caso casoBuscarOne(Long idCaso);
    
-   public String casoBuscarAutocomplete() throws Exception;
+   public String casoBuscarAutocomplete();
     
    public Integer casoCodigoGenerado();
    

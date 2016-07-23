@@ -10,7 +10,6 @@ import gob.dp.simco.registro.bean.FiltroCaso;
 import gob.dp.simco.registro.entity.Caso;
 import gob.dp.simco.reporte.entity.FiltroReporte;
 import java.util.List;
-import org.apache.log4j.Logger;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.springframework.stereotype.Repository;
 
@@ -21,58 +20,48 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class CasoDaoImpl extends SqlSessionDaoSupport implements CasoDao{
     
-    private static final Logger log = Logger.getLogger(CasoDaoImpl.class);
-
     @Override
     public void casoInsertar(Caso caso){
-        log.debug("METODO : CasoDaoImpl.casoInsertar");
         getSqlSession().insert("gob.dp.simco.registro.dao.CasoDao.casoInsertar", caso);
     }
 
     @Override
     public void casoUpdate(Caso caso) {
-        log.debug("METODO : CasoDaoImpl.casoUpdate");
         getSqlSession().update("gob.dp.simco.registro.dao.CasoDao.casoUpdate", caso);
     }
 
     @Override
     public List<Caso> casoBuscar(Caso caso){
-        log.debug("METODO : CasoDaoImpl.casoBuscar");
         return getSqlSession().selectList("gob.dp.simco.registro.dao.CasoDao.casoBuscar",caso);
     }
 
     @Override
     public Integer casoTotalBuscar(FiltroCaso filtroCaso){
-        log.debug("METODO : CasoDaoImpl.casoTotalBuscar");
         return getSqlSession().selectOne("gob.dp.simco.registro.dao.CasoDao.casoTotalBuscar",filtroCaso);
     }
 
     @Override
     public List<Caso> casoxActividadBuscar(long idActividad){
-        log.debug("METODO : CasoDaoImpl.casoxActividadBuscar");
         return getSqlSession().selectList("gob.dp.simco.registro.dao.CasoDao.casoxActividadBuscar",idActividad);
     }
 
     @Override
     public List<Caso> casoxActividadBuscarTotal(long idActividad) {
-        log.debug("METODO : CasoDaoImpl.casoxActividadBuscarTotal");
         return getSqlSession().selectList("gob.dp.simco.registro.dao.CasoDao.casoxActividadBuscarTotal",idActividad);
     }
 
     @Override
     public Caso casoBuscarOne(long idCaso) {
-        log.debug("METODO : CasoDaoImpl.casoBuscarOne");
         return getSqlSession().selectOne("gob.dp.simco.registro.dao.CasoDao.casoBuscarOne",idCaso);
     }
 
     @Override
     public Integer casoCodigoGenerado() {
-        log.debug("METODO : CasoDaoImpl.casoCodigoGenerado");
         return getSqlSession().selectOne("gob.dp.simco.registro.dao.CasoDao.casoCodigoGenerado");
     }
 
     @Override
-    public Caso casoxActaAcuerdoDetalle(long idActaAcuerdoDetalle) throws Exception {
+    public Caso casoxActaAcuerdoDetalle(long idActaAcuerdoDetalle) {
         return getSqlSession().selectOne("gob.dp.simco.registro.dao.CasoDao.casoxActaAcuerdoDetalle",idActaAcuerdoDetalle);
     }
 

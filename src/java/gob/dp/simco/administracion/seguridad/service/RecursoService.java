@@ -19,5 +19,5 @@ public interface RecursoService {
     
     public List<Recurso> buscarRecursoSegunUsuario(Usuario filtro);
     public Map<String,Recurso> buscarMapRecursoSegunUsuario(Usuario filtro);
-    public void asignarRecursosRol(Rol rol,List<Recurso> listaRecursoSeleccionado) throws Exception;
+    public void asignarRecursosRol(Rol rol,List<Recurso> listaRecursoSeleccionado);
 }

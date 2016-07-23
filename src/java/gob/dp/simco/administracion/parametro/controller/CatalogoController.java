@@ -118,7 +118,6 @@ public class CatalogoController extends AbstractManagedBean implements Serializa
     }
 
     public String cargarPagina() {
-        log.debug("METODO : CatalogoController.cargarPagina");
         busquedaCatalogoTemp = new BusquedaCatalogoTemp();
         listaCatalogo = null;
         return "catalogoPadreList";
@@ -131,7 +130,6 @@ public class CatalogoController extends AbstractManagedBean implements Serializa
     }
 
     public String buscarCatalogoPadre(long page) {
-        log.debug("METODO : CatalogoController.buscarCatalogoPadre");
         try {
             FiltroCatalogo filtroCatalogo = new FiltroCatalogo();
             if (!StringUtils.isBlank(busquedaCatalogoTemp.getNombreParametro())) {
@@ -170,7 +168,6 @@ public class CatalogoController extends AbstractManagedBean implements Serializa
     }
 
     public String viewCatalogoPadre(Integer numParametro) {
-        log.debug("METODO : CatalogoController.viewCatalogoPadre");
         this.verGuardar = true;
         try {
             getCatalogoPadre().setNumParametro(numParametro);
@@ -183,7 +180,6 @@ public class CatalogoController extends AbstractManagedBean implements Serializa
     }
 
     public String updateCatalogoPadre(Integer numParametro) {
-        log.debug("METODO : CatalogoController.updateCatalogoPadre");
         this.verGuardar = true;
         try {
             getCatalogoPadre().setNumParametro(numParametro);
@@ -209,7 +205,6 @@ public class CatalogoController extends AbstractManagedBean implements Serializa
     }
 
     public String nuevoCatalogoPadre() {
-        log.debug("METODO : CatalogoController.nuevoCatalogoPadre");
         this.verGuardar = true;
         busquedaCatalogoTemp = new BusquedaCatalogoTemp();
         this.catalogoPadre = new Catalogo();
@@ -217,7 +212,6 @@ public class CatalogoController extends AbstractManagedBean implements Serializa
     }
 
     public String insertarCatalogoPadre() {
-        log.debug("METODO : CatalogoController.insertarCatalogoPadre");
         if (catalogoPadre.getNumParametro() == null) {
             if (isHabilitado() == true) {
                 getCatalogoPadre().setCodEstado(Constantes.ESTADO_ACTIVO);
@@ -239,7 +233,6 @@ public class CatalogoController extends AbstractManagedBean implements Serializa
     }
 
     public String buscarCatalogoHijo(Integer padreParam, long page) {
-        log.debug("METODO : CatalogoController.buscarCatalogoHijo");
         try {
             FiltroCatalogo filtroCatalogo = new FiltroCatalogo();
             getCatalogoHijo().setPadreParametro(padreParam);
@@ -261,7 +254,6 @@ public class CatalogoController extends AbstractManagedBean implements Serializa
     }
 
     public String buscarCatalogoHijoLista(long page) {
-        log.debug("METODO : CatalogoController.buscarCatalogoHijo");
         try {
             FiltroCatalogo filtroCatalogo = new FiltroCatalogo();
             if (!StringUtils.isBlank(busquedaCatalogoTemp.getNombreParametro())) {
@@ -299,7 +291,6 @@ public class CatalogoController extends AbstractManagedBean implements Serializa
     }
 
     public String viewCatalogoHijo(Integer hijoParametro) {
-        log.debug("viewCatalogoHijo");
         this.verGuardar = true;
         try {
             getCatalogoHijo().setNumParametro(hijoParametro);
@@ -312,7 +303,6 @@ public class CatalogoController extends AbstractManagedBean implements Serializa
     }
 
     public String updateCatalogoHijo(Integer numParametro) {
-        log.debug("updateCatalogoHijo");
         this.verGuardar = true;
         try {
             getCatalogoHijo().setNumParametro(numParametro);
@@ -334,7 +324,6 @@ public class CatalogoController extends AbstractManagedBean implements Serializa
     }
 
     public String nuevoCatalogoHijo(Integer padreParametro) {
-        log.debug("METODO : CatalogoController.nuevoCatalogoHijo");
         this.verGuardar = true;
         busquedaCatalogoTemp = new BusquedaCatalogoTemp();
         this.catalogoHijo = new Catalogo();
@@ -343,14 +332,12 @@ public class CatalogoController extends AbstractManagedBean implements Serializa
     }
 
     public String insertarCatalogoHijo(Integer padreParametro) {
-        log.debug("METODO : CatalogoController.insertarCatalogoHijo");
         if (isHabilitado() == true) {
             getCatalogoHijo().setCodEstado(Constantes.ESTADO_ACTIVO);
         } else {
             getCatalogoHijo().setCodEstado(Constantes.ESTADO_INACTIVO);
         }
         try {
-            log.debug("->padreParametro=" + getCatalogoHijo().getPadreParametro());
             getCatalogoHijo().setNombreParametro(getCatalogoHijo().getNombreParametro().toUpperCase());
             catalogoService.nuevoCatalogoHijo(getCatalogoHijo());
             this.verGuardar = false;

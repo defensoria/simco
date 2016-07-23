@@ -8,7 +8,6 @@ import gob.dp.simco.administracion.seguridad.entity.Recurso;
 import gob.dp.simco.administracion.seguridad.entity.Rol;
 import gob.dp.simco.administracion.seguridad.entity.RolRecurso;
 import gob.dp.simco.administracion.seguridad.entity.Usuario;
-import gob.dp.simco.administracion.seguridad.entity.UsuarioRol;
 
 import java.util.List;
 import java.util.Map;
@@ -46,11 +45,11 @@ public class RecursoDaoImpl  extends SqlSessionDaoSupport implements RecursoDao
    }
    
    @Override
-   public void insertarRolRecurso(RolRecurso rolRecurso)throws Exception{
+   public void insertarRolRecurso(RolRecurso rolRecurso){
        getSqlSession().insert("recursoDao.insertarRolRecurso", rolRecurso);
    }
    @Override
-   public void deleteRolRecurso(RolRecurso rolRecurso)throws Exception{
+   public void deleteRolRecurso(RolRecurso rolRecurso){
        getSqlSession().delete("recursoDao.deleteRolRecurso", rolRecurso);
    }
  

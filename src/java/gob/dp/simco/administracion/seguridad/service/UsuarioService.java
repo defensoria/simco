@@ -22,15 +22,15 @@ public interface UsuarioService {
     
     public String autocompletarUsuario();
 
-    public Usuario consultarUsuario(FiltroUsuario filtro) throws Exception;
+    public Usuario consultarUsuario(FiltroUsuario filtro);
 
-    public void insertarUsuario(Usuario usuario, List<Rol> listaRol) throws Exception;
+    public void insertarUsuario(Usuario usuario, List<Rol> listaRol);
 
-    public void modificarUsuario(Usuario usuario, List<Rol> listaRol) throws Exception;
+    public void modificarUsuario(Usuario usuario, List<Rol> listaRol);
 
-    public void cambiarClave(Usuario usuario) throws Exception;
+    public void cambiarClave(Usuario usuario);
 
-    public Integer loginUsuario(Usuario usuario) throws Exception;
+    public Integer loginUsuario(Usuario usuario);
 
     public Integer getTotalBuscarUsuario(FiltroUsuario filtro);
     

@@ -7,7 +7,6 @@
 package gob.dp.simco.registro.dao;
 
 import gob.dp.simco.registro.entity.ActividadActaAcuerdo;
-import org.apache.log4j.Logger;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.springframework.stereotype.Repository;
 
@@ -18,29 +17,23 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class ActividadActaAcuerdoDaoIml extends SqlSessionDaoSupport implements ActividadActaAcuerdoDao{
     
-    private static final Logger log = Logger.getLogger(ActividadActaAcuerdoDaoIml.class);
-
     @Override
-    public void actividadActaAcuerdoInsertar(ActividadActaAcuerdo actividadActaAcuerdo) throws Exception {
-        log.debug("METODO : ActividadActaAcuerdoDaoIml.actividadActaAcuerdoInsertar");
+    public void actividadActaAcuerdoInsertar(ActividadActaAcuerdo actividadActaAcuerdo) {
         getSqlSession().insert("gob.dp.simco.registro.dao.ActividadActaAcuerdoDao.actividadActaAcuerdoInsertar", actividadActaAcuerdo);
     }
 
     @Override
-    public void actividadActaAcuerdoUpdate(ActividadActaAcuerdo actividadActaAcuerdo) throws Exception {
-        log.debug("METODO : ActividadActaAcuerdoDaoIml.actividadActaAcuerdoUpdate");
+    public void actividadActaAcuerdoUpdate(ActividadActaAcuerdo actividadActaAcuerdo) {
         getSqlSession().update("gob.dp.simco.registro.dao.ActividadActaAcuerdoDao.actividadActaAcuerdoUpdate", actividadActaAcuerdo);
     }
 
     @Override
-    public void actividadActaAcuerdoDelete(ActividadActaAcuerdo actividadActaAcuerdo) throws Exception {
-        log.debug("METODO : ActividadActaAcuerdoDaoIml.actividadActaAcuerdoDelete");
+    public void actividadActaAcuerdoDelete(ActividadActaAcuerdo actividadActaAcuerdo) {
         getSqlSession().delete("gob.dp.simco.registro.dao.ActividadActaAcuerdoDao.actividadActaAcuerdoDelete", actividadActaAcuerdo);
     }
 
     @Override
     public int actividadActaAcuerdoValida(ActividadActaAcuerdo actividadActaAcuerdo) {
-        log.debug("METODO : ActividadActaAcuerdoDaoIml.actividadActaAcuerdoDelete");
         return getSqlSession().selectOne("gob.dp.simco.registro.dao.ActividadActaAcuerdoDao.actividadActaAcuerdoValida",actividadActaAcuerdo);
     }
     

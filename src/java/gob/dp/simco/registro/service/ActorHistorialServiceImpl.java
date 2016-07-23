@@ -9,7 +9,6 @@ package gob.dp.simco.registro.service;
 import gob.dp.simco.registro.dao.ActorHistorialDao;
 import gob.dp.simco.registro.entity.ActorHistorial;
 import java.util.List;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,20 +19,16 @@ import org.springframework.stereotype.Service;
 @Service
 public class ActorHistorialServiceImpl implements ActorHistorialService{
     
-    private static final Logger log = Logger.getLogger(ActorHistorialServiceImpl.class);
-    
     @Autowired
     private ActorHistorialDao actorHistorialDao;
 
     @Override
-    public void actorHistorialInsertar(ActorHistorial historial) throws Exception {
-        log.debug("METODO : ActorHistorialServiceImpl.actorHistorialInsertar");
+    public void actorHistorialInsertar(ActorHistorial historial) {
         actorHistorialDao.actorHistorialInsertar(historial);
     }
 
     @Override
-    public List<ActorHistorial> actorHistorialBuscarList(Long idActor) throws Exception {
-        log.debug("METODO : ActorHistorialServiceImpl.actorHistorialBuscarList");
+    public List<ActorHistorial> actorHistorialBuscarList(Long idActor) {
         return actorHistorialDao.actorHistorialBuscarList(idActor);
     }
     

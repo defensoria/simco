@@ -19,32 +19,26 @@ import org.springframework.stereotype.Service;
 @Service
 public class SeguimientoAcuerdoServiceImpl implements SeguimientoAcuerdoService{
     
-    private static final Logger log = Logger.getLogger(SeguimientoAcuerdoServiceImpl.class);
-    
     @Autowired
     private SeguimientoAcuerdoDao seguimientoAcuerdoDao;
 
     @Override
     public void seguimientoAcuerdoInsertar(SeguimientoAcuerdo seguimientoAcuerdo) {
-        log.debug("METODO : SeguimientoAcuerdoServiceImpl.seguimientoAcuerdoInsertar");
         seguimientoAcuerdoDao.seguimientoAcuerdoInsertar(seguimientoAcuerdo);
     }
 
     @Override
     public SeguimientoAcuerdo seguimientoAcuerdoBuscar(Long idActaAcuerdoDetalle) {
-        log.debug("METODO : SeguimientoAcuerdoServiceImpl.seguimientoAcuerdoBuscar");
         return seguimientoAcuerdoDao.seguimientoAcuerdoBuscar(idActaAcuerdoDetalle);
     }
 
     @Override
     public void seguimientoAcuerdoUpdate(SeguimientoAcuerdo seguimientoAcuerdo) {
-        log.debug("METODO : SeguimientoAcuerdoServiceImpl.seguimientoAcuerdoUpdate");
         seguimientoAcuerdoDao.seguimientoAcuerdoUpdate(seguimientoAcuerdo);
     }
 
     @Override
     public void seguimientoAcuerdoDelete(Long id) {
-        log.debug("METODO : SeguimientoAcuerdoServiceImpl.seguimientoAcuerdoDelete");
         seguimientoAcuerdoDao.seguimientoAcuerdoDelete(id);
     }
 

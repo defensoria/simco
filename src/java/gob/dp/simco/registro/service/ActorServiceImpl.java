@@ -11,7 +11,6 @@ import gob.dp.simco.registro.dao.ActorDao;
 import gob.dp.simco.registro.entity.Actor;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,64 +21,53 @@ import org.springframework.stereotype.Service;
 @Service
 public class ActorServiceImpl implements ActorService{
     
-    private static final Logger log = Logger.getLogger(ActorServiceImpl.class);
-
     @Autowired
     private ActorDao actorDao;
     
     @Override
-    public void actorNuevo(Actor actor) throws Exception {
-        log.debug("METODO : ActorServiceImpl.actorNuevo");
+    public void actorNuevo(Actor actor) {
         actorDao.actorInsertar(actor);
     }
 
     @Override
-    public void actorModificar(Actor actor) throws Exception {
-        log.debug("METODO : ActorServiceImpl.actorModificar");
+    public void actorModificar(Actor actor) {
         actorDao.actorUpdate(actor);
     }
 
     @Override
-    public List<Actor> actorBuscar(FiltroActor filtroActor) throws Exception {
-        log.debug("METODO : ActorServiceImpl.actorBuscar");
+    public List<Actor> actorBuscar(FiltroActor filtroActor) {
         return actorDao.actorBuscar(filtroActor);
     }
 
     @Override
-    public Integer actorTotalBuscar(FiltroActor filtroActor) throws Exception {
-        log.debug("METODO : ActorServiceImpl.actorTotalBuscar");
+    public Integer actorTotalBuscar(FiltroActor filtroActor) {
         return actorDao.actorTotalBuscar(filtroActor);
     }
 
     @Override
-    public List<Actor> actorxActividadBuscar(Long idActividad) throws Exception {
-        log.debug("METODO : ActorServiceImpl.actorxActividadBuscar");
+    public List<Actor> actorxActividadBuscar(Long idActividad) {
         return actorDao.actorxActividadBuscar(idActividad);
     }
 
     @Override
-    public List<Actor> actorxActividadBuscarTotal(Long idActividad) throws Exception {
-        log.debug("METODO : ActorServiceImpl.actorxActividadBuscarTotal");
+    public List<Actor> actorxActividadBuscarTotal(Long idActividad) {
         return actorDao.actorxActividadBuscarTotal(idActividad);
     }
 
     @Override
-    public Actor actorBuscarOne(Long idActor) throws Exception {
-        log.debug("METODO : ActorServiceImpl.actorBuscarOne");
+    public Actor actorBuscarOne(Long idActor) {
         Actor actor = new Actor();
         actor.setId(idActor);
         return actorDao.actorBuscarOne(actor);
     }
 
     @Override
-    public List<Actor> actorBuscarPaginado(FiltroActor filtroActor) throws Exception {
-        log.debug("METODO : ActorServiceImpl.actorBuscarPaginado");
+    public List<Actor> actorBuscarPaginado(FiltroActor filtroActor) {
         return actorDao.actorBuscarPaginado(filtroActor);
     }
 
     @Override
     public List<Actor> actorxAcuerdoDetalleBusqueda(Long idAcuerdoDetalle, int indicador) {
-        log.debug("METODO : ActorServiceImpl.actorxAcuerdoDetalleBusqueda");
         if(indicador == 1)
             return actorDao.actorxAcuerdoDetalleBusqueda(idAcuerdoDetalle);
         else
@@ -88,19 +76,16 @@ public class ActorServiceImpl implements ActorService{
 
     @Override
     public List<Actor> actorxCasoBuscar(Long idCaso) {
-        log.debug("METODO : ActorServiceImpl.actorxCasoBuscar");
         return actorDao.actorxCasoBuscar(idCaso);
     }
 
     @Override
     public List<Actor> actorxCasoIntensidadBuscar(Long idCaso) {
-        log.debug("METODO : ActorServiceImpl.actorxCasoIntensidadBuscar");
         return actorDao.actorxCasoIntensidadBuscar(idCaso);
     }
 
     @Override
     public String actorTodosBuscarPaginado() {
-        log.debug("METODO : ActorServiceImpl.actorTodosBuscar");
         List<Actor> lst = actorDao.actorTodosBuscar();
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("var projects = [");
@@ -125,7 +110,6 @@ public class ActorServiceImpl implements ActorService{
     
     @Override
     public String actorEmpresaEntidadBuscarPaginado() {
-        log.debug("METODO : ActorServiceImpl.actorTodosBuscar");
         List<Actor> lst = actorDao.actorBuscarEmpresaEntidad();
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("var projects4 = [");
@@ -150,7 +134,6 @@ public class ActorServiceImpl implements ActorService{
 
     @Override
     public String actorXactividadSimpleBuscar(Long id) {
-        log.debug("METODO : ActorServiceImpl.actorXactividadSimpleBuscar");
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("var projects = [");
         int i = 0;
@@ -174,7 +157,6 @@ public class ActorServiceImpl implements ActorService{
 
     @Override
     public String actorTodosBuscarCaso(Long idCaso) {
-        log.debug("METODO : ActorServiceImpl.actorTodosBuscarCaso");
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("var projects2 = [");
         int i = 0;
@@ -193,19 +175,16 @@ public class ActorServiceImpl implements ActorService{
 
     @Override
     public List<Actor> actorBuscarSimple(Actor actor) {
-        log.debug("METODO : ActorServiceImpl.actorBuscarSimple");
         return actorDao.actorBuscarSimple(actor);
     }
 
     @Override
     public List<Actor> actorBuscarSimpleXactividad(Long idActividad) {
-        log.debug("METODO : ActorServiceImpl.actorBuscarSimpleXactividad");
         return actorDao.actorXactividadSimpleBuscar(idActividad);
     }
 
     @Override
     public Actor actorBuscarTotalSimple(Actor actor) {
-        log.debug("METODO : ActorServiceImpl.actorBuscarTotalSimple");
         Integer val = actorDao.actorBuscarTotalSimpleCount(actor);
         if(val > 0)
             return actorDao.actorBuscarTotalSimple(actor);
@@ -215,7 +194,6 @@ public class ActorServiceImpl implements ActorService{
 
     @Override
     public List<Actor> actorxActaAcuerdoBuscar(long idAcuerdoDetalle) {
-        log.debug("METODO : ActorServiceImpl.actorxActaAcuerdoBuscar");
         return actorDao.actorxActaAcuerdoBuscar(idAcuerdoDetalle);
     }
 

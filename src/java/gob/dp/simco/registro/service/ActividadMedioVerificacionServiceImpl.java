@@ -8,7 +8,6 @@ package gob.dp.simco.registro.service;
 
 import gob.dp.simco.registro.dao.ActividadMedioVerificacionDao;
 import gob.dp.simco.registro.entity.ActividadMedioVerificacion;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,26 +18,21 @@ import org.springframework.stereotype.Service;
 @Service
 public class ActividadMedioVerificacionServiceImpl implements ActividadMedioVerificacionService{
     
-    private static final Logger log = Logger.getLogger(ActividadActorServiceImpl.class);
-    
     @Autowired
     private ActividadMedioVerificacionDao actividadMedioVerificacionDao;
 
     @Override
-    public void actividadMedioVerificacionInsertar(ActividadMedioVerificacion actividadMedioVerificacion) throws Exception {
-        log.debug("METODO : ActividadMedioVerificacionServiceImpl.actividadMedioVerificacionInsertar");
+    public void actividadMedioVerificacionInsertar(ActividadMedioVerificacion actividadMedioVerificacion) {
         actividadMedioVerificacionDao.actividadMedioVerificacionInsertar(actividadMedioVerificacion);
     }
 
     @Override
-    public void actividadMedioVerificacionUpdate(ActividadMedioVerificacion actividadMedioVerificacion) throws Exception {
-        log.debug("METODO : ActividadMedioVerificacionServiceImpl.actividadMedioVerificacionUpdate");
+    public void actividadMedioVerificacionUpdate(ActividadMedioVerificacion actividadMedioVerificacion) {
         actividadMedioVerificacionDao.actividadMedioVerificacionUpdate(actividadMedioVerificacion);
     }
 
     @Override
-    public void actividadMedioVerificacionDelete(ActividadMedioVerificacion actividadMedioVerificacion) throws Exception {
-        log.debug("METODO : ActividadMedioVerificacionServiceImpl.actividadMedioVerificacionDelete");
+    public void actividadMedioVerificacionDelete(ActividadMedioVerificacion actividadMedioVerificacion) {
         actividadMedioVerificacionDao.actividadMedioVerificacionDelete(actividadMedioVerificacion);
     }
     

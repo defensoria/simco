@@ -32,11 +32,11 @@ public class RolDaoImpl  extends SqlSessionDaoSupport implements RolDao
     }
 
     @Override
-    public void insertarUsuarioRol(UsuarioRol usuarioRol)throws Exception{
+    public void insertarUsuarioRol(UsuarioRol usuarioRol){
         getSqlSession().insert("rolDao.insertarUsuarioRol", usuarioRol);
     }
     @Override
-    public void deleteUsuarioRol(UsuarioRol usuarioRol)throws Exception{
+    public void deleteUsuarioRol(UsuarioRol usuarioRol){
         getSqlSession().delete("rolDao.deleteUsuarioRol", usuarioRol);
     }
 

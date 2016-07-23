@@ -37,7 +37,6 @@ public class BusquedaController implements Serializable{
 
     public void inicioBusqueda(){
         busqueda = new Busqueda();
-        //cadenaAutocomplete = busquedaService.autocompletarBusquedaGeneral();
     }
 
     public String buscar(){
@@ -67,10 +66,8 @@ public class BusquedaController implements Serializable{
                 return registroController.irModificarRegistro(a);
             }
         }
-        
         return null;
     }
-    
     
     public String getCadenaAutocomplete() {
         return cadenaAutocomplete;

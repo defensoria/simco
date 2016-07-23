@@ -7,7 +7,6 @@ package gob.dp.simco.administracion.seguridad.dao;
 import gob.dp.simco.administracion.seguridad.bean.FiltroUsuario;
 import gob.dp.simco.administracion.seguridad.entity.Usuario;
 import java.util.List;
-import org.apache.log4j.Logger;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.springframework.stereotype.Repository;
 
@@ -18,20 +17,18 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class UsuarioDaoImpl extends SqlSessionDaoSupport implements UsuarioDao {
 
-    private static final Logger log = Logger.getLogger(UsuarioDaoImpl.class);
-
     @Override
-    public void insertarUsuario(Usuario usuario) throws Exception {
+    public void insertarUsuario(Usuario usuario) {
         getSqlSession().insert("usuarioDao.insertarUsuario", usuario);
     }
 
     @Override
-    public void modificarUsuario(Usuario usuario) throws Exception {
+    public void modificarUsuario(Usuario usuario) {
         getSqlSession().update("usuarioDao.modificarUsuario", usuario);
     }
 
     @Override
-    public void cambiarClaveUsuario(Usuario usuario) throws Exception {
+    public void cambiarClaveUsuario(Usuario usuario) {
         getSqlSession().update("usuarioDao.cambiarClaveUsuario", usuario);
     }
 

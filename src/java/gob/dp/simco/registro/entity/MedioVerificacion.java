@@ -35,14 +35,14 @@ public class MedioVerificacion implements Serializable{
     
     private String ubicacion;
     
-    private Date registro;
+    
+    
+    private Date fechaRegistro;
+    
+    private Date fechaModificacion;
     
     private ActividadMedioVerificacion actividadMedioVerificacion;
     
-    //datos temporales
-    
-    private String fechaRegistro;
-
     public Long getId() {
         return id;
     }
@@ -131,19 +131,20 @@ public class MedioVerificacion implements Serializable{
         this.ubicacion = ubicacion;
     }
 
-    public Date getRegistro() {
-        return registro;
-    }
-
-    public void setRegistro(Date registro) {
-        this.registro = registro;
-    }
-
-    public String getFechaRegistro() {
+    public Date getFechaRegistro() {
         return fechaRegistro;
     }
 
-    public void setFechaRegistro(String fechaRegistro) {
+    public void setFechaRegistro(Date fechaRegistro) {
         this.fechaRegistro = fechaRegistro;
     }
+
+    public Date getFechaModificacion() {
+        return fechaModificacion;
+    }
+
+    public void setFechaModificacion(Date fechaModificacion) {
+        this.fechaModificacion = fechaModificacion;
+    }
+    
 }

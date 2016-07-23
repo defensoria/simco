@@ -16,13 +16,13 @@ import java.util.List;
  */
 public interface ActividadActorDao {
     
-   public void actividadActorInsertar(ActividadActor actividadActor) throws Exception;
+   public void actividadActorInsertar(ActividadActor actividadActor);
    
-   public void actividadActorUpdate(ActividadActor actividadActor) throws Exception;
+   public void actividadActorUpdate(ActividadActor actividadActor);
    
-   public void actividadActorDelete(ActividadActor actividadActor) throws Exception;
+   public void actividadActorDelete(ActividadActor actividadActor);
    
-   public Integer actividadActorBuscarOne(ActividadActor actividadActor) throws Exception;
+   public Integer actividadActorBuscarOne(ActividadActor actividadActor);
    
    public List<ActividadActor> actividadActorXcaso(FiltroCasoActor filtroCasoActor);
    

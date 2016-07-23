@@ -8,7 +8,6 @@ package gob.dp.simco.comun.service;
 import gob.dp.simco.comun.dao.BusquedaDao;
 import gob.dp.simco.comun.entity.Busqueda;
 import java.util.List;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,10 +16,8 @@ import org.springframework.stereotype.Service;
  * @author carlos
  */
 @Service
-public class BusquedaServiceImpl implements BusquedaService{
-    
-    private static final Logger log = Logger.getLogger(BusquedaServiceImpl.class);
-    
+public class BusquedaServiceImpl implements BusquedaService {
+
     @Autowired
     private BusquedaDao busquedaDao;
 
@@ -28,21 +25,18 @@ public class BusquedaServiceImpl implements BusquedaService{
     public String autocompletarBusquedaGeneral() {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("var projects = [");
-        int i = 0;   
-        try {
-            for(Busqueda busqueda:busquedaDao.busquedaLista()){
-                if(i > 0)
+        int i = 0;
+
+        for (Busqueda busqueda : busquedaDao.busquedaLista()) {
+            if (i > 0) {
                 stringBuilder.append(",");
-                stringBuilder.append("{value: ").append(busqueda.getCodigo()).append(",");
-                stringBuilder.append("label: '").append(busqueda.getNombre()+" - "+busqueda.getDetalle()).append("' ,");
-                stringBuilder.append("desc: ").append("''").append(",");
-                stringBuilder.append("icon: ").append("'' },");
             }
-            stringBuilder.append("];");
-        } catch (Exception ex) {
-            log.error(ex.getCause());
+            stringBuilder.append("{value: ").append(busqueda.getCodigo()).append(",");
+            stringBuilder.append("label: '").append(busqueda.getNombre() + " - " + busqueda.getDetalle()).append("' ,");
+            stringBuilder.append("desc: ").append("''").append(",");
+            stringBuilder.append("icon: ").append("'' },");
         }
-        
+        stringBuilder.append("];");
         return stringBuilder.toString();
     }
 
@@ -50,6 +44,5 @@ public class BusquedaServiceImpl implements BusquedaService{
     public List<Busqueda> busquedaListaxPalabra(Busqueda busqueda) {
         return busquedaDao.busquedaListaxPalabra(busqueda);
     }
-    
-    
+
 }

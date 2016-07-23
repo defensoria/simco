@@ -42,34 +42,58 @@
                 var b = 0;
                 a = sessionStorage.getItem("stateMenu");
                 if (a === "0") {
-                    $("#idHtml").removeClass("sidebar-left-collapsed")
+                    $("#idHtml").removeClass("sidebar-left-collapsed");
                 }
                 if (a === "1") {
-                    $("#idHtml").addClass("sidebar-left-collapsed")
+                    $("#idHtml").addClass("sidebar-left-collapsed");
                 }
                 if (a !== null) {
                     if (a === "0") {
-                        b = 0
+                        b = 0;
                     }
                     if (a === "1") {
-                        b = 1
+                        b = 1;
                     }
                 }
                 $("#idDivOcultarMenu").click(function () {
                     if (b === 0) {
                         $("#idHtml").addClass("sidebar-left-collapsed");
-                        b = 1
+                        b = 1;
                     } else {
                         $("#idHtml").removeClass("sidebar-left-collapsed");
-                        b = 0
+                        b = 0;
                     }
-                    sessionStorage.setItem("stateMenu", b)
-                })
+                    sessionStorage.setItem("stateMenu", b);
+                });
             });
         </script>
     </h:form>
     <body>
-        <style>.formDisabled{background:#eee;pointer-events:none}</style>
+        <style>
+            .formDisabled{
+                background:#eee;
+                pointer-events:none
+            }
+            .table100 {
+                display: table;
+                height:100%;
+                width: 100%;
+            }
+
+            .cell50left {
+                width: 50%;
+                vertical-align: top;
+                display: table-cell;
+                height:100%;
+            }
+
+            .cell50Rigth {
+                width: 50%;
+                vertical-align: top;
+                display: table-cell;
+                height:100%;
+            }
+        </style>
         <div class="modal fade" id="idAlerta">
             <div class="modal-dialog modal-sm">
                 <div class="modal-content" style="background:#FCF8E3">
@@ -145,14 +169,14 @@
         <script>
             function alertar(a) {
                 $("#idAlerta").modal("show");
-                $("#mensaje").html(a)
+                $("#mensaje").html(a);
             }
             function info(a) {
                 $("#idInfo").modal("show");
-                $("#mensajeInfo").html(a)
+                $("#mensajeInfo").html(a);
             }
             function confirmar() {
-                $(".confirmacion").modal("show")
+                $(".confirmacion").modal("show");
             }
         </script>
         <h:form id="formId">
@@ -321,9 +345,9 @@
                             $(".idCaso").val(sessionStorage.getItem("idCaso"));
                             $(".menuHijo").each(function () {
                                 if ($(this).text() === sessionStorage.getItem("menuHijoSession")) {
-                                    $(this).css("font-weight", "bold").css("font-size", "1.5em")
+                                    $(this).css("font-weight", "bold").css("font-size", "1.5em");
                                 } else {
-                                    $(this).css("font-weight", "normal").css("font-size", "1em")
+                                    $(this).css("font-weight", "normal").css("font-size", "1em");
                                 }
                             });
                             $(".idNombreCaso").html(sessionStorage.getItem("nombreCaso"));
@@ -331,7 +355,7 @@
                                 $(".idNombreCaso").text($(".idNombreCaso").text().slice(0, 40) + "...")
                             }
                             $(".idNombreCaso").mousemove(function () {
-                                $(".idNombreCaso").tooltip({placement: "bottom", title: sessionStorage.getItem("nombreCaso")})
+                                $(".idNombreCaso").tooltip({placement: "bottom", title: sessionStorage.getItem("nombreCaso")});
                             })
                         });
                     </script>
@@ -357,15 +381,15 @@
                         $(document).ready(function () {
                             $(".menuNieto").each(function () {
                                 if ($(this).text() === sessionStorage.getItem("menuNietoSession")) {
-                                    $(this).css("font-weight", "bold").css("font-size", "1.5em")
+                                    $(this).css("font-weight", "bold").css("font-size", "1.5em");
                                 } else {
-                                    $(this).css("font-weight", "normal").css("font-size", "1em")
+                                    $(this).css("font-weight", "normal").css("font-size", "1em");
                                 }
                             });
                             if ($("#idInputNieto").val() === "0") {
-                                $(".idPanelBody").css("padding-top", "10px")
+                                $(".idPanelBody").css("padding-top", "10px");
                             } else {
-                                $(".idPanelBody").css("padding-top", "80px")
+                                $(".idPanelBody").css("padding-top", "80px");
                             }
                         });
                     </script>
@@ -394,36 +418,39 @@
                 if (a.status === "success") {
                     $("#loadModal").modal("hide");
                     $("body").removeClass("modal-open");
-                    $(".modal-backdrop").removeClass("modal-backdrop")
+                    $(".modal-backdrop").removeClass("modal-backdrop");
                 }
             }
+            
             function closeModalInfo(a) {
                 if (a.status === "success") {
                     $("#loadModal").modal("hide");
                     $("body").removeClass("modal-open");
                     $(".modal-backdrop").removeClass("modal-backdrop");
-                    info("Se han realizado los cambios correctamente")
+                    info("Se han realizado los cambios correctamente");
                 }
             }
+            
             function loadingModal() {
-                $("#loadModal").modal("show")
+                $("#loadModal").modal("show");
             }
+            
             function soloNumbero(a) {
                 var b = window.event ? window.event.keyCode : a.which;
                 if ((b === 8) || (b === 46)) {
                     return true;
                 }
-                return/\d/.test(String.fromCharCode(b))
+                return/\d/.test(String.fromCharCode(b));
             }
             $(".datepicker").datetimepicker({pickTime: false});
             $(".datepicker").on("changeDate", function (a) {
                 $(this).datetimepicker("hide");
             });
             $(".timepicker").datetimepicker({pickDate: false});
-            
+
             function error() {
                 window.location = "#{facesContext.externalContext.requestContextPath}/cerrarSesion.jsp"
-            };
+            }
         </script>
     </body>
 </html>

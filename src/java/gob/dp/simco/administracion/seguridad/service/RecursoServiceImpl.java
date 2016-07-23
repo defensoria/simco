@@ -71,7 +71,7 @@ public class RecursoServiceImpl implements RecursoService
 	 }
 	
 	@Override
-	public void asignarRecursosRol(Rol rol,List<Recurso> listaRecursoSeleccionado) throws Exception{
+	public void asignarRecursosRol(Rol rol,List<Recurso> listaRecursoSeleccionado){
 		
 		List<Recurso> lstRecursosNuevos=new ArrayList<Recurso>();
 		//Buscamos los recursos asignados actualmente
@@ -113,7 +113,6 @@ public class RecursoServiceImpl implements RecursoService
 	     		 */
 	             sbDetalle.append("Rol:").append(rol.getCodigo()).append(",Asignar Recurso:").append(recurso.getCodigo());
 	             auditoriaService.auditar(ConstantesAuditoria.SEGURIDAD_ASIGNAR_RECURSO, sbDetalle.toString());
-	             log.debug("Recurso Nuevo:"+recurso.getCodigo());
 	         }
 	        //Eliminamos los que sobran        
 	        for(int i=0;i<lstRecursosBD.size();i++){
@@ -128,7 +127,6 @@ public class RecursoServiceImpl implements RecursoService
 	    		 */
 	            sbDetalle.append("Rol:").append(rol.getCodigo()).append(", Quitar Recurso:").append(recurso.getCodigo());
 	            auditoriaService.auditar(ConstantesAuditoria.SEGURIDAD_QUITAR_RECURSO, sbDetalle.toString());
-	            log.debug("Recurso Eliminado:"+recurso.getCodigo());
 	         }
 		
 		

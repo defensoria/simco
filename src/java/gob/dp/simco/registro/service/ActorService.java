@@ -16,21 +16,21 @@ import java.util.List;
  */
 public interface ActorService {
     
-    public void actorNuevo(Actor actor) throws Exception;
+    public void actorNuevo(Actor actor);
     
-    public void actorModificar(Actor actor) throws Exception;
+    public void actorModificar(Actor actor);
     
-    public List<Actor> actorBuscar(FiltroActor filtroActor) throws Exception;
+    public List<Actor> actorBuscar(FiltroActor filtroActor);
    
-    public Integer actorTotalBuscar(FiltroActor filtroActor) throws Exception;
+    public Integer actorTotalBuscar(FiltroActor filtroActor);
     
-    public List<Actor> actorxActividadBuscar(Long idActividad) throws Exception;
+    public List<Actor> actorxActividadBuscar(Long idActividad);
     
-    public List<Actor> actorxActividadBuscarTotal(Long idActividad) throws Exception;
+    public List<Actor> actorxActividadBuscarTotal(Long idActividad);
     
-    public Actor actorBuscarOne(Long idActor) throws Exception;
+    public Actor actorBuscarOne(Long idActor);
     
-    public List<Actor> actorBuscarPaginado(FiltroActor filtroActor) throws Exception;
+    public List<Actor> actorBuscarPaginado(FiltroActor filtroActor);
     
     public List<Actor> actorxAcuerdoDetalleBusqueda(Long idAcuerdoDetalle, int indicador);
     

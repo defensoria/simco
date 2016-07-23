@@ -15,8 +15,8 @@ import java.util.List;
  */
 public interface ActividadHistorialService {
     
-    public void actividadHistorialInsertar(ActividadHistorial historial) throws Exception;
+    public void actividadHistorialInsertar(ActividadHistorial historial);
     
-    public List<ActividadHistorial> actividadHistorialBuscarList(Long idActividad) throws Exception;
+    public List<ActividadHistorial> actividadHistorialBuscarList(Long idActividad);
     
 }

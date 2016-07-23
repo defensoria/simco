@@ -13,7 +13,6 @@ import gob.dp.simco.registro.entity.Actor;
 import gob.dp.simco.registro.entity.Caso;
 import java.util.ArrayList;
 import java.util.List;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,8 +23,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class AnalisisActorServiceImpl implements AnalisisActorService{
     
-    private static final Logger log = Logger.getLogger(AnalisisActorServiceImpl.class);
-    
     @Autowired
     private AnalisisActorDao analisisActorDao;
     
@@ -34,13 +31,11 @@ public class AnalisisActorServiceImpl implements AnalisisActorService{
 
     @Override
     public void analisisActorInsertar(AnalisisActor analisisActor) {
-        log.debug("METODO : AnalisisActorServiceImpl.analisisActorInsertar");
         analisisActorDao.analisisActorInsertar(analisisActor);
     }
 
     @Override
     public List<AnalisisActor> analisisActorxcasoBuscar(long idCaso) {
-        log.debug("METODO : AnalisisActorServiceImpl.analisisActorxcasoBuscar");
         List<AnalisisActor> analisisActores = new ArrayList<>();
         List<AnalisisActor> analisisActors = analisisActorDao.analisisActorxcasoBuscar(idCaso);
         for(AnalisisActor aa:analisisActors){
@@ -59,7 +54,6 @@ public class AnalisisActorServiceImpl implements AnalisisActorService{
     
     @Override
     public List<AnalisisActor> analisisActorxcasoBuscarxActor(AnalisisActor analisisActor) {
-        log.debug("METODO : AnalisisActorServiceImpl.analisisActorxcasoBuscar");
         List<AnalisisActor> analisisActores = new ArrayList<>();
         List<AnalisisActor> analisisActors = analisisActorDao.analisisActorxcasoBuscarxActor(analisisActor);
         for(AnalisisActor aa:analisisActors){

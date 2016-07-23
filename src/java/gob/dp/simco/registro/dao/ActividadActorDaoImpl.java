@@ -9,7 +9,6 @@ package gob.dp.simco.registro.dao;
 import gob.dp.simco.registro.bean.FiltroCasoActor;
 import gob.dp.simco.registro.entity.ActividadActor;
 import java.util.List;
-import org.apache.log4j.Logger;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.springframework.stereotype.Repository;
 
@@ -20,35 +19,28 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class ActividadActorDaoImpl extends SqlSessionDaoSupport implements ActividadActorDao{
     
-    private static final Logger log = Logger.getLogger(ActividadActorDaoImpl.class);
-
     @Override
-    public void actividadActorInsertar(ActividadActor actividadActor) throws Exception {
-        log.debug("METODO : ActividadActorDaoImpl.actividadActorInsertar");
+    public void actividadActorInsertar(ActividadActor actividadActor) {
         getSqlSession().insert("gob.dp.simco.registro.dao.ActividadActorDao.actividadActorInsertar", actividadActor);
     }
 
     @Override
-    public void actividadActorUpdate(ActividadActor actividadActor) throws Exception {
-        log.debug("METODO : ActividadActorDaoImpl.actividadActorUpdate");
+    public void actividadActorUpdate(ActividadActor actividadActor) {
         getSqlSession().update("gob.dp.simco.registro.dao.ActividadActorDao.actividadActorUpdate", actividadActor);
     }
 
     @Override
-    public void actividadActorDelete(ActividadActor actividadActor) throws Exception {
-        log.debug("METODO : ActividadActorDaoImpl.actividadActorDelete");
+    public void actividadActorDelete(ActividadActor actividadActor) {
         getSqlSession().delete("gob.dp.simco.registro.dao.ActividadActorDao.actividadActorDelete", actividadActor);
     }
 
     @Override
-    public Integer actividadActorBuscarOne(ActividadActor actividadActor) throws Exception {
-        log.debug("METODO : ActividadActorDaoImpl.actividadActorBuscarOne");
+    public Integer actividadActorBuscarOne(ActividadActor actividadActor) {
         return getSqlSession().selectOne("gob.dp.simco.registro.dao.ActividadActorDao.actividadActorBuscarOne",actividadActor);
     }
 
     @Override
     public List<ActividadActor> actividadActorXcaso(FiltroCasoActor filtroCasoActor) {
-        log.debug("METODO : ActividadActorDaoImpl.actividadActorXcaso");
         return getSqlSession().selectList("gob.dp.simco.registro.dao.ActividadActorDao.actividadActorXcaso",filtroCasoActor);
     }
 

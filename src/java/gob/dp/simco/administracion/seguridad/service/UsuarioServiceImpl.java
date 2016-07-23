@@ -13,8 +13,6 @@ import gob.dp.simco.comun.MEncript;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.apache.log4j.Logger;
-
 /**
  *
  * @author Administrador
@@ -22,7 +20,6 @@ import org.apache.log4j.Logger;
 @Service("usuarioService")
 public class UsuarioServiceImpl implements UsuarioService {
 
-    private static final Logger log = Logger.getLogger(UsuarioServiceImpl.class);
     @Autowired
     private UsuarioDao usuarioDao;
 
@@ -49,14 +46,14 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public void insertarUsuario(Usuario usuario, List<Rol> listaRol) throws Exception {
+    public void insertarUsuario(Usuario usuario, List<Rol> listaRol) {
         usuarioDao.insertarUsuario(usuario);
         auditoriaService.auditar(ConstantesAuditoria.SEGURIDAD_REGISTRAR_USUARIO, "Registrar Usu:" + usuario.getCodigo());
         rolService.asignarRolUsuario(usuario, listaRol);
     }
 
     @Override
-    public void modificarUsuario(Usuario usuario, List<Rol> listaRol) throws Exception {
+    public void modificarUsuario(Usuario usuario, List<Rol> listaRol) {
         usuarioDao.modificarUsuario(usuario);
 
         /**
@@ -67,7 +64,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public void cambiarClave(Usuario usuario) throws Exception {
+    public void cambiarClave(Usuario usuario) {
         //String encPass = CryptoAES.getInstance().encriptar(usuario.getClave().trim());
         String encPass = MEncript.getStringMessageDigest(usuario.getClave().trim());
         usuario.setClave(encPass);
@@ -79,17 +76,14 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public Integer loginUsuario(Usuario usuario) throws Exception {
-          //String encPass = CryptoAES.getInstance().encriptar(usuario.getClave().trim());
-
-        // 2013-08-16 Linea incorporada para validar desde la vista de usuarios simco_vw_usuario, que apunta a la tabla siga.usuario
+    public Integer loginUsuario(Usuario usuario) {
         String encPass = MEncript.getStringMessageDigest(usuario.getClave().trim());
         usuario.setClave(encPass);
         return usuarioDao.loginUsuario(usuario);
     }
 
     @Override
-    public Usuario consultarUsuario(FiltroUsuario filtro) throws Exception {
+    public Usuario consultarUsuario(FiltroUsuario filtro) {
         Usuario u = usuarioDao.consultarUsuario(filtro);
         if (u != null) {
             if (filtro.isIncluirLstRol()) {
@@ -139,11 +133,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public void modificarUsuarioSimple(Usuario usuario) {
-        try {
-            usuarioDao.modificarUsuario(usuario);
-        } catch (Exception ex) {
-            log.error(ex.getCause());
-        }
+        usuarioDao.modificarUsuario(usuario);
     }
     
     @Override

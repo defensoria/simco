@@ -16,12 +16,15 @@
                 <style>
                     #project-label{display:block;
                                    font-weight:bold;
-                                   margin-bottom:1em;}
+                                   margin-bottom:1em;
+                    }
                     #project-icon{float:left;
                                   height:32px;
-                                  width:32px;}
+                                  width:32px;
+                    }
                     #project-description{margin:0;
-                                         padding:0;}
+                                         padding:0;
+                    }
                 </style>
                 <script>
                     /*<![CDATA[*/
@@ -40,7 +43,6 @@
                     });
                     /*]]>*/
                 </script>
-                <h:commandButton action="#{utilBean.correo()}" value="enviar" rendered="false"/>
                 <h:inputHidden id="hidCodActividad" value="#{registroController.actividad.id}" />
                 <input type="hidden" id="idTipoRegistro" jsf:value="#{registroController.actividad.tipo}" />
                 <div class="panel panel-featured-top-primary">
@@ -497,7 +499,7 @@
                                             <h:dataTable value="#{medioVerificacionController.medioVerificacions}" var="med" rendered="#{medioVerificacionController.medioVerificacions.size() > 0}" class="table table-striped">
                                                 <h:column>
                                                     <h:outputText value="#{med.titulo} - "/>
-                                                    <h:outputText value="#{med.registro}">
+                                                    <h:outputText value="#{med.fechaRegistro}">
                                                         <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Lima" />
                                                     </h:outputText>
                                                     <h:outputText value=" (#{med.codigo}) "/>
@@ -644,7 +646,6 @@
                         }
                     });
                     /*]]>*/
-
                     function openModal(data) {
                         alert(data.status);
                         if (data.status === 'success') {

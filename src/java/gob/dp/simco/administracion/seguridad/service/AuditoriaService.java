@@ -18,7 +18,7 @@ public interface AuditoriaService {
     * @param detalle
     * @throws Exception
     */
-    public void auditar(String codigoAccion, String detalle) throws Exception;
+    public void auditar(String codigoAccion, String detalle);
    /**
      * Cuando el usuario No se encuentra en sesión, le mando el usuario
      * @param codigoAccion
@@ -26,6 +26,6 @@ public interface AuditoriaService {
      * @param usuario
      * @throws Exception
      */
-    public void auditar(String codigoAccion, String detalle, Usuario usuario) throws Exception;
+    public void auditar(String codigoAccion, String detalle, Usuario usuario);
 
 }
