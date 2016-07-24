@@ -6,7 +6,7 @@
         <result property="caso.id" column="N_ID_CASO"/>
         <result property="actor.id" column="N_ID_ACTOR"/>
         <result property="nivel" column="N_NIVELINTENSIDAD"/>
-        <result property="usuario" column="C_USUARIOREGISTRO"/>
+        <result property="usuarioRegistro" column="C_USUARIOREGISTRO"/>
         <result property="fechaRegistro" column="D_FECHAREGISTRO"/>
     </resultMap>  
     
@@ -16,7 +16,7 @@
         N_ID_CASO,
         N_ID_ACTOR,
         N_NIVELINTENSIDAD,
-        <if test="usuario != null">
+        <if test="usuarioRegistro != null">
             C_USUARIOREGISTRO,
         </if>
         D_FECHAREGISTRO
@@ -26,8 +26,8 @@
         #{caso.id},
         #{actor.id},
         #{nivel},
-        <if test="usuario != null">
-            #{usuario},
+        <if test="usuarioRegistro != null">
+            #{usuarioRegistro},
         </if>
         #{fechaRegistro}
         )

@@ -81,6 +81,8 @@ public class Caso implements Serializable{
     private String tipoCaso;
     
     private String nombreAdjuntiaDefensorial;
+    
+    private String nombreComisionadoRegistro;
 
     public Long getId() {
         return id;
@@ -344,6 +346,14 @@ public class Caso implements Serializable{
 
     public void setFechaPublicacion(Date fechaPublicacion) {
         this.fechaPublicacion = fechaPublicacion;
+    }
+
+    public String getNombreComisionadoRegistro() {
+        return nombreComisionadoRegistro;
+    }
+
+    public void setNombreComisionadoRegistro(String nombreComisionadoRegistro) {
+        this.nombreComisionadoRegistro = nombreComisionadoRegistro;
     }
     
 }

@@ -5,6 +5,8 @@
  */
 package gob.dp.simco.analisis.controller;
 
+import gob.dp.simco.administracion.seguridad.controller.LoginController;
+import gob.dp.simco.administracion.seguridad.entity.Usuario;
 import gob.dp.simco.analisis.entity.AnalisisActor;
 import gob.dp.simco.analisis.entity.AnalisisActorIntensidad;
 import gob.dp.simco.analisis.entity.AnalisisActorTema;
@@ -149,6 +151,8 @@ public class AnalisisController extends AbstractManagedBean implements Serializa
     private String graficaInner;
 
     private List<ContextoTipo> listaTipoContexto;
+    
+    private Usuario usuarioSession;
 
     @Autowired
     private ActorService actorService;
@@ -248,7 +252,6 @@ public class AnalisisController extends AbstractManagedBean implements Serializa
         problema = new Problema();
         listaProblemaDetalle = new ArrayList<>();
         listaActoresXCaso = null;
-        generarCadenaCasos();
         verAutoCompleteCaso = true;
         graficaInner = "";
         return "problemas";
@@ -402,7 +405,6 @@ public class AnalisisController extends AbstractManagedBean implements Serializa
     public String cargarPagina() {
         try {
             caso = new Caso();
-            generarCadenaCasos();
             listaActoresXCaso = null;
             activarAlianzas = "panel-default";
             activarVinculoCercano = "panel-default";
@@ -419,7 +421,7 @@ public class AnalisisController extends AbstractManagedBean implements Serializa
 
     public String cargarPaginaCaso(Caso c) {
         try {
-            generarCadenaCasos();
+            usuarioSession();
             listaActoresXCaso = null;
             activarAlianzas = "panel-default";
             activarVinculoCercano = "panel-default";
@@ -433,14 +435,6 @@ public class AnalisisController extends AbstractManagedBean implements Serializa
             log.error(e.getCause());
         }
         return "analisis";
-    }
-
-    private void generarCadenaCasos() {
-        try {
-            cadenaAutocomplete = casoService.casoBuscarAutocomplete();
-        } catch (Exception ex) {
-            log.error(ex.getMessage());
-        }
     }
 
     public void addProblemaDetalle() {
@@ -802,9 +796,13 @@ public class AnalisisController extends AbstractManagedBean implements Serializa
                     aai.setNivel(ac.getAnalisisActorIntensidad().getNivel());
                     if (buscarActorCasoIntensidad(aai) == 0) {
                         aai.setFechaRegistro(new Date());
+                        aai.setUsuarioRegistro(usuarioSession.getCodigo());
                         analisisActorIntensidadService.analisisActorIntensidadInsertar(aai);
                     } else {
                         analisisActorIntensidadService.analisisActorIntensidadUpdate(aai);
+                    }
+                    if(StringUtils.isNotBlank(caso.getSintesisAnalisis())){
+                        casoService.casoUpdateSistesis(caso);
                     }
                     ac.setAnalisisActorIntensidad(aai);
                 }
@@ -1240,6 +1238,12 @@ public class AnalisisController extends AbstractManagedBean implements Serializa
         }
         initRelacionActorVOConflicto();
     }
+    
+    private void usuarioSession() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        LoginController loginController = (LoginController) context.getELContext().getELResolver().getValue(context.getELContext(), null, "loginController");
+        usuarioSession = loginController.getUsuarioSesion();
+    }
 
     public List<Actor> getListaActoresXCaso() {
         return listaActoresXCaso;
@@ -1577,6 +1581,14 @@ public class AnalisisController extends AbstractManagedBean implements Serializa
 
     public void setListaTipoContexto(List<ContextoTipo> listaTipoContexto) {
         this.listaTipoContexto = listaTipoContexto;
+    }
+
+    public Usuario getUsuarioSession() {
+        return usuarioSession;
+    }
+
+    public void setUsuarioSession(Usuario usuarioSession) {
+        this.usuarioSession = usuarioSession;
     }
 
 }

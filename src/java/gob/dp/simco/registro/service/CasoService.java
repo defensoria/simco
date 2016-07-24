@@ -39,4 +39,6 @@ public interface CasoService {
    public Caso casoxActaAcuerdoDetalle(long idActaAcuerdoDetalle);
    
    public void casoUpdateIndicador(Caso caso);
+   
+   public void casoUpdateSistesis(Caso caso);
 }

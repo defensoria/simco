@@ -21,7 +21,7 @@ public class AnalisisActorIntensidad {
     
     private Integer nivel;
     
-    private String usuario;
+    private String usuarioRegistro;
     
     private Date fechaRegistro;
 
@@ -49,14 +49,14 @@ public class AnalisisActorIntensidad {
         this.nivel = nivel;
     }
 
-    public String getUsuario() {
-        return usuario;
+    public String getUsuarioRegistro() {
+        return usuarioRegistro;
     }
 
-    public void setUsuario(String usuario) {
-        this.usuario = usuario;
+    public void setUsuarioRegistro(String usuarioRegistro) {
+        this.usuarioRegistro = usuarioRegistro;
     }
-
+    
     public Date getFechaRegistro() {
         return fechaRegistro;
     }

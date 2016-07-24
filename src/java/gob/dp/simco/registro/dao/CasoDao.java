@@ -38,4 +38,6 @@ public interface CasoDao {
    public void casoUpdateIndicador(Caso caso);
    
    public List<Caso> reporteCaso(FiltroReporte filtroReporte);
+   
+   public void casoUpdateSistesis(Caso caso);
 }

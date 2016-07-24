@@ -62,9 +62,11 @@
                     <a jsf:rendered="#{casoController.caso.id != null}" jsf:actionListener="#{casoController.docx()}">
                         <img src="../../bootstrap/img/doc.png" alt="Plan de Intervencion" height="45" width="45"/>
                     </a>
-                    <a style="float:right" id="idRegistrarCaso" class="btn btn-primary">
-                        <span class="glyphicon glyphicon-floppy-disk"/>Guardar
-                    </a>
+                    <h:panelGroup rendered="#{casoController.esComisionadoRegistro}">
+                        <a style="float:right" id="idRegistrarCaso" class="btn btn-primary">
+                            <span class="glyphicon glyphicon-floppy-disk"/>Guardar
+                        </a>
+                    </h:panelGroup>
                     <br/><br/><br/>
                 </div>
                 <div class="panel panel-featured-top-primary">
@@ -79,6 +81,7 @@
                                     <input style="width:50%" jsf:rendered="#{casoController.caso.id == null}" type="text" id="idNombreCaso" jsf:value="#{casoController.caso.nombre}" placeholder="Nombre"/>
                                 </td>
                                 <td>
+                                    <h:inputHidden value="#{casoController.caso.sintesisAnalisis}" />
                                     <div class="form-group has-feedback" style="margin:auto">
                                         <input type="text" id="adjuntia" jsf:value="#{casoController.caso.nombreAdjuntiaDefensorial}" placeholder="Oficina Defensorial"/>
                                         <input type="hidden" id="idAdjuntia" jsf:value="#{casoController.caso.adjuntiaDefensorial}" />
@@ -100,10 +103,12 @@
                                         </h:column>
                                         <h:column>
                                             <h:outputText value="&#160;&#160;&#160;" />
-                                            <a jsf:action="#{casoController.removeListaAdjuntias(ad)}" style="text-decoration: none">
-                                                <span style="color:red;font-size:large" class="glyphicon glyphicon-remove"></span>
-                                                <f:ajax render="@form"/>
-                                            </a>
+                                            <h:panelGroup rendered="#{casoController.esComisionadoRegistro}">
+                                                <a jsf:action="#{casoController.removeListaAdjuntias(ad)}" style="text-decoration: none">
+                                                    <span style="color:red;font-size:large" class="glyphicon glyphicon-remove"></span>
+                                                    <f:ajax render="@form"/>
+                                                </a>
+                                            </h:panelGroup>
                                         </h:column>
                                     </h:dataTable>
                                 </td>
@@ -404,8 +409,8 @@
                                     </td>
                                     <td style="width:25%;padding:5px">
                                         <h:panelGroup rendered="#{casoController.caso.subTipo == '01' and casoController.caso.tipo == '09' or casoController.caso.subTipo == '02' and casoController.caso.tipo == '09' or casoController.caso.subTipo == '03' and casoController.caso.tipo == '09'}">
-                                            <label class="TipoDialogo">Primer nivel</label>
-                                            <h:selectOneMenu value="#{casoController.caso.primerNivel}" class="btn-danger TipoDialogo">
+                                            <label>Primer nivel</label>
+                                            <h:selectOneMenu value="#{casoController.caso.primerNivel}" class="btn-danger">
                                                 <f:selectItem itemLabel="Seleccione" itemValue="0"/>
                                                 <f:selectItems value="#{casoController.listaPrimerNivel}" var="y" itemLabel="#{y.value}" itemValue="#{y.label}" />
                                             </h:selectOneMenu>
@@ -462,10 +467,12 @@
                                                     </h:selectOneMenu>
                                                 </td>
                                                 <td style="vertical-align:bottom; width: 8%">&#160;&#160;
-                                                    <a class="btn btn-primary" jsf:action="#{casoController.addRegion()}" jsf:onclick="loadingModal()">
-                                                        <span class="glyphicon glyphicon-plus" />Añadir
-                                                        <f:ajax render="@form" onevent="closeModal" execute="@form"/>
-                                                    </a>
+                                                    <h:panelGroup rendered="#{casoController.esComisionadoRegistro}">
+                                                        <a class="btn btn-primary" jsf:action="#{casoController.addRegion()}" jsf:onclick="loadingModal()">
+                                                            <span class="glyphicon glyphicon-plus" />Añadir
+                                                            <f:ajax render="@form" onevent="closeModal" execute="@form"/>
+                                                        </a>
+                                                    </h:panelGroup>    
                                                 </td>
                                             </tr>
                                             <tr>
@@ -488,30 +495,33 @@
                                                             <h:outputText value="#{region.nombreDistrito}" />
                                                         </h:column>
                                                         <h:column>
-                                                            <h:panelGroup rendered="#{region.principal != 'A'}">
-                                                                <a onclick="confirmar6#{region.id}()" style="cursor:pointer">
-                                                                    <span class="glyphicon glyphicon-ok" style="color:red;font-size:medium" />
-                                                                </a>
+                                                            <h:panelGroup rendered="#{casoController.esComisionadoRegistro}">
+                                                                <h:panelGroup rendered="#{region.principal != 'A'}">
+                                                                    <a onclick="confirmar6#{region.id}()" style="cursor:pointer">
+                                                                        <span class="glyphicon glyphicon-ok" style="color:red;font-size:medium" />
+                                                                    </a>
+                                                                </h:panelGroup>
+                                                                <h:panelGroup rendered="#{region.principal == 'A'}">
+                                                                    <a style="cursor:pointer">
+                                                                        <span class="glyphicon glyphicon-ok" style="color:red;font-size:medium; color: green" />
+                                                                    </a>
+                                                                </h:panelGroup>
+                                                                &#160;&#160;
+                                                                <h:panelGroup rendered="#{casoController.esComisionadoRegistro}">
+                                                                    <a onclick="confirmar5#{region.id}()" style="cursor:pointer">
+                                                                        <span class="glyphicon glyphicon-remove" style="color:red;font-size:medium" />
+                                                                    </a>
+                                                                    <script>function confirmar5#{region.id}() {
+                                                                            $(".confirmacion5#{region.id}").modal('show');
+                                                                        }
+                                                                        function confirmar6#{region.id}() {
+                                                                            $(".confirmacion6#{region.id}").modal('show');
+                                                                        }
+                                                                    </script>
+                                                                    <gc:confirmRemoveAjax classGC="confirmacion5#{region.id}" bean="#{casoController.removeRegion(region.id)}" mensaje="Esta seguro de eliminar este registro?" />
+                                                                    <gc:confirmAjax classGC="confirmacion6#{region.id}" bean="#{casoController.ubigeoPrincipal(region)}" mensaje="Esta seguro de definir el ubigeo princial?" />
+                                                                </h:panelGroup>
                                                             </h:panelGroup>
-
-                                                            <h:panelGroup rendered="#{region.principal == 'A'}">
-                                                                <a style="cursor:pointer">
-                                                                    <span class="glyphicon glyphicon-ok" style="color:red;font-size:medium; color: green" />
-                                                                </a>
-                                                            </h:panelGroup>
-                                                            &#160;&#160;
-                                                            <a onclick="confirmar5#{region.id}()" style="cursor:pointer">
-                                                                <span class="glyphicon glyphicon-remove" style="color:red;font-size:medium" />
-                                                            </a>
-                                                            <script>function confirmar5#{region.id}() {
-                                                                    $(".confirmacion5#{region.id}").modal('show');
-                                                                }
-                                                                function confirmar6#{region.id}() {
-                                                                    $(".confirmacion6#{region.id}").modal('show');
-                                                                }
-                                                            </script>
-                                                            <gc:confirmRemoveAjax classGC="confirmacion5#{region.id}" bean="#{casoController.removeRegion(region.id)}" mensaje="Esta seguro de eliminar este registro?" />
-                                                            <gc:confirmAjax classGC="confirmacion6#{region.id}" bean="#{casoController.ubigeoPrincipal(region)}" mensaje="Esta seguro de definir el ubigeo princial?" />
                                                         </h:column>
                                                     </h:dataTable>
                                                 </td>
@@ -729,13 +739,13 @@
                                 </script>
                                 <div class="panel-body" id="idPanelBodyActuacion2">
                                     <span class="text-primary" style="font-size: 1.5em">Descripción</span>
-                                    <textarea placeholder="Descripción" rows="6" jsf:value="#{casoController.caso.descripcionPreliminar}" style="width:100%" maxlength="1300"/>
+                                    <textarea placeholder="Descripción" rows="6" jsf:value="#{casoController.caso.descripcionPreliminar}" style="width:100%" maxlength="3800"/>
                                     <br/>
                                     <span class="text-primary" style="font-size: 1.5em">Justificación</span>
-                                    <textarea placeholder="Justificación" rows="6" jsf:value="#{casoController.caso.justificacion}" style="width:100%" maxlength="1300"/>
+                                    <textarea placeholder="Justificación" rows="6" jsf:value="#{casoController.caso.justificacion}" style="width:100%" maxlength="3800"/>
                                     <br/>
                                     <span class="text-primary" style="font-size: 1.5em">Observaciones</span>
-                                    <textarea placeholder="Observaciones" rows="6" jsf:value="#{casoController.caso.observaciones}" style="width:100%" maxlength="1300"/>
+                                    <textarea placeholder="Observaciones" rows="6" jsf:value="#{casoController.caso.observaciones}" style="width:100%" maxlength="3800"/>
                                 </div>
                             </div>
                             <h:panelGroup rendered="#{casoController.caso.id != null}">
@@ -791,20 +801,24 @@
                                                 <h:outputText value=" - #{AD.codigoActividad} " />
                                             </h:column>
                                             <h:column>
-                                                <a jsf:action="#{registroController.irModificarRegistro(AD)}">
-                                                    <span style="font-size:large" class="glyphicon glyphicon-pencil"></span>
-                                                </a>
+                                                <h:panelGroup rendered="#{casoController.esComisionadoRegistro}">
+                                                    <a jsf:action="#{registroController.irModificarRegistro(AD)}">
+                                                        <span style="font-size:large" class="glyphicon glyphicon-pencil"></span>
+                                                    </a>
+                                                </h:panelGroup>
                                             </h:column>
                                             <h:column>
-                                                <a onclick="confirmar1#{AD.id}()">
-                                                    <span style="font-size:large;color:red;cursor:pointer" class="glyphicon glyphicon-remove"></span>
-                                                </a>
-                                                <script>
-                                                    function confirmar1#{AD.id}() {
-                                                        $(".confirmacion1#{AD.id}").modal('show');
-                                                    }
-                                                </script>
-                                                <gc:confirmSubmit classGC="confirmacion1#{AD.id}" bean="#{casoController.eliminarActividadCaso(AD)}"/>
+                                                <h:panelGroup rendered="#{casoController.esComisionadoRegistro}">
+                                                    <a onclick="confirmar1#{AD.id}()">
+                                                        <span style="font-size:large;color:red;cursor:pointer" class="glyphicon glyphicon-remove"></span>
+                                                    </a>
+                                                    <script>
+                                                        function confirmar1#{AD.id}() {
+                                                            $(".confirmacion1#{AD.id}").modal('show');
+                                                        }
+                                                    </script>
+                                                    <gc:confirmSubmit classGC="confirmacion1#{AD.id}" bean="#{casoController.eliminarActividadCaso(AD)}"/>
+                                                </h:panelGroup>
                                             </h:column>
                                         </h:dataTable>
                                     </div>
@@ -863,20 +877,24 @@
                                                 <h:outputText value=" - #{AC.codigoActividad} " />
                                             </h:column>
                                             <h:column>
-                                                <a jsf:action="#{registroController.irModificarRegistro(AC)}">
-                                                    <span style="font-size:large" class="glyphicon glyphicon-pencil"></span>
-                                                </a>
+                                                <h:panelGroup rendered="#{casoController.esComisionadoRegistro}">
+                                                    <a jsf:action="#{registroController.irModificarRegistro(AC)}">
+                                                        <span style="font-size:large" class="glyphicon glyphicon-pencil"></span>
+                                                    </a>
+                                                </h:panelGroup>
                                             </h:column>
                                             <h:column>
-                                                <a onclick="confirmar2#{AC.id}()">
-                                                    <span style="font-size:large;color:red;cursor:pointer" class="glyphicon glyphicon-remove"></span>
-                                                </a>
-                                                <script>
-                                                    function confirmar2#{AC.id}() {
-                                                        $(".confirmacion2#{AC.id}").modal('show');
-                                                    }
-                                                </script>
-                                                <gc:confirmSubmit classGC="confirmacion2#{AC.id}" bean="#{casoController.eliminarActividadCaso(AC)}"/>
+                                                <h:panelGroup rendered="#{casoController.esComisionadoRegistro}">
+                                                    <a onclick="confirmar2#{AC.id}()">
+                                                        <span style="font-size:large;color:red;cursor:pointer" class="glyphicon glyphicon-remove"></span>
+                                                    </a>
+                                                    <script>
+                                                        function confirmar2#{AC.id}() {
+                                                            $(".confirmacion2#{AC.id}").modal('show');
+                                                        }
+                                                    </script>
+                                                    <gc:confirmSubmit classGC="confirmacion2#{AC.id}" bean="#{casoController.eliminarActividadCaso(AC)}"/>
+                                                </h:panelGroup>
                                             </h:column>
                                         </h:dataTable>
                                     </div>
@@ -1082,14 +1100,16 @@
                                         </div>
                                         <div class="form-group">
                                             <div class="col-sm-offset-2 col-sm-10">
-                                                <a class="btn btn-primary" jsf:onclick="return registraActividadMini()" jsf:rendered="#{registroController.tipoBoton}" jsf:action="#{registroController.registrarActividadModal(1)}">
-                                                    <span class="glyphicon glyphicon-floppy-disk"/>Guardar
-                                                    <f:ajax render="@form :idForm" execute="@form" onevent="informar"/>
-                                                </a>
-                                                <a class="btn btn-primary" jsf:onclick="return registraActividadMini()" jsf:rendered="#{!registroController.tipoBoton}" jsf:action="#{registroController.registrarActividadModal(2)}">
-                                                    <span class="glyphicon glyphicon-floppy-disk"/>Guardar
-                                                    <f:ajax render="@form :idForm" execute="@form" onevent="informar"/>
-                                                </a>
+                                                <h:panelGroup rendered="#{casoController.esComisionadoRegistro}">
+                                                    <a class="btn btn-primary" jsf:onclick="return registraActividadMini()" jsf:rendered="#{registroController.tipoBoton}" jsf:action="#{registroController.registrarActividadModal(1)}">
+                                                        <span class="glyphicon glyphicon-floppy-disk"/>Guardar
+                                                        <f:ajax render="@form :idForm" execute="@form" onevent="informar"/>
+                                                    </a>
+                                                    <a class="btn btn-primary" jsf:onclick="return registraActividadMini()" jsf:rendered="#{!registroController.tipoBoton}" jsf:action="#{registroController.registrarActividadModal(2)}">
+                                                        <span class="glyphicon glyphicon-floppy-disk"/>Guardar
+                                                        <f:ajax render="@form :idForm" execute="@form" onevent="informar"/>
+                                                    </a>
+                                                </h:panelGroup>
                                             </div>
                                         </div>
                                     </div>
@@ -1236,9 +1256,11 @@
                                             </h:outputText>
                                         </h:column>
                                         <h:column>
-                                            <a jsf:action="#{casoController.vincularActividadCaso(act)}">
-                                                <span class="glyphicon glyphicon-share" style="font-size:large"></span>
-                                            </a>
+                                            <h:panelGroup rendered="#{casoController.esComisionadoRegistro}">
+                                                <a jsf:action="#{casoController.vincularActividadCaso(act)}">
+                                                    <span class="glyphicon glyphicon-share" style="font-size:large"></span>
+                                                </a>
+                                            </h:panelGroup>
                                         </h:column>
                                     </h:dataTable>
                                 </div>

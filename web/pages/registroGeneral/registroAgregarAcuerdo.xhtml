@@ -485,7 +485,7 @@
                             <td>
                                 <div class="panel panel-featured-top-warning" style="overflow-y:auto;height:330px">
                                     <div class="panel-body">
-                                        <h:dataTable value="#{actaAcuerdoController.listaActaAcuerdoDetalleXActa}" rendered="#{actaAcuerdoController.listaActaAcuerdoDetalleXActa.size() == 0}" var="item" class="table table-striped" style="font-size:x-small">
+                                        <h:dataTable value="#{actaAcuerdoController.listaActaAcuerdoDetalleXActa}" rendered="#{actaAcuerdoController.listaActaAcuerdoDetalleXActa.size() > 0}" var="item" class="table table-striped" style="font-size:x-small">
                                             <h:column>
                                                 <f:facet name="header">código</f:facet>
                                                 <h:outputText value="#{item.codigo}" />

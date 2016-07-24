@@ -74,5 +74,10 @@ public class CasoDaoImpl extends SqlSessionDaoSupport implements CasoDao{
     public List<Caso> reporteCaso(FiltroReporte filtroReporte) {
         return getSqlSession().selectList("gob.dp.simco.registro.dao.CasoDao.reporteCaso",filtroReporte);
     }
+
+    @Override
+    public void casoUpdateSistesis(Caso caso) {
+        getSqlSession().update("gob.dp.simco.registro.dao.CasoDao.casoUpdateSistesis", caso);
+    }
     
 }

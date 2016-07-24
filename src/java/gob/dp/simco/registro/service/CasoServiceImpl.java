@@ -114,4 +114,9 @@ public class CasoServiceImpl implements CasoService {
         casoDao.casoUpdateIndicador(caso);
     }
 
+    @Override
+    public void casoUpdateSistesis(Caso caso) {
+        casoDao.casoUpdateSistesis(caso);
+    }
+
 }

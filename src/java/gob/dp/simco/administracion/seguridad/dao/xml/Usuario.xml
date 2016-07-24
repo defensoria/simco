@@ -9,11 +9,9 @@
         ape_materno        as apellidoMaterno,
         num_dni            as dni,
         est_usuario        as estado,
-        clave_usuario      as clave,
         des_email          as email,
         tel_movil          as telefonoMovil,
         tel_fijo           as telefonoFijo,
-        flag_clave_inicial as flagClaveInicial,
         c_cargo            as cargo
         from simco_seg_usuario
         where
@@ -33,10 +31,6 @@
         </if>
         <if test="apellidoMaterno!=null">
             and UPPER(ape_materno)  LIKE '%'||UPPER(#{apellidoMaterno})||'%'
-        </if>
-
-        <if test="tieneInforme">
-            and UPPER(codigo_usuario) in (select distinct COD_USUARIO from simco_reg_informe)
         </if>
         order by codigo
     </sql>
@@ -59,11 +53,9 @@
         ape_materno        as apellidoMaterno,
         num_dni            as dni,
         est_usuario        as estado,
-        clave_usuario      as clave,
         des_email          as email,
         tel_movil          as telefonoMovil,
         tel_fijo           as telefonoFijo,
-        flag_clave_inicial as flagClaveInicial,
         c_cargo            as cargo,
         c_ruta             as ruta 
         FROM (
@@ -73,11 +65,9 @@
         ape_materno,
         num_dni,
         est_usuario,
-        clave_usuario,
         des_email,
         tel_movil,
         tel_fijo,
-        flag_clave_inicial,
         c_cargo,
         c_ruta,
         ROWNUM numfila
@@ -88,11 +78,9 @@
         ape_materno,
         num_dni,
         est_usuario,
-        clave_usuario,
         des_email,
         tel_movil,
         tel_fijo,
-        flag_clave_inicial,
         c_cargo,
         c_ruta
         from simco_seg_usuario
@@ -120,7 +108,6 @@
         </if>
     </select>
 
-
     <select id="loginUsuario" resultType="java.lang.Integer" parameterType="usuario">
         select count(*)
         from simco_seg_usuario u, simco_vw_usuario t
@@ -143,9 +130,6 @@
         <if test="estado!=null">
             ,est_usuario = #{estado}
         </if>
-        <if test="clave!=null">
-            ,clave_usuario = #{clave}
-        </if>
         <if test="email!=null">
             ,des_email =#{email}
         </if>
@@ -155,19 +139,9 @@
         <if test="telefonoFijo!=null">
             ,tel_fijo = #{telefonoFijo}
         </if>
-        <if test="flagClaveInicial!=null">
-            ,flag_clave_inicial = #{flagClaveInicial}
-        </if>
         <if test="ruta!=null">
             ,c_ruta = #{ruta}
         </if>
-        where codigo_usuario = #{codigo}
-    </update>
-
-
-    <update id="cambiarClaveUsuario" parameterType="usuario">
-        update simco_seg_usuario
-        set clave_usuario = #{clave}    
         where codigo_usuario = #{codigo}
     </update>
 
@@ -214,7 +188,6 @@
         u.ape_materno        as apellidoMaterno,
         u.num_dni            as dni,
         u.est_usuario        as estado,
-        u.num_dni            as clave,
         u.des_email          as email,
         u.tel_movil          as telefonoMovil,
         u.tel_fijo           as telefonoFijo,

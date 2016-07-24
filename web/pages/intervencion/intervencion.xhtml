@@ -21,7 +21,8 @@
                     }
                 </style>
                 <script>
-                    /*<![CDATA[*/$(function () {#{intervencionController.cadenaAutocomplete}
+                    /*<![CDATA[*/
+                    $(function () {#{intervencionController.cadenaAutocomplete}
                         $("#nombreCaso").autocomplete({minLength: 3, source: projects, focus: function (event, ui) {
                                 $("#nombreCaso").val(ui.item.label);
                                 return false;
@@ -35,6 +36,11 @@
                     });/*]]>*/
                 </script>
                 <div class="panel panel-featured-top-primary">
+                    <div class="modal-header">
+                        <a type="button" class="close" data-dismiss="modal">
+                            <span style="color:red" class="glyphicon glyphicon-remove"></span>
+                        </a> 
+                    </div>
                     <div class="panel-body">
                         <table style="width:100%">
                             <tr>

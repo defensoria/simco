@@ -8,9 +8,11 @@ package gob.dp.simco.registro.controller;
 import gob.dp.simco.registro.vo.ReporteCasoVO;
 import gob.dp.simco.administracion.parametro.constantes.InforVO;
 import gob.dp.simco.administracion.parametro.service.CatalogoService;
+import gob.dp.simco.administracion.seguridad.bean.FiltroUsuario;
 import gob.dp.simco.administracion.seguridad.controller.LoginController;
 import gob.dp.simco.administracion.seguridad.controller.MenuController;
 import gob.dp.simco.administracion.seguridad.entity.Usuario;
+import gob.dp.simco.administracion.seguridad.service.UsuarioService;
 import gob.dp.simco.comun.entity.Departamento;
 import gob.dp.simco.comun.entity.Distrito;
 import gob.dp.simco.comun.entity.Provincia;
@@ -123,6 +125,8 @@ public class CasoController extends AbstractManagedBean implements Serializable 
     private CasoRegion casoRegion;
 
     private List<CasoRegion> listaCasoRegion;
+    
+    private Boolean esComisionadoRegistro;
 
     @Autowired
     private CasoService casoService;
@@ -153,12 +157,14 @@ public class CasoController extends AbstractManagedBean implements Serializable 
 
     @Autowired
     private CasoRegionService casoRegionService;
-
+    
+    @Autowired
+    private UsuarioService usuarioService;
+    
     public String cargarPagina() {
         try {
             caso = new Caso();
             casos = casoService.casoBuscar(caso);
-
         } catch (Exception ex) {
             caso = new Caso();
             log.error(ex.getMessage());
@@ -169,9 +175,14 @@ public class CasoController extends AbstractManagedBean implements Serializable 
     public String cargarPaginaCasosSigues() {
         try {
             usuarioSession();
-            caso = new Caso();
-            caso.setUsuarioRegistro(usuarioSession.getCodigo());
-            casos = casoService.casoBuscar(caso);
+            Caso c1 = new Caso();
+            casos = casoService.casoBuscar(c1);
+            for(Caso c : casos){
+                FiltroUsuario u = new FiltroUsuario();
+                u.setCodigo(c.getUsuarioRegistro());
+                Usuario u1 = usuarioService.consultarUsuario(u);
+                c.setNombreComisionadoRegistro(u1.getNombre()+" "+u1.getApellidoPaterno()+" "+u1.getApellidoMaterno());
+            }
         } catch (Exception ex) {
             log.error(ex.getMessage());
         }
@@ -202,7 +213,12 @@ public class CasoController extends AbstractManagedBean implements Serializable 
         actorController.cadenaActores();
         cargarListaCasoRegionLimpiar();
         cargarInfo();
+        setearEsComosionadoRegistro();
         return "casoNuevo";
+    }
+    
+    private void setearEsComosionadoRegistro(){
+        esComisionadoRegistro = StringUtils.equals(usuarioSession.getCodigo().toUpperCase(), caso.getUsuarioRegistro().toUpperCase());
     }
 
     public String setearFichaCaso(Caso c) {
@@ -233,6 +249,7 @@ public class CasoController extends AbstractManagedBean implements Serializable 
             actorController.cadenaActores();
             cargarListaCasoRegion();
             cargarInfo();
+            setearEsComosionadoRegistro();
         } catch (Exception ex) {
             log.error(ex.getCause());
         }
@@ -275,16 +292,16 @@ public class CasoController extends AbstractManagedBean implements Serializable 
         }
         return true;
     }
-    
-    private void updateListaRegion(){
-        for(CasoRegion casoRe : listaCasoRegion){
+
+    private void updateListaRegion() {
+        for (CasoRegion casoRe : listaCasoRegion) {
             casoRe.setIdCaso(caso.getId());
             casoRegionService.casoRegionInsertar(casoRe);
         }
     }
-    
-    private void updateListasActividades(){
-        for(Actividad a : listaActividadesCasoAD){
+
+    private void updateListasActividades() {
+        for (Actividad a : listaActividadesCasoAD) {
             ActividadCaso ac = new ActividadCaso();
             ac.setActividad(a);
             ac.setCaso(caso);
@@ -292,7 +309,7 @@ public class CasoController extends AbstractManagedBean implements Serializable 
             updateRelacionActividadCaso(a);
             actividadCasoService.actividadCasoInsertar(ac);
         }
-        for(Actividad a : listaActividadesCasoAC){
+        for (Actividad a : listaActividadesCasoAC) {
             ActividadCaso ac = new ActividadCaso();
             ac.setActividad(a);
             ac.setCaso(caso);
@@ -301,8 +318,8 @@ public class CasoController extends AbstractManagedBean implements Serializable 
             actividadCasoService.actividadCasoInsertar(ac);
         }
     }
-    
-    private void updateRelacionActividadCaso(Actividad a){
+
+    private void updateRelacionActividadCaso(Actividad a) {
         ActividadCaso ac = new ActividadCaso();
         ac.setActividad(a);
         Caso c = new Caso();
@@ -316,22 +333,23 @@ public class CasoController extends AbstractManagedBean implements Serializable 
         casoRegionService.casoRegionUpdate(idCasoRegion);
         cargarListaCasoRegion();
     }
-    
-    public void ubigeoPrincipal(CasoRegion region){
+
+    public void ubigeoPrincipal(CasoRegion region) {
         try {
             caso.setIdDepartamento(region.getIdDepartamento());
             caso.setIdProvincia(region.getIdProvincia());
             caso.setIdDistrito(region.getIdDistrito());
-            for(CasoRegion cr : listaCasoRegion){
-                if(Objects.equals(cr.getId(), region.getId()))
+            for (CasoRegion cr : listaCasoRegion) {
+                if (Objects.equals(cr.getId(), region.getId())) {
                     cr.setPrincipal("A");
-                else
+                } else {
                     cr.setPrincipal("I");
+                }
             }
         } catch (Exception ex) {
             log.error(ex);
         }
-        
+
     }
 
     private void cargarListaCasoRegion() {
@@ -667,7 +685,7 @@ public class CasoController extends AbstractManagedBean implements Serializable 
                 radvos2.add(radvo);
             }
             vo.setAcontecimientos(radvos2);
-            vo.setImagePath(ConstantesUtil.BASE_URL_IMAGEPATH+"logoPlanIntervencion.png");
+            vo.setImagePath(ConstantesUtil.BASE_URL_IMAGEPATH + "logoPlanIntervencion.png");
         }
         if (listaCasoRegion != null) {
             if (listaCasoRegion.size() > 0) {
@@ -677,7 +695,7 @@ public class CasoController extends AbstractManagedBean implements Serializable 
         lista.add(vo);
         JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(
                 lista);
-        jasperPrint = JasperFillManager.fillReport(ConstantesUtil.BASE_URL_REPORT+"documentoCaso.jasper",
+        jasperPrint = JasperFillManager.fillReport(ConstantesUtil.BASE_URL_REPORT + "documentoCaso.jasper",
                 new HashMap(), beanCollectionDataSource);
     }
 
@@ -733,25 +751,25 @@ public class CasoController extends AbstractManagedBean implements Serializable 
             for (AdjuntiaDefensorialVO o : listaAdjuntiasDefensoriales) {
                 sb.append(o.getId()).append(";");
             }
-                caso.setAdjuntiaDefensorial(sb.toString());
-                if(caso.getVersion() == null){
-                    caso.setCreacion(new Date());
-                    caso.setCodigo(generarCodigoCaso());
-                    caso.setVersion(1);
-                    caso.setUsuarioRegistro(usuarioSession.getCodigo());
-                }else{
-                    caso.setVersion(caso.getVersion()+1);
-                    casoService.casoUpdateIndicador(caso);
-                }
-                caso.setIndicador("A");
-                caso.setUsuarioModificacion(usuarioSession.getCodigo());
-                caso.setModificacion(new Date());
-                caso.setEstadoRegistro("PEN");
-                definirFechaPublicacion();
-                ordenarParametros();
-                casoService.casoNuevo(caso);
-                msg.messageInfo("Se registro Correctamente el Caso", null);
-            if(listaCasoRegion.size() > 0){
+            caso.setAdjuntiaDefensorial(sb.toString());
+            if (caso.getVersion() == null) {
+                caso.setCreacion(new Date());
+                caso.setCodigo(generarCodigoCaso());
+                caso.setVersion(1);
+                caso.setUsuarioRegistro(usuarioSession.getCodigo());
+            } else {
+                caso.setVersion(caso.getVersion() + 1);
+                casoService.casoUpdateIndicador(caso);
+            }
+            caso.setIndicador("A");
+            caso.setUsuarioModificacion(usuarioSession.getCodigo());
+            caso.setModificacion(new Date());
+            caso.setEstadoRegistro("PEN");
+            definirFechaPublicacion();
+            ordenarParametros();
+            casoService.casoNuevo(caso);
+            msg.messageInfo("Se registro Correctamente el Caso", null);
+            if (listaCasoRegion.size() > 0) {
                 updateListaRegion();
             }
             updateListasActividades();
@@ -761,35 +779,35 @@ public class CasoController extends AbstractManagedBean implements Serializable 
             log.error(ex);
         }
     }
-    
-    private void ordenarParametros(){
-        if(!caso.getTipoEstado().equals("04")){
+
+    private void ordenarParametros() {
+        if (!caso.getTipoEstado().equals("04")) {
             caso.setTipoDialogo("0");
             caso.setTipoMecanismo("0");
             caso.setTipoMomentoDialogo("0");
             caso.setTipoParticipacionCaso("0");
         }
-        if(!caso.getTipoDialogo().equals("05")){
+        if (!caso.getTipoDialogo().equals("05")) {
             caso.setTipoMecanismo("0");
             caso.setTipoMomentoDialogo("0");
             caso.setTipoParticipacionCaso("0");
         }
-        if(!caso.getTipo().equals("09")){
+        if (!caso.getTipo().equals("09")) {
             caso.setSubTipo("0");
             caso.setPrimerNivel("0");
             caso.setSegundoNivel("0");
             caso.setTercerNivel("0");
         }
-        if(!caso.getSubTipo().equals("02") && !caso.getSubTipo().equals("03") && !caso.getSubTipo().equals("01")){
+        if (!caso.getSubTipo().equals("02") && !caso.getSubTipo().equals("03") && !caso.getSubTipo().equals("01")) {
             caso.setPrimerNivel("0");
             caso.setSegundoNivel("0");
             caso.setTercerNivel("0");
         }
     }
-    
-    private void definirFechaPublicacion(){
-        if(caso.getFechaPublicacion() == null){
-            if(caso.getTipoEstado().equals("04")  || caso.getTipoEstado().equals("05") || caso.getTipoEstado().equals("06")){
+
+    private void definirFechaPublicacion() {
+        if (caso.getFechaPublicacion() == null) {
+            if (caso.getTipoEstado().equals("04") || caso.getTipoEstado().equals("05") || caso.getTipoEstado().equals("06")) {
                 caso.setFechaPublicacion(new Date());
             }
         }
@@ -845,14 +863,21 @@ public class CasoController extends AbstractManagedBean implements Serializable 
 
     private String generarCodigoCaso() {
         String numero = String.format("%8s", casoService.casoCodigoGenerado().toString()).replace(' ', '0');
-        return "CN"+ numero;
+        return "CN" + numero;
     }
 
     public void cargarListaActividadesSinCaso(int tipo) {
         verTitulo = tipo == 1;
+        List<Actividad> lista = new ArrayList<>();
         listaActividadesSinCaso = actividadService.actividadBusquedaSinCaso(tipo);
+        for(Actividad a : listaActividadesSinCaso){
+            if(StringUtils.equals(a.getUsuarioRegistro(), usuarioSession.getCodigo())){
+                lista.add(a);
+            }
+        }
+        listaActividadesSinCaso = lista;
     }
-    
+
     public void vincularActividadCaso(Actividad activida) {
         ActividadCaso ac = new ActividadCaso();
         String tipo = activida.getTipo();
@@ -1117,4 +1142,14 @@ public class CasoController extends AbstractManagedBean implements Serializable 
     public void setListaCasoRegion(List<CasoRegion> listaCasoRegion) {
         this.listaCasoRegion = listaCasoRegion;
     }
+
+    public Boolean getEsComisionadoRegistro() {
+        return esComisionadoRegistro;
+    }
+
+    public void setEsComisionadoRegistro(Boolean esComisionadoRegistro) {
+        this.esComisionadoRegistro = esComisionadoRegistro;
+    }
+    
+    
 }

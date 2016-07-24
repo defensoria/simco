@@ -17,28 +17,16 @@
                                   height:32px;
                                   width:32px}
                     #project-description{margin:0;
-                                         padding:0}
-                    </style>
-                    <script>
-                        /*<![CDATA[*/
-                        sessionStorage.setItem('menuHijoSession', 'Analisis');
-                        sessionStorage.setItem('menuNietoSession', 'Problemas');
-                        $(function () {
-                                                #{analisisController.cadenaAutocomplete}
-                            $("#nombreCaso").autocomplete({minLength: 3, source: projects, focus: function (event, ui) {
-                                    $("#nombreCaso").val(ui.item.label);
-                                    return false;
-                                }, select: function (event, ui) {
-                                    $("#nombreCaso").val(ui.item.label);
-                                    $("#idCaso").val(ui.item.value);
-                                    return false;
-                                }}).data("ui-autocomplete")._renderItem = function (ul, item) {
-                                return $("<li/>").append("<a>" + item.label + "<br/>" + item.desc + "</a>").appendTo(ul);
-                            };
-                        });
-                        /*]]>*/
-                    </script>
-                    <table style="width:100%">
+                                         padding:0
+                    }
+                    .ocultar{display:none
+                    }
+                </style>
+                <script>
+                    sessionStorage.setItem('menuHijoSession', 'Analisis');
+                    sessionStorage.setItem('menuNietoSession', 'Problemas');
+                </script>
+                <table style="width:100%">
                     <tr>
                         <td style="width:70%;font-size:2em;font-weight:bold" class="text-resalt-primary">
                             Problemas
@@ -118,22 +106,29 @@
                                                     <span class="glyphicon glyphicon-ok-circle" style="font-size:large;color:blue"/>
                                                     <f:ajax render="@form" onevent="closeModal"/>
                                                 </a>
-                                                <br/>
-                                                <br/>
                                             </td>
                                             <td style="text-align:left">
-                                                <h:selectOneMenu value="#{analisisController.idActor}" class="selectActor selectRadio" style="width:100%" onchange="loadingModal()">
-                                                    <f:selectItem itemLabel="Seleccionar" itemValue="0"/>
-                                                    <f:selectItems value="#{analisisController.listaActoresXCaso}" var="y" itemLabel="#{y.nombre} #{y.apellidoPat} #{y.apellidoMat}" itemValue="#{y.id}" />
-                                                    <f:ajax listener="#{analisisController.filtarXactor()}" render="@form" onevent="closeModal"/>
-                                                </h:selectOneMenu>
-                                                <a style="float:right;font-size:large;margin:auto" jsf:action="#{analisisController.analisisDemandaxActor()}" jsf:onclick="loadingModal()">
-                                                    <span class="glyphicon glyphicon-plus"/>
-                                                    <f:ajax render=":idForm1" onevent="openModal"></f:ajax>
-                                                </a>
+                                                <table style="width: 100%">
+                                                    <tr>
+                                                        <td>
+                                                            <h:selectOneMenu value="#{analisisController.idActor}" onchange="loadingModal()">
+                                                                <f:selectItem itemLabel="Seleccionar" itemValue="0"/>
+                                                                <f:selectItems value="#{analisisController.listaActoresXCaso}" var="y" itemLabel="#{y.nombre} #{y.apellidoPat} #{y.apellidoMat}" itemValue="#{y.id}" />
+                                                                <f:ajax listener="#{analisisController.filtarXactor()}" render="@form" onevent="closeModal"/>
+                                                            </h:selectOneMenu>
+                                                        </td>
+                                                        <td style="float: right">
+                                                            <a style="float:right;font-size:large;margin:auto" jsf:action="#{analisisController.analisisDemandaxActor()}" jsf:onclick="loadingModal()">
+                                                                <span class="glyphicon glyphicon-plus" style="font-size: large"/>
+                                                                <f:ajax render=":idForm1" onevent="openModal"/>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                </table>
                                             </td>
                                         </tr>
                                     </table>
+                                    <p/><p/>
                                     <h:dataTable value="#{analisisController.analisisActors}" var="analisis" style="width:95%">
                                         <h:column>
                                             <table style="width:100%">
@@ -261,7 +256,7 @@
                                                 </center>
                                             </td>
                                             <td>
-                                                <h:dataTable value="#{canvasController.listaActoresXCasoGrafico}" class="table table-striped" var="actorTema">
+                                                <h:dataTable value="#{canvasController.listaActoresXCasoGrafico}" class="table table-hover" var="actorTema">
                                                     <h:column>
                                                         <div class="slider" style="margin-top:1%;margin-bottom:4%;padding:0">
                                                             <div class="slider-track" style="height:0">
@@ -295,7 +290,7 @@
                         <table style="width:100%">
                             <tr>
                                 <td>
-                                    <gc:confirmAjax bean="#{analisisController.saveProblema()}" />
+                                    <gc:confirmSubmit bean="#{analisisController.saveProblema()}" />
                                     <span class="text-resalt-primary">Sintesis de Problemas</span>
                                 </td>
                                 <td style="text-align:right">
@@ -310,7 +305,7 @@
                         <table style="width:100%;vertical-align:top">
                             <tr>
                                 <td style="width:50%;padding-right:5px">
-                                    <textarea jsf:value="#{analisisController.problema.sintesis}" rows="5" style="width:100%" placeholder="Sintesis General"/>
+                                    <textarea jsf:value="#{analisisController.problema.sintesis}" rows="5" style="width:100%" placeholder="Sintesis General" maxlength="3700"/>
                                     <br/><br/>
                                     <span class="text-resalt-primary">Problemas</span>
                                     <a style="text-decoration:none" jsf:rendered="#{analisisController.problema.id != null}" jsf:action="#{analisisController.addProblemaDetalle()}">
@@ -324,25 +319,32 @@
                                         </h:column>
                                         <h:column>
                                             <gc:confirmRemoveAjax bean="#{analisisController.removeDetalleProblema(det)}" classGC="confirm#{rowdet.rowIndex+1}" mensaje="Esta seguro que desea eliminar el problema?"/>
-                                            <div class="form-group has-feedback">
+                                            <div class="form-group">
                                                 <table style="width:100%">
                                                     <tr>
                                                         <td style="width:30%;vertical-align:top">
-                                                            <textarea rows="3" jsf:value="#{det.nombre}" placeholder="Nombre"/>
+                                                            <input type="text" jsf:value="#{det.nombre}" placeholder="Nombre"/>
                                                         </td>
-                                                        <td style="width:70%">
-                                                            <textarea jsf:value="#{det.detalle}" rows="3" style="width:100%" placeholder="Sintesis Problema"/>
-                                                            <table style="width:10%" class="form-control-feedback">
+                                                        <td style="width:65%">
+                                                            <textarea jsf:value="#{det.detalle}" rows="5" style="width:100%" placeholder="Sintesis Problema"/>
+                                                        </td>
+                                                        <td>
+                                                            <table style="width:5%">
                                                                 <tr>
-                                                                    <td>
+                                                                    <td style="vertical-align: top">
                                                                         <span style="background:#3183B9" class="badge">#{rowdet.rowIndex+1}</span>
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
+                                                                    <td><p></p><p></p></td>
+                                                                </tr>
+                                                                <tr>
                                                                     <td>
-                                                                        <script>function confirm#{rowdet.rowIndex+1}() {
+                                                                        <script>
+                                                                            function confirm#{rowdet.rowIndex+1}() {
                                                                                 $(".confirm#{rowdet.rowIndex+1}").modal("show");
-                                                                            }</script>
+                                                                            }                                                                                
+                                                                        </script>
                                                                         <a onclick="confirm#{rowdet.rowIndex+1}()" style="cursor:pointer">
                                                                             <span style="color:red;font-size:medium" class="glyphicon glyphicon-remove"></span>
                                                                         </a>
@@ -395,14 +397,17 @@
                                             <span class="text-resalt-primary" style="font-weight:bold">#{analisisController.actor.nombre} #{analisisController.actor.apellidoPat}</span>
                                         </td>
                                         <td style="text-align:right">
+                                            <a type="button" class="close" data-dismiss="modal">
+                                                <span style="color:red" class="glyphicon glyphicon-remove"></span>
+                                            </a>
                                         </td>
                                     </tr>
                                 </table>
                             </div>
                             <div class="modal-body">
                                 <div class="form-group" style="height:100%">
-                                    <label class="text-resalt-primary">Descripcion</label>
-                                    <textarea jsf:value="#{analisisController.analisisActor.resumen}" rows="3" maxlength="450"/>
+                                    <span class="text-resalt-primary">Descripción:</span>
+                                    <textarea jsf:value="#{analisisController.analisisActor.resumen}" rows="5" maxlength="3700"/>
                                 </div>
                                 <div class="form-group">
                                     <div class="panel panel-success" style="width:100%">
@@ -510,9 +515,6 @@
                                             <a class="btn btn-primary" jsf:action="#{analisisController.saveAnalisisActor()}">
                                                 <span class="glyphicon glyphicon-floppy-disk"/>Guardar
                                             </a>
-                                            <a class="btn btn-danger" data-dismiss="modal">
-                                                <span class="glyphicon glyphicon-remove"/>Cancelar
-                                            </a>
                                         </td>
                                     </tr>
                                 </table>
@@ -528,9 +530,6 @@
                     </div>
                 </div>
             </div>
-            <style>
-                .ocultar{display:none}
-            </style>
             <script>
                 function openModal(data) {
                     if (data.status === 'success') {

@@ -21,7 +21,7 @@
         <result property="adjuntiaDefensorial" column="C_ADJUNTIADEFENSORIAL"/>
         <result property="actividadCaso.estado" column="C_ESTADOACTCASO"/>
         <result property="acontecimientoCaso.estado" column="C_ESTADOACONTCASO"/>
-        <result property="sintesisAnalisis" column="C_SINTESISANALISIS"/>
+        <result property="sintesisAnalisis" column="C_SISTESISANALISIS"/>
         <result property="tipoDialogo" column="C_TIPODIALOGO"/>
         <result property="tipoMecanismo" column="C_TIPOMECANISMO"/>
         <result property="tipoParticipacionCaso" column="C_TIPOPARTICIPACION"/>
@@ -40,33 +40,7 @@
 
     <select id="casoBuscar" resultMap="casoMap" parameterType="caso">
         SELECT 
-        A.N_ID_CASO,
-        A.C_NOMCASO,
-        A.C_DESCPRELIMCASO,
-        A.C_TIPOCASO,
-        A.C_JUSTIFICACION,
-        A.C_OBSERVACIONES,
-        A.D_FECHACREACION,
-        A.D_FECHAPUBLICACION,
-        A.D_FECHAMODIFICACION,
-        A.C_CODIGOCASO,
-        A.C_TIPOASUNTO,
-        A.C_TIPOESTADO,
-        A.C_TIPODIALOGO,
-        A.C_TIPOMECANISMO,
-        A.C_TIPOPARTICIPACION,
-        A.C_IDDEPART,
-        A.C_IDPROV,
-        A.C_IDDISTR,
-        A.C_SUBTIPOCASO,
-        A.C_PRIMERNIVEL,
-        A.C_SEGUNDONIVEL,
-        A.C_TERCERNIVEL,
-        A.C_MOMENTODIALOGO,
-        A.C_ADJUNTIADEFENSORIAL,
-        A.N_VERSION,
-        A.C_USUREGISTRO,
-        A.C_INDVIGENTE
+        A.* 
         FROM SIMCO_REG_CASO A
         <where>
             A.C_ESTADOREGISTRO = 'PEN' 
@@ -79,9 +53,9 @@
             <if test="id != null">
                 AND A.N_ID_CASO=#{id}
             </if>
-            <if test="usuarioRegistro != null">
+            <!--<if test="usuarioRegistro != null">
                 AND A.C_USUREGISTRO=#{usuarioRegistro}
-            </if>
+            </if>-->
             AND A.C_INDVIGENTE= 'A'
         </where>
         ORDER BY A.N_ID_CASO
@@ -276,7 +250,19 @@
             SELECT SEQ_SIMCO_REG_CASO.CURRVAL FROM DUAL
         </selectKey>
     </insert>
-
+    
+    <update id="casoUpdateSistesis" parameterType="caso">
+        UPDATE SIMCO_REG_CASO
+        <set>
+            <if test="sintesisAnalisis != null">
+                C_SISTESISANALISIS = #{sintesisAnalisis}
+            </if>
+            </set>
+        <where>
+            N_ID_CASO=#{id}
+        </where>
+    </update>
+    
     <update id="casoUpdate" parameterType="caso">
         UPDATE SIMCO_REG_CASO
         <set>
@@ -314,7 +300,7 @@
                 C_ADJUNTIADEFENSORIAL = #{adjuntiaDefensorial},
             </if>
             <if test="sintesisAnalisis != null">
-                C_SINTESISANALISIS = #{sintesisAnalisis},
+                C_SISTESISANALISIS = #{sintesisAnalisis},
             </if>
             <if test="tipoDialogo != null">
                 C_TIPODIALOGO = #{tipoDialogo},
