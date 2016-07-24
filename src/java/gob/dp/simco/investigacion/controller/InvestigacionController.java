@@ -8,7 +8,6 @@ package gob.dp.simco.investigacion.controller;
 import gob.dp.simco.administracion.seguridad.controller.LoginController;
 import gob.dp.simco.administracion.seguridad.entity.Usuario;
 import gob.dp.simco.administracion.seguridad.service.UsuarioService;
-import gob.dp.simco.comun.MessagesUtil;
 import gob.dp.simco.investigacion.entity.Campo;
 import gob.dp.simco.investigacion.entity.CampoDetalle;
 import gob.dp.simco.investigacion.entity.HistorialActividad;
@@ -19,7 +18,8 @@ import gob.dp.simco.investigacion.service.CampoService;
 import gob.dp.simco.investigacion.service.HistorialActividadService;
 import gob.dp.simco.investigacion.service.InvestigacionService;
 import gob.dp.simco.investigacion.service.ParticipacionService;
-import gob.dp.simco.registro.constantes.ConstantesUtil;
+import gob.dp.simco.comun.ConstantesUtil;
+import gob.dp.simco.comun.mb.AbstractManagedBean;
 import java.io.File;
 import java.io.InputStream;
 import java.io.Serializable;
@@ -44,7 +44,7 @@ import org.springframework.context.annotation.Scope;
  */
 @Named
 @Scope("session")
-public class InvestigacionController implements Serializable {
+public class InvestigacionController extends AbstractManagedBean implements Serializable {
 
     private static final Logger log = Logger.getLogger(InvestigacionController.class);
 
@@ -74,8 +74,6 @@ public class InvestigacionController implements Serializable {
     
     private Part file1;
     
-    private MessagesUtil msg;
-
     @Autowired
     private UsuarioService usuarioService;
 
@@ -95,7 +93,6 @@ public class InvestigacionController implements Serializable {
     private HistorialActividadService historialActividadService;
 
     public String cargarCrearInvestigacion() {
-        msg = new MessagesUtil();
         investigacion = new Investigacion();
         campo = new Campo();
         campoDetalle = new CampoDetalle();
@@ -418,14 +415,6 @@ public class InvestigacionController implements Serializable {
 
     public void setUsuarioSession(Usuario usuarioSession) {
         this.usuarioSession = usuarioSession;
-    }
-
-    public MessagesUtil getMsg() {
-        return msg;
-    }
-
-    public void setMsg(MessagesUtil msg) {
-        this.msg = msg;
     }
 
 }

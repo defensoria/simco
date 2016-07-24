@@ -3,35 +3,32 @@
 <mapper namespace="auditoriaDao">
 
 
-<insert id="insertarAuditoria" parameterType="auditoria">
+    <insert id="insertarAuditoria" parameterType="auditoria">
         <selectKey keyProperty="codigo" resultType="java.lang.String" order="BEFORE">
             select lpad(SEQ_SIMCO_AUDITORIA.NEXTVAL, 10, '0') from dual
         </selectKey>
         insert into simco_seg_auditoria
-          (codigo_auditoria,
-           codigo_accion,
-           <if test="usuario.codigo!=null">
-              codigo_usuario,
-           </if>
-           <if test="detalle!=null">
-             detalle,
-           </if>
-           fecha,
-           ip)
+        (codigo_auditoria,
+        codigo_accion,
+        <if test="usuario.codigo!=null">
+            codigo_usuario,
+        </if>
+        <if test="detalle!=null">
+            detalle,
+        </if>
+        fecha,
+        ip)
         values
-          (#{codigo},
-           #{codigoAccion},
-           <if test="usuario.codigo!=null">
-              #{usuario.codigo},
-           </if>
-           <if test="detalle!=null">
-              #{detalle},
-           </if>
-           SYSDATE,
-           #{ip}
-           )
-</insert>
-
-
-
+        (#{codigo},
+        #{codigoAccion},
+        <if test="usuario.codigo!=null">
+            #{usuario.codigo},
+        </if>
+        <if test="detalle!=null">
+            #{detalle},
+        </if>
+        SYSDATE,
+        #{ip}
+        )
+    </insert>
 </mapper>

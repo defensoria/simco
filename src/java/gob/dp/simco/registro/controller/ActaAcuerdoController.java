@@ -7,8 +7,8 @@ package gob.dp.simco.registro.controller;
 
 import gob.dp.simco.administracion.seguridad.controller.BusquedaUsuarioController;
 import gob.dp.simco.administracion.seguridad.entity.Usuario;
-import gob.dp.simco.comun.MessagesUtil;
-import gob.dp.simco.registro.constantes.ConstantesUtil;
+import gob.dp.simco.comun.ConstantesUtil;
+import gob.dp.simco.comun.mb.AbstractManagedBean;
 import gob.dp.simco.registro.entity.ActaAcuerdo;
 import gob.dp.simco.registro.entity.ActaAcuerdoDetalle;
 import gob.dp.simco.registro.entity.ActaAcuerdoDetalleMiembro;
@@ -49,7 +49,7 @@ import org.springframework.context.annotation.Scope;
  */
 @Named
 @Scope("session")
-public class ActaAcuerdoController implements Serializable {
+public class ActaAcuerdoController extends AbstractManagedBean implements Serializable {
 
     private static final Logger log = Logger.getLogger(ActaAcuerdoController.class);
 
@@ -91,8 +91,6 @@ public class ActaAcuerdoController implements Serializable {
 
     int tip = 1;
 
-    private MessagesUtil msg;
-
     private Part file1;
 
     @Autowired
@@ -126,7 +124,6 @@ public class ActaAcuerdoController implements Serializable {
         actaAcuerdoDetalle.setIndCumplimiento(false);
         actaAcuerdoDetalle.setIndAlertar(false);
         listaActaAcuerdoDetalleXActa = new ArrayList<>();
-        msg = new MessagesUtil();
     }
 
     public String cargarPagina(int tipo) {
@@ -268,8 +265,9 @@ public class ActaAcuerdoController implements Serializable {
     public void registrarActaAcuerdo(long idActividad) {
         try {
             ActaAcuerdo aa = actaAcuerdoService.actaAcuerdoxActividadBuscarOne(idActividad);
-            String ruta1 = uploadArchive(file1);
-            actaAcuerdo.setRuta(ruta1);
+            String ruta = uploadArchive(file1);
+            if(ruta != null)
+                actaAcuerdo.setRuta(ruta);
             if (aa != null) {
                 actaAcuerdo.setId(aa.getId());
                 actaAcuerdoService.actaAcuerdoModificar(actaAcuerdo);
@@ -780,14 +778,6 @@ public class ActaAcuerdoController implements Serializable {
 
     public void setUsuarioSession(Usuario usuarioSession) {
         this.usuarioSession = usuarioSession;
-    }
-
-    public MessagesUtil getMsg() {
-        return msg;
-    }
-
-    public void setMsg(MessagesUtil msg) {
-        this.msg = msg;
     }
 
     public Part getFile1() {

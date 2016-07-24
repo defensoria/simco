@@ -16,7 +16,6 @@ public interface ContextoPreguntaDao {
     
     public List<ContextoPregunta> contextoPreguntaBuscar(Long idTipo);
 
-    
 }
 
 

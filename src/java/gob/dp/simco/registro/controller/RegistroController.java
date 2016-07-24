@@ -7,14 +7,14 @@ package gob.dp.simco.registro.controller;
 
 import gob.dp.simco.administracion.seguridad.controller.LoginController;
 import gob.dp.simco.administracion.seguridad.entity.Usuario;
-import gob.dp.simco.comun.MessagesUtil;
 import gob.dp.simco.comun.entity.Departamento;
 import gob.dp.simco.comun.entity.Distrito;
 import gob.dp.simco.comun.entity.Provincia;
 import gob.dp.simco.comun.service.UbigeoService;
 import gob.dp.simco.noticia.entity.Noticia;
 import gob.dp.simco.noticia.service.NoticiaService;
-import gob.dp.simco.registro.constantes.ConstantesUtil;
+import gob.dp.simco.comun.ConstantesUtil;
+import gob.dp.simco.comun.mb.AbstractManagedBean;
 import gob.dp.simco.registro.entity.ActaAcuerdo;
 import gob.dp.simco.registro.entity.Actividad;
 import gob.dp.simco.registro.entity.ActividadCaso;
@@ -56,7 +56,7 @@ import org.springframework.context.annotation.Scope;
  */
 @Named
 @Scope("session")
-public class RegistroController implements Serializable {
+public class RegistroController extends AbstractManagedBean implements Serializable {
 
     private static final Logger log = Logger.getLogger(RegistroController.class);
 
@@ -142,8 +142,6 @@ public class RegistroController implements Serializable {
 
     private Part file1;
 
-    private MessagesUtil msg;
-
     private List<Actividad> listaActividadesPorCaso;
     
     private List<Actividad> acontecimientoVinculado;
@@ -177,7 +175,6 @@ public class RegistroController implements Serializable {
 
     public String cargarPagina() {
         try {
-            msg = new MessagesUtil();
             usuarioSession();
             actividad = new Actividad();
             limpiarListasActores();
@@ -300,7 +297,6 @@ public class RegistroController implements Serializable {
             listaNoticiasRegistro();
             limpiarActaAcuerdo();
             limpiarVictimas2();
-            msg = new MessagesUtil();
             return "registroEdit";
         } catch (Exception ex) {
             log.error("ERROR - irModificarRegistro()" + ex);
@@ -338,7 +334,6 @@ public class RegistroController implements Serializable {
             actaAcuerdo = actaAcuerdoService.actaAcuerdoxActividadBuscarOne(acti.getId());
             listaNoticiasRegistro();
             limpiarVictimas2();
-            msg = new MessagesUtil();
             return "registroNuevo";
         } catch (Exception ex) {
             log.error("ERROR - irModificarRegistro2()" + ex);
@@ -1191,14 +1186,6 @@ public class RegistroController implements Serializable {
 
     public void setFile1(Part file1) {
         this.file1 = file1;
-    }
-
-    public MessagesUtil getMsg() {
-        return msg;
-    }
-
-    public void setMsg(MessagesUtil msg) {
-        this.msg = msg;
     }
 
     public List<Actividad> getListaActividadesPorCaso() {

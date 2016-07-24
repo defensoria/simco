@@ -6,7 +6,6 @@
 package gob.dp.simco.registro.controller;
 
 import gob.dp.simco.administracion.seguridad.controller.LoginController;
-import gob.dp.simco.comun.MessagesUtil;
 import gob.dp.simco.comun.entity.Departamento;
 import gob.dp.simco.comun.entity.Distrito;
 import gob.dp.simco.comun.entity.Maestro;
@@ -14,7 +13,8 @@ import gob.dp.simco.comun.entity.Provincia;
 import gob.dp.simco.comun.service.MaestroService;
 import gob.dp.simco.comun.service.UbigeoService;
 import gob.dp.simco.registro.bean.FiltroActor;
-import gob.dp.simco.registro.constantes.ConstantesUtil;
+import gob.dp.simco.comun.ConstantesUtil;
+import gob.dp.simco.comun.mb.AbstractManagedBean;
 import gob.dp.simco.registro.entity.ActaAcuerdoDetalle;
 import gob.dp.simco.registro.entity.Actividad;
 import gob.dp.simco.registro.entity.ActividadActor;
@@ -49,7 +49,7 @@ import org.springframework.context.annotation.Scope;
  */
 @Named
 @Scope("session")
-public class ActorController implements Serializable {
+public class ActorController extends AbstractManagedBean implements Serializable {
 
     private static final Logger log = Logger.getLogger(ActorController.class);
 
@@ -141,8 +141,6 @@ public class ActorController implements Serializable {
 
     private int indicadorPersona = 0;
 
-    private MessagesUtil msg;
-
     private List<SelectItem> listaTipoPoblacion;
 
     private List<SelectItem> listaSubTipo1Poblacion;
@@ -193,14 +191,9 @@ public class ActorController implements Serializable {
     @Autowired
     private MaestroService maestroService;
 
-    public ActorController() {
-        msg = new MessagesUtil();
-    }
-
     public String cargarPagina() {
         cargarListas();
         actor = new Actor();
-        msg = new MessagesUtil();
         cadenaActores();
         bloquearFormularioPersona();
         empresa = new Actor();
@@ -1756,14 +1749,6 @@ public class ActorController implements Serializable {
 
     public void setIndicadorPersona(int indicadorPersona) {
         this.indicadorPersona = indicadorPersona;
-    }
-
-    public MessagesUtil getMsg() {
-        return msg;
-    }
-
-    public void setMsg(MessagesUtil msg) {
-        this.msg = msg;
     }
 
     public String getCadenaAutocompleteEmpresaEntidad() {

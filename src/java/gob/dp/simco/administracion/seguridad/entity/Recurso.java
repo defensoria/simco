@@ -3,36 +3,42 @@ package gob.dp.simco.administracion.seguridad.entity;
 import java.io.Serializable;
 
 /**
- * @author Dante
+ * @author carlos
  *
  * Clase utilizada en el registro de Recurso
  * @author Dante
- * @version 1.0 - 02/12/2011
  */
 public class Recurso implements Serializable {
-    private String  codigo;
-    private String  nombre;
-    private String  descripcion;
-    private String  estado;
-    private String  codigoPadre;
-    private String  url;
+
+    private String codigo;
+
+    private String nombre;
+
+    private String descripcion;
+
+    private String estado;
+
+    private String codigoPadre;
+
+    private String url;
+
     private Integer orden;
-    
-    private boolean seleccionado=false;
+
+    private boolean seleccionado = false;
 
     public String getCodigo() {
         return codigo;
     }
 
     public boolean isSeleccionado() {
-		return seleccionado;
-	}
+        return seleccionado;
+    }
 
-	public void setSeleccionado(boolean seleccionado) {
-		this.seleccionado = seleccionado;
-	}
+    public void setSeleccionado(boolean seleccionado) {
+        this.seleccionado = seleccionado;
+    }
 
-	public String getUrl() {
+    public String getUrl() {
         return url;
     }
 
@@ -76,15 +82,11 @@ public class Recurso implements Serializable {
         this.orden = orden;
     }
 
-	public String getCodigoPadre() {
-		return codigoPadre;
-	}
+    public String getCodigoPadre() {
+        return codigoPadre;
+    }
 
-	public void setCodigoPadre(String codigoPadre) {
-		this.codigoPadre = codigoPadre;
-	}
-
-    
-
-
+    public void setCodigoPadre(String codigoPadre) {
+        this.codigoPadre = codigoPadre;
+    }
 }

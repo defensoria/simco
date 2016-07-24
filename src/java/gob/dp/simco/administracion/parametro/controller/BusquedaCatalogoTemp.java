@@ -10,8 +10,11 @@ package gob.dp.simco.administracion.parametro.controller;
  * @author Administrador
  */
 public class BusquedaCatalogoTemp {
+    
     private Integer numParametro;
+    
     private String nombreParametro;
+    
     private String valorParametro;
 
     public String getNombreParametro() {

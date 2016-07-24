@@ -16,7 +16,7 @@ import gob.dp.simco.comun.service.RegistroCargaService;
 import gob.dp.simco.comun.service.ReporteService;
 import gob.dp.simco.comun.service.UbigeoService;
 import gob.dp.simco.comun.type.MesesEnum;
-import gob.dp.simco.registro.constantes.ConstantesUtil;
+import gob.dp.simco.comun.ConstantesUtil;
 import gob.dp.simco.registro.entity.Caso;
 import gob.dp.simco.reporte.entity.ElementoNombreValor;
 import gob.dp.simco.reporte.entity.ElementoReporte;

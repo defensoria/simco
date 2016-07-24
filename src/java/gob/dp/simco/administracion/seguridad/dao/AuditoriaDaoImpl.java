@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
  * @author Administrador
  */
 @Repository
-public class AuditoriaDaoImpl   extends SqlSessionDaoSupport implements AuditoriaDao
+public class AuditoriaDaoImpl extends SqlSessionDaoSupport implements AuditoriaDao
 {
     @Override
     public void insertarAuditoria(Auditoria filter){

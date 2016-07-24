@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package gob.dp.simco.comun;
 
 import java.io.IOException;
@@ -18,9 +17,9 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author Luis Medina
+ * @author carlos
  */
-public class SeguridadSessionFilter implements Filter{
+public class SeguridadSessionFilter implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -29,23 +28,21 @@ public class SeguridadSessionFilter implements Filter{
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-                HttpServletRequest httpRequest = (HttpServletRequest) request;
-                HttpSession httpSession= httpRequest.getSession(false);
-                HttpServletResponse httpResponse = (HttpServletResponse) response;       
+        HttpServletRequest httpRequest = (HttpServletRequest) request;
+        HttpSession httpSession = httpRequest.getSession(false);
+        HttpServletResponse httpResponse = (HttpServletResponse) response;
 
-                if(httpRequest.getRequestURI().equals("/simco/")||
-                   httpRequest.getRequestURI().equals("/simco/faces/signin.xhtml")
-                   )
-                {     
-                    chain.doFilter(request, response);
-                }else{
-                     if (httpSession==null || httpSession.getAttribute("usuario") == null) {                            
-                            httpResponse.sendRedirect("/simco/cerrarSesion.jsp");                           
-                        } else {
-                            chain.doFilter(request, response);
-                          }
-                  }
-               
+        if (httpRequest.getRequestURI().equals("/simco/")
+                || httpRequest.getRequestURI().equals("/simco/faces/signin.xhtml")) {
+            chain.doFilter(request, response);
+        } else {
+            if (httpSession == null || httpSession.getAttribute("usuario") == null) {
+                httpResponse.sendRedirect("/simco/cerrarSesion.jsp");
+            } else {
+                chain.doFilter(request, response);
+            }
+        }
+
     }
 
     @Override

@@ -10,7 +10,6 @@ import gob.dp.simco.administracion.seguridad.entity.Rol;
 import gob.dp.simco.administracion.seguridad.entity.Usuario;
 import gob.dp.simco.administracion.seguridad.service.RolService;
 import gob.dp.simco.administracion.seguridad.service.UsuarioService;
-import gob.dp.simco.comun.MessagesUtil;
 import gob.dp.simco.comun.mb.AbstractManagedBean;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +38,7 @@ public class UsuarioNuevoController extends AbstractManagedBean {
     private List<String> lstRolesSeleccionados;
     private boolean verGuardar=true;
     private boolean habilitado=true;
-private MessagesUtil msg;
+    
     @Autowired
     private UsuarioService usuarioService;
 
@@ -55,13 +54,12 @@ private MessagesUtil msg;
         this.mensaje="";
         List<Rol> lstRolesTodos=rolService.buscarRol(new Rol());
         SelectItem item=null;
-        this.lstRolesSeleccionados=new ArrayList<String>();//Inicializo
-        this.lstRoles=new ArrayList<SelectItem>();
+        this.lstRolesSeleccionados=new ArrayList<>();//Inicializo
+        this.lstRoles=new ArrayList<>();
         for(Rol obj:lstRolesTodos){
             item=new SelectItem(obj.getCodigo(), obj.getNombre());
             this.getLstRoles().add(item);
         }
-
         return "usuarioNuevo";
      }
 
@@ -107,7 +105,6 @@ private MessagesUtil msg;
      }
 
       public void insertarUsuario(){
-          msg = new MessagesUtil();
         Usuario filter=new Usuario();
         this.llenarFiltro(filter);
         
@@ -174,7 +171,7 @@ private MessagesUtil msg;
 
     public List<SelectItem> getLstRoles() {
         if(this.lstRoles==null){
-            this.lstRoles=new ArrayList<SelectItem>();
+            this.lstRoles=new ArrayList<>();
         }
         return lstRoles;
     }
@@ -185,7 +182,7 @@ private MessagesUtil msg;
 
     public List<String> getLstRolesSeleccionados() {
          if(this.lstRolesSeleccionados==null){
-            this.lstRolesSeleccionados=new ArrayList<String>();
+            this.lstRolesSeleccionados=new ArrayList<>();
         }
         return lstRolesSeleccionados;
     }
@@ -200,14 +197,5 @@ private MessagesUtil msg;
 
     public void setRolService(RolService rolService) {
         this.rolService = rolService;
-    }
-
-    public MessagesUtil getMsg() {
-        return msg;
-    }
-
-    public void setMsg(MessagesUtil msg) {
-        this.msg = msg;
-    }
-    
+    }  
 }

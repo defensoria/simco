@@ -9,8 +9,8 @@ import gob.dp.simco.administracion.seguridad.bean.FiltroUsuario;
 import gob.dp.simco.administracion.seguridad.entity.Usuario;
 import gob.dp.simco.administracion.seguridad.service.UsuarioLoginService;
 import gob.dp.simco.administracion.seguridad.service.UsuarioService;
-import gob.dp.simco.comun.MessagesUtil;
-import gob.dp.simco.registro.constantes.ConstantesUtil;
+import gob.dp.simco.comun.mb.AbstractManagedBean;
+import gob.dp.simco.comun.ConstantesUtil;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +26,7 @@ import org.springframework.context.annotation.Scope;
  */
 @Named
 @Scope("session")
-public class BusquedaUsuarioController implements Serializable {
+public class BusquedaUsuarioController extends AbstractManagedBean implements Serializable {
 
     private static final Logger log = Logger.getLogger(BusquedaUsuarioController.class);
 
@@ -40,18 +40,12 @@ public class BusquedaUsuarioController implements Serializable {
     
     private List<UsuarioLogin> listaUsuarioBusqueda;
     
-    MessagesUtil msg;
-
     @Autowired
     private UsuarioService usuarioService;
     
     @Autowired
     private UsuarioLoginService usuarioLoginService;
 
-    public BusquedaUsuarioController() {
-        msg = new MessagesUtil();
-    }
-    
     public void buscarUsuarios(){
         UsuarioLogin ul = new UsuarioLogin();
         if(StringUtils.isNotBlank(usuarioBusqueda.getCodigo())){

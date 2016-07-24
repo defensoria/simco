@@ -16,28 +16,24 @@ import org.springframework.stereotype.Repository;
  * @author Administrador
  */
 @Repository
-public class CatalogoDaoImpl  extends SqlSessionDaoSupport implements CatalogoDao
+public class CatalogoDaoImpl extends SqlSessionDaoSupport implements CatalogoDao
 {
     @Override
-    public List<Catalogo> buscarCatalogoPadre(FiltroCatalogo filtroCatalogo)
-    {
+    public List<Catalogo> buscarCatalogoPadre(FiltroCatalogo filtroCatalogo){
        return getSqlSession().selectList("gob.dp.simco.administracion.parametro.dao.CatalogoDao.buscarCatalogoPadre",filtroCatalogo);
     }
 
     @Override
-    public Integer getTotalBuscarCatalogoPadre(FiltroCatalogo filtroCatalogo)
-    {
+    public Integer getTotalBuscarCatalogoPadre(FiltroCatalogo filtroCatalogo){
        return (Integer) getSqlSession().selectOne("gob.dp.simco.administracion.parametro.dao.CatalogoDao.getTotalBuscarCatalogoPadre",filtroCatalogo);
     }
     @Override
-    public List<Catalogo> buscarCatalogoHijo(FiltroCatalogo filtroCatalogo)
-    {
+    public List<Catalogo> buscarCatalogoHijo(FiltroCatalogo filtroCatalogo){
        return getSqlSession().selectList("gob.dp.simco.administracion.parametro.dao.CatalogoDao.buscarCatalogoHijo",filtroCatalogo);
     }
 
     @Override
-    public Integer getTotalBuscarCatalogoHijo(FiltroCatalogo filtroCatalogo)
-    {
+    public Integer getTotalBuscarCatalogoHijo(FiltroCatalogo filtroCatalogo){
        return (Integer) getSqlSession().selectOne("gob.dp.simco.administracion.parametro.dao.CatalogoDao.getTotalBuscarCatalogoHijo",filtroCatalogo);
     }
 

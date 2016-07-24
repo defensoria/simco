@@ -5,19 +5,14 @@
  */
 package gob.dp.simco.registro.controller;
 
-import gob.dp.simco.comun.MessagesUtil;
-import gob.dp.simco.registro.constantes.ConstantesUtil;
-import gob.dp.simco.registro.constantes.FunctionUtil;
+import gob.dp.simco.comun.FunctionUtil;
+import gob.dp.simco.comun.mb.AbstractManagedBean;
 import gob.dp.simco.registro.entity.Actividad;
 import gob.dp.simco.registro.entity.ActividadMedioVerificacion;
 import gob.dp.simco.registro.entity.MedioVerificacion;
 import gob.dp.simco.registro.service.ActividadMedioVerificacionService;
 import gob.dp.simco.registro.service.MedioVerificacionService;
-import java.io.File;
-import java.io.InputStream;
 import java.io.Serializable;
-import java.nio.file.Files;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -34,7 +29,7 @@ import org.springframework.context.annotation.Scope;
  */
 @Named
 @Scope("session")
-public class MedioVerificacionController implements Serializable {
+public class MedioVerificacionController extends AbstractManagedBean implements Serializable {
 
     private static final Logger log = Logger.getLogger(MedioVerificacionController.class);
 
@@ -46,17 +41,11 @@ public class MedioVerificacionController implements Serializable {
 
     private Part file1;
 
-    private MessagesUtil msg;
-
     @Autowired
     private MedioVerificacionService medioVerificacionService;
 
     @Autowired
     private ActividadMedioVerificacionService actividadMedioVerificacionService;
-
-    public MedioVerificacionController() {
-        msg = new MessagesUtil();
-    }
 
     public String cargarPagina(Long idActividad) {
         try {
@@ -174,11 +163,4 @@ public class MedioVerificacionController implements Serializable {
         this.actividad = actividad;
     }
 
-    public MessagesUtil getMsg() {
-        return msg;
-    }
-
-    public void setMsg(MessagesUtil msg) {
-        this.msg = msg;
-    }
 }

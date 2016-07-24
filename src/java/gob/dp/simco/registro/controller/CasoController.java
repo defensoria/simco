@@ -11,14 +11,14 @@ import gob.dp.simco.administracion.parametro.service.CatalogoService;
 import gob.dp.simco.administracion.seguridad.controller.LoginController;
 import gob.dp.simco.administracion.seguridad.controller.MenuController;
 import gob.dp.simco.administracion.seguridad.entity.Usuario;
-import gob.dp.simco.comun.MessagesUtil;
 import gob.dp.simco.comun.entity.Departamento;
 import gob.dp.simco.comun.entity.Distrito;
 import gob.dp.simco.comun.entity.Provincia;
 import gob.dp.simco.comun.service.UbigeoService;
 import gob.dp.simco.registro.bean.AdjuntiaDefensorialVO;
 import gob.dp.simco.registro.bean.FiltroParametro;
-import gob.dp.simco.registro.constantes.ConstantesUtil;
+import gob.dp.simco.comun.ConstantesUtil;
+import gob.dp.simco.comun.mb.AbstractManagedBean;
 import gob.dp.simco.registro.entity.Actividad;
 import gob.dp.simco.registro.entity.ActividadCaso;
 import gob.dp.simco.registro.entity.Actor;
@@ -70,7 +70,7 @@ import org.springframework.context.annotation.Scope;
  */
 @Named
 @Scope("session")
-public class CasoController implements Serializable {
+public class CasoController extends AbstractManagedBean implements Serializable {
 
     private static final Logger log = Logger.getLogger(CasoController.class);
 
@@ -103,8 +103,6 @@ public class CasoController implements Serializable {
     private int nroActuacionesDefensoriales = 0;
 
     private boolean verTitulo = false;
-
-    private MessagesUtil msg;
 
     private List<SelectItem> listaDepartamento;
 
@@ -155,10 +153,6 @@ public class CasoController implements Serializable {
 
     @Autowired
     private CasoRegionService casoRegionService;
-
-    public CasoController() {
-        msg = new MessagesUtil();
-    }
 
     public String cargarPagina() {
         try {
@@ -1043,14 +1037,6 @@ public class CasoController implements Serializable {
 
     public void setListCasoActor(List<CasoActor> listCasoActor) {
         this.listCasoActor = listCasoActor;
-    }
-
-    public MessagesUtil getMsg() {
-        return msg;
-    }
-
-    public void setMsg(MessagesUtil msg) {
-        this.msg = msg;
     }
 
     public List<SelectItem> getListaDepartamento() {

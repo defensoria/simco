@@ -3,17 +3,19 @@ package gob.dp.simco.administracion.seguridad.entity;
 import java.io.Serializable;
 
 /**
- * @author Dante
+ * @author carlos
  *
  * Clase utilizada en el registro de Rol
  * @author Dante
- * @version 1.0 - 02/12/2011
  */
 public class Rol implements Serializable {
     
     private String codigo;
+    
     private String nombre;
+    
     private String descripcion;
+    
     private String estado;
 
     public Rol() {

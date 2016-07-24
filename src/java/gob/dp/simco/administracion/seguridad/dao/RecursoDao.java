@@ -10,17 +10,20 @@ import java.util.Map;
 /**
  * Interface RecursoDao que realiza la relación entre el service y el sqlMap
  * @author Dante
- * @version 1.0 - 14/12/2011
  */
 
 public interface RecursoDao {
 
     public List<Recurso> buscarRecurso(Recurso filtro);
+    
     public List<Recurso> buscarRecursoSegunUsuario(Usuario filtro);
+    
     public Map<String, Recurso> buscarMapRecursoSegunUsuario(Usuario filtro);
+    
     public List<Recurso> buscarRecursoSegunRol(Rol filtro);
     
     public void insertarRolRecurso(RolRecurso rolRecurso);
+    
     public void deleteRolRecurso(RolRecurso rolRecurso);
  
 }

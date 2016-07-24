@@ -7,7 +7,7 @@ package gob.dp.simco.analisis.controller;
 
 import gob.dp.simco.analisis.entity.AnalisisActorTema;
 import gob.dp.simco.analisis.service.AnalisisActorTemaService;
-import gob.dp.simco.comun.MessagesUtil;
+import gob.dp.simco.comun.mb.AbstractManagedBean;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -25,7 +25,7 @@ import org.springframework.context.annotation.Scope;
  */
 @Named
 @Scope("session")
-public class CanvasController implements Serializable{
+public class CanvasController extends AbstractManagedBean implements Serializable{
     
     private static final long serialVersionUID = 1L;
     
@@ -35,15 +35,9 @@ public class CanvasController implements Serializable{
     
     private Long idTemaGrafico = 0L;
     
-    MessagesUtil msg;
-    
     @Autowired
     private AnalisisActorTemaService analisisActorTemaService;
 
-    public CanvasController() {
-        msg = new MessagesUtil();
-    }
-    
     public void cambiarCanvas(){
         listaActoresXCasoGrafico = new ArrayList<>();
         List<AnalisisActorTema> list = analisisActorTemaService.analisisActorTemaXactorBuscar(idTemaGrafico);

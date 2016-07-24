@@ -5,8 +5,8 @@
  */
 package gob.dp.simco.registro.controller;
 
-import gob.dp.simco.comun.MessagesUtil;
-import gob.dp.simco.registro.constantes.ConstantesUtil;
+import gob.dp.simco.comun.ConstantesUtil;
+import gob.dp.simco.comun.mb.AbstractManagedBean;
 import gob.dp.simco.registro.entity.ActividadVictima;
 import gob.dp.simco.registro.service.ActividadVictimaService;
 import java.io.File;
@@ -33,15 +33,13 @@ import org.springframework.context.annotation.Scope;
  */
 @Named
 @Scope("session")
-public class VictimaViolenciaController implements Serializable {
+public class VictimaViolenciaController extends AbstractManagedBean implements Serializable {
 
     private static final Logger log = Logger.getLogger(RegistroController.class);
 
     private ActividadVictima actividadVictima;
 
     private int tipo = 0;
-
-    private MessagesUtil msg;
 
     private Part file1;
 
@@ -53,10 +51,6 @@ public class VictimaViolenciaController implements Serializable {
 
     @Autowired
     private ActividadVictimaService actividadVictimaService;
-
-    public VictimaViolenciaController() {
-        msg = new MessagesUtil();
-    }
 
     public String cargarPagina(long idActivid, int tip) {
         tipo = tip;
@@ -238,14 +232,6 @@ public class VictimaViolenciaController implements Serializable {
 
     public void setActividadVictima(ActividadVictima actividadVictima) {
         this.actividadVictima = actividadVictima;
-    }
-
-    public MessagesUtil getMsg() {
-        return msg;
-    }
-
-    public void setMsg(MessagesUtil msg) {
-        this.msg = msg;
     }
 
     public Part getFile1() {

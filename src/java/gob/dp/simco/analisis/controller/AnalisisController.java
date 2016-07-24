@@ -26,7 +26,7 @@ import gob.dp.simco.analisis.service.ProblemaDetalleService;
 import gob.dp.simco.analisis.service.ProblemaService;
 import gob.dp.simco.analisis.service.TemaService;
 import gob.dp.simco.analisis.vo.RelacionActorVO;
-import gob.dp.simco.comun.MessagesUtil;
+import gob.dp.simco.comun.mb.AbstractManagedBean;
 import gob.dp.simco.registro.bean.FiltroCasoActor;
 import gob.dp.simco.registro.controller.RegistroController;
 import gob.dp.simco.registro.entity.Actividad;
@@ -60,7 +60,7 @@ import org.springframework.context.annotation.Scope;
  */
 @Named
 @Scope("session")
-public class AnalisisController implements Serializable {
+public class AnalisisController extends AbstractManagedBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -148,8 +148,6 @@ public class AnalisisController implements Serializable {
 
     private String graficaInner;
 
-    MessagesUtil msg;
-
     private List<ContextoTipo> listaTipoContexto;
 
     @Autowired
@@ -196,7 +194,6 @@ public class AnalisisController implements Serializable {
 
     public AnalisisController() {
         limpiarListas();
-        msg = new MessagesUtil();
     }
 
     public String cargarContexto(Caso caso) {

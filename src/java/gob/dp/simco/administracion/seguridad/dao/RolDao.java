@@ -15,9 +15,13 @@ import java.util.Map;
 public interface RolDao {
 
    public List<Rol> buscarRol(Rol filtro);
+   
    public List<Rol> buscarRolSegunUsuario(Usuario filtro);
+   
    public void insertarUsuarioRol(UsuarioRol usuarioRol);
+   
    public void deleteUsuarioRol(UsuarioRol usuarioRol);
+   
    public Map<String,Rol> buscarMapRolSegunUsuario(Usuario filtro);
 
 }

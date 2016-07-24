@@ -26,6 +26,7 @@ import org.springframework.context.annotation.Scope;
 public class SeguridadUtilController {
 
     private static final Logger log = Logger.getLogger(SeguridadUtilController.class);
+    
     @Autowired
     private RolService rolService;
 

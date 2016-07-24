@@ -5,7 +5,7 @@
  */
 package gob.dp.simco.registro.controller;
 
-import gob.dp.simco.comun.ConstantesComun;
+import gob.dp.simco.comun.ConstantesUtil;
 import gob.dp.simco.registro.entity.Parametro;
 import gob.dp.simco.registro.service.CacheService;
 import java.util.List;
@@ -154,22 +154,22 @@ public class ListasComunesController {
     private List insertarValoresDefectoParametro(List lst, boolean insertarTODOS, boolean insertarNINGUNO, boolean insertarSELECCIONE) {
         if (insertarTODOS) {
             Parametro par = new Parametro();
-            par.setValorParametro(ConstantesComun.LISTA_VALOR_TODOS_CODIGO);
-            par.setNombreParametro(ConstantesComun.LISTA_VALOR_TODOS_NOMBRE);
+            par.setValorParametro(ConstantesUtil.LISTA_VALOR_TODOS_CODIGO);
+            par.setNombreParametro(ConstantesUtil.LISTA_VALOR_TODOS_NOMBRE);
             lst.add(0, par);
         }
 
         if (insertarNINGUNO) {
             Parametro par = new Parametro();
-            par.setValorParametro(ConstantesComun.LISTA_VALOR_NINGUNO_CODIGO);
-            par.setNombreParametro(ConstantesComun.LISTA_VALOR_NINGUNO_NOMBRE);
+            par.setValorParametro(ConstantesUtil.LISTA_VALOR_NINGUNO_CODIGO);
+            par.setNombreParametro(ConstantesUtil.LISTA_VALOR_NINGUNO_NOMBRE);
             lst.add(0, par);
         }
 
         if (insertarSELECCIONE) {
             Parametro par = new Parametro();
-            par.setValorParametro(ConstantesComun.LISTA_VALOR_SELECCIONE_CODIGO);
-            par.setNombreParametro(ConstantesComun.LISTA_VALOR_SELECCIONE_NOMBRE);
+            par.setValorParametro(ConstantesUtil.LISTA_VALOR_SELECCIONE_CODIGO);
+            par.setNombreParametro(ConstantesUtil.LISTA_VALOR_SELECCIONE_NOMBRE);
             lst.add(0, par);
         }
 

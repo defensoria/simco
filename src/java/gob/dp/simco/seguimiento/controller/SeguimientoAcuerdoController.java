@@ -258,16 +258,6 @@ public class SeguimientoAcuerdoController implements Serializable {
         if(cas != null){
             SeguimientoAcuerdo seguimientoAcu = seguimientoAcuerdoService.seguimientoAcuerdoBuscarAcuerdo(idAcuerdo);
             if(seguimientoAcu != null){
-                if(seguimientoAcu.getIndicadorSeleccionHoraFin() == true){
-                    fechaFinAlerta = seguimientoAcu.getFinDefinitivo();
-                }else{
-                    if(StringUtils.equals(seguimientoAcu.getIndicadorAntesDespuesFin(), "ANT")){
-                        fechaFinAlerta =  sumarRestarDiasFecha(seguimientoAcu.getFinSeguimiento(), seguimientoAcu.getNumeroFinal()*(-1));
-                    }
-                    if(StringUtils.equals(seguimientoAcu.getIndicadorAntesDespuesFin(), "DES")){
-                        fechaFinAlerta =  sumarRestarDiasFecha(seguimientoAcu.getFinSeguimiento(), seguimientoAcu.getNumeroFinal());
-                    }         
-                }
                 if(fechaFinAlerta != null){
                     long dias = diferenciaFechas(new Date(), fechaFinAlerta)+1L;
                     if(dias > 0){
@@ -291,24 +281,14 @@ public class SeguimientoAcuerdoController implements Serializable {
         Calendar cal2 = Calendar.getInstance();
         cal1.setTime(fechaIni);
         cal2.setTime(fechaFin);
-        // conseguir la representacion de la fecha en milisegundos
         long milis1 = cal1.getTimeInMillis();
         long milis2 = cal2.getTimeInMillis();
-        // calcular la diferencia en milisengundos
         long diff = milis2 - milis1;
-        // calcular la diferencia en segundos
-        //long diffSeconds = diff / 1000;
-        // calcular la diferencia en minutos
-        //long diffMinutes = diff / (60 * 1000);
-        // calcular la diferencia en horas
-        //long diffHours = diff / (60 * 60 * 1000);
-        // calcular la diferencia en dias
         long diffDays = diff / (24 * 60 * 60 * 1000);
         return diffDays;
     }
 
     public Date sumarRestarDiasFecha(Date fecha, int dias) {
-
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(fecha); // Configuramos la fecha que se recibe	
         calendar.add(Calendar.DAY_OF_YEAR, dias);  // numero de días a añadir, o restar en caso de días<0	

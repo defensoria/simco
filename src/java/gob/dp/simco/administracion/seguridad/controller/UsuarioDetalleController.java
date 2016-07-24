@@ -10,9 +10,8 @@ import gob.dp.simco.administracion.seguridad.entity.Usuario;
 import gob.dp.simco.administracion.seguridad.entity.UsuarioLogin;
 import gob.dp.simco.administracion.seguridad.service.RolService;
 import gob.dp.simco.administracion.seguridad.service.UsuarioService;
-import gob.dp.simco.comun.MessagesUtil;
 import gob.dp.simco.comun.mb.AbstractManagedBean;
-import gob.dp.simco.registro.constantes.ConstantesUtil;
+import gob.dp.simco.comun.ConstantesUtil;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -45,8 +44,6 @@ public class UsuarioDetalleController extends AbstractManagedBean implements Ser
 
     private Usuario usuario;
 
-    private String mensaje;
-
     private List<SelectItem> lstRoles;
 
     private String rolSeleccionado;
@@ -59,18 +56,12 @@ public class UsuarioDetalleController extends AbstractManagedBean implements Ser
 
     private Part file1;
 
-    MessagesUtil msg;
-
     @Autowired
     private UsuarioService usuarioService;
 
     @Autowired
     private RolService rolService;
-
-    public UsuarioDetalleController() {
-        msg = new MessagesUtil();
-    }
-
+    
     public String verDetalleUsuario(UsuarioLogin usuarioLogin) {
         FiltroUsuario filter = new FiltroUsuario();
         filter.setCodigo(usuarioLogin.getCodigo());
@@ -148,13 +139,11 @@ public class UsuarioDetalleController extends AbstractManagedBean implements Ser
             usuarioService.modificarUsuario(filter, lstRolSel);
             msg.messageInfo("Se realizaron los cambios correctamente", null);
         } catch (Exception ex) {
-            mensaje = "Ocurrió un error:" + ex.getMessage();
             log.error("Ocurrió un error", ex);
         }
     }
 
     private void insertarUsuario() {
-
         Usuario filter = new Usuario();
         this.llenarFiltro(filter);
         try {
@@ -175,7 +164,7 @@ public class UsuarioDetalleController extends AbstractManagedBean implements Ser
             msg.messageInfo("Se registro el usuario", null);
             busquedaUsuarioController.addUsuarioLista(usu);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("ERROR: insertarUsuario "+e);
         }
     }
 
@@ -310,14 +299,6 @@ public class UsuarioDetalleController extends AbstractManagedBean implements Ser
 
     public void setLstRoles(List<SelectItem> lstRoles) {
         this.lstRoles = lstRoles;
-    }
-
-    public String getMensaje() {
-        return mensaje;
-    }
-
-    public void setMensaje(String mensaje) {
-        this.mensaje = mensaje;
     }
 
     public Usuario getUsuario() {

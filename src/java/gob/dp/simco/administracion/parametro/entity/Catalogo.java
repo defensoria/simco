@@ -9,7 +9,7 @@ import java.io.Serializable;
 
 /**
  *
- * @author Sony
+ * @author carlos
  */
 public class Catalogo implements Serializable{
     

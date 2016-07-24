@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package gob.dp.simco.registro.constantes;
+package gob.dp.simco.comun;
 
 /**
  *
@@ -40,7 +40,17 @@ public class ConstantesUtil {
     
     public static final String BASE_URL_PRODUCCION_IMAGE = "http://localhost:8080/filesystem/";
     
+    public static final String LISTA_VALOR_TODOS_CODIGO = "-1000";
     
+    public static final String LISTA_VALOR_TODOS_NOMBRE = "TODOS";
+
+    public static final String LISTA_VALOR_NINGUNO_CODIGO = "-2000";
+    
+    public static final String LISTA_VALOR_NINGUNO_NOMBRE = "NINGUNO";
+
+    public static final String LISTA_VALOR_SELECCIONE_CODIGO = "-3000";
+    
+    public static final String LISTA_VALOR_SELECCIONE_NOMBRE = "SELECCIONE";
     
     
     

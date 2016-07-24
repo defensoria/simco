@@ -16,7 +16,6 @@ public interface ContextoTipoDao {
     
     public List<ContextoTipo> contextoTipoBuscar();
 
-    
 }
 
 

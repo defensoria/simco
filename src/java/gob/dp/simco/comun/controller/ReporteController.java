@@ -11,7 +11,7 @@ import gob.dp.simco.comun.entity.Resumen;
 import gob.dp.simco.comun.service.RegistroCargaService;
 import gob.dp.simco.comun.service.ReporteService;
 import gob.dp.simco.comun.service.UbigeoService;
-import gob.dp.simco.registro.constantes.ConstantesUtil;
+import gob.dp.simco.comun.ConstantesUtil;
 import java.io.IOException;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;

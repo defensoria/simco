@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package gob.dp.simco.registro.constantes;
+package gob.dp.simco.comun;
 
 import java.io.File;
 import java.io.IOException;
@@ -55,6 +55,10 @@ public class FunctionUtil {
         } catch (Exception e) {
             return "";
         }
+    }
+    
+    public static final double redondear( double numero, int decimales ) {
+        return Math.round(numero*Math.pow(10,decimales))/Math.pow(10,decimales);
     }
     
 }

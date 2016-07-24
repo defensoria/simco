@@ -7,7 +7,6 @@ import gob.dp.simco.administracion.seguridad.entity.Recurso;
 import gob.dp.simco.administracion.seguridad.entity.Rol;
 import gob.dp.simco.administracion.seguridad.service.RecursoService;
 import gob.dp.simco.administracion.seguridad.service.RolService;
-import gob.dp.simco.comun.MessagesUtil;
 import gob.dp.simco.comun.mb.AbstractManagedBean;
 import java.io.Serializable;
 
@@ -19,27 +18,19 @@ import org.springframework.context.annotation.Scope;
 
 @Named
 @Scope("session")
-public class AsignarRecursoRolController implements Serializable {
+public class AsignarRecursoRolController extends AbstractManagedBean implements Serializable {
 
     private static final Logger log = Logger.getLogger(AsignarRecursoRolController.class);
     
     private Rol rol;
     
-    private String mensaje = "";
-
     private List<Recurso> listaRecurso;
     
-    MessagesUtil msg;
-
     @Autowired
     private RecursoService recursoService;
     
     @Autowired
     private RolService rolService;
-
-    public AsignarRecursoRolController() {
-        msg = new MessagesUtil();
-    }
 
     public void setRolService(RolService rolService) {
         this.rolService = rolService;
@@ -61,12 +52,11 @@ public class AsignarRecursoRolController implements Serializable {
     }
 
     public String verAsignarRecursoRol(String codigo) {
-        this.mensaje = "";
         Rol filter = new Rol();
         filter.setCodigo(codigo);
-        this.rol = rolService.buscarRol(filter).get(0);
-        this.listaRecurso = new ArrayList<>();
-        this.listaRecurso = recursoService.buscarRecursosAsignados(this.rol);
+        rol = rolService.buscarRol(filter).get(0);
+        listaRecurso = new ArrayList<>();
+        listaRecurso = recursoService.buscarRecursosAsignados(rol);
         return "verAsignarRecursoRol";
     }
 
@@ -98,14 +88,6 @@ public class AsignarRecursoRolController implements Serializable {
 
     public void setRol(Rol rol) {
         this.rol = rol;
-    }
-
-    public String getMensaje() {
-        return mensaje;
-    }
-
-    public void setMensaje(String mensaje) {
-        this.mensaje = mensaje;
     }
 
 }

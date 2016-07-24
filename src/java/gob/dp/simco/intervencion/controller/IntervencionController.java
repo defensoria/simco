@@ -8,7 +8,6 @@ package gob.dp.simco.intervencion.controller;
 import gob.dp.simco.administracion.seguridad.controller.BusquedaUsuarioController;
 import gob.dp.simco.administracion.seguridad.controller.LoginController;
 import gob.dp.simco.administracion.seguridad.entity.Usuario;
-import gob.dp.simco.comun.MessagesUtil;
 import gob.dp.simco.intervencion.entity.Intervencion;
 import gob.dp.simco.intervencion.entity.IntervencionAccion;
 import gob.dp.simco.intervencion.entity.IntervencionEtapa;
@@ -22,7 +21,8 @@ import gob.dp.simco.intervencion.service.IntervencionHistorialActService;
 import gob.dp.simco.intervencion.service.IntervencionMiembroService;
 import gob.dp.simco.intervencion.service.IntervencionService;
 import gob.dp.simco.intervencion.vo.ReportPlanIntervencionVO;
-import gob.dp.simco.registro.constantes.ConstantesUtil;
+import gob.dp.simco.comun.ConstantesUtil;
+import gob.dp.simco.comun.mb.AbstractManagedBean;
 import gob.dp.simco.registro.entity.Actividad;
 import gob.dp.simco.registro.entity.Caso;
 import gob.dp.simco.registro.service.ActividadService;
@@ -35,8 +35,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
-import java.util.logging.Level;
 import javax.inject.Named;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletOutputStream;
@@ -57,7 +55,7 @@ import org.springframework.context.annotation.Scope;
  */
 @Named
 @Scope("session")
-public class IntervencionController implements Serializable {
+public class IntervencionController extends AbstractManagedBean implements Serializable {
 
     private static final Logger log = Logger.getLogger(IntervencionController.class);
 
@@ -105,8 +103,6 @@ public class IntervencionController implements Serializable {
 
     JasperPrint jasperPrint;
 
-    private MessagesUtil msg;
-
     private Integer actividadesTotales;
 
     private Integer actividadesTotalesEjecutadas;
@@ -137,10 +133,6 @@ public class IntervencionController implements Serializable {
     @Autowired
     private CasoService casoService;
 
-    public IntervencionController() {
-        msg = new MessagesUtil();
-    }
-
     public String cargarPaginaIntervencion() {
         usuarioSession();
         intervencion = new Intervencion();
@@ -150,7 +142,7 @@ public class IntervencionController implements Serializable {
         generarCadenaCasos();
         return "intervencion";
     }
-    
+
     private void usuarioSession() {
         FacesContext context = FacesContext.getCurrentInstance();
         LoginController loginController = (LoginController) context.getELContext().getELResolver().getValue(context.getELContext(), null, "loginController");
@@ -175,25 +167,25 @@ public class IntervencionController implements Serializable {
         usuarioSession();
         caso = new Caso();
         try {
-        caso = casoService.casoBuscarOne(idCaso);
-        intervencionEtapa = new IntervencionEtapa();
-        Intervencion i = intervencionService.intervencionBuscarCaso(caso.getCodigo());
-        if (i == null) {
-            intervencion = new Intervencion();
-            saveIntervencion();
-            cargarListas2();
-            accions = null;
-        } else {
-            setIntervencion(i);
-            listarAcciones(i.getId());
-            cargarListasTipoTotal();
-        }
-        FacesContext context = FacesContext.getCurrentInstance();
-        BusquedaUsuarioController busquedaUsuarioController = (BusquedaUsuarioController) context.getELContext().getELResolver().getValue(context.getELContext(), null, "busquedaUsuarioController");
-        busquedaUsuarioController.listarPaginado(1L);
-        intervencionAccion = new IntervencionAccion();
-        intervencionAccionSelect = new IntervencionAccion();
-        intervencionMiembros = new ArrayList<>();
+            caso = casoService.casoBuscarOne(idCaso);
+            intervencionEtapa = new IntervencionEtapa();
+            Intervencion i = intervencionService.intervencionBuscarCaso(caso.getCodigo());
+            if (i == null) {
+                intervencion = new Intervencion();
+                saveIntervencion();
+                cargarListas2();
+                accions = null;
+            } else {
+                setIntervencion(i);
+                listarAcciones(i.getId());
+                cargarListasTipoTotal();
+            }
+            FacesContext context = FacesContext.getCurrentInstance();
+            BusquedaUsuarioController busquedaUsuarioController = (BusquedaUsuarioController) context.getELContext().getELResolver().getValue(context.getELContext(), null, "busquedaUsuarioController");
+            busquedaUsuarioController.listarPaginado(1L);
+            intervencionAccion = new IntervencionAccion();
+            intervencionAccionSelect = new IntervencionAccion();
+            intervencionMiembros = new ArrayList<>();
         } catch (Exception ex) {
             log.error(ex);
         }
@@ -266,13 +258,13 @@ public class IntervencionController implements Serializable {
                 ias.add(ia);
             }
             vo.setAcciones(ias);
-            vo.setImagePath(ConstantesUtil.BASE_URL_IMAGEPATH+"logoPlanIntervencion.png");
+            vo.setImagePath(ConstantesUtil.BASE_URL_IMAGEPATH + "logoPlanIntervencion.png");
 
             lista.add(vo);
 
             JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(
                     lista);
-            jasperPrint = JasperFillManager.fillReport(ConstantesUtil.BASE_URL_REPORT+"planIntervencion.jasper",
+            jasperPrint = JasperFillManager.fillReport(ConstantesUtil.BASE_URL_REPORT + "planIntervencion.jasper",
                     new HashMap(), beanCollectionDataSource);
             return true;
         } else {
@@ -283,19 +275,14 @@ public class IntervencionController implements Serializable {
 
     public void pdf() throws JRException, IOException {
         Date date = new Date();
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
-                "yyyy-MM-dd hh:mm:ss");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         String fecha = simpleDateFormat.format(date);
         if (initJasper()) {
             FacesContext facesContext = FacesContext.getCurrentInstance();
-            HttpServletResponse httpServletResponse = (HttpServletResponse) facesContext
-                    .getCurrentInstance().getExternalContext().getResponse();
-            httpServletResponse.addHeader("Content-disposition",
-                    "attachment; filename=" + fecha + "_planIntervencion.pdf");
-            ServletOutputStream servletOutputStream = httpServletResponse
-                    .getOutputStream();
-            JasperExportManager.exportReportToPdfStream(jasperPrint,
-                    servletOutputStream);
+            HttpServletResponse httpServletResponse = (HttpServletResponse) facesContext.getCurrentInstance().getExternalContext().getResponse();
+            httpServletResponse.addHeader("Content-disposition", "attachment; filename=" + fecha + "_planIntervencion.pdf");
+            ServletOutputStream servletOutputStream = httpServletResponse.getOutputStream();
+            JasperExportManager.exportReportToPdfStream(jasperPrint, servletOutputStream);
             facesContext.responseComplete();
             facesContext.renderResponse();
         }
@@ -580,21 +567,21 @@ public class IntervencionController implements Serializable {
 
     public void updateIntervencionEtapaEnEjecucion() {
         List<IntervencionMiembro> ims = intervencionMiembroService.intervencionMiembroBuscar(intervencionEtapa.getId());
-        for(IntervencionMiembro im : ims){
+        for (IntervencionMiembro im : ims) {
             im.setEstado("TEM");
             intervencionMiembroService.intervencionMiembroUpdate(im);
         }
-        if(intervencionEtapa.getListaActuacionesEjecutadas() > 0){
+        if (intervencionEtapa.getListaActuacionesEjecutadas() > 0) {
             intervencionEtapa.setTipo("ENE");
-        }else{
+        } else {
             intervencionEtapa.setTipo("PLA");
         }
-        
+
         for (IntervencionMiembro miembro : intervencionMiembros) {
-                miembro.setIntervencionEtapa(intervencionEtapa);
-                intervencionMiembroService.intervencionMiembroInsertar(miembro);
-            }
-        
+            miembro.setIntervencionEtapa(intervencionEtapa);
+            intervencionMiembroService.intervencionMiembroInsertar(miembro);
+        }
+
         intervencionEtapaUpdate();
 
         if (ejecutados > 0) {
@@ -621,9 +608,9 @@ public class IntervencionController implements Serializable {
     }
 
     public boolean removeMiembro(IntervencionMiembro miembro) {
-        if(StringUtils.equals(usuarioSession.getCodigo(), miembro.getCodigoUsuario())){
+        if (StringUtils.equals(usuarioSession.getCodigo(), miembro.getCodigoUsuario())) {
             return false;
-        }else{
+        } else {
             intervencionMiembros.remove(miembro);
         }
         return true;
@@ -707,30 +694,30 @@ public class IntervencionController implements Serializable {
 
     public boolean saveIntervencion() {
         try {
-        intervencions = intervencionService.intervencionBuscar(usuarioSession.getCodigo());
-        
-        if (caso.getId() == null) {
-            msg.messageAlert("Debe de seleccionar un caso", null);
-            return false;
-        }else{
-            caso = casoService.casoBuscarOne(caso.getId());
-        }
-            
-        for (Intervencion i : intervencions) {
-            if (i.getCodigoCaso().equals(caso.getCodigo())) {
-                msg.messageAlert("Ya ha sido seleccionado el caso", null);
+            intervencions = intervencionService.intervencionBuscar(usuarioSession.getCodigo());
+
+            if (caso.getId() == null) {
+                msg.messageAlert("Debe de seleccionar un caso", null);
                 return false;
+            } else {
+                caso = casoService.casoBuscarOne(caso.getId());
             }
-        }
-        intervencion.setEstado("ACT");
-        intervencion.setNombre(caso.getNombre());
-        intervencion.setCodigoCaso(caso.getCodigo());
-        intervencionService.intervencionInsertar(intervencion);
-        intervencions = intervencionService.intervencionBuscar(usuarioSession.getCodigo());
-        listarIntervenciones();
+
+            for (Intervencion i : intervencions) {
+                if (i.getCodigoCaso().equals(caso.getCodigo())) {
+                    msg.messageAlert("Ya ha sido seleccionado el caso", null);
+                    return false;
+                }
+            }
+            intervencion.setEstado("ACT");
+            intervencion.setNombre(caso.getNombre());
+            intervencion.setCodigoCaso(caso.getCodigo());
+            intervencionService.intervencionInsertar(intervencion);
+            intervencions = intervencionService.intervencionBuscar(usuarioSession.getCodigo());
+            listarIntervenciones();
         } catch (Exception ex) {
-                log.error(ex);
-            }
+            log.error(ex);
+        }
         return true;
     }
 
@@ -924,14 +911,6 @@ public class IntervencionController implements Serializable {
 
     public void setEjecutados(Integer ejecutados) {
         this.ejecutados = ejecutados;
-    }
-
-    public MessagesUtil getMsg() {
-        return msg;
-    }
-
-    public void setMsg(MessagesUtil msg) {
-        this.msg = msg;
     }
 
     public Integer getActividadesTotales() {

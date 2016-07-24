@@ -8,9 +8,8 @@ import gob.dp.simco.administracion.parametro.bean.FiltroCatalogo;
 import gob.dp.simco.administracion.parametro.constantes.Constantes;
 import gob.dp.simco.administracion.parametro.entity.Catalogo;
 import gob.dp.simco.administracion.parametro.service.CatalogoService;
-import gob.dp.simco.comun.MessagesUtil;
 import gob.dp.simco.comun.mb.AbstractManagedBean;
-import gob.dp.simco.registro.constantes.ConstantesUtil;
+import gob.dp.simco.comun.ConstantesUtil;
 import java.io.Serializable;
 import java.util.List;
 import javax.inject.Named;
@@ -29,8 +28,6 @@ public class CatalogoController extends AbstractManagedBean implements Serializa
 
     private static final Logger log = Logger.getLogger(CatalogoController.class);
 
-    private String mensaje;
-
     private Long nroPagina = 1L;
 
     private Long nroPaginaHijo = 1L;
@@ -41,8 +38,6 @@ public class CatalogoController extends AbstractManagedBean implements Serializa
 
     private int padreParametro = 0;
     
-    MessagesUtil msg;
-
     private BusquedaCatalogoTemp busquedaCatalogoTemp;
 
     private Catalogo catalogoPadre;
@@ -51,22 +46,9 @@ public class CatalogoController extends AbstractManagedBean implements Serializa
 
     private boolean habilitado = true;
 
-    private boolean verGuardar = true;
-    
     @Autowired
     private CatalogoService catalogoService;
 
-    public CatalogoController() {
-        msg = new MessagesUtil();
-    }
-    
-    public boolean isVerGuardar() {
-        return verGuardar;
-    }
-
-    public void setVerGuardar(boolean verGuardar) {
-        this.verGuardar = verGuardar;
-    }
 
     public BusquedaCatalogoTemp getBusquedaCatalogoTemp() {
         if (busquedaCatalogoTemp == null) {
@@ -85,14 +67,6 @@ public class CatalogoController extends AbstractManagedBean implements Serializa
 
     public void setHabilitado(boolean habilitado) {
         this.habilitado = habilitado;
-    }
-
-    public String getMensaje() {
-        return mensaje;
-    }
-
-    public void setMensaje(String mensaje) {
-        this.mensaje = mensaje;
     }
 
     public Catalogo getCatalogoPadre() {
@@ -136,10 +110,10 @@ public class CatalogoController extends AbstractManagedBean implements Serializa
                 filtroCatalogo.setNombreParametro(busquedaCatalogoTemp.getNombreParametro().toUpperCase());
             }
 
-            filtroCatalogo.setNumParametro((busquedaCatalogoTemp.getNumParametro() == null || busquedaCatalogoTemp.getNumParametro().equals(new Integer(0))) ? null : busquedaCatalogoTemp.getNumParametro());
+            filtroCatalogo.setNumParametro((busquedaCatalogoTemp.getNumParametro() == null || busquedaCatalogoTemp.getNumParametro() == 0) ? null : busquedaCatalogoTemp.getNumParametro());
             listarPaginado(filtroCatalogo, page);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("ERROR : buscarCatalogoPadre:"+e);
         }
         return "catalogoPadreList";
     }
@@ -162,25 +136,23 @@ public class CatalogoController extends AbstractManagedBean implements Serializa
                     nroPagina = pagina;
                 }
             } catch (Exception e) {
-                log.error("ERROR : BusquedaUsuarioController.listarPaginado: " + e.getMessage());
+                log.error("ERROR : BusquedaUsuarioController.listarPaginado: " + e);
             }
         }
     }
 
     public String viewCatalogoPadre(Integer numParametro) {
-        this.verGuardar = true;
         try {
             getCatalogoPadre().setNumParametro(numParametro);
             setCatalogoPadre(catalogoService.viewCatalogoPadre(getCatalogoPadre()));
             this.habilitado = getCatalogoPadre().getCodEstado().equals(Constantes.ESTADO_ACTIVO);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("ERROR : viewCatalogoPadre " + e);
         }
         return "catalogoPadreUpdate";
     }
 
     public String updateCatalogoPadre(Integer numParametro) {
-        this.verGuardar = true;
         try {
             getCatalogoPadre().setNumParametro(numParametro);
             getCatalogoPadre().setPadreParametro(getCatalogoPadre().getPadreParametro());
@@ -199,15 +171,14 @@ public class CatalogoController extends AbstractManagedBean implements Serializa
             catalogoService.updateCatalogoPadre(getCatalogoPadre());
             msg.messageInfo("Se realizacion los cambios correctamente", null);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("ERROR : updateCatalogoPadre " + e);
         }
         return "catalogoPadreUpdate";
     }
 
     public String nuevoCatalogoPadre() {
-        this.verGuardar = true;
         busquedaCatalogoTemp = new BusquedaCatalogoTemp();
-        this.catalogoPadre = new Catalogo();
+        catalogoPadre = new Catalogo();
         return "catalogoPadreNuevo";
     }
 
@@ -223,10 +194,9 @@ public class CatalogoController extends AbstractManagedBean implements Serializa
                 getCatalogoPadre().setValorParametro("");
                 getCatalogoPadre().setNombreParametro(getCatalogoPadre().getNombreParametro().toUpperCase());
                 catalogoService.nuevoCatalogoPadre(getCatalogoPadre());
-                this.verGuardar = false;
                 msg.messageInfo("Se realizaron todos los cambios correctamente", null);
             } catch (Exception ex) {
-                log.error(ex);
+                log.error("ERROR : insertarCatalogoPadre " + ex);
             }
         }
         return "catalogoPadreNuevo";
@@ -239,15 +209,15 @@ public class CatalogoController extends AbstractManagedBean implements Serializa
             if (!StringUtils.isBlank(busquedaCatalogoTemp.getNombreParametro())) {
                 filtroCatalogo.setNombreParametro(busquedaCatalogoTemp.getNombreParametro().toUpperCase());
             }
-            filtroCatalogo.setNumParametro((busquedaCatalogoTemp.getNumParametro() == null || busquedaCatalogoTemp.getNumParametro().equals(new Integer(0))) ? null : busquedaCatalogoTemp.getNumParametro());
-            if (padreParam == null || padreParam.equals(new Integer(0))) {
+            filtroCatalogo.setNumParametro((busquedaCatalogoTemp.getNumParametro() == null || busquedaCatalogoTemp.getNumParametro() == 0) ? null : busquedaCatalogoTemp.getNumParametro());
+            if (padreParam == null || padreParam == 0) {
                 filtroCatalogo.setPadreParametro(null);
             } else {
                 filtroCatalogo.setPadreParametro(padreParam);
             }
             listarPaginadoHijo(filtroCatalogo, page);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("ERROR : buscarCatalogoHijo " + e);
         }
         padreParametro = padreParam;
         return "catalogoHijoListVer";
@@ -259,10 +229,10 @@ public class CatalogoController extends AbstractManagedBean implements Serializa
             if (!StringUtils.isBlank(busquedaCatalogoTemp.getNombreParametro())) {
                 filtroCatalogo.setNombreParametro(busquedaCatalogoTemp.getNombreParametro().toUpperCase());
             }
-            filtroCatalogo.setNumParametro((busquedaCatalogoTemp.getNumParametro() == null || busquedaCatalogoTemp.getNumParametro().equals(new Integer(0))) ? null : busquedaCatalogoTemp.getNumParametro());
+            filtroCatalogo.setNumParametro((busquedaCatalogoTemp.getNumParametro() == null || busquedaCatalogoTemp.getNumParametro()== 0) ? null : busquedaCatalogoTemp.getNumParametro());
             listarPaginadoHijo(filtroCatalogo, page);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("ERROR : buscarCatalogoHijoLista " + e);
         }
         return "catalogoHijoList";
     }
@@ -285,25 +255,23 @@ public class CatalogoController extends AbstractManagedBean implements Serializa
                     nroPaginaHijo = pagina;
                 }
             } catch (Exception e) {
-                log.error("ERROR : BusquedaUsuarioController.listarPaginado: " + e.getMessage());
+                log.error("ERROR : listarPaginadoHijo: " + e.getMessage());
             }
         }
     }
 
     public String viewCatalogoHijo(Integer hijoParametro) {
-        this.verGuardar = true;
         try {
             getCatalogoHijo().setNumParametro(hijoParametro);
             setCatalogoHijo(catalogoService.viewCatalogoHijo(getCatalogoHijo()));
-            this.habilitado = getCatalogoHijo().getCodEstado().equals(Constantes.ESTADO_ACTIVO);
+            habilitado = getCatalogoHijo().getCodEstado().equals(Constantes.ESTADO_ACTIVO);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("ERROR : viewCatalogoHijo: " + e.getMessage());
         }
         return "catalogoHijoUpdate";
     }
 
     public String updateCatalogoHijo(Integer numParametro) {
-        this.verGuardar = true;
         try {
             getCatalogoHijo().setNumParametro(numParametro);
             getCatalogoHijo().setPadreParametro(getCatalogoHijo().getPadreParametro());
@@ -318,15 +286,14 @@ public class CatalogoController extends AbstractManagedBean implements Serializa
             catalogoService.updateCatalogoHijo(getCatalogoHijo());
             msg.messageInfo("Se realizaron los cambios correctamente", null);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("ERROR : updateCatalogoHijo: " + e.getMessage());
         }
         return "catalogoHijoUpdate";
     }
 
     public String nuevoCatalogoHijo(Integer padreParametro) {
-        this.verGuardar = true;
         busquedaCatalogoTemp = new BusquedaCatalogoTemp();
-        this.catalogoHijo = new Catalogo();
+        catalogoHijo = new Catalogo();
         getCatalogoHijo().setPadreParametro(padreParametro);
         return "catalogoHijoNuevo";
     }
@@ -340,10 +307,9 @@ public class CatalogoController extends AbstractManagedBean implements Serializa
         try {
             getCatalogoHijo().setNombreParametro(getCatalogoHijo().getNombreParametro().toUpperCase());
             catalogoService.nuevoCatalogoHijo(getCatalogoHijo());
-            this.verGuardar = false;
             msg.messageInfo("Se registraron los cambios correctamente", null);
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (Exception e) {
+            log.error("ERROR : insertarCatalogoHijo: " + e.getMessage());
         }
         return "catalogoHijoNuevo";
     }

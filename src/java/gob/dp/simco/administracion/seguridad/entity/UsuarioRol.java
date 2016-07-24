@@ -2,7 +2,9 @@ package gob.dp.simco.administracion.seguridad.entity;
 
 
 public class UsuarioRol {
+    
     private Usuario usuario=new Usuario();
+    
     private Rol rol=new Rol();
 
     public Rol getRol() {
