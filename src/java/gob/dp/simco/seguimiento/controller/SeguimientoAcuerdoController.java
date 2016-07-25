@@ -33,7 +33,6 @@ import java.util.List;
 import javax.inject.Named;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -139,6 +138,15 @@ public class SeguimientoAcuerdoController implements Serializable {
         listaAlertaProgramadas = new ArrayList<>();
         acuerdoDetalles = actaAcuerdoDetalleService.actaAcuerdoDetalleSeguimientoCaso(idCaso);
         for(ActaAcuerdoDetalle aad : acuerdoDetalles){
+            if(aad.getFechaCumplimiento().after(new Date())){
+                aad.setColor("yelow");
+            }
+            if(aad.getFechaCumplimiento().before(new Date())){
+                aad.setColor("red");
+            }
+            if(aad.isIndCumplido())
+                aad.setColor("green");
+            
             verAlertas(aad);
         }
         seteaValoresInicio();

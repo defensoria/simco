@@ -5,7 +5,7 @@
       xmlns:jsf="http://xmlns.jcp.org/jsf">
     <ui:composition template="../template/template.xhtml">
         <ui:define name="content">
-            <script>sessionStorage.setItem("menuHijoSession", "Acuerdos");</script>
+            <script>sessionStorage.setItem("menuHijoSession", "Seguimiento de acuerdos");</script>
             <h:form id="idForm" class="form-horizontal">
                 <div class="panel panel-default">
                     <div class="panel-heading">
@@ -30,10 +30,10 @@
                             <h:column>
                                 <f:facet name="header">Cumplido</f:facet>
                                 <h:selectBooleanCheckbox value="#{item.indCumplido}" onchange="loadingModal()">
-                                                    <f:ajax render="@form" listener="#{seguimientoAcuerdoController.setearColor(item)}" onevent="closeModal"/>
-                                                </h:selectBooleanCheckbox>
+                                    <f:ajax render="@form" listener="#{seguimientoAcuerdoController.setearColor(item)}" onevent="closeModal"/>
+                                </h:selectBooleanCheckbox>
                             </h:column>
-                            
+
                             <h:column>
                                 <f:facet name="header">Vencimiento</f:facet>
                                 <h:outputText value="#{item.fechaCumplimiento}" rendered="#{!item.indCumplimiento}">
@@ -82,10 +82,7 @@
                                     <a href="#" class="trigger">
                                         <span class="glyphicon glyphicon-exclamation-sign trigger" style="color:#{item.color == null? 'silver':item.color};font-size:large"></span>
                                     </a>
-                                    
-                                    
                                 </div>
-                                
                             </h:column>
                         </h:dataTable>
                     </div>

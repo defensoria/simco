@@ -11,7 +11,7 @@
                 <gc:confirmSubmit classGC="confirmacionGuardarTodo" bean="#{intervencionController.saveIntervencionEtapa()}"/>
                 <table style="width:100%">
                     <tr>
-                        <td style="width:40%; padding-right: 3px">
+                        <td style="width:60%; padding-right: 3px">
                             <h:outputText style="text-justify: kashida" value="#{intervencionController.intervencion.descripcion}" />
                             <br/>
                             <span class="text-titulo-comun-simco">Intervención - #{intervencionController.intervencion.nombre}</span>
@@ -22,7 +22,7 @@
                                 <img src="../../bootstrap/img/pdf.png" alt="Plan de Intervencion" height="45" width="45"/>
                             </a>
                         </td>
-                        <td style="width:40%">
+                        <td style="width:25%; vertical-align: top">
                             <div class="panel panel-warning">
                                 <div class="panel-heading" style="padding: 2px">
                                     <span class="text-titulo-comun-simco">Resumen:</span>
@@ -51,7 +51,7 @@
                                 </div>
                             </div>
                         </td>
-                        <td style="text-align:right">
+                        <td style="text-align:right; vertical-align: top">
                             <script>
                                 function confirmacionGuardarTodo() {
                                     $(".confirmacionGuardarTodo").modal("show");
@@ -82,7 +82,7 @@
                                     <h:panelGroup rendered="#{planificado.listaActuacionesEjecutadas == 0}" id="idPanel2">
 
                                         <div class="form-group has-feedback">
-                                            <textarea class="form-control" rows="8" jsf:value="#{planificado.detalle}" style="width:95%;font-size:1em; background: #{planificado.intervencionAccion.color}"/>
+                                            <textarea class="form-control" rows="8" jsf:value="#{planificado.detalle}" style="width:95%;font-size:1em; background: #{planificado.intervencionAccion.color}" maxlength="3700"/>
                                             <a jsf:action="#{intervencionController.openModalRegistroDescripcion(planificado)}" jsf:rendered="#{planificado.id != null}">
                                                 <span class="glyphicon glyphicon-pencil form-control-feedback" style="font-size:small;color:#0074cc;right:18px"></span>
                                                 <f:ajax render=":idPanelGroupIntervencionDescripcion :idForm2" onevent="openModalDescripcion"/>
@@ -126,7 +126,7 @@
                                 <h:column>
                                     <h:panelGroup rendered="#{enEjecucion.listaActuacionesEjecutadas > 0 and enEjecucion.listaActuacionesTotal > enEjecucion.listaActuacionesEjecutadas}">
                                         <div class="form-group has-feedback">
-                                            <textarea class="form-control" rows="8" jsf:value="#{enEjecucion.detalle}" style="font-size:1em;width:100%;background:#{enEjecucion.listaActuacionesTotal == enEjecucion.listaActuacionesEjecutadas and enEjecucion.listaActuacionesTotal>0? 'silver':''}" />
+                                            <textarea class="form-control" rows="8" jsf:value="#{enEjecucion.detalle}" style="font-size:1em;width:100%;background:#{enEjecucion.listaActuacionesTotal == enEjecucion.listaActuacionesEjecutadas and enEjecucion.listaActuacionesTotal>0? 'silver':''}" maxlength="3700"/>
                                             <a jsf:action="#{intervencionController.openModalRegistroDescripcion(enEjecucion)}" jsf:rendered="#{enEjecucion.listaActuacionesTotal > enEjecucion.listaActuacionesEjecutadas}">
                                                 <span class="glyphicon glyphicon-pencil form-control-feedback" style="font-size:small;color:#0074cc;right:18px"></span>
                                                 <f:ajax render=":idPanelGroupIntervencionDescripcion :idForm2" onevent="openModalDescripcion"/>
@@ -170,7 +170,7 @@
                                 <h:column>
                                     <h:panelGroup rendered="#{ejecucion.listaActuacionesTotal == ejecucion.listaActuacionesEjecutadas and ejecucion.listaActuacionesTotal > 0}">
                                         <div class="form-group has-feedback">
-                                            <textarea class="form-control" rows="8" jsf:value="#{ejecucion.detalle}" style="width:100%;font-size:1em" />
+                                            <textarea class="form-control" rows="8" jsf:value="#{ejecucion.detalle}" style="width:100%;font-size:1em" maxlength="3700"/>
                                             <a jsf:action="#{intervencionController.openModalRegistroDescripcion(ejecucion)}">
                                                 <span class="glyphicon glyphicon-pencil form-control-feedback" style="font-size:small;color:#0074cc;right:18px"></span>
                                                 <f:ajax render=":idPanelGroupIntervencionDescripcion :idForm2" onevent="openModalDescripcion"/>
@@ -247,7 +247,7 @@
                                 <div class="modal-body">
                                     <div class="panel-body">
                                         <span style="color:#0074cc;font-size:medium">Descripción</span>
-                                        <textarea class="form-control" id="idDescripcionGeneral" jsf:value="#{intervencionController.intervencion.descripcion}" rows="3" style="width:100%" maxlength="1350"/>
+                                        <textarea class="form-control" id="idDescripcionGeneral" jsf:value="#{intervencionController.intervencion.descripcion}" rows="3" style="width:100%" maxlength="3700"/>
                                         <div style="float:right;padding-top:15px">
                                             <a class="btn btn-danger" onclick="limpiaDetalle()" data-dismiss="modal">
                                                 <span class="glyphicon glyphicon-remove"/>Cancelar
@@ -292,13 +292,25 @@
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <span class="text-primary" style="font-size:1.5em">Campo de acción</span>
+                                    <table style="width: 100%">
+                                        <tr>
+                                            <td>
+                                                <span class="text-primary" style="font-size:1.5em">Campo de acción</span>    
+                                            </td>
+                                            <td>
+                                                <a type="button" class="close" data-dismiss="modal">
+                                                    <span style="color:red" class="glyphicon glyphicon-remove"></span>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </table>
                                 </div>
                                 <div class="modal-body">
                                     <div class="panel panel-default">
                                         <div class="panel-body">
                                             <input type="text" id="idNombreCampoAccion" class="form-control" jsf:value="#{intervencionController.intervencionAccion.title}" placeholder="Nombre" style="width:50%" maxlength="250" />
-                                            <textarea id="idDetalleCampoAccion" class="form-control" placeholder="Detalle" jsf:value="#{intervencionController.intervencionAccion.descripcion}" rows="3" style="width:100%;height:190px" maxlength="800"/>
+                                            <br/>
+                                            <textarea id="idDetalleCampoAccion" class="form-control" placeholder="Detalle" jsf:value="#{intervencionController.intervencionAccion.descripcion}" rows="3" style="width:100%;height:190px"  maxlength="3700"/>
                                             <br/>
                                             <center>
                                                 <div style="width:100%;padding:20px" id="idDivColor">
@@ -318,10 +330,6 @@
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <a class="btn btn-danger" data-dismiss="modal">
-                                        <span class="glyphicon glyphicon-remove"/>Cancelar
-                                    </a>
-                                    &#160;
                                     <a class="btn btn-primary" jsf:onclick="return validaCampoAccion()" jsf:action="#{intervencionController.saveIntervencionAccion()}">
                                         <span class="glyphicon glyphicon-floppy-disk"/>Guardar
                                         <f:ajax render="@form" execute="@form" onevent="closeModalCampoAccion"/>
@@ -337,11 +345,22 @@
                     <div class="modal-dialog" style="width:50%">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h4 class="modal-title" id="myModalLabel"><b>#{intervencionController.intervencionEtapa.detalle}</b>
+                                <table style="width: 100%">
+                                            <tr>
+                                                    <td>
+                                                        <h4 class="modal-title" id="myModalLabel"><b>#{intervencionController.intervencionEtapa.detalle}</b>
                                     <h:outputText value="(Planificado)" style="color:gray" rendered="#{intervencionController.intervencionEtapa.avance == 0}"/>
                                     <h:outputText value="(En ejecución)" style="color:gray" rendered="#{intervencionController.intervencionEtapa.avance lt 100 and intervencionController.intervencionEtapa.avance gt 0}"/>
                                     <h:outputText value="(Ejecutado)" style="color:gray" rendered="#{intervencionController.intervencionEtapa.avance == 100}"/>
                                 </h4>
+                                                </td>
+                                                    <td>
+                                                       <a type="button" class="close" data-dismiss="modal">
+                                        <span style="color:red" class="glyphicon glyphicon-remove"></span>
+                                    </a> 
+                                                </td>
+                                        </tr>
+                                </table>
                             </div>
                             <div class="modal-body">
                                 <h:form id="idForm2">
@@ -349,10 +368,6 @@
                                     <div style="text-align:right">
                                         <a class="btn btn-primary" jsf:action="#{intervencionController.updateIntervencionEtapaEnEjecucion()}">
                                             <span class="glyphicon glyphicon-floppy-disk"/>Guardar
-                                        </a>
-                                        &#160;&#160;
-                                        <a class="btn btn-danger" data-dismiss="modal">
-                                            <span class="glyphicon glyphicon glyphicon-share"/>Cancelar
                                         </a>
                                         &#160;&#160;
                                         <a class="btn btn-warning" onclick="confirmar1()">
@@ -424,11 +439,12 @@
                                                 </tr>
                                                 <tr>
                                                     <td style="padding-right:10px;vertical-align:top">
-                                                        <span style="color:#0074cc;font-size:medium">Descripción</span>
-                                                        <textarea class="form-control" id="txtOpcionales" jsf:value="#{intervencionController.intervencionEtapa.descripcion}" rows="3" style="width:100%" maxlength="1350"/>
+                                                        <span style="color:#0074cc;font-size:medium">Descripción:</span>
+                                                        <textarea class="form-control" id="txtOpcionales" jsf:value="#{intervencionController.intervencionEtapa.descripcion}" rows="6" style="width:100%" maxlength="3700"/>
                                                     </td>
                                                     <td style="padding-left:10px">
-                                                        <script>$("#idPanelBody").hide();
+                                                        <script>
+                                                            $("#idPanelBody").hide();
                                                             $("#spanAddUser").removeClass("glyphicon-minus").addClass("glyphicon-plus");
                                                             var i = 1;
                                                             $("#addUser").click(function () {
@@ -761,7 +777,8 @@
                             $('#idHiddenColor').val("maroon");
                     }
                 }
-                sessionStorage.setItem('menuHijoSession', 'Intervencion');</script>
+                sessionStorage.setItem('menuHijoSession', 'Intervencion');            
+            </script>
         </ui:define>
     </ui:composition>
 </html>
