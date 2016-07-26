@@ -62,12 +62,11 @@ public class CasoServiceImpl implements CasoService {
     }
 
     @Override
-    public String casoBuscarAutocomplete() {
+    public String casoBuscarAutocomplete(Caso cas) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("var projects = [");
         int i = 0;
-        Caso caso1 = new Caso();
-        for (Caso a : casoDao.casoBuscar(caso1)) {
+        for (Caso a : casoDao.casoBuscar(cas)) {
             if (i > 0) {
                 stringBuilder.append(",");
             }

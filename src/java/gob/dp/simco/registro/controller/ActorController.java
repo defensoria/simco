@@ -6,6 +6,7 @@
 package gob.dp.simco.registro.controller;
 
 import gob.dp.simco.administracion.seguridad.controller.LoginController;
+import gob.dp.simco.administracion.seguridad.entity.Usuario;
 import gob.dp.simco.comun.entity.Departamento;
 import gob.dp.simco.comun.entity.Distrito;
 import gob.dp.simco.comun.entity.Maestro;
@@ -166,6 +167,8 @@ public class ActorController extends AbstractManagedBean implements Serializable
     private List<SelectItem> listaSubTipo1Organizacion;
 
     private List<SelectItem> listaSubTipo2Organizacion;
+    
+    private Usuario usuarioSession;
 
     @Autowired
     private ActorService actorService;
@@ -311,9 +314,22 @@ public class ActorController extends AbstractManagedBean implements Serializable
         listaSubTipo3Empresa = cargarListaCompuesta(13, padre);
     }
     
+    private void usuarioSession() {
+        try {
+            FacesContext context = FacesContext.getCurrentInstance();
+            LoginController loginController = (LoginController) context.getELContext().getELResolver().getValue(context.getELContext(), null, "loginController");
+            usuarioSession = loginController.getUsuarioSesion();
+        } catch (Exception e) {
+            log.error("ERROR - usuarioSession()" + e);
+        }
+    }
+    
     public String cargarPaginaBusqueda() {
         try {
-            cadenaAutocomplete3 = casoService.casoBuscarAutocomplete();
+            usuarioSession();
+            Caso cas = new Caso();
+            cas.setUsuarioRegistro(usuarioSession.getCodigo());
+            cadenaAutocomplete3 = casoService.casoBuscarAutocomplete(cas);
             cadenaAutocomplete4 = actividadService.actividadBusquedaPaginadoAutocompletar();
             listaActorBusquedaGeneral = null;
         } catch (Exception ex) {
@@ -1887,6 +1903,12 @@ public class ActorController extends AbstractManagedBean implements Serializable
         this.listaSubTipo3Empresa = listaSubTipo3Empresa;
     }
 
-    
+    public Usuario getUsuarioSession() {
+        return usuarioSession;
+    }
+
+    public void setUsuarioSession(Usuario usuarioSession) {
+        this.usuarioSession = usuarioSession;
+    }
 
 }

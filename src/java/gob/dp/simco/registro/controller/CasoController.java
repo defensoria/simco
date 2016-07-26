@@ -218,7 +218,7 @@ public class CasoController extends AbstractManagedBean implements Serializable 
     }
     
     private void setearEsComosionadoRegistro(){
-        esComisionadoRegistro = StringUtils.equals(usuarioSession.getCodigo().toUpperCase(), caso.getUsuarioRegistro().toUpperCase());
+        esComisionadoRegistro = StringUtils.equals(usuarioSession.getCodigo(), caso.getUsuarioRegistro());
     }
 
     public String setearFichaCaso(Caso c) {
@@ -301,6 +301,7 @@ public class CasoController extends AbstractManagedBean implements Serializable 
     }
 
     private void updateListasActividades() {
+        if(listaActividadesCasoAD != null)
         for (Actividad a : listaActividadesCasoAD) {
             ActividadCaso ac = new ActividadCaso();
             ac.setActividad(a);
@@ -309,6 +310,7 @@ public class CasoController extends AbstractManagedBean implements Serializable 
             updateRelacionActividadCaso(a);
             actividadCasoService.actividadCasoInsertar(ac);
         }
+        if(listaActividadesCasoAC != null)
         for (Actividad a : listaActividadesCasoAC) {
             ActividadCaso ac = new ActividadCaso();
             ac.setActividad(a);
@@ -775,6 +777,7 @@ public class CasoController extends AbstractManagedBean implements Serializable 
             updateListasActividades();
             actualizarActoresFicha();
             validaListasActoresCasos(caso.getId());
+            setearEsComosionadoRegistro();
         } catch (Exception ex) {
             log.error(ex);
         }

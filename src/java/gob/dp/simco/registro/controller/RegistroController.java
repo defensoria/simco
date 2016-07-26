@@ -502,7 +502,9 @@ public class RegistroController extends AbstractManagedBean implements Serializa
 
     private void generarCadenaCasos() {
         try {
-            cadenaAutocomplete = casoService.casoBuscarAutocomplete();
+            Caso cas = new Caso();
+            cas.setUsuarioRegistro(usuarioSession.getCodigo());
+            cadenaAutocomplete = casoService.casoBuscarAutocomplete(cas);
         } catch (Exception ex) {
             log.error("ERROR - generarCadenaCasos()" + ex);
         }

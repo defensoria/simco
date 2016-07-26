@@ -30,7 +30,7 @@ public interface CasoService {
    
    public Caso casoBuscarOne(Long idCaso);
    
-   public String casoBuscarAutocomplete();
+   public String casoBuscarAutocomplete(Caso cas);
     
    public Integer casoCodigoGenerado();
    

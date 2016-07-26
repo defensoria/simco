@@ -361,7 +361,10 @@ public class IntervencionController extends AbstractManagedBean implements Seria
 
     private void generarCadenaCasos() {
         try {
-            cadenaAutocomplete = casoService.casoBuscarAutocomplete();
+            usuarioSession();
+            Caso cas = new Caso();
+            cas.setUsuarioRegistro(usuarioSession.getCodigo());
+            cadenaAutocomplete = casoService.casoBuscarAutocomplete(cas);
         } catch (Exception ex) {
             log.error(ex.getMessage());
         }

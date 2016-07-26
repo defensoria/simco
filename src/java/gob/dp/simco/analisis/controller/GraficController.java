@@ -5,6 +5,8 @@
  */
 package gob.dp.simco.analisis.controller;
 
+import gob.dp.simco.administracion.seguridad.controller.LoginController;
+import gob.dp.simco.administracion.seguridad.entity.Usuario;
 import gob.dp.simco.analisis.entity.AnalisisActor;
 import gob.dp.simco.analisis.entity.AnalisisRelacion;
 import gob.dp.simco.analisis.entity.Tema;
@@ -20,6 +22,7 @@ import gob.dp.simco.registro.service.ActorService;
 import gob.dp.simco.registro.service.CasoService;
 import java.io.Serializable;
 import java.util.List;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +47,8 @@ public class GraficController implements Serializable{
     private String cadenaAutocomplete;
     
     private Caso caso;
+    
+    private Usuario usuarioSession;
     
     @Autowired
     private ActorService actorService;
@@ -206,9 +211,22 @@ public class GraficController implements Serializable{
         }
     }
     
+    private void usuarioSession() {
+        try {
+            FacesContext context = FacesContext.getCurrentInstance();
+            LoginController loginController = (LoginController) context.getELContext().getELResolver().getValue(context.getELContext(), null, "loginController");
+            usuarioSession = loginController.getUsuarioSesion();
+        } catch (Exception e) {
+            log.error("ERROR - usuarioSession()" + e);
+        }
+    }
+    
     private void generarCadenaCasos() {
         try {
-            cadenaAutocomplete = casoService.casoBuscarAutocomplete();
+            usuarioSession();
+            Caso cas = new Caso();
+            cas.setUsuarioRegistro(usuarioSession.getCodigo());
+            cadenaAutocomplete = casoService.casoBuscarAutocomplete(cas);
         } catch (Exception ex) {
             log.error(ex.getMessage());
         }
@@ -244,6 +262,14 @@ public class GraficController implements Serializable{
 
     public void setCaso(Caso caso) {
         this.caso = caso;
+    }
+
+    public Usuario getUsuarioSession() {
+        return usuarioSession;
+    }
+
+    public void setUsuarioSession(Usuario usuarioSession) {
+        this.usuarioSession = usuarioSession;
     }
     
     
