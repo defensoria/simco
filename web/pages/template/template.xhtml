@@ -93,6 +93,41 @@
                 display: table-cell;
                 height:100%;
             }
+            
+            .alink:hover{
+                text-decoration:none
+            }
+             
+            .alink:link{
+                text-decoration:none
+            }
+            
+            .alink:active{
+                text-decoration:none
+            }
+            
+            #project-label{display:block;
+                           font-weight:bold;
+                           margin-bottom:1em
+            }
+                    
+            #project-icon{float:left;
+                          height:32px;
+                          width:32px
+            }
+            
+            #project-description{margin:0;
+                                 padding:0
+            }
+                  
+            .ocultar{
+                display:none
+            }
+            
+            .df_input_error{
+                background: #F2DEDE;
+                border: solid red;
+            }
         </style>
         <div class="modal fade" id="idAlerta">
             <div class="modal-dialog modal-sm">
@@ -406,7 +441,7 @@
                 </div>
             </div>
         </section>
-        <div class="modal js-loading-bar" data-toggle="modal" id="loadModal" tabindex="-1" role="dialog" aria-labelledby="loadModal"> style="vertical-align: central" aria-hidden="true">
+        <div class="modal js-loading-bar" data-toggle="modal" id="loadModal" tabindex="-1" role="dialog" aria-labelledby="loadModal" style="vertical-align: central" aria-hidden="true">
             <br/><br/><br/><br/><br/>
             <center>
                 <img style="background:white" src="/simco/faces/bootstrap/img/loading.gif"></img>

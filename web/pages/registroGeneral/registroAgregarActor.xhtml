@@ -7,16 +7,7 @@
     <ui:composition template="../template/template.xhtml">
         <ui:define name="content">
             <h:form id="idForm" class="form-horizontal">
-                <style>
-                    #project-label{display:block;
-                                   font-weight:bold;
-                                   margin-bottom:1em}
-                    #project-icon{float:left;
-                                  height:32px;
-                                  width:32px}
-                    #project-description{margin:0;
-                                         padding:0}
-                    </style>
+                <h:inputHidden id="hidCodActividad" value="#{registroController.actividad.id}" />
                     <script>
                         /*<![CDATA[*/$(function () {#{actorController.cadenaAutocomplete}
                             $("#actor").autocomplete({minLength: 3, source: projects, focus: function (event, ui) {
@@ -168,7 +159,7 @@
                                                         <table style="width:100%">
                                                             <tr>
                                                                 <td style="width:50%">
-                                                                    <b class="round tooltip-top" title="Actitud frente al dialogo">A.D:</b>
+                                                                    <b class="round tooltip-top" title="Actitud frente al diálogo">A.D:</b>
                                                                     <div class="slider slider-horizontal">
                                                                         <div class="slider-track">
                                                                             <div style="left:0;width:70%" class="slider-selection">
@@ -214,7 +205,7 @@
                                             <a style="font-size:large;cursor:pointer" onclick="confirmar1#{row3.rowIndex+1}()">
                                                 <span style="color:red" class="glyphicon glyphicon-remove"/>
                                             </a>
-                                            <gc:confirmSubmit bean="#{actorController.removeActorSeleccionado(actor)}" classGC="confirmar1#{row3.rowIndex+1}" mensaje="Esta seguro que desea eliminar el actor?"/>
+                                            <gc:confirmSubmit bean="#{actorController.removeActorSeleccionado(actor)}" classGC="confirmar1#{row3.rowIndex+1}" mensaje="¿Está seguro que desea eliminar el actor?"/>
                                             <script>
                                                 function confirmar1#{row3.rowIndex+1}() {
                                                     $(".confirmar1#{row3.rowIndex+1}").modal("show");

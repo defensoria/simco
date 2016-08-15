@@ -44,10 +44,10 @@ public enum MesesEnum {
 	DICIEMBRE("12", "Diciembre");
 	
 	/** La Constante list. */
-	private static final List<MesesEnum> list = new ArrayList<MesesEnum>();
+	private static final List<MesesEnum> list = new ArrayList<>();
 	
 	/** La Constante lookup. */
-	private static final Map<String, MesesEnum> lookup = new HashMap<String, MesesEnum>();
+	private static final Map<String, MesesEnum> lookup = new HashMap<>();
 
 	static {
 		for (MesesEnum s : EnumSet.allOf(MesesEnum.class)) {
@@ -58,10 +58,10 @@ public enum MesesEnum {
 	}
 	
 	/** El key. */
-	private String key;
+	private final String key;
 	
 	/** El value. */
-	private String value;
+	private final String value;
 
 	/**
 	 * Instancia un nuevo tipo via type.
@@ -92,26 +92,12 @@ public enum MesesEnum {
 		return value;
 	}
 
-	/**
-	 * Obtiene description.
-	 *
-	 * @param locale Par&aacute;metro de tipo Locale que determina la localidad.
-	 * @return Retorna un valor de tipo String con la descripci&oacute;n del
-	 * tipo de via.
-	 */
 	public String getDescription() {
 		return this.getValue();
 	}
 
-	/**
-	 * Obtiene list.
-	 *
-	 * @param locale Par&aacute;metro de tipo Locale que determina la localidad.
-	 * @return Retorna una lista de tipo SelectVO con el key y
-	 * descripci&oacute;n del tipo de via.
-	 */
 	public static List<SelectVO> getList() {
-		List<SelectVO> rList = new ArrayList<SelectVO>();
+		List<SelectVO> rList = new ArrayList<>();
 		for (MesesEnum s : list) {
 			SelectVO select = new SelectVO();
 			select.setId(s.getKey());

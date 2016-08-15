@@ -10,21 +10,6 @@
             <h:form id="idFormAgregarAcuerdo" class="form-horizontal" enctype="multipart/form-data">
                 <h:messages />
                 <input type="hidden" id="idUsuarioSession" jsf:value="#{actaAcuerdoController.actaAcuerdoDetalle.usuarioRegistro}" />
-                <style>
-                    #project-label{
-                        display:block;
-                        font-weight:bold;
-                        margin-bottom:1em
-                    }
-                    #project-icon{
-                        float:left;
-                        height:32px;
-                        width:32px
-                    }
-                    #project-description{
-                        margin:0;padding:0
-                    }
-                </style>
                 <script>
                     /*<![CDATA[*/
                     var usu = JSON.parse(sessionStorage.getItem('userSesion'));
@@ -446,7 +431,7 @@
                         </tr>
                     </table>
                     <br/>
-                    <gc:confirmSubmit bean="#{actaAcuerdoController.agregarActaAcuerdoxActividad(registroController.actividad.id)}" classGC="confirmacion1" mensaje="Esta seguro que desea agregar el registro?" />
+                    <gc:confirmSubmit bean="#{actaAcuerdoController.agregarActaAcuerdoxActividad(registroController.actividad.id)}" classGC="confirmacion1" mensaje="¿Está seguro que desea agregar el registro?" />
                     <script>
                         function confirmar1() {
                             $(".confirmacion1").modal('show');

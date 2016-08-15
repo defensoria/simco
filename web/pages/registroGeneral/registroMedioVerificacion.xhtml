@@ -24,7 +24,6 @@
                                             i++;
                                         }
                                     });
-
                                     function setearPalabras() {
                                         var i = 0;
                                         var cadena = "";
@@ -82,8 +81,12 @@
                                             <tr>
                                                 <td style="padding-right:5px">
                                                     <a style="float:right" class="btn btn-primary" id="idBotenAnadir">
-                                                        <h:outputText rendered="#{medioVerificacionController.medioVerificacion.id == null}" value="Añadir" class="glyphicon glyphicon-plus" />
-                                                        <h:outputText rendered="#{medioVerificacionController.medioVerificacion.id != null}" value="Editar" class="glyphicon glyphicon-edit" />
+                                                        <h:panelGroup rendered="#{medioVerificacionController.medioVerificacion.id == null}">
+                                                            <span class="glyphicon glyphicon-plus" />Añadir
+                                                        </h:panelGroup>
+                                                        <h:panelGroup rendered="#{medioVerificacionController.medioVerificacion.id != null}">
+                                                            <span class="glyphicon glyphicon-edit" />Editar
+                                                        </h:panelGroup>
                                                     </a>
                                                 </td>
                                                 <td style="padding-left:5px">
@@ -154,7 +157,6 @@
                                     </td>
                                 </tr>
                             </table>
-
                             <br/>
                             <b>Archivo:</b>
                             <h:selectOneRadio value="#{medioVerificacionController.medioVerificacion.tipoArchivo}">
@@ -204,11 +206,9 @@
                             </table>
                             <br/>
                         </div>
-
                     </div>
                     &#160;&#160;
                     <div class="cell50Rigth panel panel-featured-top-primary">
-
                         <div class="panel-body">
                             <table style="width:100%">
                                 <tr>
@@ -251,7 +251,7 @@
                                     <a style="font-size:large;margin:auto; cursor: pointer" onclick="confirmar1#{row.rowIndex+1}()">
                                         <span style="color:red" class="glyphicon glyphicon-remove"/>
                                     </a>
-                                    <gc:confirmRemoveSubmit classGC="confirmacion1#{row.rowIndex+1}" bean="#{medioVerificacionController.removeMedioVerificacion(medio)}" mensaje="Esta seguro que desea eliminar el registro del medio?"/>
+                                    <gc:confirmRemoveSubmit classGC="confirmacion1#{row.rowIndex+1}" bean="#{medioVerificacionController.removeMedioVerificacion(medio)}" mensaje="¿Está seguro que desea eliminar el registro del medio?"/>
                                     <script>
                                         function confirmar1#{row.rowIndex+1}() {
                                             $(".confirmacion1#{row.rowIndex+1}").modal('show');

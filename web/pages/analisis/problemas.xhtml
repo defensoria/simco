@@ -8,20 +8,6 @@
         <ui:define name="content">
             <h:form id="idForm" class="form-horizontal">
                 <h:messages />
-                <style>
-                    #project-label{display:block;
-                                   font-weight:bold;
-                                   margin-bottom:1em
-                    }
-                    #project-icon{float:left;
-                                  height:32px;
-                                  width:32px}
-                    #project-description{margin:0;
-                                         padding:0
-                    }
-                    .ocultar{display:none
-                    }
-                </style>
                 <script>
                     sessionStorage.setItem('menuHijoSession', 'Analisis');
                     sessionStorage.setItem('menuNietoSession', 'Problemas');
@@ -291,7 +277,7 @@
                             <tr>
                                 <td>
                                     <gc:confirmSubmit bean="#{analisisController.saveProblema()}" />
-                                    <span class="text-resalt-primary">Sintesis de Problemas</span>
+                                    <span class="text-resalt-primary">Síntesis de problemas</span>
                                 </td>
                                 <td style="text-align:right">
                                     <a class="btn btn-primary" onclick="confirmar()">
@@ -305,7 +291,7 @@
                         <table style="width:100%;vertical-align:top">
                             <tr>
                                 <td style="width:50%;padding-right:5px">
-                                    <textarea jsf:value="#{analisisController.problema.sintesis}" rows="5" style="width:100%" placeholder="Sintesis General" maxlength="3700"/>
+                                    <textarea jsf:value="#{analisisController.problema.sintesis}" rows="5" style="width:100%" placeholder="Síntesis general" maxlength="3700"/>
                                     <br/><br/>
                                     <span class="text-resalt-primary">Problemas</span>
                                     <a style="text-decoration:none" jsf:rendered="#{analisisController.problema.id != null}" jsf:action="#{analisisController.addProblemaDetalle()}">
@@ -318,7 +304,7 @@
                                             <h:outputText value="&#160;&#160;" />
                                         </h:column>
                                         <h:column>
-                                            <gc:confirmRemoveAjax bean="#{analisisController.removeDetalleProblema(det)}" classGC="confirm#{rowdet.rowIndex+1}" mensaje="Esta seguro que desea eliminar el problema?"/>
+                                            <gc:confirmRemoveAjax bean="#{analisisController.removeDetalleProblema(det)}" classGC="confirm#{rowdet.rowIndex+1}" mensaje="¿Está seguro que desea eliminar el problema?"/>
                                             <div class="form-group">
                                                 <table style="width:100%">
                                                     <tr>

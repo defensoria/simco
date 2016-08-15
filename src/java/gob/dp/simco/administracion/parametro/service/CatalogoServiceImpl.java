@@ -87,9 +87,6 @@ public class CatalogoServiceImpl implements CatalogoService
         return catalogoDao;
     }
 
-    /**
-     * @param parametroDao the parametroDao to set
-     */
     public void setCatalogoDao(CatalogoDao catalogoDao) {
         this.catalogoDao = catalogoDao;
     }

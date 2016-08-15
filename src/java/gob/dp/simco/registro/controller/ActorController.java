@@ -195,7 +195,8 @@ public class ActorController extends AbstractManagedBean implements Serializable
     private MaestroService maestroService;
 
     public String cargarPagina() {
-        cargarListas();
+        try {
+            cargarListas();
         actor = new Actor();
         cadenaActores();
         bloquearFormularioPersona();
@@ -210,6 +211,9 @@ public class ActorController extends AbstractManagedBean implements Serializable
         actorMiembro = new ActorMiembro();
         actorMiembroEntidad = new ActorMiembro();
         actorMiembroPesona = new ActorMiembro();
+        } catch (Exception e) {
+            log.error("ERROR - cargarPagina()" + e);
+        }
         return "actorNuevo";
     }
 
@@ -221,61 +225,73 @@ public class ActorController extends AbstractManagedBean implements Serializable
     }
 
     private void cargarListas() {
-        limpiarListasClasificacion();
+        try {
+            limpiarListasClasificacion();
         listaTipoPoblacion = cargarListaSimple(1);
         listaTipoEstado = cargarListaSimple(4);
         listaTipoEmpresa = cargarListaSimple(10);
         listaTipoOrganizacion = cargarListaSimple(7);
         listaSubTipo1Empresa = cargarListaSimple(11);
         listaSubTipo2Empresa = cargarListaSimple(12);
+        } catch (Exception e) {
+            log.error("ERROR - cargarListas()" + e);
+        }
     }
     
     private void limpiarListasClasificacion(){
         listaTipoEstado = null;
         listaSubTipo1Estado = null;
         listaSubTipo2Estado = null;
-        
         listaTipoEmpresa = null;
         listaSubTipo1Empresa = null;
         listaSubTipo2Empresa = null;
         listaSubTipo3Empresa = null;
-        
         listaTipoPoblacion = null;
         listaSubTipo1Poblacion = null;
         listaSubTipo2Poblacion = null;
-        
         listaTipoOrganizacion = null;
         listaSubTipo1Organizacion = null;
         listaSubTipo2Organizacion = null;
-        
-        
     }
 
     public void cargarAjaxListaSubTipo1() {
-        listaSubTipo1Poblacion = null;
+        try {
+            listaSubTipo1Poblacion = null;
         listaSubTipo2Poblacion = null;
         Integer padre = maestroService.padreParametro(new Maestro(actor.getTipoPoblacion(), 1));
         if(padre != null)
             listaSubTipo1Poblacion = cargarListaCompuesta(2, padre);
+        } catch (Exception e) {
+            log.error("ERROR - cargarAjaxListaSubTipo1()" + e);
+        }
     }
     
     public void cargarAjaxListaSubTipo2() {
-        listaSubTipo2Poblacion = null;
+        try {
+            listaSubTipo2Poblacion = null;
         Integer padre = maestroService.padreParametro(new Maestro(actor.getSubTipo1Poblacion(), 2));
         if(padre != null)
             listaSubTipo2Poblacion = cargarListaCompuesta(3, padre);
+        } catch (Exception e) {
+            log.error("ERROR - cargarAjaxListaSubTipo2()" + e);
+        }
     }
     
     public void cargarAjaxListaSubTipo1Estado() {
-        listaSubTipo1Estado = null;
+        try {
+            listaSubTipo1Estado = null;
         listaSubTipo2Estado = null;
         Integer padre = maestroService.padreParametro(new Maestro(entidad.getTipoEstado(), 4));
         if(padre != null)
-            listaSubTipo1Estado = cargarListaCompuesta(5, padre);  
+            listaSubTipo1Estado = cargarListaCompuesta(5, padre);
+        } catch (Exception e) {
+            log.error("ERROR - cargarAjaxListaSubTipo1Estado()" + e);
+        }
     }
     
     public void cargarAjaxListaSubTipo2Estado(){
-        listaSubTipo2Estado = new ArrayList<>();
+        try {
+            listaSubTipo2Estado = new ArrayList<>();
         if(entidad.getSubTipo1Estado().equals("01") || entidad.getSubTipo1Estado().equals("02") ||  entidad.getSubTipo1Estado().equals("06") ||  entidad.getSubTipo1Estado().equals("07")){
             Integer padre = maestroService.padreParametro(new Maestro(entidad.getTipoEstado(), 4));
             if(padre != null)
@@ -285,18 +301,26 @@ public class ActorController extends AbstractManagedBean implements Serializable
             if(padre != null)
                 listaSubTipo2Estado = cargarListaCompuesta(6, padre);
         }
+        } catch (Exception e) {
+            log.error("ERROR - cargarAjaxListaSubTipo2Estado()" + e);
+        }
     }
     
     public void cargarAjaxListaSubTipo1Organizacion() {
-        listaSubTipo1Organizacion = null;
+        try {
+            listaSubTipo1Organizacion = null;
         listaSubTipo2Organizacion = null;
         Integer padre = maestroService.padreParametro(new Maestro(empresa.getTipoOrganizacion(), 7));
         if(padre != null)
             listaSubTipo1Organizacion = cargarListaCompuesta(8, padre);
+        } catch (Exception e) {
+            log.error("ERROR - cargarAjaxListaSubTipo1Organizacion()" + e);
+        }
     }
     
     public void cargarAjaxListaSubTipo2Organizacion() {
-        listaSubTipo2Organizacion = null;
+        try {
+            listaSubTipo2Organizacion = null;
         if(empresa.getSubTipo1Organizacion().equals("40") || empresa.getSubTipo1Organizacion().equals("41")){
             Integer padre = maestroService.padreParametro(new Maestro(empresa.getTipoOrganizacion(), 7));
             if(padre != null)
@@ -306,12 +330,19 @@ public class ActorController extends AbstractManagedBean implements Serializable
             if(padre != null)
                 listaSubTipo2Organizacion = cargarListaCompuesta(9, padre);
         }
+        } catch (Exception e) {
+            log.error("ERROR - cargarAjaxListaSubTipo2Organizacion()" + e);
+        }
     }
     
     public void cargarAjaxListaSubTipo3Empresa() {
-        listaSubTipo3Empresa = null;
+        try {
+            listaSubTipo3Empresa = null;
         Integer padre = maestroService.padreParametro(new Maestro(empresa.getSubTipo2Empresa(), 12));
         listaSubTipo3Empresa = cargarListaCompuesta(13, padre);
+        } catch (Exception e) {
+            log.error("ERROR - cargarAjaxListaSubTipo3Empresa()" + e);
+        }
     }
     
     private void usuarioSession() {
@@ -333,7 +364,7 @@ public class ActorController extends AbstractManagedBean implements Serializable
             cadenaAutocomplete4 = actividadService.actividadBusquedaPaginadoAutocompletar();
             listaActorBusquedaGeneral = null;
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            log.error("ERROR - cargarPaginaBusqueda()" + ex);
         }
         return "actorBuscar";
     }
@@ -344,7 +375,7 @@ public class ActorController extends AbstractManagedBean implements Serializable
             LoginController loginController = (LoginController) context.getELContext().getELResolver().getValue(context.getELContext(), null, "loginController");
             listaActorCasosSigues = actorService.actoresSigues(loginController.getUsuarioSesion().getCodigo());
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            log.error("ERROR - cargarPaginaActoresSigues()" + ex);
         }
         return "actorCaso";
     }

@@ -8,16 +8,6 @@
         <ui:define name="content">
             <h:form id="idForm" class="form-horizontal">
                 <h:messages />
-                <style>
-                    #project-label{display:block;
-                                   font-weight:bold;
-                                   margin-bottom:1em}
-                    #project-icon{float:left;
-                                  height:32px;width:32px
-                    }
-                    #project-description{margin:0;
-                                         padding:0}
-                    </style>
                     <script>
                         sessionStorage.setItem('menuHijoSession', 'Analisis');
                         sessionStorage.setItem('menuNietoSession', 'Actores');
@@ -93,7 +83,7 @@
                         <table style="width:100%">
                             <tr>
                                 <td style="width:50%">
-                                    <span class="text-resalt-green">Analis de poder/influencia</span>
+                                    <span class="text-resalt-green">Anális de poder/influencia</span>
                                 </td>
                                 <td style="width:50%;text-align:right">
                                     <a class="btn btn-primary" onclick="confirmar()">
@@ -239,7 +229,7 @@
                                                 <td style="width:30%">
                                                     <div class="panel #{analisisController.activarVinculoCercano}">
                                                         <div class="panel-heading">
-                                                            <span class="text-resalt-primary">Vinculo Cercano</span>
+                                                            <span class="text-resalt-primary">Vínculo Cercano</span>
                                                             <a style="font-size:medium;text-decoration:none" jsf:action="#{analisisController.cargarSeccionVinculoCercano()}" jsf:immediate="true">
                                                                 <span class="glyphicon glyphicon-plus"></span>
                                                                 <f:ajax render=":idForm:idPanelVinculacion" execute="@form" />
@@ -273,7 +263,7 @@
                                                 <td style="width:30%">
                                                     <div class="panel #{analisisController.activarVinculoDebil}">
                                                         <div class="panel-heading">
-                                                            <span class="text-resalt-primary">Vinculo Debil</span>
+                                                            <span class="text-resalt-primary">Vínculo Debil</span>
                                                             <a style="font-size:medium;text-decoration:none" jsf:action="#{analisisController.cargarSeccionVinculoDebil()}" jsf:immediate="true">
                                                                 <span class="glyphicon glyphicon-plus"></span>
                                                                 <f:ajax render=":idForm:idPanelVinculacion" execute="@form" />
@@ -309,7 +299,7 @@
                                                 <td style="width:30%">
                                                     <div class="panel #{analisisController.activarTension}">
                                                         <div class="panel-heading">
-                                                            <span class="text-resalt-primary">Tension</span>
+                                                            <span class="text-resalt-primary">Tensión</span>
                                                             <a style="font-size:medium;text-decoration:none" jsf:action="#{analisisController.cargarSeccionTension()}" jsf:immediate="true">
                                                                 <span class="glyphicon glyphicon-plus"></span>
                                                                 <f:ajax render=":idForm:idPanelVinculacion" execute="@form" />
@@ -382,7 +372,7 @@
                                     <td style="width:15%;vertical-align:top;padding-left:1px">
                                         <h:dataTable value="#{analisisController.listaActoresXCaso}" var="actor" class="table table-hover">
                                             <h:column>
-                                                <f:facet name="header">Lista de Actores:</f:facet>
+                                                <f:facet name="header">Lista de actores:</f:facet>
                                                 <a style="text-decoration:none" jsf:action="#{analisisController.cargarListas(actor)}" jsf:immediate="true" jsf:onclick="loadingModal()">
                                                     <span class="glyphicon glyphicon-user" style="font-size:medium;color:mediumseagreen"></span>
                                                     <f:ajax render=":idForm:idPanelVinculacion" execute="@form" onevent="closeModal" />

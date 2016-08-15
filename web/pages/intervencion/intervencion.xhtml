@@ -7,22 +7,10 @@
         <ui:define name="content">
             <h:form id="idForm" class="form-horizontal">
                 <h:messages id="idMessages"/>
-                <style>
-                    #project-label{display:block;
-                                   font-weight:bold;
-                                   margin-bottom:1em
-                    }
-                    #project-icon{float:left;
-                                  height:32px;
-                                  width:32px
-                    }
-                    #project-description{margin:0;
-                                         padding:0
-                    }
-                </style>
                 <script>
                     /*<![CDATA[*/
-                    $(function () {#{intervencionController.cadenaAutocomplete}
+                    $(function () {
+                    #{intervencionController.cadenaAutocomplete}
                         $("#nombreCaso").autocomplete({minLength: 3, source: projects, focus: function (event, ui) {
                                 $("#nombreCaso").val(ui.item.label);
                                 return false;
@@ -33,12 +21,13 @@
                             }}).data("ui-autocomplete")._renderItem = function (ul, item) {
                             return $("<li/>").append("<a>" + item.label + "<br/>" + item.desc + "</a>").appendTo(ul);
                         };
-                    });/*]]>*/
+                    });
+                    /*]]>*/
                 </script>
                 <div class="panel panel-featured-top-primary">
                     <div class="modal-header">
                         <a type="button" class="close" data-dismiss="modal">
-                            <span style="color:red" class="glyphicon glyphicon-remove"></span>
+                            <span style="color:red" class="glyphicon glyphicon-remove"/>
                         </a> 
                     </div>
                     <div class="panel-body">

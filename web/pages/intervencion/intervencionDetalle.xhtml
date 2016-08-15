@@ -264,29 +264,33 @@
                         </div>
                     </div>
                 </h:panelGroup>
-                <script>function validaCampoAccion() {
+                <script>
+                    function validaCampoAccion() {
                         if ($('#idNombreCampoAccion').val() === "") {
-                            $('#idNombreCampoAccion').addClass('error');
+                            $('#idNombreCampoAccion').addClass('df_input_error');
+                            $('#idNombreCampoAccion').focus();
                             return false;
                         }
                         else {
-                            $('#idNombreCampoAccion').removeClass('error');
+                            $('#idNombreCampoAccion').removeClass('df_input_error');
                         }
                         if ($('#idDetalleCampoAccion').val() === "") {
-                            $('#idDetalleCampoAccion').addClass('error');
+                            $('#idDetalleCampoAccion').addClass('df_input_error');
+                            $('#idDetalleCampoAccion').focus();
                             return false;
                         }
                         else {
-                            $('#idDetalleCampoAccion').removeClass('error');
+                            $('#idDetalleCampoAccion').removeClass('df_input_error');
                         }
                         if ($('#idHiddenColor').val() === "") {
-                            $('#idDivColor').addClass('error');
+                            $('#idDivColor').addClass('df_input_error');
                             return false;
                         }
                         else {
-                            $('#idDivColor').removeClass('error');
+                            $('#idDivColor').removeClass('df_input_error');
                         }
-                    }</script>
+                    }                    
+                </script>
                 <h:panelGroup id="idPanelGroupIntervencion2">
                     <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
@@ -374,9 +378,11 @@
                                             <span class="glyphicon glyphicon-remove"/>Eliminar
                                         </a>
                                         <gc:confirmRemoveSubmit classGC="confirmacion1" bean="#{intervencionController.removeListaIntervencionEtapa(intervencionController.intervencionEtapa, intervencionController.intervencionEtapa.avance)}"/>
-                                        <script>function confirmar1() {
+                                        <script>
+                                            function confirmar1() {
                                                 $(".confirmacion1").modal('show');
-                                            }</script>
+                                            }                                            
+                                        </script>
                                     </div>
                                     <br/>
                                     <div class="panel panel-default">
@@ -413,7 +419,6 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <style>.alink:hover{text-decoration:none}.alink:link{text-decoration:none}.alink:active{text-decoration:none}</style>
                                                             <script>$('.trigger').popover({html: true, placement: 'bottom', tabindex: '0', trigger: 'focus', title: function () {
                                                                         return $(this).parent().find('.head').html();
                                                                     }, content: function () {
@@ -473,7 +478,6 @@
                                                                 </div>
 
                                                                 <div id="idPanelBody" class="panel-body">
-
                                                                     <h:dataTable value="#{busquedaUsuarioController.listaUsuario}" var="item" id="idDatatableActor" class="table table-striped" style="font-size:.8em;text-align:left">
                                                                         <h:column id="colNombre">
                                                                             <f:facet name="header">
@@ -495,7 +499,8 @@
                                                                         </h:column>
                                                                     </h:dataTable>
                                                                     <ul class="pager">
-                                                                        <li><a jsf:action="#{busquedaUsuarioController.listarPaginado(busquedaUsuarioController.nroPagina -1)}">Anterior
+                                                                        <li>
+                                                                            <a jsf:action="#{busquedaUsuarioController.listarPaginado(busquedaUsuarioController.nroPagina -1)}">Anterior
                                                                                 <f:ajax render="idDatatableActor" />
                                                                             </a>
                                                                         </li>

@@ -118,7 +118,7 @@ public class UsuarioNuevoController extends AbstractManagedBean {
             }
             usuarioService.insertarUsuario(filter,lstRolSel);
             usuario.setCodigo(filter.getCodigo());
-            msg.messageInfo("Se registro correctamente el usuario", null);
+            msg.messageInfo("Se registró correctamente el usuario", null);
             usuario = new Usuario();
         }catch(Exception e){
             log.error(e);

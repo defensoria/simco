@@ -2,9 +2,46 @@
     <ui:composition template="../template/template.xhtml">
         <ui:define name="content">
             <h:form id="idForm" class="form-horizontal">
-                <style>#project-label{display:block;font-weight:bold;margin-bottom:1em}#project-icon{float:left;height:32px;width:32px}#project-description{margin:0;padding:0}</style>
-                <script>/*<![CDATA[*/sessionStorage.setItem('menuHijoSession', 'Buscar'); $(function(){#{actorController.cadenaAutocomplete3}#{actorController.cadenaAutocomplete4}
-                    $("#caso").autocomplete({minLength:3, source:projects, focus:function(event, ui){$("#caso").val(ui.item.label); return false; }, select:function(event, ui){$("#caso").val(ui.item.label); $("#caso-id").val(ui.item.value); return false; }}).data("ui-autocomplete")._renderItem = function(ul, item){return $("<li/>").append("<a>" + item.label + "<br/>" + item.desc + "</a>").appendTo(ul); }; $("#actividad").autocomplete({minLength:3, source:projects2, focus:function(event, ui){$("#actividad").val(ui.item.label); return false; }, select:function(event, ui){$("#actividad").val(ui.item.label); $("#actividad-id").val(ui.item.value); return false; }}).data("ui-autocomplete")._renderItem = function(ul, item){return $("<li/>").append("<a>" + item.label + "<br/>" + item.desc + "</a>").appendTo(ul); }; }); /*]]>*/</script>
+                <script>
+                    /*<![CDATA[*/
+                    sessionStorage.setItem('menuHijoSession', 'Buscar'); 
+                    $(function(){
+                                        #{actorController.cadenaAutocomplete3}
+                                        #{actorController.cadenaAutocomplete4}
+                                            
+                    $("#caso").autocomplete(
+                            {minLength:3, 
+                             source:projects, 
+                             focus:function(event, ui){
+                                 $("#caso").val(ui.item.label); 
+                                 return false; 
+                             }, 
+                             select:function(event, ui){
+                                 $("#caso").val(ui.item.label); 
+                                 $("#caso-id").val(ui.item.value); 
+                                 return false; 
+                             }
+                         }
+                                 ).data("ui-autocomplete")._renderItem = function(ul, item){
+                             return $("<li/>").append("<a>" + item.label + "<br/>" + item.desc + "</a>").appendTo(ul); }; 
+                         $("#actividad").autocomplete({
+                             minLength:3, source:projects2, 
+                             focus:function(event, ui){
+                                 $("#actividad").val(ui.item.label); 
+                                 return false; 
+                             }, 
+                             select:function(event, ui){
+                                 $("#actividad").val(ui.item.label); 
+                                 $("#actividad-id").val(ui.item.value); 
+                                 return false; 
+                             }
+                         }
+                                 ).data("ui-autocomplete")._renderItem = function(ul, item){
+                             return $("<li/>").append("<a>" + item.label + "<br/>" + item.desc + "</a>").appendTo(ul); 
+                         }; 
+                     }); 
+                     /*]]>*/                          
+                </script>
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <span class="text-resalt-primary" style="font-size:2em">Búsqueda de actores</span>

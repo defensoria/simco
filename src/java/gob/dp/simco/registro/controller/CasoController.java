@@ -770,7 +770,7 @@ public class CasoController extends AbstractManagedBean implements Serializable 
             definirFechaPublicacion();
             ordenarParametros();
             casoService.casoNuevo(caso);
-            msg.messageInfo("Se registro Correctamente el Caso", null);
+            msg.messageInfo("Se registró Correctamente el Caso.", null);
             if (listaCasoRegion.size() > 0) {
                 updateListaRegion();
             }

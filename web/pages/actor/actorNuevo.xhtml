@@ -199,8 +199,9 @@
                                                 <tr>
                                                     <td colspan="2">
                                                         <h:panelGroup rendered="#{actorController.actor.id != null}">
-                                                            <style>#project-label{display:block;font-weight:bold;margin-bottom:1em}#project-icon{float:left;height:32px;width:32px}#project-description{margin:0;padding:0}</style>
-                                                            <script>/*<![CDATA[*/$(function () {#{actorController.cadenaAutocompleteEmpresaEntidad}
+                                                            <script>
+                                                                /*<![CDATA[*/$(function () {
+                                                                                                                                #{actorController.cadenaAutocompleteEmpresaEntidad}
                                                                     $("#actor-persona").autocomplete({minLength: 3, source: projects4, focus: function (event, ui) {
                                                                             $("#actor-persona").val(ui.item.label);
                                                                             return false;
@@ -211,7 +212,9 @@
                                                                         }}).data("ui-autocomplete")._renderItem = function (ul, item) {
                                                                         return $("<li/>").append("<a>" + item.label + "<br/>" + item.desc + "</a>").appendTo(ul);
                                                                     };
-                                                                });/*]]>*/</script>
+                                                                });
+                                                                /*]]>*/                                                                    
+                                                            </script>
                                                             <table style="width:100%">
                                                                 <tr>
                                                                     <td style="width:50%;padding-right:5px;vertical-align:top">
@@ -563,8 +566,9 @@
                                                 <tr>
                                                     <td colspan="2">
                                                         <h:panelGroup rendered="#{actorController.empresa.id != null}">
-                                                            <style>#project-label{display:block;font-weight:bold;margin-bottom:1em}#project-icon{float:left;height:32px;width:32px}#project-description{margin:0;padding:0}</style>
-                                                            <script>/*<![CDATA[*/$(function () {#{actorController.cadenaAutocomplete}
+                                                            <script>
+                                                    /*<![CDATA[*/$(function () {
+                                                                                                        #{actorController.cadenaAutocomplete}
                                                                     $("#actor").autocomplete({minLength: 3, source: projects, focus: function (event, ui) {
                                                                             $("#actor").val(ui.item.label);
                                                                             return false;
@@ -575,7 +579,9 @@
                                                                         }}).data("ui-autocomplete")._renderItem = function (ul, item) {
                                                                         return $("<li/>").append("<a>" + item.label + "<br/>" + item.desc + "</a>").appendTo(ul);
                                                                     };
-                                                                });/*]]>*/</script>
+                                                                });
+                                                                /*]]>*/                                                                    
+                                                            </script>
                                                             <table style="width:100%">
                                                                 <tr>
                                                                     <td style="width:50%;padding-right:5px;vertical-align:top">
@@ -855,8 +861,9 @@
                                                 <tr>
                                                     <td colspan="2">
                                                         <h:panelGroup rendered="#{actorController.entidad.id != null}">
-                                                            <style>#project-label{display:block;font-weight:bold;margin-bottom:1em}#project-icon{float:left;height:32px;width:32px}#project-description{margin:0;padding:0}</style>
-                                                            <script>/*<![CDATA[*/$(function () {#{actorController.cadenaAutocomplete}
+                                                            <script>
+                                        /*<![CDATA[*/
+                                        $(function () {#{actorController.cadenaAutocomplete}
                                                                     $("#actor-entidad").autocomplete({minLength: 3, source: projects, focus: function (event, ui) {
                                                                             $("#actor-entidad").val(ui.item.label);
                                                                             return false;
@@ -867,7 +874,9 @@
                                                                         }}).data("ui-autocomplete")._renderItem = function (ul, item) {
                                                                         return $("<li/>").append("<a>" + item.label + "<br/>" + item.desc + "</a>").appendTo(ul);
                                                                     };
-                                                                });/*]]>*/</script>
+                                                                });
+                                                                /*]]>*/                                                                    
+                                                            </script>
                                                             <table style="width:100%">
                                                                 <tr>
                                                                     <td style="width:50%;vertical-align:top;padding-right:5px">

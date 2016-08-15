@@ -10,9 +10,9 @@
                 <input type="hidden" id="idUsuarioSession" jsf:value="#{investigacionController.investigacion.usuarioRegistro}" />
                 <input type="hidden" id="idNombreCompleto" jsf:value="#{investigacionController.historialActividad.nombre}" />
                 <input type="hidden" id="idNumeroParticipantes" value="#{investigacionController.listaParticipantes.size()}" />
-                <style>#project-label{display:block;font-weight:bold;margin-bottom:1em}#project-icon{float:left;height:32px;width:32px}#project-description{margin:0;padding:0}</style>
                 <script>
-                    /*<![CDATA[*/sessionStorage.setItem('menuHijoSession', 'Crear');
+                    /*<![CDATA[*/
+                    sessionStorage.setItem('menuHijoSession', 'Crear');
                     var usu = JSON.parse(sessionStorage.getItem('userSesion'));
                     $("#idUsuarioSession").val(usu.codigo);
                     $("#idNombreCompleto").val(usu.nombre + " " + usu.apellidoPat + " " + usu.apellidoMat);

@@ -442,7 +442,7 @@ public class RegistroController extends AbstractManagedBean implements Serializa
                 }
             }
             listaNoticiasRegistros.add(noticiaRegistro);
-            msg.messageInfo("Se vinculo la noticia", null);
+            msg.messageInfo("Se vinculó la noticia", null);
             return true;
         } catch (Exception e) {
             log.error("ERROR - vinculaNoticia()" + e);
@@ -650,7 +650,7 @@ public class RegistroController extends AbstractManagedBean implements Serializa
                 verDetalleRegistro = true;
             }
             historialActividad(accionHistorial, actividad.getId());
-            msg.messageInfo("Se realizadon los cambios", null);
+            msg.messageInfo("Se guardaron los cambios", null);
             if (caso.getId() != null) {
                 return "registroEdit";
             }else{
@@ -705,6 +705,7 @@ public class RegistroController extends AbstractManagedBean implements Serializa
     }
 
     private static String getFilename(Part part) {
+        if(part != null)
         try {
             for (String cd : part.getHeader("content-disposition").split(";")) {
                 if (cd.trim().startsWith("filename")) {

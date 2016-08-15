@@ -10,19 +10,6 @@
             <h:form id="idForm" class="form-horizontal">
                 <h:messages id="idMessages"/>
                 <gc:confirmSubmit bean="#{casoController.registrarCaso()}"/>
-                <style>
-                    #project-label{display:block;
-                                   font-weight:bold;
-                                   margin-bottom:1em
-                    }
-                    #project-icon{float:left;
-                                  height:32px;
-                                  width:32px
-                    }
-                    #project-description{margin:0;
-                                         padding:0
-                    }
-                </style>
                 <script>
                     /*<![CDATA[*/
                     sessionStorage.setItem('menuHijoSession', 'Panel');
@@ -56,14 +43,15 @@
                             confirmar();
                             return false;
                         });
-                    });/*]]>*/
+                    });
+                    /*]]>*/
                 </script>
                 <div>
                     <a jsf:rendered="#{casoController.caso.id != null}" jsf:actionListener="#{casoController.pdf()}">
-                        <img src="../../bootstrap/img/pdf.png" alt="Plan de Intervencion" height="45" width="45"/>
+                        <img src="../../bootstrap/img/pdf.png" alt="Plan de Intervención" height="45" width="45"/>
                     </a>
                     <a jsf:rendered="#{casoController.caso.id != null}" jsf:actionListener="#{casoController.docx()}">
-                        <img src="../../bootstrap/img/doc.png" alt="Plan de Intervencion" height="45" width="45"/>
+                        <img src="../../bootstrap/img/doc.png" alt="Plan de Intervención" height="45" width="45"/>
                     </a>
                     <h:panelGroup rendered="#{(casoController.caso.id == null) or (casoController.esComisionadoRegistro)}">
                         <a style="float:right" id="idRegistrarCaso" class="btn btn-primary">
@@ -102,7 +90,6 @@
                                                     <h:outputText value="&#160;&#160;&#160;" />
                                                 </strong>
                                             </div>
-
                                         </h:column>
                                         <h:column>
                                             <h:outputText value="&#160;&#160;&#160;" />
@@ -950,20 +937,6 @@
                                     </div>
                                 </div>
                                 <div class="modal-body" style="padding:5px">
-                                    <style>
-                                        #project-label{display:block;
-                                                       font-weight:bold;
-                                                       margin-bottom:1em
-                                        }
-                                        #project-icon{float:left;
-                                                      height:32px;
-                                                      width:32px
-                                        }#project-description{margin:0;
-                                                              padding:0
-                                        }
-                                        .ui-autocomplete{z-index:2147483647
-                                        }
-                                    </style>
                                     <script>
                                         /*<![CDATA[*/$(function () {#{actorController.cadenaAutocomplete}
                                             $("#actor").autocomplete({minLength: 3, source: projects, focus: function (event, ui) {
