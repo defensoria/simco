@@ -1,11 +1,43 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:jsf="http://xmlns.jcp.org/jsf" xmlns:gc="http://xmlns.jcp.org/jsf/composite/gc">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:h="http://xmlns.jcp.org/jsf/html" 
+      xmlns:f="http://xmlns.jcp.org/jsf/core" 
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets" 
+      xmlns:jsf="http://xmlns.jcp.org/jsf" 
+      xmlns:gc="http://xmlns.jcp.org/jsf/composite/gc">
     <ui:composition template="../template/template.xhtml">
         <ui:define name="content">
             <h:form class="form-horizontal" id="idForm">
-                <script>sessionStorage.setItem('menuHijoSession', 'EditarActor'); $(document).ready(function(){$('#idBotonGuardar').on('click', function(){$("#idPanelBodyActuacion").slideDown(400).delay(800); $("#spanAddActuacion").removeClass("glyphicon-plus").addClass("glyphicon-minus"); $("#idPanelBodyActuacion2").slideUp(300).delay(800); $("#spanAddActuacion2").removeClass("glyphicon-minus").addClass("glyphicon-plus"); $("#idPanelBodyActuacion3").slideUp(300).delay(800); $("#spanAddActuacion3").removeClass("glyphicon-minus").addClass("glyphicon-plus"); if ($('#idDniActor').val() !== ""){if ($('#idDniActor').val().length !== 8){$('#idDniActor').addClass('error'); alertar("El DNI debe tener 8 digitos"); return false; } else{$('#idDniActor').removeClass('error'); }}
-                    if ($('#idActorNombre').val() === ""){$('#idActorNombre').addClass('error'); alertar("Debe de ingresar el nombre del Actor"); return false; }
-                    else{$('#idActorNombre').removeClass('error'); }
-                    confirmar(); return false; }); function confirmar(){$(".confirmacion").modal('show'); }});</script>
+                <script>
+                    sessionStorage.setItem('menuHijoSession', 'EditarActor');
+                    $(document).ready(function () {
+                        $('#idBotonGuardar').on('click', function () {
+                            $("#idPanelBodyActuacion").slideDown(400).delay(800);
+                            $("#spanAddActuacion").removeClass("glyphicon-plus").addClass("glyphicon-minus");
+                            $("#idPanelBodyActuacion2").slideUp(300).delay(800);
+                            $("#spanAddActuacion2").removeClass("glyphicon-minus").addClass("glyphicon-plus");
+                            $("#idPanelBodyActuacion3").slideUp(300).delay(800);
+                            $("#spanAddActuacion3").removeClass("glyphicon-minus").addClass("glyphicon-plus");
+                            if ($('#idDniActor').val() !== "") {
+                                if ($('#idDniActor').val().length !== 8) {
+                                    $('#idDniActor').addClass('error');
+                                    alertar("El DNI debe tener 8 digitos");
+                                    return false;
+                                } else {
+                                    $('#idDniActor').removeClass('error');
+                                }
+                            }
+                            if ($('#idActorNombre').val() === "") {
+                                $('#idActorNombre').addClass('error');
+                                alertar("Debe de ingresar el nombre del Actor");
+                                return false;
+                            } else {
+                                $('#idActorNombre').removeClass('error');
+                            }
+                            confirmar();
+                            return false;
+                        });
+                    });
+                </script>
                 <h:panelGroup id="idPanelPersona" rendered="#{actorController.actor.tipoGeneral == 'PE'}">
                     <div class="panel panel-default" style="width:100%">
                         <div class="panel-heading">
@@ -56,30 +88,30 @@
                                                                             <tr>
                                                                                 <td style="width: 34%">
                                                                                     <label>Tipo:</label>
-                                                                                <h:selectOneMenu value="#{actorController.actor.tipoPoblacion}" onchange="loadingModal()">
-                                                                            <f:selectItem itemValue="0" itemLabel="Seleccione" />
-                                                                            <f:selectItems value="#{actorController.listaTipoPoblacion}" />
-                                                                            <f:ajax listener="#{actorController.cargarAjaxListaSubTipo1()}" render="idPanelPoblacion" onevent="closeModal"/>
-                                                                        </h:selectOneMenu>
+                                                                                    <h:selectOneMenu value="#{actorController.actor.tipoPoblacion}" onchange="loadingModal()">
+                                                                                        <f:selectItem itemValue="0" itemLabel="Seleccione" />
+                                                                                        <f:selectItems value="#{actorController.listaTipoPoblacion}" />
+                                                                                        <f:ajax listener="#{actorController.cargarAjaxListaSubTipo1()}" render="idPanelPoblacion" onevent="closeModal"/>
+                                                                                    </h:selectOneMenu>
                                                                                 </td>
                                                                                 <td style="width: 34%">
                                                                                     <label>Sub-tipo1:</label>
-                                                                                <h:selectOneMenu value="#{actorController.actor.subTipo1Poblacion}" onchange="loadingModal()">
-                                                                            <f:selectItem itemValue="0" itemLabel="Seleccione" />
-                                                                            <f:selectItems value="#{actorController.listaSubTipo1Poblacion}" />
-                                                                            <f:ajax listener="#{actorController.cargarAjaxListaSubTipo2()}" render="idPanelPoblacion" onevent="closeModal"/>
-                                                                        </h:selectOneMenu>
+                                                                                    <h:selectOneMenu value="#{actorController.actor.subTipo1Poblacion}" onchange="loadingModal()">
+                                                                                        <f:selectItem itemValue="0" itemLabel="Seleccione" />
+                                                                                        <f:selectItems value="#{actorController.listaSubTipo1Poblacion}" />
+                                                                                        <f:ajax listener="#{actorController.cargarAjaxListaSubTipo2()}" render="idPanelPoblacion" onevent="closeModal"/>
+                                                                                    </h:selectOneMenu>
                                                                                 </td>
                                                                                 <td>
                                                                                     <label>Sub-tipo2:</label>
-                                                                                <h:selectOneMenu value="#{actorController.actor.subTipo2Poblacion}">
-                                                                            <f:selectItem itemValue="0" itemLabel="Seleccione" />
-                                                                            <f:selectItems value="#{actorController.listaSubTipo2Poblacion}" />
-                                                                        </h:selectOneMenu>
+                                                                                    <h:selectOneMenu value="#{actorController.actor.subTipo2Poblacion}">
+                                                                                        <f:selectItem itemValue="0" itemLabel="Seleccione" />
+                                                                                        <f:selectItems value="#{actorController.listaSubTipo2Poblacion}" />
+                                                                                    </h:selectOneMenu>
                                                                                 </td>
                                                                             </tr>
-                                                                            </table>
-                                                                            </h:panelGroup>
+                                                                        </table>
+                                                                    </h:panelGroup>
                                                                     <br/>
                                                                     <table style="width: 100%">
                                                                         <tr>
@@ -118,7 +150,6 @@
                                                                                 </h:selectOneRadio>
                                                                             </td>
                                                                             <td style="width:50%">
-                                                                                
                                                                             </td>
                                                                         </tr>
                                                                     </table>
@@ -159,23 +190,24 @@
                                                     <tr>
                                                         <td colspan="2">
                                                             <script>
-                                                        /*<![CDATA[*/
-                                                        $(function(){#{actorController.cadenaAutocompleteEmpresaEntidad}
-                                                                        $("#actor-persona").autocomplete({
-                                                                            minLength:3, source:projects4, 
-                                                                            focus:function(event, ui){
-                                                                                $("#actor-persona").val(ui.item.label); 
-                                                                                return false; 
-                                                                            }, select:function(event, ui){
-                                                                                $("#actor-persona").val(ui.item.label); 
-                                                                                $("#actor-id-persona").val(ui.item.value); 
-                                                                                return false; 
-                                                                            }
-                                                                        }).data("ui-autocomplete")._renderItem = function(ul, item){
-                                                                            return $("<li/>").append("<a>" + item.label + "<br/>" + item.desc + "</a>").appendTo(ul); 
-                                                                        }; 
-                                                                    }); 
-                                                                    /*]]>*/                                                                            
+                                                                /*<![CDATA[*/
+                                                                $(function () {
+                                                                #{actorController.cadenaAutocompleteEmpresaEntidad}
+                                                                    $("#actor-persona").autocomplete({
+                                                                        minLength: 3, source: projects4,
+                                                                        focus: function (event, ui) {
+                                                                            $("#actor-persona").val(ui.item.label);
+                                                                            return false;
+                                                                        }, select: function (event, ui) {
+                                                                            $("#actor-persona").val(ui.item.label);
+                                                                            $("#actor-id-persona").val(ui.item.value);
+                                                                            return false;
+                                                                        }
+                                                                    }).data("ui-autocomplete")._renderItem = function (ul, item) {
+                                                                        return $("<li/>").append("<a>" + item.label + "<br/>" + item.desc + "</a>").appendTo(ul);
+                                                                    };
+                                                                });
+                                                                /*]]>*/
                                                             </script>
                                                             <table style="width:100%">
                                                                 <tr>
@@ -184,13 +216,22 @@
                                                                             <div class="panel-body">
                                                                                 <span class="text-resalt-primary">Búsqueda de empresa o entidad</span>
                                                                                 <br/>
-                                                                                <script>function limpiarCampoActorPersona(data){if (data.status === 'success'){$('#actor-persona').val(""); $('#actor-id-persona').val(""); $("#loadModal").modal('hide'); $('body').removeClass('modal-open'); $(".modal-backdrop").removeClass("modal-backdrop"); }}</script>
+                                                                                <script>
+                                                                                    function limpiarCampoActorPersona(data) {
+                                                                                        if (data.status === 'success') {
+                                                                                            $('#actor-persona').val("");
+                                                                                            $('#actor-id-persona').val("");
+                                                                                            $("#loadModal").modal('hide');
+                                                                                            $('body').removeClass('modal-open');
+                                                                                            $(".modal-backdrop").removeClass("modal-backdrop");
+                                                                                        }
+                                                                                    }                                                                       
+                                                                                </script>
                                                                                 <div id="idDivActorPersonaMiembro" class="form-group has-feedback" style="margin:auto;width:50%;text-align:left">
                                                                                     <input type="text" id="actor-persona" jsf:value="#{actorController.actorMiembroPesona.nombre}"/>
                                                                                     <input type="hidden" id="actor-id-persona" jsf:value="#{actorController.actorMiembroPesona.idActor}"/>
                                                                                     <a style="font-size:large;margin:auto" jsf:action="#{actorController.addMiembroPersona()}" jsf:onclick="loadingModal()">
                                                                                         <span class="glyphicon glyphicon-plus form-control-feedback"/>
-                                                                                        <f:ajax render="@form" execute="@form" onevent="limpiarCampoActorPersona"/>
                                                                                     </a>
                                                                                 </div>
                                                                                 <br/><br/>
@@ -209,14 +250,12 @@
                                                                                     </h:column>
                                                                                     <h:column>
                                                                                         <a jsf:action="#{actorController.addMiembroGuardarPersona(persona)}" jsf:onclick="loadingModal()">
-                                                                                            <span style="font-size:large" class="glyphicon glyphicon-floppy-disk"></span>
-                                                                                            <f:ajax render="@form" execute="@form" onevent="closeModal"/>
+                                                                                            <span style="font-size:large" class="glyphicon glyphicon-floppy-disk"/>
                                                                                         </a>
                                                                                     </h:column>
                                                                                     <h:column>
                                                                                         <a jsf:action="#{actorController.removeTempMiembroPersona(persona)}" jsf:onclick="loadingModal()">
-                                                                                            <span style="color:red;font-size:large" class="glyphicon glyphicon-remove"></span>
-                                                                                            <f:ajax render="@form" onevent="closeModal"/>
+                                                                                            <span style="color:red;font-size:large" class="glyphicon glyphicon-remove"/>
                                                                                         </a>
                                                                                     </h:column>
                                                                                 </h:dataTable>
@@ -226,7 +265,7 @@
                                                                     <td style="padding-left:5px;vertical-align:top">
                                                                         <div class="panel panel-featured-top-primary">
                                                                             <div class="panel-body">
-                                                                                <span class="text-resalt-primary">Empresas o Entidades añadidas</span>
+                                                                                <span class="text-resalt-primary">Empresas o entidades añadidas</span>
                                                                                 <br/>
                                                                                 <h:dataTable value="#{actorController.listaMiembrosRegistradosPersona}" var="person" class="table table-striped" style="width:100%" rendered="#{actorController.listaMiembrosRegistradosPersona.size() > 0}">
                                                                                     <h:column>
@@ -261,8 +300,16 @@
                     </div>
                 </h:panelGroup>
                 <gc:confirmSubmit bean="#{actorController.actualizarActor()}"/>
-                <script>$(document).ready(function(){$('#idBotonGuardar2').on('click', function(){$("#idPanelBodyActuacion2").slideDown(400).delay(800); $("#spanAddActuacion2").removeClass("glyphicon-plus").addClass("glyphicon-minus"); $("#idPanelBodyActuacion").slideUp(300).delay(800); $("#spanAddActuacion").removeClass("glyphicon-minus").addClass("glyphicon-plus"); $("#idPanelBodyActuacion3").slideUp(300).delay(800); $("#spanAddActuacion3").removeClass("glyphicon-minus").addClass("glyphicon-plus"); 
-        if ($( "input:checked" ).val() === "0") {
+                <script>
+                    $(document).ready(function () {
+                        $('#idBotonGuardar2').on('click', function () {
+                            $("#idPanelBodyActuacion2").slideDown(400).delay(800);
+                            $("#spanAddActuacion2").removeClass("glyphicon-plus").addClass("glyphicon-minus");
+                            $("#idPanelBodyActuacion").slideUp(300).delay(800);
+                            $("#spanAddActuacion").removeClass("glyphicon-minus").addClass("glyphicon-plus");
+                            $("#idPanelBodyActuacion3").slideUp(300).delay(800);
+                            $("#spanAddActuacion3").removeClass("glyphicon-minus").addClass("glyphicon-plus");
+                            if ($("input:checked").val() === "0") {
                                 $('.idClasificacion').addClass('error');
                                 alertar("Debe de ingresar la clasificacion");
                                 return false;
@@ -270,13 +317,32 @@
                             else {
                                 $('.idClasificacion').removeClass('error');
                             }
-                    if ($('#idNombreEmpresa').val() === "")
-        {$('#idNombreEmpresa').addClass('error'); 
-            alertar("Debe de ingresar el nombre de la organizacion"); 
-            return false; }
-                    else{$('#idNombreEmpresa').removeClass('error'); }
-                    if ($('#rucEmpresa').val() !== ""){if ($('#rucEmpresa').val().length !== 11){$('#rucEmpresa').addClass('error'); alertar("El numero de RUC debe contar con 11 digitos"); return false; }} else{$('#rucEmpresa').removeClass('error'); }
-                    confirmar2(); return false; }); }); function confirmar2(){$(".confirmacion2").modal('show'); }</script>
+                            if ($('#idNombreEmpresa').val() === "")
+                            {
+                                $('#idNombreEmpresa').addClass('error');
+                                alertar("Debe de ingresar el nombre de la organizacion");
+                                return false;
+                            }
+                            else {
+                                $('#idNombreEmpresa').removeClass('error');
+                            }
+                            if ($('#rucEmpresa').val() !== "") {
+                                if ($('#rucEmpresa').val().length !== 11) {
+                                    $('#rucEmpresa').addClass('error');
+                                    alertar("El numero de RUC debe contar con 11 digitos");
+                                    return false;
+                                }
+                            } else {
+                                $('#rucEmpresa').removeClass('error');
+                            }
+                            confirmar2();
+                            return false;
+                        });
+                    });
+                    function confirmar2() {
+                        $(".confirmacion2").modal('show');
+                    }
+                </script>
                 <gc:confirmSubmit bean="#{actorController.registrarActorEmpresa()}" classGC="confirmacion2"/>
                 <h:panelGroup id="idPanelEmpresa" rendered="#{actorController.empresa.tipoGeneral == 'EM'}">
                     <div class="panel panel-default" style="width:100%">
@@ -312,77 +378,77 @@
                                                                 <span class="text-resalt-primary">Datos generales</span>
                                                                 <br/><br/><br/>
                                                                 <h:panelGroup id="idPanelOrganizacionM">
-                                                                <h:selectOneRadio class="idClasificacion" onclick="loadingModal()" value="#{actorController.empresa.clasificacion}">
-                                                                    <f:selectItem  itemLabel="Organización&#160;&#160;&#160;&#160;&#160;" itemValue="OR" />
-                                                                    <f:selectItem  itemLabel="Empresa " itemValue="EM" />
-                                                                    <f:ajax render="idPanelOrganizacionM" onevent="closeModal"/>
-                                                                </h:selectOneRadio>
-                                                                <br/>
-                                                                <h:panelGroup id="idPanelOrganizacion" rendered="#{actorController.empresa.clasificacion == 'OR'}">
-                                                                    <table style="width: 100%">
+                                                                    <h:selectOneRadio class="idClasificacion" onclick="loadingModal()" value="#{actorController.empresa.clasificacion}">
+                                                                        <f:selectItem  itemLabel="Organización&#160;&#160;&#160;&#160;&#160;" itemValue="OR" />
+                                                                        <f:selectItem  itemLabel="Empresa " itemValue="EM" />
+                                                                        <f:ajax render="idPanelOrganizacionM" onevent="closeModal"/>
+                                                                    </h:selectOneRadio>
+                                                                    <br/>
+                                                                    <h:panelGroup id="idPanelOrganizacion" rendered="#{actorController.empresa.clasificacion == 'OR'}">
+                                                                        <table style="width: 100%">
                                                                             <tr>
                                                                                 <td style="width: 34%">
                                                                                     <label>Tipo:</label>
                                                                                     <h:selectOneMenu class="form-control" value="#{actorController.empresa.tipoOrganizacion}" onchange="loadingModal()">
-                                                                            <f:selectItem itemValue="0" itemLabel="Seleccione" />
-                                                                            <f:selectItems value="#{actorController.listaTipoOrganizacion}" />
-                                                                            <f:ajax listener="#{actorController.cargarAjaxListaSubTipo1Organizacion()}" render="idPanelOrganizacion" onevent="closeModal"/>
-                                                                        </h:selectOneMenu>
+                                                                                        <f:selectItem itemValue="0" itemLabel="Seleccione" />
+                                                                                        <f:selectItems value="#{actorController.listaTipoOrganizacion}" />
+                                                                                        <f:ajax listener="#{actorController.cargarAjaxListaSubTipo1Organizacion()}" render="idPanelOrganizacion" onevent="closeModal"/>
+                                                                                    </h:selectOneMenu>
                                                                                 </td>
                                                                                 <td style="width: 34%">
                                                                                     <label>Sub-tipo1:</label>
                                                                                     <h:selectOneMenu value="#{actorController.empresa.subTipo1Organizacion}" onchange="loadingModal()">
-                                                                            <f:selectItem itemValue="0" itemLabel="Seleccione" />
-                                                                            <f:selectItems value="#{actorController.listaSubTipo1Organizacion}" />
-                                                                            <f:ajax listener="#{actorController.cargarAjaxListaSubTipo2Organizacion()}" render="idPanelOrganizacion" onevent="closeModal"/>
-                                                                        </h:selectOneMenu>
+                                                                                        <f:selectItem itemValue="0" itemLabel="Seleccione" />
+                                                                                        <f:selectItems value="#{actorController.listaSubTipo1Organizacion}" />
+                                                                                        <f:ajax listener="#{actorController.cargarAjaxListaSubTipo2Organizacion()}" render="idPanelOrganizacion" onevent="closeModal"/>
+                                                                                    </h:selectOneMenu>
                                                                                 </td>
                                                                                 <td>
                                                                                     <label>Sub-tipo2:</label>
                                                                                     <h:selectOneMenu value="#{actorController.empresa.subTipo2Organizacion}">
-                                                                            <f:selectItem itemValue="0" itemLabel="Seleccione" />
-                                                                            <f:selectItems value="#{actorController.listaSubTipo2Organizacion}" />
-                                                                        </h:selectOneMenu>
+                                                                                        <f:selectItem itemValue="0" itemLabel="Seleccione" />
+                                                                                        <f:selectItems value="#{actorController.listaSubTipo2Organizacion}" />
+                                                                                    </h:selectOneMenu>
                                                                                 </td>
                                                                             </tr>
-                                                                            </table>
-                                                                </h:panelGroup>
-                                                                <h:panelGroup id="idPanelEmpresa2" rendered="#{actorController.empresa.clasificacion == 'EM'}">
-                                                                    <table style="width: 100%">
+                                                                        </table>
+                                                                    </h:panelGroup>
+                                                                    <h:panelGroup id="idPanelEmpresa2" rendered="#{actorController.empresa.clasificacion == 'EM'}">
+                                                                        <table style="width: 100%">
                                                                             <tr>
                                                                                 <td style="width: 25%">
                                                                                     <label>Tipo:</label>
                                                                                     <h:selectOneMenu value="#{actorController.empresa.tipoEmpresa}">
-                                                                            <f:selectItem itemValue="0" itemLabel="Seleccione" />
-                                                                            <f:selectItems value="#{actorController.listaTipoEmpresa}" />
-                                                                        </h:selectOneMenu>
+                                                                                        <f:selectItem itemValue="0" itemLabel="Seleccione" />
+                                                                                        <f:selectItems value="#{actorController.listaTipoEmpresa}" />
+                                                                                    </h:selectOneMenu>
                                                                                 </td>
                                                                                 <td style="width: 25%">
                                                                                     <label>Sub-tipo1:</label>
                                                                                     <h:selectOneMenu value="#{actorController.empresa.subTipo1Empresa}">
-                                                                            <f:selectItem itemValue="0" itemLabel="Seleccione" />
-                                                                            <f:selectItems value="#{actorController.listaSubTipo1Empresa}" />
-                                                                        </h:selectOneMenu>
+                                                                                        <f:selectItem itemValue="0" itemLabel="Seleccione" />
+                                                                                        <f:selectItems value="#{actorController.listaSubTipo1Empresa}" />
+                                                                                    </h:selectOneMenu>
                                                                                 </td>
                                                                                 <td style="width: 25%">
                                                                                     <label>Sub-tipo2:</label>
                                                                                     <h:selectOneMenu value="#{actorController.empresa.subTipo2Empresa}" onchange="loadingModal()">
-                                                                            <f:selectItem itemValue="0" itemLabel="Seleccione" />
-                                                                            <f:selectItems value="#{actorController.listaSubTipo2Empresa}" />
-                                                                            <f:ajax listener="#{actorController.cargarAjaxListaSubTipo3Empresa()}" render="idSubTipo3Orga" onevent="closeModal"/>
-                                                                        </h:selectOneMenu>
+                                                                                        <f:selectItem itemValue="0" itemLabel="Seleccione" />
+                                                                                        <f:selectItems value="#{actorController.listaSubTipo2Empresa}" />
+                                                                                        <f:ajax listener="#{actorController.cargarAjaxListaSubTipo3Empresa()}" render="idSubTipo3Orga" onevent="closeModal"/>
+                                                                                    </h:selectOneMenu>
                                                                                 </td>
                                                                                 <td style="width: 25%">
                                                                                     <label>Sub-tipo3:</label>
                                                                                     <h:selectOneMenu id="idSubTipo3Orga" value="#{actorController.empresa.subTipo3Empresa}">
-                                                                            <f:selectItem itemValue="0" itemLabel="Seleccione" />
-                                                                            <f:selectItems value="#{actorController.listaSubTipo3Empresa}" />
-                                                                        </h:selectOneMenu>
+                                                                                        <f:selectItem itemValue="0" itemLabel="Seleccione" />
+                                                                                        <f:selectItems value="#{actorController.listaSubTipo3Empresa}" />
+                                                                                    </h:selectOneMenu>
                                                                                 </td>
                                                                             </tr>
-                                                                            </table>
-                                                
-                                                                </h:panelGroup>
+                                                                        </table>
+
+                                                                    </h:panelGroup>
                                                                 </h:panelGroup>
                                                                 <br/>
                                                                 <table style="width:100%">
@@ -489,26 +555,26 @@
                                                 <tr>
                                                     <td colspan="2">
                                                         <script>
-                                            /*<![CDATA[*/$(
-                                                    function(){
-                                                                                                #{actorController.cadenaAutocomplete}
-                                                                    $("#actor").autocomplete({
-                                                                        minLength:3, 
-                                                                        source:projects, 
-                                                                        focus:function(event, ui){
-                                                                            $("#actor").val(ui.item.label); 
-                                                                            return false; 
-                                                                        }, 
-                                                                        select:function(event, ui){
-                                                                            $("#actor").val(ui.item.label); 
-                                                                            $("#actor-id").val(ui.item.value); 
-                                                                            return false; 
-                                                                        }
-                                                                    }).data("ui-autocomplete")._renderItem = function(ul, item){
-                                                                        return $("<li/>").append("<a>" + item.label + "<br/>" + item.desc + "</a>").appendTo(ul); 
-                                                                    }; 
-                                                                }); 
-                                                                /*]]>*/                                                                        
+                                                            /*<![CDATA[*/
+                                                            $(function () {
+                                                            #{actorController.cadenaAutocomplete}
+                                                                $("#actor").autocomplete({
+                                                                    minLength: 3,
+                                                                    source: projects,
+                                                                    focus: function (event, ui) {
+                                                                        $("#actor").val(ui.item.label);
+                                                                        return false;
+                                                                    },
+                                                                    select: function (event, ui) {
+                                                                        $("#actor").val(ui.item.label);
+                                                                        $("#actor-id").val(ui.item.value);
+                                                                        return false;
+                                                                    }
+                                                                }).data("ui-autocomplete")._renderItem = function (ul, item) {
+                                                                    return $("<li/>").append("<a>" + item.label + "<br/>" + item.desc + "</a>").appendTo(ul);
+                                                                };
+                                                            });
+                                                            /*]]>*/
                                                         </script>
                                                     </td>
                                                 </tr>
@@ -516,24 +582,26 @@
                                                     <td colspan="2">
                                                         <h:panelGroup rendered="#{actorController.empresa.id != null}">
                                                             <script>
-                                                /*<![CDATA[*/$(function(){
-                                                                                                #{actorController.cadenaAutocomplete}
-                                                                        $("#actor").autocomplete({
-                                                                            minLength:3, 
-                                                                            source:projects, 
-                                                                            focus:function(event, ui){
-                                                                                $("#actor").val(ui.item.label); 
-                                                                                return false; 
-                                                                            }, 
-                                                                            select:function(event, ui){
-                                                                                $("#actor").val(ui.item.label); 
-                                                                                $("#actor-id").val(ui.item.value); 
-                                                                                return false; 
-                                                                            }
-                                                                        }).data("ui-autocomplete")._renderItem = function(ul, item){
-                                                                            return $("<li/>").append("<a>" + item.label + "<br/>" + item.desc + "</a>").appendTo(ul); 
-                                                                        }; 
-                                                                    }); /*]]>*/                                                                            
+                                                                /*<![CDATA[*/
+                                                                $(function () {
+                                                                    #{actorController.cadenaAutocomplete}
+                                                                    $("#actor").autocomplete({
+                                                                        minLength: 3,
+                                                                        source: projects,
+                                                                        focus: function (event, ui) {
+                                                                            $("#actor").val(ui.item.label);
+                                                                            return false;
+                                                                        },
+                                                                        select: function (event, ui) {
+                                                                            $("#actor").val(ui.item.label);
+                                                                            $("#actor-id").val(ui.item.value);
+                                                                            return false;
+                                                                        }
+                                                                    }).data("ui-autocomplete")._renderItem = function (ul, item) {
+                                                                        return $("<li/>").append("<a>" + item.label + "<br/>" + item.desc + "</a>").appendTo(ul);
+                                                                    };
+                                                                });
+                                                                /*]]>*/
                                                             </script>
                                                             <table style="width:100%">
                                                                 <tr>
@@ -542,7 +610,17 @@
                                                                             <div class="panel-body">
                                                                                 <span class="text-resalt-primary">Búsqueda de miembros</span>
                                                                                 <br/>
-                                                                                <script>function limpiarCampoActor(data){if (data.status === 'success'){$('#actor').val(""); $('#actor-id').val(""); $("#loadModal").modal('hide'); $('body').removeClass('modal-open'); $(".modal-backdrop").removeClass("modal-backdrop"); }}</script>
+                                                                                <script>
+                                                                                    function limpiarCampoActor(data) {
+                                                                                        if (data.status === 'success') {
+                                                                                            $('#actor').val("");
+                                                                                            $('#actor-id').val("");
+                                                                                            $("#loadModal").modal('hide');
+                                                                                            $('body').removeClass('modal-open');
+                                                                                            $(".modal-backdrop").removeClass("modal-backdrop");
+                                                                                        }
+                                                                                    }
+                                                                                </script>
                                                                                 <div id="idDivActorMiembro" class="form-group has-feedback" style="width:50%;text-align:left">
                                                                                     <input type="text" id="actor" jsf:value="#{actorController.actorMiembro.nombre}" />
                                                                                     <input type="hidden" jsf:value="#{actorController.actorMiembro.idMiembro}" id="actor-id" />
@@ -584,7 +662,7 @@
                                                                     <td style="padding-left:5px;vertical-align:top">
                                                                         <div class="panel panel-featured-top-primary">
                                                                             <div class="panel-body">
-                                                                                <span class="text-resalt-primary">Miembros añadidos en la Empresa</span>
+                                                                                <span class="text-resalt-primary">Miembros añadidos en la empresa</span>
                                                                                 <br/>
                                                                                 <h:dataTable value="#{actorController.listaMiembrosRegistrados}" var="mienbrosEm" id="idDatatableMiembrosRegistradosEmp" class="table table-striped" style="width:100%" binding="#{row2e}" rendered="#{actorController.listaMiembrosRegistrados.size() > 0}">
                                                                                     <h:column>
@@ -622,10 +700,39 @@
                         </div>
                     </div>
                 </h:panelGroup>
-                <script>$(document).ready(function(){$('#idBotonGuardar3').on('click', function(){$("#idPanelBodyActuacion3").slideDown(400).delay(800); $("#spanAddActuacion3").removeClass("glyphicon-plus").addClass("glyphicon-minus"); $("#idPanelBodyActuacion").slideUp(300).delay(800); $("#spanAddActuacion").removeClass("glyphicon-minus").addClass("glyphicon-plus"); $("#idPanelBodyActuacion2").slideUp(300).delay(800); $("#spanAddActuacion2").removeClass("glyphicon-minus").addClass("glyphicon-plus"); if ($('#idNombreEntidad').val() === ""){$('#idNombreEntidad').addClass('error'); alertar("Debe de ingresar el nombre de la Entidad"); return false; }
-                    else{$('#idNombreEntidad').removeClass('error'); }
-                    if ($('#idRucEntidad').val() !== ""){if ($('#idRucEntidad').val().length !== 11){$('#idRucEntidad').addClass('error'); alertar("El numero de RUC debe contar con 11 digitos"); return false; } else{$('#idRucEntidad').removeClass('error'); }}
-                    confirmar3(); return false; }); }); function confirmar3(){$(".confirmacion3").modal('show'); }</script>
+                <script>
+                    $(document).ready(function () {
+                        $('#idBotonGuardar3').on('click', function () {
+                            $("#idPanelBodyActuacion3").slideDown(400).delay(800);
+                            $("#spanAddActuacion3").removeClass("glyphicon-plus").addClass("glyphicon-minus");
+                            $("#idPanelBodyActuacion").slideUp(300).delay(800);
+                            $("#spanAddActuacion").removeClass("glyphicon-minus").addClass("glyphicon-plus");
+                            $("#idPanelBodyActuacion2").slideUp(300).delay(800);
+                            $("#spanAddActuacion2").removeClass("glyphicon-minus").addClass("glyphicon-plus");
+                            if ($('#idNombreEntidad').val() === "") {
+                                $('#idNombreEntidad').addClass('error');
+                                alertar("Debe de ingresar el nombre de la Entidad");
+                                return false;
+                            }
+                            else {
+                                $('#idNombreEntidad').removeClass('error');
+                            }
+                            if ($('#idRucEntidad').val() !== "") {
+                                if ($('#idRucEntidad').val().length !== 11) {
+                                    $('#idRucEntidad').addClass('error');
+                                    alertar("El numero de RUC debe contar con 11 digitos");
+                                    return false;
+                                } else {
+                                    $('#idRucEntidad').removeClass('error');
+                                }
+                            }
+                            confirmar3();
+                            return false;
+                        });
+                    });
+                    function confirmar3() {
+                        $(".confirmacion3").modal('show');
+                    }</script>
                 <gc:confirmSubmit bean="#{actorController.registrarActorEntidad()}" classGC="confirmacion3"/>
                 <h:panelGroup id="idPanelEntidad" rendered="#{actorController.entidad.tipoGeneral == 'EN'}">
                     <div class="panel panel-default" style="width:100%">
@@ -661,37 +768,37 @@
                                                                 <span class="text-resalt-primary">Datos generales</span>
                                                                 <br/><br/><br/>
                                                                 <h:panelGroup id="idPanelEstado">
-                                                                        <table style="width: 100%">
-                                                                            <tr>
-                                                                                <td style="width: 34%">
-                                                                                    <label>Tipo:</label>
-                                                                                    <h:selectOneMenu value="#{actorController.entidad.tipoEstado}" onchange="loadingModal()">
-                                                                            <f:selectItem itemValue="0" itemLabel="Seleccione" />
-                                                                            <f:selectItems value="#{actorController.listaTipoEstado}" />
-                                                                            <f:ajax listener="#{actorController.cargarAjaxListaSubTipo1Estado()}" render="idPanelEstado" onevent="closeModal"/>
-                                                                        </h:selectOneMenu>
-                                                                                </td>
-                                                                                <td style="width: 34%">
-                                                                                    <label>Sub-tipo1:</label>
-                                                                                    <h:selectOneMenu value="#{actorController.entidad.subTipo1Estado}" onchange="loadingModal()">
-                                                                            <f:selectItem itemValue="0" itemLabel="Seleccione" />
-                                                                            <f:selectItems value="#{actorController.listaSubTipo1Estado}" />
-                                                                            <f:ajax listener="#{actorController.cargarAjaxListaSubTipo2Estado()}" render="idPanelEstado" onevent="closeModal"/>
-                                                                        </h:selectOneMenu>
-                                                                                </td>
-                                                                                <td>
-                                                                                    <label>Sub-tipo2:</label>
-                                                                                    <h:selectOneMenu value="#{actorController.entidad.subTipo2Estado}">
-                                                                            <f:selectItem itemValue="0" itemLabel="Seleccione" />
-                                                                            <f:selectItems value="#{actorController.listaSubTipo2Estado}" />
-                                                                        </h:selectOneMenu>
-                                                                                </td>
-                                                                            </tr>
-                                                                            </table>
-                                                                            </h:panelGroup>
+                                                                    <table style="width: 100%">
+                                                                        <tr>
+                                                                            <td style="width: 34%">
+                                                                                <label>Tipo:</label>
+                                                                                <h:selectOneMenu value="#{actorController.entidad.tipoEstado}" onchange="loadingModal()">
+                                                                                    <f:selectItem itemValue="0" itemLabel="Seleccione" />
+                                                                                    <f:selectItems value="#{actorController.listaTipoEstado}" />
+                                                                                    <f:ajax listener="#{actorController.cargarAjaxListaSubTipo1Estado()}" render="idPanelEstado" onevent="closeModal"/>
+                                                                                </h:selectOneMenu>
+                                                                            </td>
+                                                                            <td style="width: 34%">
+                                                                                <label>Sub-tipo1:</label>
+                                                                                <h:selectOneMenu value="#{actorController.entidad.subTipo1Estado}" onchange="loadingModal()">
+                                                                                    <f:selectItem itemValue="0" itemLabel="Seleccione" />
+                                                                                    <f:selectItems value="#{actorController.listaSubTipo1Estado}" />
+                                                                                    <f:ajax listener="#{actorController.cargarAjaxListaSubTipo2Estado()}" render="idPanelEstado" onevent="closeModal"/>
+                                                                                </h:selectOneMenu>
+                                                                            </td>
+                                                                            <td>
+                                                                                <label>Sub-tipo2:</label>
+                                                                                <h:selectOneMenu value="#{actorController.entidad.subTipo2Estado}">
+                                                                                    <f:selectItem itemValue="0" itemLabel="Seleccione" />
+                                                                                    <f:selectItems value="#{actorController.listaSubTipo2Estado}" />
+                                                                                </h:selectOneMenu>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </h:panelGroup>
                                                                 <br/>
                                                                 <table style="width:100%">
-                                                                   
+
                                                                     <tr>
                                                                         <td style="padding-bottom: 5px"><b>Nombre:</b></td>
                                                                         <td style="padding-bottom: 5px">
@@ -777,25 +884,26 @@
                                                 <tr>
                                                     <td colspan="2">
                                                         <script>
-                                    /*<![CDATA[*/$(function(){
-                                                                        #{actorController.cadenaAutocomplete}
-                                                                    $("#actor-entidad").autocomplete({
-                                                                        minLength:3, 
-                                                                        source:projects, 
-                                                                        focus:function(event, ui){
-                                                                            $("#actor-entidad").val(ui.item.label); 
-                                                                            return false; 
-                                                                        }, 
-                                                                        select:function(event, ui){
-                                                                            $("#actor-entidad").val(ui.item.label); 
-                                                                            $("#actor-id-entidad").val(ui.item.value); 
-                                                                            return false; 
-                                                                        }
-                                                                    }).data("ui-autocomplete")._renderItem = function(ul, item){
-                                                                        return $("<li/>").append("<a>" + item.label + "<br/>" + item.desc + "</a>").appendTo(ul); 
-                                                                    }; 
-                                                                }); 
-                                                                /*]]>*/                                                                        
+                                                            /*<![CDATA[*/
+                                                            $(function () {
+                                                            #{actorController.cadenaAutocomplete}
+                                                                $("#actor-entidad").autocomplete({
+                                                                    minLength: 3,
+                                                                    source: projects,
+                                                                    focus: function (event, ui) {
+                                                                        $("#actor-entidad").val(ui.item.label);
+                                                                        return false;
+                                                                    },
+                                                                    select: function (event, ui) {
+                                                                        $("#actor-entidad").val(ui.item.label);
+                                                                        $("#actor-id-entidad").val(ui.item.value);
+                                                                        return false;
+                                                                    }
+                                                                }).data("ui-autocomplete")._renderItem = function (ul, item) {
+                                                                    return $("<li/>").append("<a>" + item.label + "<br/>" + item.desc + "</a>").appendTo(ul);
+                                                                };
+                                                            });
+                                                            /*]]>*/
                                                         </script>
                                                         <table style="width:100%">
                                                             <tr>
@@ -804,7 +912,17 @@
                                                                         <div class="panel-body">
                                                                             <span class="text-resalt-primary">Búsqueda de funcionarios</span>
                                                                             <br/>
-                                                                            <script>function limpiarCampoActorEntidad(data){if (data.status === 'success'){$('#actor-entidad').val(""); $('#actor-id-entidad').val(""); $("#loadModal").modal('hide'); $('body').removeClass('modal-open'); $(".modal-backdrop").removeClass("modal-backdrop"); }}</script>
+                                                                            <script>
+                                                                                function limpiarCampoActorEntidad(data) {
+                                                                                    if (data.status === 'success') {
+                                                                                        $('#actor-entidad').val("");
+                                                                                        $('#actor-id-entidad').val("");
+                                                                                        $("#loadModal").modal('hide');
+                                                                                        $('body').removeClass('modal-open');
+                                                                                        $(".modal-backdrop").removeClass("modal-backdrop");
+                                                                                    }
+                                                                                }
+                                                                            </script>
                                                                             <div id="idDivActorMiembroEntidad" class="form-group has-feedback" style="width:50%">
                                                                                 <input type="text" id="actor-entidad" jsf:value="#{actorController.actorMiembroEntidad.nombre}"/>
                                                                                 <input type="hidden" jsf:value="#{actorController.actorMiembroEntidad.idMiembro}" id="actor-id-entidad" />
@@ -883,20 +1001,92 @@
                         </div>
                     </div>
                 </h:panelGroup>
-                <script>function openRegistroPersona(data){if (data.status === 'success'){$("#idPanelBodyActuacion").slideDown(400).delay(800); $("#spanAddActuacion").removeClass("glyphicon-plus").addClass("glyphicon-minus"); $("#idPanelBodyActuacion2").slideUp(300).delay(800); $("#spanAddActuacion2").removeClass("glyphicon-minus").addClass("glyphicon-plus"); $("#idPanelBodyActuacion3").slideUp(300).delay(800); $("#spanAddActuacion3").removeClass("glyphicon-minus").addClass("glyphicon-plus"); $("#loadModal").modal('hide'); $('body').removeClass('modal-open'); $(".modal-backdrop").removeClass("modal-backdrop"); }}
-                    if ($('#idActorNombre').val() === ''){$("#idPanelBodyActuacion").hide(); $("#spanAddActuacion").removeClass("glyphicon-minus").addClass("glyphicon-plus"); } else{$("#spanAddActuacion").removeClass("glyphicon-plus").addClass("glyphicon-minus"); }
-                    $("#spanAddActuacion").removeClass("glyphicon-minus").addClass("glyphicon-plus"); var i = 1; $("#addActuacion").click(function(){if (i === 1)
-                    {$("#idPanelBodyActuacion").slideDown(400).delay(800); $("#spanAddActuacion").removeClass("glyphicon-plus").addClass("glyphicon-minus"); $("#idPanelBodyActuacion2").slideUp(300).delay(800); $("#spanAddActuacion2").removeClass("glyphicon-minus").addClass("glyphicon-plus"); $("#idPanelBodyActuacion3").slideUp(300).delay(800); $("#spanAddActuacion3").removeClass("glyphicon-minus").addClass("glyphicon-plus"); i = 2; }
-                    else
-                    {$("#idPanelBodyActuacion").slideUp(300).delay(800); $("#spanAddActuacion").removeClass("glyphicon-minus").addClass("glyphicon-plus"); i = 1; }}); if ($('#idNombreEmpresa').val() === ''){$("#idPanelBodyActuacion2").hide(); $("#spanAddActuacion2").removeClass("glyphicon-minus").addClass("glyphicon-plus"); } else{$("#spanAddActuacion2").removeClass("glyphicon-plus").addClass("glyphicon-minus"); }
-                    var i = 1; $("#addActuacion2").click(function(){if (i === 1)
-                    {$("#idPanelBodyActuacion2").slideDown(400).delay(800); $("#spanAddActuacion2").removeClass("glyphicon-plus").addClass("glyphicon-minus"); $("#idPanelBodyActuacion").slideUp(300).delay(800); $("#spanAddActuacion").removeClass("glyphicon-minus").addClass("glyphicon-plus"); $("#idPanelBodyActuacion3").slideUp(300).delay(800); $("#spanAddActuacion3").removeClass("glyphicon-minus").addClass("glyphicon-plus"); i = 2; }
-                    else
-                    {$("#idPanelBodyActuacion2").slideUp(300).delay(800); $("#spanAddActuacion2").removeClass("glyphicon-minus").addClass("glyphicon-plus"); i = 1; }}); if ($('#idNombreEntidad').val() === ''){$("#idPanelBodyActuacion3").hide(); $("#spanAddActuacion3").removeClass("glyphicon-minus").addClass("glyphicon-plus"); } else{$("#spanAddActuacion3").removeClass("glyphicon-plus").addClass("glyphicon-minus"); }
-                    var k = 1; $("#addActuacion3").click(function(){if (k === 1)
-                    {$("#idPanelBodyActuacion3").slideDown(400).delay(800); $("#spanAddActuacion3").removeClass("glyphicon-plus").addClass("glyphicon-minus"); $("#idPanelBodyActuacion2").slideUp(300).delay(800); $("#spanAddActuacion2").removeClass("glyphicon-minus").addClass("glyphicon-plus"); $("#idPanelBodyActuacion").slideUp(300).delay(800); $("#spanAddActuacion").removeClass("glyphicon-minus").addClass("glyphicon-plus"); k = 2; }
-                    else
-                    {$("#idPanelBodyActuacion3").slideUp(300).delay(800); $("#spanAddActuacion3").removeClass("glyphicon-minus").addClass("glyphicon-plus"); k = 1; }}); $('.datepicker').datetimepicker({pickTime:false}); $(".datepicker").on("changeDate", function(ev){$(this).datetimepicker("hide"); });</script>
+                <script>
+                    function openRegistroPersona(data) {
+                        if (data.status === 'success') {
+                            $("#idPanelBodyActuacion").slideDown(400).delay(800);
+                            $("#spanAddActuacion").removeClass("glyphicon-plus").addClass("glyphicon-minus");
+                            $("#idPanelBodyActuacion2").slideUp(300).delay(800);
+                            $("#spanAddActuacion2").removeClass("glyphicon-minus").addClass("glyphicon-plus");
+                            $("#idPanelBodyActuacion3").slideUp(300).delay(800);
+                            $("#spanAddActuacion3").removeClass("glyphicon-minus").addClass("glyphicon-plus");
+                            $("#loadModal").modal('hide');
+                            $('body').removeClass('modal-open');
+                            $(".modal-backdrop").removeClass("modal-backdrop");
+                        }
+                    }
+                    if ($('#idActorNombre').val() === '') {
+                        $("#idPanelBodyActuacion").hide();
+                        $("#spanAddActuacion").removeClass("glyphicon-minus").addClass("glyphicon-plus");
+                    } else {
+                        $("#spanAddActuacion").removeClass("glyphicon-plus").addClass("glyphicon-minus");
+                    }
+                    $("#spanAddActuacion").removeClass("glyphicon-minus").addClass("glyphicon-plus");
+                    var i = 1;
+                    $("#addActuacion").click(function () {
+                        if (i === 1) {
+                            $("#idPanelBodyActuacion").slideDown(400).delay(800);
+                            $("#spanAddActuacion").removeClass("glyphicon-plus").addClass("glyphicon-minus");
+                            $("#idPanelBodyActuacion2").slideUp(300).delay(800);
+                            $("#spanAddActuacion2").removeClass("glyphicon-minus").addClass("glyphicon-plus");
+                            $("#idPanelBodyActuacion3").slideUp(300).delay(800);
+                            $("#spanAddActuacion3").removeClass("glyphicon-minus").addClass("glyphicon-plus");
+                            i = 2;
+                        } else {
+                            $("#idPanelBodyActuacion").slideUp(300).delay(800);
+                            $("#spanAddActuacion").removeClass("glyphicon-minus").addClass("glyphicon-plus");
+                            i = 1;
+                        }
+                    });
+                    if ($('#idNombreEmpresa').val() === '') {
+                        $("#idPanelBodyActuacion2").hide();
+                        $("#spanAddActuacion2").removeClass("glyphicon-minus").addClass("glyphicon-plus");
+                    } else {
+                        $("#spanAddActuacion2").removeClass("glyphicon-plus").addClass("glyphicon-minus");
+                    }
+                    var i = 1;
+                    $("#addActuacion2").click(function () {
+                        if (i === 1) {
+                            $("#idPanelBodyActuacion2").slideDown(400).delay(800);
+                            $("#spanAddActuacion2").removeClass("glyphicon-plus").addClass("glyphicon-minus");
+                            $("#idPanelBodyActuacion").slideUp(300).delay(800);
+                            $("#spanAddActuacion").removeClass("glyphicon-minus").addClass("glyphicon-plus");
+                            $("#idPanelBodyActuacion3").slideUp(300).delay(800);
+                            $("#spanAddActuacion3").removeClass("glyphicon-minus").addClass("glyphicon-plus");
+                            i = 2;
+                        } else {
+                            $("#idPanelBodyActuacion2").slideUp(300).delay(800);
+                            $("#spanAddActuacion2").removeClass("glyphicon-minus").addClass("glyphicon-plus");
+                            i = 1;
+                        }
+                    });
+                    if ($('#idNombreEntidad').val() === '') {
+                        $("#idPanelBodyActuacion3").hide();
+                        $("#spanAddActuacion3").removeClass("glyphicon-minus").addClass("glyphicon-plus");
+                    } else {
+                        $("#spanAddActuacion3").removeClass("glyphicon-plus").addClass("glyphicon-minus");
+                    }
+                    var k = 1;
+                    $("#addActuacion3").click(function () {
+                        if (k === 1) {
+                            $("#idPanelBodyActuacion3").slideDown(400).delay(800);
+                            $("#spanAddActuacion3").removeClass("glyphicon-plus").addClass("glyphicon-minus");
+                            $("#idPanelBodyActuacion2").slideUp(300).delay(800);
+                            $("#spanAddActuacion2").removeClass("glyphicon-minus").addClass("glyphicon-plus");
+                            $("#idPanelBodyActuacion").slideUp(300).delay(800);
+                            $("#spanAddActuacion").removeClass("glyphicon-minus").addClass("glyphicon-plus");
+                            k = 2;
+                        } else {
+                            $("#idPanelBodyActuacion3").slideUp(300).delay(800);
+                            $("#spanAddActuacion3").removeClass("glyphicon-minus").addClass("glyphicon-plus");
+                            k = 1;
+                        }
+                    });
+                    $('.datepicker').datetimepicker({pickTime: false});
+                    $(".datepicker").on("changeDate", function (ev) {
+                        $(this).datetimepicker("hide");
+                    });
+                </script>
             </h:form>
         </ui:define>
     </ui:composition>

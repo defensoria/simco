@@ -147,27 +147,27 @@ public class ActorController extends AbstractManagedBean implements Serializable
     private List<SelectItem> listaSubTipo1Poblacion;
 
     private List<SelectItem> listaSubTipo2Poblacion;
-    
+
     private List<SelectItem> listaTipoEstado;
 
     private List<SelectItem> listaSubTipo1Estado;
 
     private List<SelectItem> listaSubTipo2Estado;
-    
+
     private List<SelectItem> listaTipoEmpresa;
 
     private List<SelectItem> listaSubTipo1Empresa;
 
     private List<SelectItem> listaSubTipo2Empresa;
-    
+
     private List<SelectItem> listaSubTipo3Empresa;
-    
+
     private List<SelectItem> listaTipoOrganizacion;
 
     private List<SelectItem> listaSubTipo1Organizacion;
 
     private List<SelectItem> listaSubTipo2Organizacion;
-    
+
     private Usuario usuarioSession;
 
     @Autowired
@@ -197,24 +197,71 @@ public class ActorController extends AbstractManagedBean implements Serializable
     public String cargarPagina() {
         try {
             cargarListas();
-        actor = new Actor();
-        cadenaActores();
-        bloquearFormularioPersona();
-        empresa = new Actor();
-        entidad = new Actor();
-        listaMiembros = new ArrayList<>();
-        listaMiembrosEntidad = new ArrayList<>();
-        listaMiembrosPersona = new ArrayList<>();
-        listaMiembrosRegistrados = new ArrayList<>();
-        listaMiembrosRegistradosEntidad = new ArrayList<>();
-        listaMiembrosRegistradosPersona = new ArrayList<>();
-        actorMiembro = new ActorMiembro();
-        actorMiembroEntidad = new ActorMiembro();
-        actorMiembroPesona = new ActorMiembro();
+            actor = new Actor();
+            cadenaActores();
+            bloquearFormularioPersona();
+            empresa = new Actor();
+            entidad = new Actor();
+            listaMiembros = new ArrayList<>();
+            listaMiembrosEntidad = new ArrayList<>();
+            listaMiembrosPersona = new ArrayList<>();
+            listaMiembrosRegistrados = new ArrayList<>();
+            listaMiembrosRegistradosEntidad = new ArrayList<>();
+            listaMiembrosRegistradosPersona = new ArrayList<>();
+            actorMiembro = new ActorMiembro();
+            actorMiembroEntidad = new ActorMiembro();
+            actorMiembroPesona = new ActorMiembro();
         } catch (Exception e) {
             log.error("ERROR - cargarPagina()" + e);
         }
-        return "actorNuevo";
+        return "actorNuevoPersona";
+    }
+    
+    public String cargarPaginaEmpresa() {
+        try {
+            cargarListas();
+            actor = new Actor();
+            cadenaActores();
+            bloquearFormularioPersona();
+            empresa = new Actor();
+            entidad = new Actor();
+            listaMiembros = new ArrayList<>();
+            listaMiembrosEntidad = new ArrayList<>();
+            listaMiembrosPersona = new ArrayList<>();
+            listaMiembrosRegistrados = new ArrayList<>();
+            listaMiembrosRegistradosEntidad = new ArrayList<>();
+            listaMiembrosRegistradosPersona = new ArrayList<>();
+            actorMiembro = new ActorMiembro();
+            actorMiembroEntidad = new ActorMiembro();
+            actorMiembroPesona = new ActorMiembro();
+        } catch (Exception e) {
+            log.error("ERROR - cargarPagina()" + e);
+        }
+        return "actorNuevoEmpresa";
+    }
+    
+    public String cargarPaginaEntidad() {
+        try {
+            cargarListas();
+            actor = new Actor();
+            cadenaActores();
+            bloquearFormularioPersona();
+            empresa = new Actor();
+            entidad = new Actor();
+            listaMiembros = new ArrayList<>();
+            listaMiembrosEntidad = new ArrayList<>();
+            listaMiembrosPersona = new ArrayList<>();
+            listaMiembrosRegistrados = new ArrayList<>();
+            listaMiembrosRegistradosEntidad = new ArrayList<>();
+            listaMiembrosRegistradosPersona = new ArrayList<>();
+            actorMiembro = new ActorMiembro();
+            actorMiembroEntidad = new ActorMiembro();
+            actorMiembroPesona = new ActorMiembro();
+        } catch (Exception e) {
+            log.error("ERROR - cargarPagina()" + e);
+        }
+        return "actorNuevoEntidad";
+        
     }
 
     public void initActor() {
@@ -227,18 +274,18 @@ public class ActorController extends AbstractManagedBean implements Serializable
     private void cargarListas() {
         try {
             limpiarListasClasificacion();
-        listaTipoPoblacion = cargarListaSimple(1);
-        listaTipoEstado = cargarListaSimple(4);
-        listaTipoEmpresa = cargarListaSimple(10);
-        listaTipoOrganizacion = cargarListaSimple(7);
-        listaSubTipo1Empresa = cargarListaSimple(11);
-        listaSubTipo2Empresa = cargarListaSimple(12);
+            listaTipoPoblacion = cargarListaSimple(1);
+            listaTipoEstado = cargarListaSimple(4);
+            listaTipoEmpresa = cargarListaSimple(10);
+            listaTipoOrganizacion = cargarListaSimple(7);
+            listaSubTipo1Empresa = cargarListaSimple(11);
+            listaSubTipo2Empresa = cargarListaSimple(12);
         } catch (Exception e) {
             log.error("ERROR - cargarListas()" + e);
         }
     }
-    
-    private void limpiarListasClasificacion(){
+
+    private void limpiarListasClasificacion() {
         listaTipoEstado = null;
         listaSubTipo1Estado = null;
         listaSubTipo2Estado = null;
@@ -257,94 +304,102 @@ public class ActorController extends AbstractManagedBean implements Serializable
     public void cargarAjaxListaSubTipo1() {
         try {
             listaSubTipo1Poblacion = null;
-        listaSubTipo2Poblacion = null;
-        Integer padre = maestroService.padreParametro(new Maestro(actor.getTipoPoblacion(), 1));
-        if(padre != null)
-            listaSubTipo1Poblacion = cargarListaCompuesta(2, padre);
+            listaSubTipo2Poblacion = null;
+            Integer padre = maestroService.padreParametro(new Maestro(actor.getTipoPoblacion(), 1));
+            if (padre != null) {
+                listaSubTipo1Poblacion = cargarListaCompuesta(2, padre);
+            }
         } catch (Exception e) {
             log.error("ERROR - cargarAjaxListaSubTipo1()" + e);
         }
     }
-    
+
     public void cargarAjaxListaSubTipo2() {
         try {
             listaSubTipo2Poblacion = null;
-        Integer padre = maestroService.padreParametro(new Maestro(actor.getSubTipo1Poblacion(), 2));
-        if(padre != null)
-            listaSubTipo2Poblacion = cargarListaCompuesta(3, padre);
+            Integer padre = maestroService.padreParametro(new Maestro(actor.getSubTipo1Poblacion(), 2));
+            if (padre != null) {
+                listaSubTipo2Poblacion = cargarListaCompuesta(3, padre);
+            }
         } catch (Exception e) {
             log.error("ERROR - cargarAjaxListaSubTipo2()" + e);
         }
     }
-    
+
     public void cargarAjaxListaSubTipo1Estado() {
         try {
             listaSubTipo1Estado = null;
-        listaSubTipo2Estado = null;
-        Integer padre = maestroService.padreParametro(new Maestro(entidad.getTipoEstado(), 4));
-        if(padre != null)
-            listaSubTipo1Estado = cargarListaCompuesta(5, padre);
+            listaSubTipo2Estado = null;
+            Integer padre = maestroService.padreParametro(new Maestro(entidad.getTipoEstado(), 4));
+            if (padre != null) {
+                listaSubTipo1Estado = cargarListaCompuesta(5, padre);
+            }
         } catch (Exception e) {
             log.error("ERROR - cargarAjaxListaSubTipo1Estado()" + e);
         }
     }
-    
-    public void cargarAjaxListaSubTipo2Estado(){
+
+    public void cargarAjaxListaSubTipo2Estado() {
         try {
             listaSubTipo2Estado = new ArrayList<>();
-        if(entidad.getSubTipo1Estado().equals("01") || entidad.getSubTipo1Estado().equals("02") ||  entidad.getSubTipo1Estado().equals("06") ||  entidad.getSubTipo1Estado().equals("07")){
-            Integer padre = maestroService.padreParametro(new Maestro(entidad.getTipoEstado(), 4));
-            if(padre != null)
-                listaSubTipo2Estado = cargarListaCompuesta(6, padre);
-        }else{
-            Integer padre = maestroService.padreParametro(new Maestro(entidad.getSubTipo1Estado(), 5));
-            if(padre != null)
-                listaSubTipo2Estado = cargarListaCompuesta(6, padre);
-        }
+            if (entidad.getSubTipo1Estado().equals("01") || entidad.getSubTipo1Estado().equals("02") || entidad.getSubTipo1Estado().equals("06") || entidad.getSubTipo1Estado().equals("07")) {
+                Integer padre = maestroService.padreParametro(new Maestro(entidad.getTipoEstado(), 4));
+                if (padre != null) {
+                    listaSubTipo2Estado = cargarListaCompuesta(6, padre);
+                }
+            } else {
+                Integer padre = maestroService.padreParametro(new Maestro(entidad.getSubTipo1Estado(), 5));
+                if (padre != null) {
+                    listaSubTipo2Estado = cargarListaCompuesta(6, padre);
+                }
+            }
         } catch (Exception e) {
             log.error("ERROR - cargarAjaxListaSubTipo2Estado()" + e);
         }
     }
-    
+
     public void cargarAjaxListaSubTipo1Organizacion() {
         try {
             listaSubTipo1Organizacion = null;
-        listaSubTipo2Organizacion = null;
-        Integer padre = maestroService.padreParametro(new Maestro(empresa.getTipoOrganizacion(), 7));
-        if(padre != null)
-            listaSubTipo1Organizacion = cargarListaCompuesta(8, padre);
+            listaSubTipo2Organizacion = null;
+            Integer padre = maestroService.padreParametro(new Maestro(empresa.getTipoOrganizacion(), 7));
+            if (padre != null) {
+                listaSubTipo1Organizacion = cargarListaCompuesta(8, padre);
+            }
         } catch (Exception e) {
             log.error("ERROR - cargarAjaxListaSubTipo1Organizacion()" + e);
         }
     }
-    
+
     public void cargarAjaxListaSubTipo2Organizacion() {
         try {
             listaSubTipo2Organizacion = null;
-        if(empresa.getSubTipo1Organizacion().equals("40") || empresa.getSubTipo1Organizacion().equals("41")){
-            Integer padre = maestroService.padreParametro(new Maestro(empresa.getTipoOrganizacion(), 7));
-            if(padre != null)
-                listaSubTipo2Organizacion = cargarListaCompuesta(9, padre);
-        }else{
-            Integer padre = maestroService.padreParametro(new Maestro(empresa.getSubTipo1Organizacion(), 8));
-            if(padre != null)
-                listaSubTipo2Organizacion = cargarListaCompuesta(9, padre);
-        }
+            if (empresa.getSubTipo1Organizacion().equals("40") || empresa.getSubTipo1Organizacion().equals("41")) {
+                Integer padre = maestroService.padreParametro(new Maestro(empresa.getTipoOrganizacion(), 7));
+                if (padre != null) {
+                    listaSubTipo2Organizacion = cargarListaCompuesta(9, padre);
+                }
+            } else {
+                Integer padre = maestroService.padreParametro(new Maestro(empresa.getSubTipo1Organizacion(), 8));
+                if (padre != null) {
+                    listaSubTipo2Organizacion = cargarListaCompuesta(9, padre);
+                }
+            }
         } catch (Exception e) {
             log.error("ERROR - cargarAjaxListaSubTipo2Organizacion()" + e);
         }
     }
-    
+
     public void cargarAjaxListaSubTipo3Empresa() {
         try {
             listaSubTipo3Empresa = null;
-        Integer padre = maestroService.padreParametro(new Maestro(empresa.getSubTipo2Empresa(), 12));
-        listaSubTipo3Empresa = cargarListaCompuesta(13, padre);
+            Integer padre = maestroService.padreParametro(new Maestro(empresa.getSubTipo2Empresa(), 12));
+            listaSubTipo3Empresa = cargarListaCompuesta(13, padre);
         } catch (Exception e) {
             log.error("ERROR - cargarAjaxListaSubTipo3Empresa()" + e);
         }
     }
-    
+
     private void usuarioSession() {
         try {
             FacesContext context = FacesContext.getCurrentInstance();
@@ -354,7 +409,7 @@ public class ActorController extends AbstractManagedBean implements Serializable
             log.error("ERROR - usuarioSession()" + e);
         }
     }
-    
+
     public String cargarPaginaBusqueda() {
         try {
             usuarioSession();
@@ -388,10 +443,12 @@ public class ActorController extends AbstractManagedBean implements Serializable
             listaActorPaginado = new ArrayList<>();
             listaActorPaginado2 = new ArrayList<>();
             actividadActorTemp = new ActividadActorTemp();
-            if (listaActorSeleccionado == null)
+            if (listaActorSeleccionado == null) {
                 listaActorSeleccionado = new ArrayList<>();
-            if (listaActorSeleccionadoFinal == null)
+            }
+            if (listaActorSeleccionadoFinal == null) {
                 listaActorSeleccionadoFinal = new ArrayList<>();
+            }
             listaActorSeleccionadoAcuerdoIni = new ArrayList<>();
             listaActorSeleccionadoAcuerdoFin = new ArrayList<>();
             cadenaActores();
@@ -416,11 +473,13 @@ public class ActorController extends AbstractManagedBean implements Serializable
             listaActorPaginado = new ArrayList<>();
             listaActorPaginado2 = new ArrayList<>();
             actividadActorTemp = new ActividadActorTemp();
-            if (listaActorSeleccionado == null)
+            if (listaActorSeleccionado == null) {
                 listaActorSeleccionado = new ArrayList<>();
+            }
             listaActorSeleccionadoFinal = actorService.actorxActividadBuscarTotal(idActividad);
-            if (listaActorSeleccionadoFinal == null)
+            if (listaActorSeleccionadoFinal == null) {
                 listaActorSeleccionadoFinal = new ArrayList<>();
+            }
             listaActorSeleccionadoAcuerdoIni = new ArrayList<>();
             listaActorSeleccionadoAcuerdoFin = new ArrayList<>();
             cadenaActores();
@@ -527,8 +586,12 @@ public class ActorController extends AbstractManagedBean implements Serializable
                 return false;
             }
         }
-        listaMiembros.add(actorMiembro);
-        actorMiembro = new ActorMiembro();
+        if (actorMiembro.getIdActor() != null) {
+            listaMiembros.add(actorMiembro);
+            actorMiembro = new ActorMiembro();
+        } else {
+            msg.messageAlert("Debe seleccionar un miembro", null);
+        }
         return true;
     }
 
@@ -539,8 +602,12 @@ public class ActorController extends AbstractManagedBean implements Serializable
                 return false;
             }
         }
-        listaMiembrosEntidad.add(actorMiembroEntidad);
-        actorMiembroEntidad = new ActorMiembro();
+        if (actorMiembroEntidad.getIdActor() != null) {
+            listaMiembrosEntidad.add(actorMiembroEntidad);
+            actorMiembroEntidad = new ActorMiembro();
+        } else {
+            msg.messageAlert("Debe seleccionar un funcionario", null);
+        }
         return true;
     }
 
@@ -551,8 +618,12 @@ public class ActorController extends AbstractManagedBean implements Serializable
                 return false;
             }
         }
-        listaMiembrosPersona.add(actorMiembroPesona);
-        actorMiembroPesona = new ActorMiembro();
+        if (actorMiembroPesona.getIdActor() != null) {
+            listaMiembrosPersona.add(actorMiembroPesona);
+            actorMiembroPesona = new ActorMiembro();
+        } else {
+            msg.messageAlert("Debe seleccionar una empresa o entidad", null);
+        }
         return true;
     }
 
@@ -747,10 +818,10 @@ public class ActorController extends AbstractManagedBean implements Serializable
             listaMiembrosRegistrados = null;
             listaMiembrosRegistradosEntidad = null;
             listaMiembrosRegistradosPersona = actorMiembroService.actorMiembroBuscarxMiembro(actor.getId());
-            if(actor.getTipoPoblacion() != null){
+            if (actor.getTipoPoblacion() != null) {
                 cargarAjaxListaSubTipo1();
             }
-            if(actor.getSubTipo1Poblacion() != null){
+            if (actor.getSubTipo1Poblacion() != null) {
                 cargarAjaxListaSubTipo2();
             }
         }
@@ -768,18 +839,18 @@ public class ActorController extends AbstractManagedBean implements Serializable
             listaMiembrosRegistrados = actorMiembroService.actorMiembroBuscarxActor(empresa.getId());
             listaMiembrosRegistradosEntidad = null;
             listaMiembrosRegistradosPersona = null;
-            
-            if(empresa.getTipoOrganizacion() != null){
+
+            if (empresa.getTipoOrganizacion() != null) {
                 cargarAjaxListaSubTipo1Organizacion();
             }
-            if(empresa.getSubTipo1Organizacion()!= null){
+            if (empresa.getSubTipo1Organizacion() != null) {
                 cargarAjaxListaSubTipo2Organizacion();
             }
-            
-            if(empresa.getSubTipo2Empresa() != null){
+
+            if (empresa.getSubTipo2Empresa() != null) {
                 cargarAjaxListaSubTipo3Empresa();
             }
-            
+
         }
         if (StringUtils.equals(a.getTipoGeneral(), "EN")) {
             setEntidad(a);
@@ -795,11 +866,11 @@ public class ActorController extends AbstractManagedBean implements Serializable
             listaMiembrosRegistradosEntidad = actorMiembroService.actorMiembroBuscarxActor(entidad.getId());
             listaMiembrosRegistrados = null;
             listaMiembrosRegistradosPersona = null;
-            
-            if(entidad.getTipoEstado() != null){
+
+            if (entidad.getTipoEstado() != null) {
                 cargarAjaxListaSubTipo1Estado();
             }
-            if(entidad.getSubTipo1Estado() != null){
+            if (entidad.getSubTipo1Estado() != null) {
                 cargarAjaxListaSubTipo2Estado();
             }
         }
@@ -867,8 +938,8 @@ public class ActorController extends AbstractManagedBean implements Serializable
         actorBusquedaTemp = new ActorBusquedaTemp();
         listaActorSeleccionado = null;
     }
-    
-    public void listarActorSeleccionadoActividad(){
+
+    public void listarActorSeleccionadoActividad() {
         try {
             Actor a;
             if (actor.getId() != null) {
@@ -1172,9 +1243,9 @@ public class ActorController extends AbstractManagedBean implements Serializable
                 msg.messageInfo("El actor se ha registrado correctamente ahora puede añadirlo a alguna Empresa o Entidad", null);
             } else {
                 if (actor.getId() != null) {
-                        actorService.actorModificar(actor);
-                        msg.messageInfo("El actor se ha modificado correctamente", null);
-                    }else{
+                    actorService.actorModificar(actor);
+                    msg.messageInfo("El actor se ha modificado correctamente", null);
+                } else {
                     msg.messageAlert("El DNI ingresado ya se encuentra registrado en el sistema", null);
                 }
             }
@@ -1209,7 +1280,7 @@ public class ActorController extends AbstractManagedBean implements Serializable
                         empresa.setTipoGeneral("EM");
                         actorService.actorNuevo(empresa);
                         msg.messageInfo("Se ha registrado correctamente la Empresa ahora puede agregar sus miembros", null);
-                    }else{
+                    } else {
                         msg.messageAlert("El RUC " + empresa.getRuc() + " ya se encuentra registrado", null);
                         empresa = new Actor();
                     }
@@ -1244,7 +1315,7 @@ public class ActorController extends AbstractManagedBean implements Serializable
                         msg.messageAlert("El RUC " + entidad.getRuc() + " ya se encuentra registrado", null);
                         entidad = new Actor();
                     }
-                }else{
+                } else {
                     entidad.setTipoGeneral("EN");
                     actorService.actorNuevo(entidad);
                     msg.messageInfo("Se ha registrado correctamente la Entidad ahora puede agregar sus miembros", null);
@@ -1440,9 +1511,9 @@ public class ActorController extends AbstractManagedBean implements Serializable
 
         try {
             List<Maestro> lista = maestroService.listaCompuesta(new Maestro(grupo, padre));
-                for (Maestro tipo : lista) {
-                    items.add(new SelectItem(tipo.getValor(), tipo.getNombre()));
-                }
+            for (Maestro tipo : lista) {
+                items.add(new SelectItem(tipo.getValor(), tipo.getNombre()));
+            }
         } catch (Exception e) {
             log.error(e);
         }
@@ -1453,10 +1524,10 @@ public class ActorController extends AbstractManagedBean implements Serializable
         List<SelectItem> items = new ArrayList<>();
         try {
             List<Maestro> lista = maestroService.listaSimple(new Maestro(grupo));
-            
-                for (Maestro tipo : lista) {
-                    items.add(new SelectItem(tipo.getValor(), tipo.getNombre()));
-                }
+
+            for (Maestro tipo : lista) {
+                items.add(new SelectItem(tipo.getValor(), tipo.getNombre()));
+            }
         } catch (Exception e) {
             log.error(e);
         }

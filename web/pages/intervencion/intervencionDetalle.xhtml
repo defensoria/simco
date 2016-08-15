@@ -230,15 +230,16 @@
                     <script>
                         function validaDetalleGeneral() {
                             if ($('#idDescripcionGeneral').val() === "") {
-                                $('#idDescripcionGeneral').addClass('error');
+                                $('#idDescripcionGeneral').addClass('df_input_error');
                                 return false;
                             }
                             else {
-                                $('#idDescripcionGeneral').removeClass('error');
+                                $('#idDescripcionGeneral').removeClass('df_input_error');
                             }
                         }
+                        
                         function limpiaDetalle() {
-                            $('#idDescripcionGeneral').removeClass('error');
+                            $('#idDescripcionGeneral').removeClass('df_input_error');
                         }
                     </script>
                     <div class="modal fade" id="idModalDetalle" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
