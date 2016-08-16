@@ -200,7 +200,8 @@
                 <table style="width:100%">
                     <tr>
                         <td style="width:50%">
-                            <span class="text-resalt-primary" style="font-size:2em">&#160;&#160;Crear Investigacion</span>
+                            <span class="text-resalt-primary" style="font-size:2.5em">Crear investigación</span>
+                            <br/><br/><br/>
                         </td>
                         <td style="float:right">
                             <a class="btn btn-primary" id="idBotonGuardar">
@@ -305,7 +306,6 @@
                                                     <input type="hidden" jsf:value="#{investigacionController.usuario.codigo}" id="usuario-id" />
                                                     <a style="float:right;font-size:large;margin:auto" jsf:action="#{investigacionController.addUsuario()}">
                                                         <span class="glyphicon glyphicon-plus form-control-feedback"/>
-                                                        <f:ajax render="@form" execute="@form"/>
                                                     </a>
                                                 </div>
                                             </td>
@@ -317,7 +317,7 @@
                                                         <table style="width:100%">
                                                             <tr>
                                                                 <td style="width:70%">
-                                                                    <h:outputText value="#{part.usuarioNombre} - #{part.usuarioCargo}" />
+                                                                    <h:outputText value="#{part.usuarioNombre}" />
                                                                 </td>
                                                                 <td style="text-align:right">
                                                                     <table style="width:100%">
@@ -453,7 +453,7 @@
                                                                                                             <span class="text-comun">#{det.comentario}</span>
                                                                                                             <br/>
                                                                                                             <span class="text-bold">
-                                                                                                                fecha de registro:
+                                                                                                                Fecha de registro:
                                                                                                             </span>
                                                                                                             <h:outputText value="#{det.fechaRegistro}">
                                                                                                                 <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Lima" />
@@ -489,7 +489,8 @@
                                                             </div>
                                                         </section>
                                                     </div>
-                                                    <script>$(".idPanelBodyActuacion").hide();
+                                                    <script>
+                                                        $(".idPanelBodyActuacion").hide();
                                                         $(".spanAddActuacion").removeClass("glyphicon-minus").addClass("glyphicon-plus");
                                                         var i = 1;
                                                         function efecto(valor) {
@@ -505,7 +506,8 @@
                                                                 $(valor).children().removeClass("glyphicon-minus").addClass("glyphicon-plus");
                                                                 i = 1;
                                                             }
-                                                        }</script>
+                                                        }                                                    
+                                                    </script>
                                                 </div>
                                             </div>
                                         </div>

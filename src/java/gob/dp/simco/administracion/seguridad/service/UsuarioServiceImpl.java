@@ -123,7 +123,7 @@ public class UsuarioServiceImpl implements UsuarioService {
             if(i > 0)
             stringBuilder.append(",");    
             stringBuilder.append("{value: '").append(a.getCodigo()).append("' ,");
-            stringBuilder.append("label: '").append(a.getNombre()+" "+a.getApellidoPaterno()+" "+a.getApellidoMaterno()+" - "+a.getCargo()).append("' ,");
+            stringBuilder.append("label: '").append(a.getNombre()+" "+a.getApellidoPaterno()+" "+a.getApellidoMaterno()).append("' ,");
             stringBuilder.append("desc: ").append("''").append(",");
             stringBuilder.append("icon: ").append("'' },");
         }

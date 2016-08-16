@@ -281,22 +281,24 @@ public class InvestigacionController extends AbstractManagedBean implements Seri
     }
 
     public void addUsuario() {
-        String[] arrayDatosUser = usuario.getNombre().split("-");
-        Participacion participacion = new Participacion();
-        participacion.setEstado("ACT");
-        participacion.setFechaRegistro(new Date());
-        participacion.setUsuRegistro(investigacion.getUsuarioRegistro());
-        participacion.setUsuarioCargo(arrayDatosUser[1].trim());
-        participacion.setUsuarioNombre(arrayDatosUser[0].trim());
-        participacion.setUsuarioCodigo(usuario.getCodigo());
-        int i = 0;
-        for(Participacion p : listaParticipantes){
-            if(StringUtils.equals(p.getUsuarioCodigo(), usuario.getCodigo())){
-                i++;
+        if(StringUtils.isNotBlank(usuario.getCodigo())){
+            Participacion participacion = new Participacion();
+            participacion.setEstado("ACT");
+            participacion.setFechaRegistro(new Date());
+            participacion.setUsuRegistro(investigacion.getUsuarioRegistro());
+            participacion.setUsuarioNombre(usuario.getNombre());
+            participacion.setUsuarioCodigo(usuario.getCodigo());
+            int i = 0;
+            for(Participacion p : listaParticipantes){
+                if(StringUtils.equals(p.getUsuarioCodigo(), usuario.getCodigo())){
+                    i++;
+                }
             }
-        }
-        if(i == 0){
-            listaParticipantes.add(participacion);
+            if(i == 0){
+                listaParticipantes.add(participacion);
+            }
+        }else{
+            msg.messageAlert("Debe seleccionar un usuario", null);
         }
         usuario = new Usuario();
     }

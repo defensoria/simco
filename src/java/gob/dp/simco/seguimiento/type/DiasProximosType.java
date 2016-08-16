@@ -15,19 +15,19 @@ import java.util.Map;
 
 public enum DiasProximosType {
 
-	PROXIMOS_7(7, "Proximos 7 dias"),
+	PROXIMOS_7(7, "Próximos 7 días"),
 
-	PROXIMOS_6(6, "Proximos 6 dias"),
+	PROXIMOS_6(6, "Próximos 6 días"),
         
-        PROXIMOS_5(5, "Proximos 5 dias"),
+        PROXIMOS_5(5, "Próximos 5 días"),
         
-        PROXIMOS_4(4, "Proximos 4 dias"),
+        PROXIMOS_4(4, "Próximos 4 días"),
         
-        PROXIMOS_3(3, "Proximos 3 dias"),
+        PROXIMOS_3(3, "Próximos 3 días"),
         
-        PROXIMOS_2(2, "Proximos 2 dias"),
+        PROXIMOS_2(2, "Próximos 2 días"),
         
-        PROXIMOS_1(1, "Proximos 1 dias");
+        PROXIMOS_1(1, "Próximos 1 días");
         
         
 	
