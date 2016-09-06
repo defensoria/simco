@@ -628,6 +628,40 @@
     </select>
     
     
+    <select id="actorBuscarNombrePaginado" resultMap="actorMap" parameterType="filtroActor">
+        SELECT  A.N_ID_ACTOR,
+        A.C_NOMACTOR,
+        A.C_APELLIDOPATACTOR,
+        A.C_APELLIDOMATACTOR,
+        A.C_DNIACTOR,
+        A.C_RUCACTOR,
+        A.D_FECNACIMIENTOACTOR,
+        A.C_LUGNACIMIENTOACTOR,
+        A.C_INFOCONTACTO,
+        A.C_CARGOACTOR,
+        A.C_TIPOGENERAL
+        FROM (
+        SELECT B.N_ID_ACTOR,
+        B.C_NOMACTOR,
+        B.C_APELLIDOPATACTOR,
+        B.C_APELLIDOMATACTOR,
+        B.C_DNIACTOR,
+        B.C_RUCACTOR,
+        B.D_FECNACIMIENTOACTOR,
+        B.C_LUGNACIMIENTOACTOR,
+        B.C_INFOCONTACTO,
+        B.C_CARGOACTOR,
+        B.C_TIPOGENERAL,
+        ROWNUM numfila
+        FROM (
+        SELECT  D.*
+        FROM SIMCO_REG_ACTOR D
+        WHERE UPPER(d.C_NOMACTOR||d.C_APELLIDOPATACTOR||d.C_APELLIDOMATACTOR) LIKE '%'||UPPER(#{nombre})||'%'
+        ORDER BY D.N_ID_ACTOR
+        ) B
+        ) A WHERE a.numfila BETWEEN #{ini} AND #{fin}
+    </select>
+    
     <select id="actorxCasoBuscar" resultMap="actorMap" parameterType="long">
         SELECT 
         DISTINCT

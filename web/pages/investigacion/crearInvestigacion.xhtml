@@ -7,6 +7,7 @@
     <ui:composition template="../template/template.xhtml">
         <ui:define name="content">
             <h:form enctype="multipart/form-data" class="form-horizontal">
+                <gc:confirmSubmit bean="#{investigacionController.saveInvestigacion()}" mensaje="¿Desea guardar los cambios?"/>
                 <input type="hidden" id="idUsuarioSession" jsf:value="#{investigacionController.investigacion.usuarioRegistro}" />
                 <input type="hidden" id="idNombreCompleto" jsf:value="#{investigacionController.historialActividad.nombre}" />
                 <input type="hidden" id="idNumeroParticipantes" value="#{investigacionController.listaParticipantes.size()}" />
@@ -92,41 +93,9 @@
                             $('#idCampoDetalle').addClass('error');
                             return false;
                         }
-                    }/*]]>*/
+                    }
+                    /*]]>*/
                 </script>
-                <div class="modal fade confirmacion" data-keyboard="false" data-backdrop="static">
-                    <div class="modal-dialog modal-sm">
-                        <div class="modal-content" style="background:#D9EDF7">
-                            <div class="modal-header" style="padding:5px">
-                                <h4 style="color:#3183B9"><b>Confirmación</b></h4>
-                            </div>
-                            <div style="background:white">
-                                <div class="modal-body" style="padding:7px">
-                                    <table style="width:100%">
-                                        <tr>
-                                            <td style="padding-right:8px">
-                                                <img style="width:30px" src="../../bootstrap/img/confirm.png" />
-                                            </td>
-                                            <td>
-                                                <div style="color:#878787">
-                                                    Esta seguro que desea realizar los cambios ?
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </div>
-                            </div>
-                            <div class="modal-footer" style="padding:5px;background:white">
-                                <a class="btn btn-info" data-dismiss="modal" id="idBotonGuardarCampo" style="text-decoration:none" jsf:action="#{investigacionController.saveInvestigacion()}" jsf:onclick="loadingModal()">
-                                    <span>Aceptar</span>
-                                </a>
-                                <a class="btn btn-danger" href="#" data-dismiss="modal" style="text-decoration:none">
-                                    <span>Cancelar</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 <div class="modal fade" data-keyboard="false" data-backdrop="static" id="idModalCampo">
                     <div class="modal-dialog">
                         <div class="modal-content">

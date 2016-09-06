@@ -8,7 +8,6 @@
 <script type="text/javascript"  language="javascript">
 function cerrarSesion() {
 	var form; 
-
 	if(opener != null) {
 		form = opener.document.forms[0];
 	}
@@ -23,7 +22,6 @@ function cerrarSesion() {
 	if(opener != null) {
 		close();
 	}
-
 }
 </script>
 </head>

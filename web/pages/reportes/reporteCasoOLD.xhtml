@@ -21,7 +21,7 @@
                                     <table>
                                         <tr>
                                             <td>
-                                                <input type="hidden" jsf:value="#{reporteController.reporte1.parametro}"  id="idAnhoHidden"/>
+                                                <input type="hidden" jsf:value="#{reporteSimcoController.reporte1.parametro}"  id="idAnhoHidden"/>
                                                 <script type="text/javascript">
 
                                                     $(document).ready(function () {
@@ -43,13 +43,13 @@
                                                     });
                                                 </script>
                                                 <select id="idSelectAnho" multiple="multiple">
-                                                    <c:forEach var="x" items="#{reporteController.listaAnhos}">
+                                                    <c:forEach var="x" items="#{reporteSimcoController.listaAnhos}">
                                                         <option value="${x.anho}">${x.anho}</option>
                                                     </c:forEach>
                                                 </select>
                                             </td>
                                             <td>
-                                                <a jsf:action="#{reporteController.cargarGraficoEstadoAnho()}" class="btn btn-primary">
+                                                <a jsf:action="#{reporteSimcoController.cargarGraficoEstadoAnho()}" class="btn btn-primary">
                                                     <span class="glyphicon glyphicon-share-alt"></span>
                                                 </a>
                                             </td>
@@ -57,7 +57,7 @@
                                     </table>
 
                                     <br/>
-                                    <h:dataTable value="#{reporteController.listaResumen}" rendered="#{reporteController.listaResumen.size() > 0}" var="resume" style="width: 100%" class="table table-bordered" columnClasses="colmun" headerClass="colmun" >
+                                    <h:dataTable value="#{reporteSimcoController.listaResumen}" rendered="#{reporteSimcoController.listaResumen.size() > 0}" var="resume" style="width: 100%" class="table table-bordered" columnClasses="colmun" headerClass="colmun" >
                                         <f:facet name="header" >
                                             <table style="width: 100%">
                                                 <tr>
@@ -65,10 +65,10 @@
                                                         <span style="font-weight: bold; font-size: 1.3em">Estado</span>
                                                     </td>
                                                     <td style="text-align: right">
-                                                        <a jsf:actionListener="#{reporteController.pdf(1)}">
+                                                        <a jsf:actionListener="#{reporteSimcoController.pdf(1)}">
                                                             <img src="../../bootstrap/img/pdf1.png" alt="Plan de Intervencion" height="30" width="30"/>
                                                         </a>
-                                                        <a jsf:actionListener="#{reporteController.xls(1)}">
+                                                        <a jsf:actionListener="#{reporteSimcoController.xls(1)}">
                                                             <img src="../../bootstrap/img/xls.png" alt="Plan de Intervencion" height="30" width="30"/>
                                                         </a>
                                                     </td>
@@ -118,7 +118,7 @@
                                     <table>
                                         <tr>
                                             <td>
-                                                <input type="hidden" jsf:value="#{reporteController.reporte2.parametro}"  id="idAnhoHidden2"/>
+                                                <input type="hidden" jsf:value="#{reporteSimcoController.reporte2.parametro}"  id="idAnhoHidden2"/>
 
                                                 <script type="text/javascript">
 
@@ -144,12 +144,12 @@
 
                                                 <select id="idSelectAnho2">
                                                     <option value="">Seleccione</option>
-                                                    <c:forEach var="x" items="#{reporteController.listaAnhos}">
+                                                    <c:forEach var="x" items="#{reporteSimcoController.listaAnhos}">
                                                         <option value="${x.anho}">${x.anho}</option>
                                                     </c:forEach>
                                                 </select>   
                                                 
-                                                <input type="hidden" jsf:value="#{reporteController.reporte2.columna}"  id="idAnhoHiddenMes2"/>
+                                                <input type="hidden" jsf:value="#{reporteSimcoController.reporte2.columna}"  id="idAnhoHiddenMes2"/>
                                                 <script type="text/javascript">
 
                                                     $(document).ready(function () {
@@ -174,7 +174,7 @@
 
                                                 <select id="idSelectMes2" multiple="multiple">
                                                     <option value="">Seleccione</option>
-                                                    <c:forEach var="x" items="#{reporteController.listasMeses}">
+                                                    <c:forEach var="x" items="#{reporteSimcoController.listasMeses}">
                                                         <option value="${x.key}">${x.value}</option>
                                                     </c:forEach>
                                                 </select> 
@@ -183,14 +183,14 @@
                                                 
                                             </td>
                                             <td>
-                                                <a jsf:action="#{reporteController.cargarReporte002()}" class="btn btn-primary">
+                                                <a jsf:action="#{reporteSimcoController.cargarReporte002()}" class="btn btn-primary">
                                                     <span class="glyphicon glyphicon-share-alt"></span>
                                                 </a>
                                             </td>
                                         </tr>
                                     </table>
                                     <br/>
-                                    <h:dataTable value="#{reporteController.listaResumen2}" rendered="#{reporteController.listaResumen2.size()>0}" var="resume2" style="width: 100%" class="table table-bordered" columnClasses="colmun" headerClass="colmun" >
+                                    <h:dataTable value="#{reporteSimcoController.listaResumen2}" rendered="#{reporteSimcoController.listaResumen2.size()>0}" var="resume2" style="width: 100%" class="table table-bordered" columnClasses="colmun" headerClass="colmun" >
                                         <f:facet name="header" >
                                             <table style="width: 100%">
                                                 <tr>
@@ -198,10 +198,10 @@
                                                         <span style="font-weight: bold; font-size: 1.3em">Estado</span>
                                                     </td>
                                                     <td style="text-align: right">
-                                                        <a jsf:actionListener="#{reporteController.pdf(2)}">
+                                                        <a jsf:actionListener="#{reporteSimcoController.pdf(2)}">
                                                             <img src="../../bootstrap/img/pdf1.png" alt="Plan de Intervencion" height="30" width="30"/>
                                                         </a>
-                                                        <a jsf:actionListener="#{reporteController.xls(2)}">
+                                                        <a jsf:actionListener="#{reporteSimcoController.xls(2)}">
                                                             <img src="../../bootstrap/img/xls.png" alt="Plan de Intervencion" height="30" width="30"/>
                                                         </a>
                                                     </td>
@@ -255,7 +255,7 @@
                                     <table>             
                                                 <tr>
                                                     <td>
-                                            <input type="hidden" jsf:value="#{reporteController.reporte3.parametro}"  id="idAnhoHidden3"/>
+                                            <input type="hidden" jsf:value="#{reporteSimcoController.reporte3.parametro}"  id="idAnhoHidden3"/>
 
                                                 <script type="text/javascript">
 
@@ -281,13 +281,13 @@
 
                                                 <select id="idSelectAnho3">
                                                     <option value="0">Seleccione</option>
-                                                    <c:forEach var="x" items="#{reporteController.listaAnhos}">
+                                                    <c:forEach var="x" items="#{reporteSimcoController.listaAnhos}">
                                                         <option value="${x.anho}">${x.anho}</option>
                                                     </c:forEach>
                                                 </select>    
                                             </td>
                                             <td>
-                                                <input type="hidden" jsf:value="#{reporteController.reporte3.columna}" id="idDepartaHidden"/>
+                                                <input type="hidden" jsf:value="#{reporteSimcoController.reporte3.columna}" id="idDepartaHidden"/>
 
                                                 <script type="text/javascript">
 
@@ -309,20 +309,20 @@
                                                     });
                                                 </script>
                                                 <select id="idSelectDeparta" multiple="multiple">
-                                                    <c:forEach var="x" items="#{reporteController.listaDepartamento}">
+                                                    <c:forEach var="x" items="#{reporteSimcoController.listaDepartamento}">
                                                         <option value="${x.value}">${x.label}</option>
                                                     </c:forEach>
                                                 </select>                                            
 
                                             </td>
                                             <td>
-                                                <a jsf:action="#{reporteController.cargarReporte003()}" class="btn btn-primary">
+                                                <a jsf:action="#{reporteSimcoController.cargarReporte003()}" class="btn btn-primary">
                                                     <span class="glyphicon glyphicon-share-alt"></span>
                                                 </a>
                                             </td>        
                                         </tr>
                                     </table>
-                                    <h:dataTable value="#{reporteController.listaResumen3}" var="resume" rendered="#{reporteController.listaResumen3.size()>0}" style="width: 100%" class="table table-bordered" columnClasses="colmun" headerClass="colmun" >
+                                    <h:dataTable value="#{reporteSimcoController.listaResumen3}" var="resume" rendered="#{reporteSimcoController.listaResumen3.size()>0}" style="width: 100%" class="table table-bordered" columnClasses="colmun" headerClass="colmun" >
                                         <f:facet name="header" >
                                             <table style="width: 100%">
                                                 <tr>
@@ -330,10 +330,10 @@
                                                         <span style="font-weight: bold; font-size: 1.3em">Estado</span>
                                                     </td>
                                                     <td style="text-align: right">
-                                                        <a jsf:actionListener="#{reporteController.pdf(3)}">
+                                                        <a jsf:actionListener="#{reporteSimcoController.pdf(3)}">
                                                             <img src="../../bootstrap/img/pdf1.png" alt="Plan de Intervencion" height="30" width="30"/>
                                                         </a>
-                                                        <a jsf:actionListener="#{reporteController.xls(3)}">
+                                                        <a jsf:actionListener="#{reporteSimcoController.xls(3)}">
                                                             <img src="../../bootstrap/img/xls.png" alt="Plan de Intervencion" height="30" width="30"/>
                                                         </a>
                                                     </td>
@@ -383,7 +383,7 @@
                         <td colspan="2" style="padding-right: 1px">
                             <div class="panel panel-featured-top-primary">
                                 <div class="panel-heading">
-                                    <a jsf:actionListener="#{reporteController.pdf4()}">
+                                    <a jsf:actionListener="#{reporteSimcoController.pdf4()}">
                                         <img src="../../bootstrap/img/pdf.png" alt="Plan de Intervencion" height="30" width="30"/>
                                     </a>
                                     <a jsf:actionListener="#{casoController.docx()}">
@@ -395,7 +395,7 @@
                                     <span class="text-resalt-primary">PERÚ: CONFLICTOS SOCIALES, SEGÚN AÑO, POR TIPO DE CONFLICTO, 2004-15 (Cantidad de casos)</span>
                                     <br/>
                                     <br/>
-                                    <h:dataTable value="#{reporteController.listaResumen4}" var="resume" style="width: 100%" class="table table-bordered" columnClasses="colmun" headerClass="colmun" >
+                                    <h:dataTable value="#{reporteSimcoController.listaResumen4}" var="resume" style="width: 100%" class="table table-bordered" columnClasses="colmun" headerClass="colmun" >
                                         <f:facet name="header" >
                                             <center><h:outputText value="Estado" /></center>
                                         </f:facet>
@@ -470,7 +470,7 @@
                         <td colspan="2" style="padding-right: 1px">
                             <div class="panel panel-featured-top-primary">
                                 <div class="panel-heading">
-                                    <a jsf:actionListener="#{reporteController.pdf5()}">
+                                    <a jsf:actionListener="#{reporteSimcoController.pdf5()}">
                                         <img src="../../bootstrap/img/pdf.png" alt="Plan de Intervencion" height="30" width="30"/>
                                     </a>
                                     <a jsf:actionListener="#{casoController.docx()}">
@@ -482,7 +482,7 @@
                                     <span class="text-resalt-primary">PERÚ: CONFLICTOS SOCIALES, SEGÚN AÑO, POR TIPO DE CONFLICTO, 2004-15 (Cantidad de casos)</span>
                                     <br/>
                                     <br/>
-                                    <h:dataTable value="#{reporteController.listaResumen5}" var="resume" style="width: 100%" class="table table-bordered" columnClasses="colmun" headerClass="colmun" >
+                                    <h:dataTable value="#{reporteSimcoController.listaResumen5}" var="resume" style="width: 100%" class="table table-bordered" columnClasses="colmun" headerClass="colmun" >
                                         <f:facet name="header" >
                                             <center><h:outputText value="Estado" /></center>
                                         </f:facet>
@@ -558,7 +558,7 @@
                         <td colspan="2" style="padding-right: 1px">
                             <div class="panel panel-featured-top-primary">
                                 <div class="panel-heading">
-                                    <a jsf:actionListener="#{reporteController.pdf6()}">
+                                    <a jsf:actionListener="#{reporteSimcoController.pdf6()}">
                                         <img src="../../bootstrap/img/pdf.png" alt="Plan de Intervencion" height="30" width="30"/>
                                     </a>
                                     <a jsf:actionListener="#{casoController.docx()}">
@@ -570,7 +570,7 @@
                                     <span class="text-resalt-primary">PERÚ: CONFLICTOS SOCIALES, SEGÚN AÑO, POR TIPO DE CONFLICTO, 2004-15 (Cantidad de casos)</span>
                                     <br/>
                                     <br/>
-                                    <h:dataTable value="#{reporteController.listaResumen6}" var="resume" style="width: 100%" class="table table-bordered" columnClasses="colmun" headerClass="colmun" >
+                                    <h:dataTable value="#{reporteSimcoController.listaResumen6}" var="resume" style="width: 100%" class="table table-bordered" columnClasses="colmun" headerClass="colmun" >
                                         <f:facet name="header" >
                                             <center><h:outputText value="Estado" /></center>
                                         </f:facet>

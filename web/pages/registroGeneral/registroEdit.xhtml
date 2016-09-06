@@ -8,10 +8,10 @@
     <ui:composition template="../template/template.xhtml">
         <ui:define name="content">
             <h:form id="idForm" class="form-horizontal" enctype="multipart/form-data">
+                <gc:confirmSubmit bean="#{registroController.registrarActividad()}"/>
                 <input type="hidden" jsf:value="#{registroController.actividad.coordenadaX}" id="idCoordenadaX"/>
                 <input type="hidden" jsf:value="#{registroController.actividad.coordenadaY}" id="idCoordenadaY"/>
                 <input type="hidden" jsf:value="#{registroController.actividad.zoom}" id="idZoom"/>
-                <gc:confirmSubmit bean="#{registroController.registrarActividad()}"/>
                 <h:inputHidden id="hidCodActividad" value="#{registroController.actividad.id}" />
                 <input type="hidden" id="idTipoRegistro" jsf:value="#{registroController.actividad.tipo}" />
                 <div class="panel panel-featured-top-primary">
@@ -289,7 +289,7 @@
                                 <div class="panel panel-featured-top-primary" style="width:100%;height:250px">
                                     <div class="panel-body">
                                         <span class="text-resalt-primary">Descripción</span>
-                                        <textarea rows="3" jsf:value="#{registroController.actividad.descripcion}" style="width:100%;height:170px" maxlength="1400"/>
+                                        <textarea rows="8" jsf:value="#{registroController.actividad.descripcion}" style="width:100%;" maxlength="1400"/>
                                     </div>
                                 </div>
                             </td>
@@ -327,7 +327,7 @@
                                 <div class="panel panel-featured-top-primary" style="width:100%;height:250px">
                                     <div class="panel-body">
                                         <span class="text-resalt-primary">Comentarios</span>
-                                        <textarea rows="3" jsf:value="#{registroController.actividad.comentario}" style="width:100%;height:170px" maxlength="1400"/>
+                                        <textarea rows="8" jsf:value="#{registroController.actividad.comentario}" style="width:100%;" maxlength="1400"/>
                                     </div>
                                 </div>
                                 <div class="panel panel-featured-top-primary" style="width:100%;height:250px;overflow-y:auto">

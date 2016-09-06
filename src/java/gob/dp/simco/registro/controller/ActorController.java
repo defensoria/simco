@@ -35,7 +35,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
-import java.util.logging.Level;
 import javax.inject.Named;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
@@ -216,7 +215,7 @@ public class ActorController extends AbstractManagedBean implements Serializable
         }
         return "actorNuevoPersona";
     }
-    
+
     public String cargarPaginaEmpresa() {
         try {
             cargarListas();
@@ -239,7 +238,7 @@ public class ActorController extends AbstractManagedBean implements Serializable
         }
         return "actorNuevoEmpresa";
     }
-    
+
     public String cargarPaginaEntidad() {
         try {
             cargarListas();
@@ -261,7 +260,7 @@ public class ActorController extends AbstractManagedBean implements Serializable
             log.error("ERROR - cargarPagina()" + e);
         }
         return "actorNuevoEntidad";
-        
+
     }
 
     public void initActor() {
@@ -460,7 +459,7 @@ public class ActorController extends AbstractManagedBean implements Serializable
                 }
             }
         } catch (Exception ex) {
-            log.error(ex);
+            log.error("ERROR - cargarRegistroAgregarActor()" + ex);
         }
         return "registroAgregarActor";
     }
@@ -491,55 +490,59 @@ public class ActorController extends AbstractManagedBean implements Serializable
                 }
             }
         } catch (Exception ex) {
-            log.error(ex);
+            log.error("ERROR - cargarRegistroAgregarActor3()" + ex);
         }
         return "registroAgregarActor";
     }
 
     public String cargarRegistroAgregarActor2(Caso cas, Long idActividad) {
-        tip = true;
-        actor = new Actor();
-        actor2 = new Actor();
-        listaActorPaginado = new ArrayList<>();
-        listaActorPaginado2 = new ArrayList<>();
-        actividadActorTemp = new ActividadActorTemp();
-        if (listaActorSeleccionado == null) {
-            listaActorSeleccionado = new ArrayList<>();
-        }
-        if (cas.getId() != null) {
-            try {
-                listaActorSeleccionadoFinal = actorService.actorxActividadBuscarTotal(idActividad);
-            } catch (Exception ex) {
-                listaActorSeleccionadoFinal = null;
-                log.error(ex.getCause());
+        try {
+            tip = true;
+            actor = new Actor();
+            actor2 = new Actor();
+            listaActorPaginado = new ArrayList<>();
+            listaActorPaginado2 = new ArrayList<>();
+            actividadActorTemp = new ActividadActorTemp();
+            if (listaActorSeleccionado == null) {
+                listaActorSeleccionado = new ArrayList<>();
             }
-        }
-
-        if (listaActorSeleccionadoFinal.size() > 0) {
-            List<Actor> as = new ArrayList<>();
-            for (Actor a : listaActorSeleccionadoFinal) {
-                if (a.getActividadActor() == null) {
-                    ActividadActor aa = new ActividadActor();
-                    a.setActividadActor(aa);
-                }
-                as.add(a);
-            }
-            listaActorSeleccionadoFinal.clear();
-            listaActorSeleccionadoFinal.addAll(as);
-        }
-        if (listaActorSeleccionadoFinal == null) {
-            listaActorSeleccionadoFinal = new ArrayList<>();
-        }
-
-        listaActorSeleccionadoAcuerdoIni = new ArrayList<>();
-        listaActorSeleccionadoAcuerdoFin = new ArrayList<>();
-        cadenaActores();
-        if (cas != null) {
             if (cas.getId() != null) {
-                listaActorPaginado2 = actorService.actorxCasoBuscar(cas.getId());
-            } else {
-                listaActorPaginado2 = new ArrayList<>();
+                try {
+                    listaActorSeleccionadoFinal = actorService.actorxActividadBuscarTotal(idActividad);
+                } catch (Exception ex) {
+                    listaActorSeleccionadoFinal = null;
+                    log.error(ex.getCause());
+                }
             }
+
+            if (listaActorSeleccionadoFinal.size() > 0) {
+                List<Actor> as = new ArrayList<>();
+                for (Actor a : listaActorSeleccionadoFinal) {
+                    if (a.getActividadActor() == null) {
+                        ActividadActor aa = new ActividadActor();
+                        a.setActividadActor(aa);
+                    }
+                    as.add(a);
+                }
+                listaActorSeleccionadoFinal.clear();
+                listaActorSeleccionadoFinal.addAll(as);
+            }
+            if (listaActorSeleccionadoFinal == null) {
+                listaActorSeleccionadoFinal = new ArrayList<>();
+            }
+
+            listaActorSeleccionadoAcuerdoIni = new ArrayList<>();
+            listaActorSeleccionadoAcuerdoFin = new ArrayList<>();
+            cadenaActores();
+            if (cas != null) {
+                if (cas.getId() != null) {
+                    listaActorPaginado2 = actorService.actorxCasoBuscar(cas.getId());
+                } else {
+                    listaActorPaginado2 = new ArrayList<>();
+                }
+            }
+        } catch (Exception e) {
+            log.error("ERROR - cargarRegistroAgregarActor2()" + e);
         }
         return "registroAgregarActor";
     }
@@ -554,43 +557,56 @@ public class ActorController extends AbstractManagedBean implements Serializable
     }
 
     public void habilitaFormDNI() {
-        String dni = actor.getDni();
-        if (StringUtils.isNotBlank(dni)) {
-            if (validaDNI(dni)) {
-                habilitarFormularioPersona();
-                setIndicadorPersona(0);
-                actor = new Actor();
-                actor.setDni(dni);
-                msg.messageInfo("Ingrese los datos del la nueva persona", null);
+        try {
+            String dni = actor.getDni();
+            if (StringUtils.isNotBlank(dni)) {
+                if (validaDNI(dni)) {
+                    habilitarFormularioPersona();
+                    setIndicadorPersona(0);
+                    actor = new Actor();
+                    actor.setDni(dni);
+                    msg.messageInfo("Ingrese los datos del la nueva persona", null);
+                } else {
+                    bloquearFormularioPersona();
+                    setIndicadorPersona(0);
+                    msg.messageAlert("El DNI " + dni + " ya se encuentra registrado", null);
+                }
             } else {
-                bloquearFormularioPersona();
-                setIndicadorPersona(0);
-                msg.messageAlert("El DNI " + dni + " ya se encuentra registrado", null);
+                msg.messageAlert("Debe Ingresar el DNI", null);
             }
-        } else {
-            msg.messageAlert("Debe Ingresar el DNI", null);
+        } catch (Exception e) {
+            log.error("ERROR - habilitaFormDNI()" + e);
         }
     }
 
     private boolean validaDNI(String idDocumento) {
-        Actor a = new Actor();
-        a.setDni(idDocumento);
-        int counta = actorService.actorValidadDNI(a);
+        int counta = 0;
+        try {
+            Actor a = new Actor();
+            a.setDni(idDocumento);
+            counta = actorService.actorValidadDNI(a);
+        } catch (Exception e) {
+            log.error("ERROR - validaDNI()" + e);
+        }
         return counta <= 0;
     }
 
     public boolean addMiembro() {
-        for (ActorMiembro am : listaMiembros) {
-            if (Objects.equals(am.getIdMiembro(), actorMiembro.getIdMiembro())) {
-                actorMiembro = new ActorMiembro();
-                return false;
+        try {
+            for (ActorMiembro am : listaMiembros) {
+                if (Objects.equals(am.getIdMiembro(), actorMiembro.getIdMiembro())) {
+                    actorMiembro = new ActorMiembro();
+                    return false;
+                }
             }
-        }
-        if (actorMiembro.getIdActor() != null) {
-            listaMiembros.add(actorMiembro);
-            actorMiembro = new ActorMiembro();
-        } else {
-            msg.messageAlert("Debe seleccionar un miembro", null);
+            if (actorMiembro.getIdMiembro() != null) {
+                listaMiembros.add(actorMiembro);
+                actorMiembro = new ActorMiembro();
+            } else {
+                msg.messageAlert("Debe seleccionar un miembro", null);
+            }
+        } catch (Exception e) {
+            log.error("ERROR - addMiembro()" + e);
         }
         return true;
     }
@@ -602,7 +618,7 @@ public class ActorController extends AbstractManagedBean implements Serializable
                 return false;
             }
         }
-        if (actorMiembroEntidad.getIdActor() != null) {
+        if (actorMiembroEntidad.getIdMiembro() != null) {
             listaMiembrosEntidad.add(actorMiembroEntidad);
             actorMiembroEntidad = new ActorMiembro();
         } else {
@@ -612,17 +628,21 @@ public class ActorController extends AbstractManagedBean implements Serializable
     }
 
     public boolean addMiembroPersona() {
-        for (ActorMiembro am : listaMiembrosPersona) {
-            if (Objects.equals(am.getIdActor(), actorMiembroPesona.getIdActor())) {
-                actorMiembroPesona = new ActorMiembro();
-                return false;
+        try {
+            for (ActorMiembro am : listaMiembrosPersona) {
+                if (Objects.equals(am.getIdActor(), actorMiembroPesona.getIdActor())) {
+                    actorMiembroPesona = new ActorMiembro();
+                    return false;
+                }
             }
-        }
-        if (actorMiembroPesona.getIdActor() != null) {
-            listaMiembrosPersona.add(actorMiembroPesona);
-            actorMiembroPesona = new ActorMiembro();
-        } else {
-            msg.messageAlert("Debe seleccionar una empresa o entidad", null);
+            if (actorMiembroPesona.getIdActor() != null) {
+                listaMiembrosPersona.add(actorMiembroPesona);
+                actorMiembroPesona = new ActorMiembro();
+            } else {
+                msg.messageAlert("Debe seleccionar una empresa o entidad", null);
+            }
+        } catch (Exception e) {
+            log.error("ERROR - addMiembroPersona()" + e);
         }
         return true;
     }
@@ -640,18 +660,30 @@ public class ActorController extends AbstractManagedBean implements Serializable
     }
 
     public void removeMiembroRegistrado(ActorMiembro am) {
-        actorMiembroService.actorMiembroDelete(am);
-        listaMiembrosRegistrados = actorMiembroService.actorMiembroBuscarxActor(empresa.getId());
+        try {
+            actorMiembroService.actorMiembroDelete(am);
+            listaMiembrosRegistrados = actorMiembroService.actorMiembroBuscarxActor(empresa.getId());
+        } catch (Exception e) {
+            log.error("ERROR - removeMiembroRegistrado()" + e);
+        }
     }
 
     public void removeMiembroRegistradoEntidad(ActorMiembro am) {
-        actorMiembroService.actorMiembroDelete(am);
-        listaMiembrosRegistradosEntidad = actorMiembroService.actorMiembroBuscarxActor(entidad.getId());
+        try {
+            actorMiembroService.actorMiembroDelete(am);
+            listaMiembrosRegistradosEntidad = actorMiembroService.actorMiembroBuscarxActor(entidad.getId());
+        } catch (Exception e) {
+            log.error("ERROR - removeMiembroRegistradoEntidad()" + e);
+        }
     }
 
     public void removeMiembroRegistradoPersona(ActorMiembro am) {
-        actorMiembroService.actorMiembroDelete(am);
-        listaMiembrosRegistradosPersona = actorMiembroService.actorMiembroBuscarxMiembro(actor.getId());
+        try {
+            actorMiembroService.actorMiembroDelete(am);
+            listaMiembrosRegistradosPersona = actorMiembroService.actorMiembroBuscarxMiembro(actor.getId());
+        } catch (Exception e) {
+            log.error("ERROR - removeMiembroRegistradoPersona()" + e);
+        }
     }
 
     public boolean addMiembroGuardar(ActorMiembro am) {
@@ -673,7 +705,7 @@ public class ActorController extends AbstractManagedBean implements Serializable
             }
             removeTempMiembro(am);
         } catch (Exception e) {
-            log.error(e);
+            log.error("ERROR - addMiembroGuardar()" + e);
         }
         return true;
     }
@@ -702,7 +734,7 @@ public class ActorController extends AbstractManagedBean implements Serializable
             }
             removeTempMiembroEntidad(am);
         } catch (Exception e) {
-            log.error(e);
+            log.error("ERROR - addMiembroGuardarEntidad()" + e);
         }
         return true;
     }
@@ -726,7 +758,7 @@ public class ActorController extends AbstractManagedBean implements Serializable
             }
             removeTempMiembroPersona(am);
         } catch (Exception e) {
-            log.error(e);
+            log.error("ERROR - addMiembroGuardarPersona()" + e);
         }
         return true;
     }
@@ -735,7 +767,7 @@ public class ActorController extends AbstractManagedBean implements Serializable
         try {
             listaActorSeleccionado = actorService.actorxActividadBuscarTotal(idActividad);
         } catch (Exception ex) {
-            java.util.logging.Logger.getLogger(ActorController.class.getName()).log(Level.SEVERE, null, ex);
+            log.error("ERROR - listarActoresXcaso()" + ex);
         }
     }
 
@@ -744,8 +776,12 @@ public class ActorController extends AbstractManagedBean implements Serializable
     }
 
     public void cadenaActores() {
-        cadenaAutocomplete = actorService.actorTodosBuscarPaginado();
-        cadenaAutocompleteEmpresaEntidad = actorService.actorEmpresaEntidadBuscarPaginado();
+        try {
+            cadenaAutocomplete = actorService.actorTodosBuscarPaginado();
+            cadenaAutocompleteEmpresaEntidad = actorService.actorEmpresaEntidadBuscarPaginado();
+        } catch (Exception e) {
+            log.error("ERROR - cadenaActores()" + e);
+        }
     }
 
     public void limpiarListasActoresAcuerdos() {
@@ -754,46 +790,87 @@ public class ActorController extends AbstractManagedBean implements Serializable
     }
 
     public void validaDni() {
-        String dni = actor.getDni();
-        if (StringUtils.isNotBlank(dni)) {
-            setActor(actorService.actorBuscarTotalSimple(actor));
-            if (StringUtils.isBlank(actor.getDni())) {
-                actor = new Actor();
-                actor.setDni(dni);
-            } else {
-                if (StringUtils.isNotBlank(actor.getIdProvincia()) && StringUtils.isNotBlank(actor.getIdProvincia())) {
-                    comboProvincia();
-                }
-                if (StringUtils.isNotBlank(actor.getIdDistrito()) && StringUtils.isNotBlank(actor.getIdDistrito())) {
-                    comboDistrito();
+        try {
+            String dni = actor.getDni();
+            if (StringUtils.isNotBlank(dni)) {
+                setActor(actorService.actorBuscarTotalSimple(actor));
+                if (StringUtils.isBlank(actor.getDni())) {
+                    actor = new Actor();
+                    actor.setDni(dni);
+                } else {
+                    if (StringUtils.isNotBlank(actor.getIdProvincia()) && StringUtils.isNotBlank(actor.getIdProvincia())) {
+                        comboProvincia();
+                    }
+                    if (StringUtils.isNotBlank(actor.getIdDistrito()) && StringUtils.isNotBlank(actor.getIdDistrito())) {
+                        comboDistrito();
+                    }
                 }
             }
+        } catch (Exception e) {
+            log.error("ERROR - validaDni()" + e);
         }
     }
 
     public void buscarActorXnombre() {
-        String value = FacesContext.getCurrentInstance().
-                getExternalContext().getRequestParameterMap().get("nombreActor");
-        Actor ac = new Actor();
-        ac.setNombre(value);
+        try {
+            String value = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("nombreActor");
+            Actor ac = new Actor();
+            ac.setNombre(value);
+            listaActorBusquedaGeneral = null;
+            listaActorBusquedaGeneral = actorService.actorBuscarSimple(ac);
+        } catch (Exception e) {
+            log.error("ERROR - buscarActorXnombre()" + e);
+        }
+    }
+    
+    public void limpiarModalBusquedaActor(){
         listaActorBusquedaGeneral = null;
-        listaActorBusquedaGeneral = actorService.actorBuscarSimple(ac);
+    }
+    
+    public void buscarActorXnombrePaginado(Long pagina) {
+        int paginado = ConstantesUtil.PAGINADO_10;
+        String value = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("nombreActor");
+        Long ini = paginado * (pagina - 1) + 1;
+        Long fin = paginado * pagina;
+        if (pagina == 0) {
+            ini = 1L;
+            fin = 10L;
+        }
+        FiltroActor filtroActor = new FiltroActor();
+        filtroActor.setIni(ini);
+        filtroActor.setFin(fin);
+        filtroActor.setNombre(value);
+        try {
+            List<Actor> lista = actorService.actorBuscarNombrePaginado(filtroActor);
+            if(lista.size() > 0){
+                listaActorBusquedaGeneral = lista;
+                nroPagina = pagina;
+            }
+        } catch (Exception e) {
+            log.error("ERROR - listarPaginado()" + e);
+        }
     }
 
     public void buscarActorXRegistro() {
-        String value = FacesContext.getCurrentInstance().
-                getExternalContext().getRequestParameterMap().get("actividad-id");
-        Long id = Long.parseLong(value);
-        listaActorBusquedaGeneral = null;
-        listaActorBusquedaGeneral = actorService.actorBuscarSimpleXactividad(id);
+        try {
+            String value = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("actividad-id");
+            Long id = Long.parseLong(value);
+            listaActorBusquedaGeneral = null;
+            listaActorBusquedaGeneral = actorService.actorBuscarSimpleXactividad(id);
+        } catch (Exception e) {
+            log.error("ERROR - cargarPaginaActoresSigues()" + e);
+        }
     }
 
     public void buscarActorXCaso() {
-        String value = FacesContext.getCurrentInstance().
-                getExternalContext().getRequestParameterMap().get("caso-id");
-        Long id = Long.parseLong(value);
-        listaActorBusquedaGeneral = null;
-        listaActorBusquedaGeneral = actorService.actorxCasoBuscar(id);
+        try {
+            String value = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("caso-id");
+            Long id = Long.parseLong(value);
+            listaActorBusquedaGeneral = null;
+            listaActorBusquedaGeneral = actorService.actorxCasoBuscar(id);
+        } catch (Exception e) {
+            log.error("ERROR - buscarActorXCaso()" + e);
+        }
     }
 
     public String regresarBusqueda() {
@@ -801,78 +878,82 @@ public class ActorController extends AbstractManagedBean implements Serializable
     }
 
     public String setearActor(Actor a) {
-        actor = new Actor();
-        empresa = new Actor();
-        entidad = new Actor();
-        if (StringUtils.equals(a.getTipoGeneral(), "PE")) {
-            setActor(a);
-            if (StringUtils.isNotBlank(actor.getIdProvincia()) && StringUtils.isNotBlank(actor.getIdProvincia())) {
-                comboProvincia();
+        try {
+            actor = new Actor();
+            empresa = new Actor();
+            entidad = new Actor();
+            if (StringUtils.equals(a.getTipoGeneral(), "PE")) {
+                setActor(a);
+                if (StringUtils.isNotBlank(actor.getIdProvincia()) && StringUtils.isNotBlank(actor.getIdProvincia())) {
+                    comboProvincia();
+                }
+                if (StringUtils.isNotBlank(actor.getIdDistrito()) && StringUtils.isNotBlank(actor.getIdDistrito())) {
+                    comboDistrito();
+                }
+                listaMiembros = new ArrayList<>();
+                listaMiembrosEntidad = new ArrayList<>();
+                listaMiembrosPersona = new ArrayList<>();
+                listaMiembrosRegistrados = null;
+                listaMiembrosRegistradosEntidad = null;
+                listaMiembrosRegistradosPersona = actorMiembroService.actorMiembroBuscarxMiembro(actor.getId());
+                if (actor.getTipoPoblacion() != null) {
+                    cargarAjaxListaSubTipo1();
+                }
+                if (actor.getSubTipo1Poblacion() != null) {
+                    cargarAjaxListaSubTipo2();
+                }
             }
-            if (StringUtils.isNotBlank(actor.getIdDistrito()) && StringUtils.isNotBlank(actor.getIdDistrito())) {
-                comboDistrito();
-            }
-            listaMiembros = new ArrayList<>();
-            listaMiembrosEntidad = new ArrayList<>();
-            listaMiembrosPersona = new ArrayList<>();
-            listaMiembrosRegistrados = null;
-            listaMiembrosRegistradosEntidad = null;
-            listaMiembrosRegistradosPersona = actorMiembroService.actorMiembroBuscarxMiembro(actor.getId());
-            if (actor.getTipoPoblacion() != null) {
-                cargarAjaxListaSubTipo1();
-            }
-            if (actor.getSubTipo1Poblacion() != null) {
-                cargarAjaxListaSubTipo2();
-            }
-        }
-        if (StringUtils.equals(a.getTipoGeneral(), "EM")) {
-            setEmpresa(a);
-            if (StringUtils.isNotBlank(empresa.getIdProvincia()) && StringUtils.isNotBlank(empresa.getIdProvincia())) {
-                comboProvinciaEmpresa();
-            }
-            if (StringUtils.isNotBlank(empresa.getIdDistrito()) && StringUtils.isNotBlank(empresa.getIdDistrito())) {
-                comboDistritoEmpresa();
-            }
-            listaMiembros = new ArrayList<>();
-            listaMiembrosEntidad = new ArrayList<>();
-            listaMiembrosPersona = new ArrayList<>();
-            listaMiembrosRegistrados = actorMiembroService.actorMiembroBuscarxActor(empresa.getId());
-            listaMiembrosRegistradosEntidad = null;
-            listaMiembrosRegistradosPersona = null;
+            if (StringUtils.equals(a.getTipoGeneral(), "EM")) {
+                setEmpresa(a);
+                if (StringUtils.isNotBlank(empresa.getIdDepartamento()) && !StringUtils.equals(empresa.getIdDepartamento(), "0")) {
+                    comboProvinciaEmpresa();
+                }
+                if (StringUtils.isNotBlank(empresa.getIdProvincia()) && !StringUtils.equals(empresa.getIdProvincia(), "0")) {
+                    comboDistritoEmpresa();
+                }
+                listaMiembros = new ArrayList<>();
+                listaMiembrosEntidad = new ArrayList<>();
+                listaMiembrosPersona = new ArrayList<>();
+                listaMiembrosRegistrados = actorMiembroService.actorMiembroBuscarxActor(empresa.getId());
+                listaMiembrosRegistradosEntidad = null;
+                listaMiembrosRegistradosPersona = null;
 
-            if (empresa.getTipoOrganizacion() != null) {
-                cargarAjaxListaSubTipo1Organizacion();
-            }
-            if (empresa.getSubTipo1Organizacion() != null) {
-                cargarAjaxListaSubTipo2Organizacion();
-            }
+                if (empresa.getTipoOrganizacion() != null) {
+                    cargarAjaxListaSubTipo1Organizacion();
+                }
+                if (empresa.getSubTipo1Organizacion() != null) {
+                    cargarAjaxListaSubTipo2Organizacion();
+                }
 
-            if (empresa.getSubTipo2Empresa() != null) {
-                cargarAjaxListaSubTipo3Empresa();
-            }
+                if (empresa.getSubTipo2Empresa() != null) {
+                    cargarAjaxListaSubTipo3Empresa();
+                }
 
-        }
-        if (StringUtils.equals(a.getTipoGeneral(), "EN")) {
-            setEntidad(a);
-            if (StringUtils.isNotBlank(entidad.getIdProvincia()) && StringUtils.isNotBlank(entidad.getIdProvincia())) {
-                comboProvinciaEntidad();
             }
-            if (StringUtils.isNotBlank(entidad.getIdDistrito()) && StringUtils.isNotBlank(entidad.getIdDistrito())) {
-                comboDistritoEntidad();
-            }
-            listaMiembros = new ArrayList<>();
-            listaMiembrosEntidad = new ArrayList<>();
-            listaMiembrosPersona = new ArrayList<>();
-            listaMiembrosRegistradosEntidad = actorMiembroService.actorMiembroBuscarxActor(entidad.getId());
-            listaMiembrosRegistrados = null;
-            listaMiembrosRegistradosPersona = null;
+            if (StringUtils.equals(a.getTipoGeneral(), "EN")) {
+                setEntidad(a);
+                if (StringUtils.isNotBlank(entidad.getIdProvincia()) && StringUtils.isNotBlank(entidad.getIdProvincia())) {
+                    comboProvinciaEntidad();
+                }
+                if (StringUtils.isNotBlank(entidad.getIdDistrito()) && StringUtils.isNotBlank(entidad.getIdDistrito())) {
+                    comboDistritoEntidad();
+                }
+                listaMiembros = new ArrayList<>();
+                listaMiembrosEntidad = new ArrayList<>();
+                listaMiembrosPersona = new ArrayList<>();
+                listaMiembrosRegistradosEntidad = actorMiembroService.actorMiembroBuscarxActor(entidad.getId());
+                listaMiembrosRegistrados = null;
+                listaMiembrosRegistradosPersona = null;
 
-            if (entidad.getTipoEstado() != null) {
-                cargarAjaxListaSubTipo1Estado();
+                if (entidad.getTipoEstado() != null) {
+                    cargarAjaxListaSubTipo1Estado();
+                }
+                if (entidad.getSubTipo1Estado() != null) {
+                    cargarAjaxListaSubTipo2Estado();
+                }
             }
-            if (entidad.getSubTipo1Estado() != null) {
-                cargarAjaxListaSubTipo2Estado();
-            }
+        } catch (Exception e) {
+            log.error("ERROR - setearActor()" + e);
         }
         return "actorEdit";
     }
@@ -881,9 +962,8 @@ public class ActorController extends AbstractManagedBean implements Serializable
         try {
             setearActor(actorService.actorBuscarOne(idActor));
         } catch (Exception ex) {
-            log.error(ex.getCause());
+            log.error("ERROR - busquedaGeneralActor()" + ex);
         }
-
     }
 
     public void agregarActorSeleccionadoAcuerdoIni() {
@@ -906,7 +986,7 @@ public class ActorController extends AbstractManagedBean implements Serializable
             }
             actor = new Actor();
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            log.error("ERROR - agregarActorSeleccionadoAcuerdoIni()" + ex);
         }
     }
 
@@ -930,7 +1010,7 @@ public class ActorController extends AbstractManagedBean implements Serializable
             }
             actor2 = new Actor();
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            log.error("ERROR - agregarActorSeleccionadoAcuerdoFin()" + ex);
         }
     }
 
@@ -961,7 +1041,7 @@ public class ActorController extends AbstractManagedBean implements Serializable
             }
             actor = new Actor();
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            log.error("ERROR - listarActorSeleccionadoActividad()" + ex);
         }
     }
 
@@ -983,127 +1063,129 @@ public class ActorController extends AbstractManagedBean implements Serializable
     }
 
     public void comboProvincia() {
-        listaProvincia = new ArrayList<>();
-        String id = actor.getIdDepartamento();
-        if (StringUtils.equals(id, "0")) {
-            listaProvincia.clear();
-            listaDistrito.clear();
-        } else {
-            List<Provincia> list = ubigeoService.provinciaLista(id);
-            if (list.size() > 0) {
-                for (Provincia provincia : list) {
-                    listaProvincia.add(new SelectItem(provincia.getIdProvincia(), provincia.getDescripcion()));
+        try {
+            listaProvincia = new ArrayList<>();
+            String id = actor.getIdDepartamento();
+            if (StringUtils.equals(id, "0")) {
+                listaProvincia.clear();
+                listaDistrito.clear();
+            } else {
+                List<Provincia> list = ubigeoService.provinciaLista(id);
+                if (list.size() > 0) {
+                    for (Provincia provincia : list) {
+                        listaProvincia.add(new SelectItem(provincia.getIdProvincia(), provincia.getDescripcion()));
+                    }
                 }
             }
+        } catch (Exception e) {
+            log.error("ERROR - comboProvincia()" + e);
         }
     }
 
     public void comboProvinciaEmpresa() {
-        listaProvincia = new ArrayList<>();
-        String id = empresa.getIdDepartamento();
-        listaProvincia = new ArrayList<>();
-        listaDistrito = new ArrayList<>();
-        if (StringUtils.equals(id, "0")) {
-            List<Provincia> list = ubigeoService.provinciaLista(id);
-            if (list.size() > 0) {
-                for (Provincia provincia : list) {
-                    listaProvincia.add(new SelectItem(provincia.getIdProvincia(), provincia.getDescripcion()));
+        try {
+            listaProvincia = new ArrayList<>();
+            String id = empresa.getIdDepartamento();
+            listaProvincia = new ArrayList<>();
+            listaDistrito = new ArrayList<>();
+            if (!StringUtils.equals(id, "0")) {
+                List<Provincia> list = ubigeoService.provinciaLista(id);
+                if (list.size() > 0) {
+                    for (Provincia provincia : list) {
+                        listaProvincia.add(new SelectItem(provincia.getIdProvincia(), provincia.getDescripcion()));
+                    }
                 }
             }
+        } catch (Exception e) {
+            log.error("ERROR - comboProvinciaEmpresa()" + e);
         }
     }
 
     public void comboProvinciaEntidad() {
-        listaProvincia = new ArrayList<>();
-        String id = entidad.getIdDepartamento();
-        listaProvincia = new ArrayList<>();
-        listaDistrito = new ArrayList<>();
-        if (StringUtils.equals(id, "0")) {
-            List<Provincia> list = ubigeoService.provinciaLista(id);
-            if (list.size() > 0) {
-                for (Provincia provincia : list) {
-                    listaProvincia.add(new SelectItem(provincia.getIdProvincia(), provincia.getDescripcion()));
+        try {
+            listaProvincia = new ArrayList<>();
+            String id = entidad.getIdDepartamento();
+            listaProvincia = new ArrayList<>();
+            listaDistrito = new ArrayList<>();
+            if (!StringUtils.equals(id, "0")) {
+                List<Provincia> list = ubigeoService.provinciaLista(id);
+                if (list.size() > 0) {
+                    for (Provincia provincia : list) {
+                        listaProvincia.add(new SelectItem(provincia.getIdProvincia(), provincia.getDescripcion()));
+                    }
                 }
             }
+        } catch (Exception e) {
+            log.error("ERROR - comboProvinciaEntidad()" + e);
         }
     }
 
     public void comboDistrito() {
-        listaDistrito = new ArrayList<>();
-        String idDepartamento = actor.getIdDepartamento();
-        String idProvincia = actor.getIdProvincia();
-        if (StringUtils.equals(idDepartamento, "0") || StringUtils.equals(idProvincia, "0")) {
-            listaDistrito.clear();
-        } else {
-            Distrito d = new Distrito();
-            d.setIdDepartamento(idDepartamento);
-            d.setIdProvincia(idProvincia);
-            List<Distrito> list = ubigeoService.distritoLista(d);
-            if (list.size() > 0) {
-                for (Distrito distrito : list) {
-                    listaDistrito.add(new SelectItem(distrito.getIdDistrito(), distrito.getDescripcion()));
+        try {
+            listaDistrito = new ArrayList<>();
+            String idDepartamento = actor.getIdDepartamento();
+            String idProvincia = actor.getIdProvincia();
+            if (StringUtils.equals(idDepartamento, "0") || StringUtils.equals(idProvincia, "0")) {
+                listaDistrito.clear();
+            } else {
+                Distrito d = new Distrito();
+                d.setIdDepartamento(idDepartamento);
+                d.setIdProvincia(idProvincia);
+                List<Distrito> list = ubigeoService.distritoLista(d);
+                if (list.size() > 0) {
+                    for (Distrito distrito : list) {
+                        listaDistrito.add(new SelectItem(distrito.getIdDistrito(), distrito.getDescripcion()));
+                    }
                 }
             }
+        } catch (Exception e) {
+            log.error("ERROR - comboDistrito()" + e);
         }
     }
 
     public void comboDistritoEmpresa() {
-        listaDistrito = new ArrayList<>();
-        String idDepartamento = actor.getIdDepartamento();
-        String idProvincia = actor.getIdProvincia();
-        if (StringUtils.equals(idDepartamento, "0") || StringUtils.equals(idProvincia, "0")) {
-            listaDistrito.clear();
-        } else {
-            Distrito d = new Distrito();
-            d.setIdDepartamento(idDepartamento);
-            d.setIdProvincia(idProvincia);
-            List<Distrito> list = ubigeoService.distritoLista(d);
-            if (list.size() > 0) {
-                for (Distrito distrito : list) {
-                    listaDistrito.add(new SelectItem(distrito.getIdDistrito(), distrito.getDescripcion()));
+        try {
+            listaDistrito = new ArrayList<>();
+            String idDepartamento = empresa.getIdDepartamento();
+            String idProvincia = empresa.getIdProvincia();
+            if (StringUtils.equals(idDepartamento, "0") || StringUtils.equals(idProvincia, "0")) {
+                listaDistrito.clear();
+            } else {
+                Distrito d = new Distrito();
+                d.setIdDepartamento(idDepartamento);
+                d.setIdProvincia(idProvincia);
+                List<Distrito> list = ubigeoService.distritoLista(d);
+                if (list.size() > 0) {
+                    for (Distrito distrito : list) {
+                        listaDistrito.add(new SelectItem(distrito.getIdDistrito(), distrito.getDescripcion()));
+                    }
                 }
             }
+        } catch (Exception e) {
+            log.error("ERROR - comboDistritoEmpresa()" + e);
         }
     }
 
     public void comboDistritoEntidad() {
-        listaDistrito = new ArrayList<>();
-        String idDepartamento = actor.getIdDepartamento();
-        String idProvincia = actor.getIdProvincia();
-        if (StringUtils.equals(idDepartamento, "0") || StringUtils.equals(idProvincia, "0")) {
-            listaDistrito.clear();
-        } else {
-            Distrito d = new Distrito();
-            d.setIdDepartamento(idDepartamento);
-            d.setIdProvincia(idProvincia);
-            List<Distrito> list = ubigeoService.distritoLista(d);
-            if (list.size() > 0) {
-                for (Distrito distrito : list) {
-                    listaDistrito.add(new SelectItem(distrito.getIdDistrito(), distrito.getDescripcion()));
-                }
-            }
-        }
-    }
-
-    public void buscarActorTodos2() {
         try {
-            Actor a;
-            if (actor2.getId() != null) {
-                a = new Actor();
-                a = actorService.actorBuscarOne(actor2.getId());
-                boolean i = true;
-                for (Actor a1 : listaActorPaginado2) {
-                    if (Objects.equals(a1.getId(), a.getId())) {
-                        i = false;
+            listaDistrito = new ArrayList<>();
+            String idDepartamento = entidad.getIdDepartamento();
+            String idProvincia = entidad.getIdProvincia();
+            if (StringUtils.equals(idDepartamento, "0") || StringUtils.equals(idProvincia, "0")) {
+                listaDistrito.clear();
+            } else {
+                Distrito d = new Distrito();
+                d.setIdDepartamento(idDepartamento);
+                d.setIdProvincia(idProvincia);
+                List<Distrito> list = ubigeoService.distritoLista(d);
+                if (list.size() > 0) {
+                    for (Distrito distrito : list) {
+                        listaDistrito.add(new SelectItem(distrito.getIdDistrito(), distrito.getDescripcion()));
                     }
                 }
-                if (i) {
-                    listaActorPaginado2.add(a);
-                }
             }
-            actor2 = new Actor();
-        } catch (Exception ex) {
-            log.error(ex.getMessage());
+        } catch (Exception e) {
+            log.error("ERROR - comboDistritoEntidad()" + e);
         }
     }
 
@@ -1129,7 +1211,7 @@ public class ActorController extends AbstractManagedBean implements Serializable
             }
             actor = new Actor();
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            log.error("ERROR - buscarActorTodos()" + ex);
         }
     }
 
@@ -1172,30 +1254,38 @@ public class ActorController extends AbstractManagedBean implements Serializable
 
     public List<ActorAcuerdo> vincularListaActoresAcuerdoDetalleIni(Long idDetalle) {
         ArrayList list = new ArrayList<>();
-        for (Actor actor1 : listaActorSeleccionadoAcuerdoIni) {
-            ActorAcuerdo actorAcuerdo = new ActorAcuerdo();
-            ActaAcuerdoDetalle actaAcuerdoDetalle = new ActaAcuerdoDetalle();
-            actaAcuerdoDetalle.setId(idDetalle);
-            actorAcuerdo.setActaAcuerdoDetalle(actaAcuerdoDetalle);
-            actorAcuerdo.setActor(actor1);
-            actorAcuerdo.setEstado("ACT");
-            actorAcuerdo.setTipo("INI");
-            list.add(actorAcuerdo);
+        try {
+            for (Actor actor1 : listaActorSeleccionadoAcuerdoIni) {
+                ActorAcuerdo actorAcuerdo = new ActorAcuerdo();
+                ActaAcuerdoDetalle actaAcuerdoDetalle = new ActaAcuerdoDetalle();
+                actaAcuerdoDetalle.setId(idDetalle);
+                actorAcuerdo.setActaAcuerdoDetalle(actaAcuerdoDetalle);
+                actorAcuerdo.setActor(actor1);
+                actorAcuerdo.setEstado("ACT");
+                actorAcuerdo.setTipo("INI");
+                list.add(actorAcuerdo);
+            }
+        } catch (Exception e) {
+            log.error("ERROR - cargarPaginaActoresSigues()" + e);
         }
         return list;
     }
 
     public List<ActorAcuerdo> vincularListaActoresAcuerdoDetalleFin(Long idDetalle) {
         ArrayList list = new ArrayList<>();
-        for (Actor actor1 : listaActorSeleccionadoAcuerdoFin) {
-            ActorAcuerdo actorAcuerdo = new ActorAcuerdo();
-            ActaAcuerdoDetalle actaAcuerdoDetalle = new ActaAcuerdoDetalle();
-            actaAcuerdoDetalle.setId(idDetalle);
-            actorAcuerdo.setActaAcuerdoDetalle(actaAcuerdoDetalle);
-            actorAcuerdo.setActor(actor1);
-            actorAcuerdo.setEstado("ACT");
-            actorAcuerdo.setTipo("FIN");
-            list.add(actorAcuerdo);
+        try {
+            for (Actor actor1 : listaActorSeleccionadoAcuerdoFin) {
+                ActorAcuerdo actorAcuerdo = new ActorAcuerdo();
+                ActaAcuerdoDetalle actaAcuerdoDetalle = new ActaAcuerdoDetalle();
+                actaAcuerdoDetalle.setId(idDetalle);
+                actorAcuerdo.setActaAcuerdoDetalle(actaAcuerdoDetalle);
+                actorAcuerdo.setActor(actor1);
+                actorAcuerdo.setEstado("ACT");
+                actorAcuerdo.setTipo("FIN");
+                list.add(actorAcuerdo);
+            }
+        } catch (Exception e) {
+            log.error("ERROR - vincularListaActoresAcuerdoDetalleFin()" + e);
         }
         return list;
     }
@@ -1250,7 +1340,7 @@ public class ActorController extends AbstractManagedBean implements Serializable
                 }
             }
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            log.error("ERROR - registrarActor()" + ex);
         }
     }
 
@@ -1259,7 +1349,7 @@ public class ActorController extends AbstractManagedBean implements Serializable
             actorService.actorModificar(actor);
             msg.messageInfo("Se ha actualizado la informacion de la persona", null);
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            log.error("ERROR - actualizarActor()" + ex);
         }
     }
 
@@ -1295,9 +1385,8 @@ public class ActorController extends AbstractManagedBean implements Serializable
                     msg.messageInfo("Se ha registrado correctamente la Empresa ahora puede agregar sus miembros", null);
                 }
             }
-
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            log.error("ERROR - registrarActorEmpresa()" + ex);
         }
     }
 
@@ -1330,9 +1419,8 @@ public class ActorController extends AbstractManagedBean implements Serializable
                     msg.messageInfo("Se ha registrado correctamente la Entidad ahora puede agregar sus miembros", null);
                 }
             }
-
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            log.error("ERROR - registrarActorEntidad()" + ex);
         }
     }
 
@@ -1351,24 +1439,24 @@ public class ActorController extends AbstractManagedBean implements Serializable
         try {
             listaActorPaginado = actorService.actorBuscarPaginado(filtroActor);
         } catch (Exception e) {
-            log.error("ERROR : ActividadController.listarPaginado: " + e.getMessage());
+            log.error("ERROR - listarPaginado()" + e);
         }
     }
 
     public void historialActor(String accion, String entidad, Long idEntidad, Long idActor) {
-        FacesContext context = FacesContext.getCurrentInstance();
-        LoginController loginController = (LoginController) context.getELContext().getELResolver().getValue(context.getELContext(), null, "loginController");
-        ActorHistorial historial = new ActorHistorial();
-        historial.setAccion(accion);
-        historial.setIdActor(idActor);
-        historial.setFechaRegistro(new Date());
-        historial.setEntidad(entidad);
-        historial.setIdEntidad(idEntidad);
-        historial.setUsuarioRegistro(loginController.getUsuarioSesion().getCodigo());
         try {
+            FacesContext context = FacesContext.getCurrentInstance();
+            LoginController loginController = (LoginController) context.getELContext().getELResolver().getValue(context.getELContext(), null, "loginController");
+            ActorHistorial historial = new ActorHistorial();
+            historial.setAccion(accion);
+            historial.setIdActor(idActor);
+            historial.setFechaRegistro(new Date());
+            historial.setEntidad(entidad);
+            historial.setIdEntidad(idEntidad);
+            historial.setUsuarioRegistro(loginController.getUsuarioSesion().getCodigo());
             actorHistorialService.actorHistorialInsertar(historial);
         } catch (Exception e) {
-            log.error("METODO : ActorController.historialActor" + e.getMessage());
+            log.error("ERROR - historialActor()" + e);
         }
     }
 
@@ -1377,7 +1465,7 @@ public class ActorController extends AbstractManagedBean implements Serializable
         try {
             list = actorHistorialService.actorHistorialBuscarList(actorTemp.getId());
         } catch (Exception e) {
-            log.error("ERROR : ActorController.listarActorHistorial: " + e.getMessage());
+            log.error("ERROR - listarActorHistorial()" + e);
         }
         return list;
     }
@@ -1403,7 +1491,7 @@ public class ActorController extends AbstractManagedBean implements Serializable
             try {
                 actividadActorService.saveOrUpdate(actividadActor1);
             } catch (Exception e) {
-                log.error("ERROR : ActividadController.actividadUnionActorModal: " + e.getMessage());
+                log.error("ERROR - actividadUnionActorModal()" + e);
             }
         }
     }
@@ -1439,7 +1527,7 @@ public class ActorController extends AbstractManagedBean implements Serializable
                 actividadActorService.saveOrUpdate(actividadActor1);
                 msg.messageInfo("Se han registrado los cambios", null);
             } catch (Exception e) {
-                log.error("ERROR : ActividadController.actividadUnionActor: " + e.getMessage());
+                log.error("ERROR - actividadUnionActor()" + e);
             }
         }
         return "registroNuevo";
@@ -1475,7 +1563,7 @@ public class ActorController extends AbstractManagedBean implements Serializable
                 actividadActorService.saveOrUpdate(actividadActor1);
                 msg.messageInfo("Se han registrado los cambios", null);
             } catch (Exception e) {
-                log.error("ERROR : ActividadController.actividadUnionActor2: " + e.getMessage());
+                log.error("ERROR - actividadUnionActor2()" + e);
             }
         }
         return "registroEdit";
@@ -1486,7 +1574,7 @@ public class ActorController extends AbstractManagedBean implements Serializable
         try {
             list = actividadService.actividadxActorBuscarTotal(actorTemp.getId());
         } catch (Exception e) {
-            log.error("ERROR : ActorController.listarActividadActorTotal: " + e.getMessage());
+            log.error("ERROR - listarActividadActorTotal()" + e);
         }
         return list;
     }
@@ -1502,7 +1590,7 @@ public class ActorController extends AbstractManagedBean implements Serializable
             actividadActorService.actividadActorDelete(actividadActor1);
             listaActividadxActorTotal = listarActividadActorTotal();
         } catch (Exception e) {
-            log.error("METODO : eliminarActorActividad" + e.getMessage());
+            log.error("ERROR - eliminarActividadActor()" + e);
         }
     }
 
@@ -1515,7 +1603,7 @@ public class ActorController extends AbstractManagedBean implements Serializable
                 items.add(new SelectItem(tipo.getValor(), tipo.getNombre()));
             }
         } catch (Exception e) {
-            log.error(e);
+            log.error("ERROR - cargarListaCompuesta()" + e);
         }
         return items;
     }
@@ -1529,16 +1617,11 @@ public class ActorController extends AbstractManagedBean implements Serializable
                 items.add(new SelectItem(tipo.getValor(), tipo.getNombre()));
             }
         } catch (Exception e) {
-            log.error(e);
+            log.error("ERROR - cargarListaSimple()" + e);
         }
         return items;
     }
 
-    /**
-     * GETTER AND SETTE
-     *
-     * @return R
-     */
     public ActorTemp getActorTemp() {
         return actorTemp;
     }
@@ -2012,5 +2095,4 @@ public class ActorController extends AbstractManagedBean implements Serializable
     public void setUsuarioSession(Usuario usuarioSession) {
         this.usuarioSession = usuarioSession;
     }
-
 }

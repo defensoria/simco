@@ -57,11 +57,13 @@
                                     $(".confirmacionGuardarTodo").modal("show");
                                 }
                             </script>
-                            <a class="btn btn-primary" onclick="confirmacionGuardarTodo()">
-                                <span class="glyphicon glyphicon-floppy-disk"/>Guardar
-                            </a>
+                            <h:panelGroup rendered="#{casoController.esComisionadoRegistro}">
+                                <a class="btn btn-primary" onclick="confirmacionGuardarTodo()">
+                                    <span class="glyphicon glyphicon-floppy-disk"/>Guardar
+                                </a>
+                            </h:panelGroup>
                             &#160;
-                            <a class="btn btn-default" jsf:action="#{intervencionController.archivar()}">
+                            <a class="btn btn-default" jsf:rendered="#{casoController.esComisionadoRegistro}" jsf:action="#{intervencionController.archivar()}">
                                 <span class="glyphicon glyphicon-folder-open"/>Archivar
                             </a>
                         </td>
@@ -237,7 +239,7 @@
                                 $('#idDescripcionGeneral').removeClass('df_input_error');
                             }
                         }
-                        
+
                         function limpiaDetalle() {
                             $('#idDescripcionGeneral').removeClass('df_input_error');
                         }
@@ -245,21 +247,32 @@
                     <div class="modal fade" id="idModalDetalle" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
+                                <div class="modal-header">
+                                    <table style="width: 100%">
+                                        <tr>
+                                            <td>
+                                                <span class="text-resalt-primary">Descripción de la intervención</span>
+                                            </td>
+                                            <td>
+                                               <a type="button" class="close" data-dismiss="modal" onclick="limpiaDetalle()">
+                                        <span style="color:red" class="glyphicon glyphicon-remove"/>
+                                    </a> 
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    
+                                </div>
                                 <div class="modal-body">
-                                    <div class="panel-body">
-                                        <span style="color:#0074cc;font-size:medium">Descripción</span>
-                                        <textarea class="form-control" id="idDescripcionGeneral" jsf:value="#{intervencionController.intervencion.descripcion}" rows="3" style="width:100%" maxlength="3700"/>
-                                        <div style="float:right;padding-top:15px">
-                                            <a class="btn btn-danger" onclick="limpiaDetalle()" data-dismiss="modal">
-                                                <span class="glyphicon glyphicon-remove"/>Cancelar
-                                            </a>
-                                            &#160;
+                                        <textarea class="form-control" id="idDescripcionGeneral" jsf:value="#{intervencionController.intervencion.descripcion}" rows="6" style="width:100%" maxlength="3700"/>
+                                        <br/>
+                                        <div>
+                                            <h:panelGroup rendered="#{casoController.esComisionadoRegistro}">
                                             <a class="btn btn-primary" jsf:onclick="return validaDetalleGeneral()" jsf:action="#{intervencionController.updateIntervencion()}">
                                                 <span class="glyphicon glyphicon-floppy-disk"/>Guardar
                                                 <f:ajax render="@form" execute="@form" onevent="closeModalDetalle"/>
                                             </a>
+                                                </h:panelGroup>
                                         </div>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -290,7 +303,7 @@
                         else {
                             $('#idDivColor').removeClass('df_input_error');
                         }
-                    }                    
+                    }
                 </script>
                 <h:panelGroup id="idPanelGroupIntervencion2">
                     <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -335,7 +348,7 @@
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <a class="btn btn-primary" jsf:onclick="return validaCampoAccion()" jsf:action="#{intervencionController.saveIntervencionAccion()}">
+                                    <a class="btn btn-primary" jsf:rendered="#{casoController.esComisionadoRegistro}" jsf:onclick="return validaCampoAccion()" jsf:action="#{intervencionController.saveIntervencionAccion()}">
                                         <span class="glyphicon glyphicon-floppy-disk"/>Guardar
                                         <f:ajax render="@form" execute="@form" onevent="closeModalCampoAccion"/>
                                     </a>
@@ -351,38 +364,40 @@
                         <div class="modal-content">
                             <div class="modal-header">
                                 <table style="width: 100%">
-                                            <tr>
-                                                    <td>
-                                                        <h4 class="modal-title" id="myModalLabel"><b>#{intervencionController.intervencionEtapa.detalle}</b>
-                                    <h:outputText value="(Planificado)" style="color:gray" rendered="#{intervencionController.intervencionEtapa.avance == 0}"/>
-                                    <h:outputText value="(En ejecución)" style="color:gray" rendered="#{intervencionController.intervencionEtapa.avance lt 100 and intervencionController.intervencionEtapa.avance gt 0}"/>
-                                    <h:outputText value="(Ejecutado)" style="color:gray" rendered="#{intervencionController.intervencionEtapa.avance == 100}"/>
-                                </h4>
-                                                </td>
-                                                    <td>
-                                                       <a type="button" class="close" data-dismiss="modal">
-                                        <span style="color:red" class="glyphicon glyphicon-remove"></span>
-                                    </a> 
-                                                </td>
-                                        </tr>
+                                    <tr>
+                                        <td>
+                                            <h4 class="modal-title" id="myModalLabel"><b>#{intervencionController.intervencionEtapa.detalle}</b>&#160;&#160;
+                                                <h:outputText value="(Planificado)" style="color:gray" rendered="#{intervencionController.intervencionEtapa.avance == 0}"/>
+                                                <h:outputText value="(En ejecución)" style="color:gray" rendered="#{intervencionController.intervencionEtapa.avance lt 100 and intervencionController.intervencionEtapa.avance gt 0}"/>
+                                                <h:outputText value="(Ejecutado)" style="color:gray" rendered="#{intervencionController.intervencionEtapa.avance == 100}"/>
+                                            </h4>
+                                        </td>
+                                        <td>
+                                            <a type="button" class="close" data-dismiss="modal">
+                                                <span style="color:red" class="glyphicon glyphicon-remove"></span>
+                                            </a> 
+                                        </td>
+                                    </tr>
                                 </table>
                             </div>
                             <div class="modal-body">
                                 <h:form id="idForm2">
                                     <h:messages />
                                     <div style="text-align:right">
-                                        <a class="btn btn-primary" jsf:action="#{intervencionController.updateIntervencionEtapaEnEjecucion()}">
+                                        <a class="btn btn-primary" jsf:rendered="#{casoController.esComisionadoRegistro}" jsf:action="#{intervencionController.updateIntervencionEtapaEnEjecucion()}">
                                             <span class="glyphicon glyphicon-floppy-disk"/>Guardar
                                         </a>
                                         &#160;&#160;
-                                        <a class="btn btn-warning" onclick="confirmar1()">
-                                            <span class="glyphicon glyphicon-remove"/>Eliminar
-                                        </a>
+                                        <h:panelGroup rendered="#{casoController.esComisionadoRegistro}">
+                                            <a class="btn btn-warning" onclick="confirmar1()">
+                                                <span class="glyphicon glyphicon-remove"/>Eliminar
+                                            </a>
+                                        </h:panelGroup>
                                         <gc:confirmRemoveSubmit classGC="confirmacion1" bean="#{intervencionController.removeListaIntervencionEtapa(intervencionController.intervencionEtapa, intervencionController.intervencionEtapa.avance)}"/>
                                         <script>
                                             function confirmar1() {
                                                 $(".confirmacion1").modal('show');
-                                            }                                            
+                                            }
                                         </script>
                                     </div>
                                     <br/>
@@ -420,7 +435,8 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <script>$('.trigger').popover({html: true, placement: 'bottom', tabindex: '0', trigger: 'focus', title: function () {
+                                                            <script>
+                                                                $('.trigger').popover({html: true, placement: 'bottom', tabindex: '0', trigger: 'focus', title: function () {
                                                                         return $(this).parent().find('.head').html();
                                                                     }, content: function () {
                                                                         return $(this).parent().find('.content').html();
@@ -429,7 +445,8 @@
                                                                 $(".datepicker").on("changeDate", function (ev) {
                                                                     $(this).datetimepicker("hide");
                                                                 });
-                                                                $('.timepicker').datetimepicker({pickDate: false});</script>
+                                                                $('.timepicker').datetimepicker({pickDate: false});                                                            
+                                                            </script>
                                                         </div>
                                                     </td>
                                                     <td style="width:40%;padding-left:10px;padding-bottom:20px;vertical-align:top">
@@ -493,7 +510,7 @@
                                                                             <h:outputText value="#{item.dni}"/>
                                                                         </h:column>
                                                                         <h:column>
-                                                                            <a  style="cursor: pointer" jsf:action="#{intervencionController.addMiembro(item)}" data-toggle="tooltip" data-placement="bottom" title="Modificar usuario">
+                                                                            <a jsf:rendered="#{casoController.esComisionadoRegistro}" style="cursor: pointer" jsf:action="#{intervencionController.addMiembro(item)}" data-toggle="tooltip" data-placement="bottom" title="Modificar usuario">
                                                                                 <span class="glyphicon glyphicon-share-alt" style="font-size:large"/>
                                                                                 <f:ajax render=":idForm2:idPanelMiembros"/>
                                                                             </a>
@@ -519,7 +536,7 @@
                                                                             </li>
                                                                         </h:column>
                                                                         <h:column>
-                                                                            <a style="cursor: pointer" jsf:action="#{intervencionController.removeMiembro(miembro)}" >
+                                                                            <a style="cursor: pointer" jsf:rendered="#{casoController.esComisionadoRegistro}" jsf:action="#{intervencionController.removeMiembro(miembro)}">
                                                                                 <span style="color:red" class="glyphicon glyphicon-remove"></span>
                                                                                 <f:ajax render=":idForm2:idPanelMiembros"/>
                                                                             </a>
@@ -561,7 +578,7 @@
                                                                                 <div class="form-group has-success has-feedback">
                                                                                     <label class="control-label" for="inputSuccess2">Nombre de la Actividad</label>
                                                                                     <input type="text" jsf:value="#{intervencionController.descripcionActuacion}" class="form-control" placeholder="Nueva Actuación" aria-describedby="inputSuccess2Status"/>
-                                                                                    <a jsf:action="#{intervencionController.addListaIntervencionEtapaActuacion()}">
+                                                                                    <a jsf:rendered="#{casoController.esComisionadoRegistro}" jsf:action="#{intervencionController.addListaIntervencionEtapaActuacion()}">
                                                                                         <span class="glyphicon glyphicon-share-alt form-control-feedback" aria-hidden="true"></span>
                                                                                         <f:ajax render="idDatatableAcciones @form" execute="@form"/>
                                                                                     </a>
@@ -591,7 +608,7 @@
                                                                                     </h:selectOneMenu>
                                                                                 </td>
                                                                                 <td>
-                                                                                    <a jsf:action="#{intervencionController.removeActuacionActividad(actuacion)}">
+                                                                                    <a jsf:rendered="#{casoController.esComisionadoRegistro}" jsf:action="#{intervencionController.removeActuacionActividad(actuacion)}">
                                                                                         <span style="font-size:large;padding:5px" class="glyphicon glyphicon-trash"></span>
                                                                                         <f:ajax render="@form"/>
                                                                                     </a>
@@ -783,7 +800,7 @@
                             $('#idHiddenColor').val("maroon");
                     }
                 }
-                sessionStorage.setItem('menuHijoSession', 'Intervención');            
+                sessionStorage.setItem('menuHijoSession', 'Intervención');
             </script>
         </ui:define>
     </ui:composition>

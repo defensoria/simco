@@ -221,5 +221,10 @@ public class ActorServiceImpl implements ActorService{
     public List<Actor> actoresSigues(String codigoUsuario) {
         return actorDao.actoresSigues(codigoUsuario);
     }
+
+    @Override
+    public List<Actor> actorBuscarNombrePaginado(FiltroActor filtroActor) {
+        return actorDao.actorBuscarNombrePaginado(filtroActor);
+    }
     
 }

@@ -68,7 +68,7 @@
                             <tr>
                                 <td style="width:70%">
                                     <span class="text-resalt-comun" style="font-weight:bold">#{casoController.caso.nombre} </span>
-                                    <h:outputText rendered="#{casoController.caso.id != null}" class="text-resalt-comun" value="codigo: #{casoController.caso.codigo}" />
+                                    <h:outputText rendered="#{casoController.caso.id != null}" class="text-resalt-comun" value="código: #{casoController.caso.codigo}" />
                                     <input style="width:50%" jsf:rendered="#{casoController.caso.id == null}" type="text" id="idNombreCaso" jsf:value="#{casoController.caso.nombre}" placeholder="Nombre"/>
                                 </td>
                                 <td>
@@ -310,7 +310,7 @@
                                         </table>
                                     </td>
                                     <td style="padding:5px">
-                                        <label class="TipoDialogo cTipoFace">Momento de diálogo</label>
+                                        <label class="TipoDialogo cTipoFace">Momento del diálogo</label>
                                         <h:selectOneMenu value="#{casoController.caso.tipoMomentoDialogo}" class="btn-info TipoDialogo cTipoFace" style="background:#6AA84F">
                                             <f:selectItem itemLabel="--Seleccione--" itemValue="0"/>
                                             <f:selectItems value="#{listasComunesController.buscarMomentoDialogo(false, false, false)}" var="y" itemLabel="#{y.nombreParametro}" itemValue="#{y.valorParametro}" />
@@ -324,7 +324,7 @@
                                         </h:selectOneMenu>
                                     </td>
                                     <td style="width:25%;padding:5px">
-                                        <label class="TipoDialogo cTipoFace">Particip. DP en Dial.</label>
+                                        <label class="TipoDialogo cTipoFace">Participación DP en diálogo</label>
                                         <h:selectOneMenu value="#{casoController.caso.tipoParticipacionCaso}" class="btn-info TipoDialogo cTipoFace" style="background:#6AA84F">
                                             <f:selectItem itemLabel="--Seleccione--" itemValue="0"/>
                                             <f:selectItems value="#{listasComunesController.buscarTipoParticipacionCaso(false, false, false)}" var="y" itemLabel="#{y.nombreParametro}" itemValue="#{y.valorParametro}" />
@@ -766,11 +766,11 @@
                                                     </script>
                                                 </td>
                                                 <td style="text-align:right">
-                                                    <a jsf:action="#{casoController.cargarListaActividadesSinCaso(2)}" jsf:onclick="loadingModal()">
+                                                    <a jsf:rendered="#{casoController.esComisionadoRegistro}" jsf:action="#{casoController.cargarListaActividadesSinCaso(2)}" jsf:onclick="loadingModal()">
                                                         <span style="font-size:large" class="glyphicon glyphicon-search"></span>
                                                         <f:ajax render=":idForm3" onevent="openModalBusquedaSinCaso" />
                                                     </a>
-                                                    <a style="text-decoration:none" jsf:action="#{registroController.cargarAcontecimientoModal(casoController.caso, 2)}" jsf:onclick="loadingModal()">
+                                                    <a jsf:rendered="#{casoController.esComisionadoRegistro}" style="text-decoration:none" jsf:action="#{registroController.cargarAcontecimientoModal(casoController.caso, 2)}" jsf:onclick="loadingModal()">
                                                         <span style="font-size:large" class="glyphicon glyphicon-plus"></span>
                                                         <f:ajax render=":idForm2" execute="@form" onevent="openModalAcontecimiento"/>
                                                     </a>
@@ -842,11 +842,11 @@
                                                     </script>
                                                 </td>
                                                 <td style="text-align:right">
-                                                    <a jsf:action="#{casoController.cargarListaActividadesSinCaso(1)}" jsf:onclick="loadingModal()">
+                                                    <a jsf:rendered="#{casoController.esComisionadoRegistro}" jsf:action="#{casoController.cargarListaActividadesSinCaso(1)}" jsf:onclick="loadingModal()">
                                                         <span style="font-size:large" class="glyphicon glyphicon-search"></span>
                                                         <f:ajax render=":idForm3" onevent="openModalBusquedaSinCaso" />
                                                     </a>
-                                                    <a style="text-decoration:none" jsf:action="#{registroController.cargarAcontecimientoModal(casoController.caso, 1)}" jsf:onclick="loadingModal()">
+                                                    <a jsf:rendered="#{casoController.esComisionadoRegistro}" style="text-decoration:none" jsf:action="#{registroController.cargarAcontecimientoModal(casoController.caso, 1)}" jsf:onclick="loadingModal()">
                                                         <span style="font-size:large" class="glyphicon glyphicon-plus"></span>
                                                         <f:ajax render=":idForm2" execute="@form" onevent="openModalAcontecimiento"/>
                                                     </a>
@@ -938,18 +938,8 @@
                                 </div>
                                 <div class="modal-body" style="padding:5px">
                                     <script>
-                                        /*<![CDATA[*/$(function () {#{actorController.cadenaAutocomplete}
-                                            $("#actor").autocomplete({minLength: 3, source: projects, focus: function (event, ui) {
-                                                    $("#actor").val(ui.item.label);
-                                                    return false;
-                                                }, select: function (event, ui) {
-                                                    $("#actor").val(ui.item.label);
-                                                    $("#actor-id").val(ui.item.value);
-                                                    return false;
-                                                }}).data("ui-autocomplete")._renderItem = function (ul, item) {
-                                                return $("<li/>").append("<a>" + item.label + "<br/>" + item.desc + "</a>").appendTo(ul);
-                                            };
-                                        });
+                                        /*<![CDATA[*/
+                                        
                                         $(document).ready(function ($) {
                                             if ($('#idForm2\\:idCheckbox').is(':checked')) {
                                                 $('#txtHoraFin').addClass('disabled-form').val('');
@@ -1116,10 +1106,24 @@
                                                         <div class="panel-body">
                                                             <div>
                                                                 <span style="color:#0074cc;font-weight:bold">Actores</span>
+                                                                <script>
+                        /*<![CDATA[*/$(function () {#{actorController.cadenaAutocomplete}
+                            $(".actor").autocomplete({minLength: 3, source: projects, focus: function (event, ui) {
+                                    $(".actor").val(ui.item.label);
+                                    return false;
+                                }, select: function (event, ui) {
+                                    $(".actor").val(ui.item.label);
+                                    $(".actor-id").val(ui.item.value);
+                                    return false;
+                                }}).data("ui-autocomplete")._renderItem = function (ul, item) {
+                                return $("<li/>").append("<a>" + item.label + "<br/>" + item.desc + "</a>").appendTo(ul);
+                            };
+                        });/*]]>*/
+                    </script>
                                                             </div>
                                                             <div class="form-group has-feedback" style="width:100%">
-                                                                <input type="text" jsf:value="#{actorController.actor.nombre}" id="actor"/>
-                                                                <input type="hidden" jsf:value="#{actorController.actor.id}" id="actor-id" />
+                                                                <input type="text" jsf:value="#{actorController.actor.nombre}" class="actor"/>
+                                                                <input type="hidden" jsf:value="#{actorController.actor.id}" class="actor-id" />
                                                                 <a style="float:right;font-size:large" jsf:action="#{actorController.buscarActorTodos()}">
                                                                     <span style="top:0" class="glyphicon glyphicon-plus form-control-feedback"/>
                                                                     <f:ajax render="@form" execute="@form"/>

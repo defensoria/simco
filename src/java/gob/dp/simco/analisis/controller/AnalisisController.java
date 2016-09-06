@@ -593,7 +593,7 @@ public class AnalisisController extends AbstractManagedBean implements Serializa
                 analisisActorService.analisisActorArchivar(aa);
             }
         }
-        msg.messageInfo("Se ha habilitado la visualizacion de todos los resumen de demandas", null);
+        msg.messageInfo("Se ha habilitado la visualización de todos los resúmenes de demandas", null);
     }
 
     private void deleteTemasxActor(AnalisisActor aa) {
@@ -1076,7 +1076,7 @@ public class AnalisisController extends AbstractManagedBean implements Serializa
                     return false;
                 }
                 relacionActorVOAlianza.setActor2(actor);
-                msg.messageInfo("Se ha agregado la relacion de Alianzas", null);
+                msg.messageInfo("Se ha agregado la relacion de alianzas", null);
                 indicador++;
             }
         }
@@ -1099,7 +1099,7 @@ public class AnalisisController extends AbstractManagedBean implements Serializa
                     return false;
                 }
                 relacionActorVOVinculoCercano.setActor2(actor);
-                msg.messageInfo("Se ha agregado la relacion de Vinculo Cercano", null);
+                msg.messageInfo("Se ha agregado la relacion de vínculo cercano", null);
                 indicador++;
             }
         }
@@ -1122,7 +1122,7 @@ public class AnalisisController extends AbstractManagedBean implements Serializa
                     return false;
                 }
                 relacionActorVOVinculoDebil.setActor2(actor);
-                msg.messageInfo("Se ha agregado la relacion de Vinculo Debil", null);
+                msg.messageInfo("Se ha agregado la relacion de vínculo Debil", null);
                 indicador++;
             }
         }
@@ -1145,7 +1145,7 @@ public class AnalisisController extends AbstractManagedBean implements Serializa
                     return false;
                 }
                 relacionActorVOTension.setActor2(actor);
-                msg.messageInfo("Se ha agregado la relacion de Tension", null);
+                msg.messageInfo("Se ha agregado la relacion de tensión", null);
                 indicador++;
             }
         }
@@ -1168,7 +1168,7 @@ public class AnalisisController extends AbstractManagedBean implements Serializa
                     return false;
                 }
                 relacionActorVOConflicto.setActor2(actor);
-                msg.messageInfo("Se ha agregado la relacion de Conflicto", null);
+                msg.messageInfo("Se ha agregado la relacion de conflicto", null);
                 indicador++;
             }
         }

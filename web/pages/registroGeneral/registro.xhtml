@@ -9,10 +9,10 @@
     <ui:composition template="../template/template.xhtml">
         <ui:define name="content">
             <h:form id="idForm3" class="form-horizontal" enctype="multipart/form-data">
+                <gc:confirmSubmit bean="#{registroController.registrarActividad()}"/>
                 <input type="hidden" jsf:value="#{registroController.actividad.coordenadaX}" id="idCoordenadaX"/>
                 <input type="hidden" jsf:value="#{registroController.actividad.coordenadaY}" id="idCoordenadaY"/>
                 <input type="hidden" jsf:value="#{registroController.actividad.zoom}" id="idZoom"/>
-                <gc:confirmSubmit bean="#{registroController.registrarActividad()}"/>
                 <script>
                     /*<![CDATA[*/
                     $(function () {

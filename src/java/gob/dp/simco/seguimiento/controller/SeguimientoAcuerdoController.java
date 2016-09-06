@@ -138,11 +138,14 @@ public class SeguimientoAcuerdoController implements Serializable {
         listaAlertaProgramadas = new ArrayList<>();
         acuerdoDetalles = actaAcuerdoDetalleService.actaAcuerdoDetalleSeguimientoCaso(idCaso);
         for(ActaAcuerdoDetalle aad : acuerdoDetalles){
-            if(aad.getFechaCumplimiento().after(new Date())){
-                aad.setColor("yelow");
-            }
-            if(aad.getFechaCumplimiento().before(new Date())){
-                aad.setColor("red");
+            if(aad.getFechaCumplimiento() != null){
+                if(aad.getFechaCumplimiento().after(new Date())){
+                    aad.setColor("yelow");
+                }
+                
+                if(aad.getFechaCumplimiento().before(new Date())){
+                    aad.setColor("red");
+                }
             }
             if(aad.isIndCumplido())
                 aad.setColor("green");

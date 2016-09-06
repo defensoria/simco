@@ -86,9 +86,11 @@
                                     <span class="text-resalt-green">Anális de poder/influencia</span>
                                 </td>
                                 <td style="width:50%;text-align:right">
-                                    <a class="btn btn-primary" onclick="confirmar()">
-                                        <span class="glyphicon glyphicon-floppy-disk"/>Guardar
-                                    </a>
+                                    <h:panelGroup rendered="#{casoController.esComisionadoRegistro}">
+                                        <a class="btn btn-primary" onclick="confirmar()">
+                                            <span class="glyphicon glyphicon-floppy-disk"/>Guardar
+                                        </a>
+                                    </h:panelGroup>
                                 </td>
                             </tr>
                         </table>
@@ -180,9 +182,11 @@
                                         <span class="text-resalt-warning">Relaciones</span>
                                     </td>
                                     <td style="text-align:right">
-                                        <a class="btn btn-primary" onclick="confirmacionRelacion()">
-                                            <span class="glyphicon glyphicon-floppy-disk"/>Guardar
-                                        </a>
+                                        <h:panelGroup rendered="#{casoController.esComisionadoRegistro}">
+                                            <a class="btn btn-primary" onclick="confirmacionRelacion()">
+                                                <span class="glyphicon glyphicon-floppy-disk"/>Guardar
+                                            </a>
+                                        </h:panelGroup>
                                     </td>
                                 </tr>
                             </table>
@@ -229,7 +233,7 @@
                                                 <td style="width:30%">
                                                     <div class="panel #{analisisController.activarVinculoCercano}">
                                                         <div class="panel-heading">
-                                                            <span class="text-resalt-primary">Vínculo Cercano</span>
+                                                            <span class="text-resalt-primary">Vínculo cercano</span>
                                                             <a style="font-size:medium;text-decoration:none" jsf:action="#{analisisController.cargarSeccionVinculoCercano()}" jsf:immediate="true">
                                                                 <span class="glyphicon glyphicon-plus"></span>
                                                                 <f:ajax render=":idForm:idPanelVinculacion" execute="@form" />

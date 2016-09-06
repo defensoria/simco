@@ -16,6 +16,7 @@ import gob.dp.simco.registro.controller.RegistroController;
 import gob.dp.simco.registro.entity.ActaAcuerdoDetalle;
 import gob.dp.simco.registro.entity.Caso;
 import gob.dp.simco.registro.service.ActaAcuerdoDetalleService;
+import gob.dp.simco.reporte.controller.ReporteSimcoController;
 import gob.dp.simco.reporte.controller.ReporteGeneralController;
 import gob.dp.simco.seguimiento.controller.SeguimientoAcuerdoController;
 import gob.dp.simco.seguimiento.entity.Alerta;
@@ -313,8 +314,8 @@ public class MenuController implements Serializable {
         }
 
         if (codigoPagina == 35) {
-            ReporteGeneralController reporteGeneralController = (ReporteGeneralController) context.getELContext().getELResolver().getValue(context.getELContext(), null, "reporteGeneralController");
-            return reporteGeneralController.reporte();
+            ReporteSimcoController reporteSimcoController = (ReporteSimcoController) context.getELContext().getELResolver().getValue(context.getELContext(), null, "reporteSimcoController");
+            return reporteSimcoController.cargarReporteCaso();
         }
 
         if (codigoPagina == 36) {

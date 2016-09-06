@@ -125,7 +125,7 @@
                                         <table style="width: 100%">
                                             <tr>
                                                 <td style="width: 50%; padding-right: 5px">
-                                                    <span class="text-primary" style="font-size:1.2em;font-weight:bold">Fecha que se tomaron los acuerdos</span>
+                                                    <span class="text-primary" style="font-size:1.2em;font-weight:bold">Fecha en que se tomaron los acuerdos</span>
                                                     <br/>
                                                     <div class="input-group datepicker" id="idDivTxtFechaRegistro">
                                                         <div class="input-group-addon add-on">
@@ -241,7 +241,7 @@
                                 <div class="panel panel-featured-top-primary" style="height:100px">
                                     <div class="panel-body">
                                         <div>
-                                            <span class="text-primary" style="font-size:1.2em;font-weight:bold">A mas tardar el</span><br/>
+                                            <span class="text-primary" style="font-size:1.2em;font-weight:bold">A más tardar el</span><br/>
                                             <table style="width:100%">
                                                 <tr>
                                                     <td style="padding-right:2px;width:60%">
@@ -304,7 +304,7 @@
                             <td style="width:40%;padding-right:2px">
                                 <div class="panel panel-featured-top-primary" style="overflow-y:auto;height:360px">
                                     <div class="panel-body">
-                                        <span class="text-primary" style="font-size:1.2em;font-weight:bold">Responsable del seguimiento por parte del DP</span>
+                                        <span class="text-primary" style="font-size:1.2em;font-weight:bold">Responsable del seguimiento por parte de la DP</span>
                                         <br/>
                                         <div class="panel panel-info" style="width:100%">
                                             <div class="panel-heading">
@@ -494,7 +494,7 @@
                                                 </h:outputText>
                                             </h:column>
                                             <h:column>
-                                                <f:facet name="header">Fecha finaliza</f:facet>
+                                                <f:facet name="header">Finaliza</f:facet>
                                                 <h:outputText value="#{item.fechaCumplimiento}">
                                                     <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Lima" />
                                                 </h:outputText>
@@ -528,55 +528,6 @@
                     </table>
                 </h:panelGroup>
                 <script>
-                    function sumaDias(fecha, dias) {
-                        var fec = converterFecha(fecha);
-                        return new Date(fec.valueOf() + (dias * 24 * 3600 * 1000));
-                    }
-                    function converterFecha(stringFecha) {
-                        var parts = stringFecha.split("/");
-                        var dt = new Date(parseInt(parts[2], 10), parseInt(parts[1], 10) - 1, parseInt(parts[0], 10));
-                        return dt;
-                    }
-                    function soloNumbero(e)
-                    {
-                        var keynum = window.event ? window.event.keyCode : e.which;
-                        if ((keynum === 8) || (keynum === 46))
-                            return true;
-                        return /\d/.test(String.fromCharCode(keynum));
-                    }
-                    function comparaFechas(date1, date2) {
-                        var date_dia1 = date1.getDate();
-                        var date_mes1 = date1.getMonth();
-                        var date_anho1 = date1.getFullYear();
-                        var date_dia2 = date2.getDate();
-                        var date_mes2 = date2.getMonth();
-                        var date_anho2 = date2.getFullYear();
-                        if (parseInt(date_anho1) > parseInt(date_anho2)) {
-                            return 1;
-                        }
-                        if (parseInt(date_anho2) > parseInt(date_anho1)) {
-                            return 1;
-                        }
-                        if (parseInt(date_anho1) === parseInt(date_anho2)) {
-                            if (parseInt(date_mes1) > parseInt(date_mes2)) {
-                                return 1;
-                            }
-                            if (parseInt(date_mes2) > parseInt(date_mes1)) {
-                                return 2;
-                            }
-                            if (parseInt(date_mes1) === parseInt(date_mes2)) {
-                                if (date_dia1 > date_dia2) {
-                                    return 1;
-                                }
-                                if (date_dia2 > date_dia1) {
-                                    return 2;
-                                }
-                                if (date_dia1 === date_dia2) {
-                                    return 0;
-                                }
-                            }
-                        }
-                    }
                     function agregarAcuerdo(tipo) {
                         if ($('#txtDescripcion').val() === "") {
                             $('#txtDescripcion').addClass('error');

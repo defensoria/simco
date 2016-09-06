@@ -63,4 +63,6 @@ public interface ActorService {
     public int actorValidadRUC(Actor actor);
     
     public List<Actor> actoresSigues(String codigoUsuario);
+    
+    public List<Actor> actorBuscarNombrePaginado(FiltroActor filtroActor);
 }

@@ -39,12 +39,8 @@
                                 <div class="panel-body">
                                     <span class="text-resalt-green">Demandas y posiciones de los actores</span>
                                     <br/><br/>
-                                    <script>
-                                        $(document).ready(function () {
-                                            $('.selectRadio').multiselect();
-                                        });
-                                    </script>
-                                    <h:selectOneMenu value="#{analisisController.idActor}" class="selectActor selectRadio" style="width:100%" onchange="loadingModal()">
+                                    
+                                    <h:selectOneMenu value="#{analisisController.idActor}" class="selectActor" style="width:50%" onchange="loadingModal()">
                                         <f:selectItem itemLabel="Seleccionar" itemValue="0"/>
                                         <f:selectItems value="#{analisisController.listaActoresXCaso}" var="y" itemLabel="#{y.nombre} #{y.apellidoPat} #{y.apellidoMat}" itemValue="#{y.id}" />
                                         <f:ajax listener="#{analisisController.listener}" render="@form" onevent="closeModal"/>
@@ -64,8 +60,8 @@
                                                                         <span style="color:#0074cc;font-size:1.3em">Demanda</span>
                                                                     </td>
                                                                     <td style="width:50%;text-align:right">
-                                                                        <a style="cursor:pointer" jsf:action="#{analisisController.verActividad(actor.actividad.id)}">
-                                                                            <span class="glyphicon glyphicon-link" style="font-size:large"/>
+                                                                        <a style="cursor:pointer" jsf:action="#{analisisController.verActividad(actor.actividad.id)}" class="round tooltip-top" title="ir a la actuación defensorial o acontecimiento">
+                                                                            <span class="glyphicon glyphicon-log-in" style="font-size:large"/>
                                                                         </a>
                                                                     </td>
                                                                 </tr>
@@ -88,7 +84,7 @@
                                         <tr>
                                             <td style="width:50%">
                                                 <span class="text-resalt-green">Resumen de las demandas y posiciones</span>&#160;&#160;
-                                                <a jsf:action="#{analisisController.desarchivarTodas()}" jsf:onclick="loadingModal()">
+                                                <a jsf:rendered="#{casoController.esComisionadoRegistro}" jsf:action="#{analisisController.desarchivarTodas()}" jsf:onclick="loadingModal()" title="hábilitar resumenes de demandas">
                                                     <span class="glyphicon glyphicon-ok-circle" style="font-size:large;color:blue"/>
                                                     <f:ajax render="@form" onevent="closeModal"/>
                                                 </a>
@@ -96,15 +92,15 @@
                                             <td style="text-align:left">
                                                 <table style="width: 100%">
                                                     <tr>
-                                                        <td>
-                                                            <h:selectOneMenu value="#{analisisController.idActor}" onchange="loadingModal()">
+                                                        <td style="padding-right: 5px">
+                                                            <h:selectOneMenu value="#{analisisController.idActor}" onchange="loadingModal()" style="width: 90%">
                                                                 <f:selectItem itemLabel="Seleccionar" itemValue="0"/>
                                                                 <f:selectItems value="#{analisisController.listaActoresXCaso}" var="y" itemLabel="#{y.nombre} #{y.apellidoPat} #{y.apellidoMat}" itemValue="#{y.id}" />
                                                                 <f:ajax listener="#{analisisController.filtarXactor()}" render="@form" onevent="closeModal"/>
                                                             </h:selectOneMenu>
                                                         </td>
                                                         <td style="float: right">
-                                                            <a style="float:right;font-size:large;margin:auto" jsf:action="#{analisisController.analisisDemandaxActor()}" jsf:onclick="loadingModal()">
+                                                            <a jsf:rendered="#{casoController.esComisionadoRegistro}" style="float:right;font-size:large;margin:auto" jsf:action="#{analisisController.analisisDemandaxActor()}" jsf:onclick="loadingModal()" title="Agregar tema">
                                                                 <span class="glyphicon glyphicon-plus" style="font-size: large"/>
                                                                 <f:ajax render=":idForm1" onevent="openModal"/>
                                                             </a>
@@ -129,14 +125,16 @@
                                                                                 <span style="color:#0074cc">#{analisis.actor.nombre} #{analisis.actor.apellidoPat} #{analisis.actor.apellidoMat}</span>
                                                                             </td>
                                                                             <td style="width:50%;text-align:right">
-                                                                                <a jsf:action="#{analisisController.archivarAnalisisActor(analisis)}" jsf:onclick="loadingModal()">
+                                                                                <a jsf:rendered="#{casoController.esComisionadoRegistro}" jsf:action="#{analisisController.archivarAnalisisActor(analisis)}" jsf:onclick="loadingModal()">
                                                                                     <span class="glyphicon glyphicon-ok-circle" style="font-size:large;color:silver"/>
                                                                                     <f:ajax render="@form" onevent="closeModal" />
                                                                                 </a>
                                                                                 &#160;
-                                                                                <a style="cursor:pointer" onclick="confirmarTemas12#{analisis.actor.id}()">
-                                                                                    <span class="glyphicon glyphicon-remove" style="font-size:large;color:red"/>
-                                                                                </a>
+                                                                                <h:panelGroup rendered="#{casoController.esComisionadoRegistro}">
+                                                                                    <a style="cursor:pointer" onclick="confirmarTemas12#{analisis.actor.id}()">
+                                                                                        <span class="glyphicon glyphicon-remove" style="font-size:large;color:red"/>
+                                                                                    </a>
+                                                                                </h:panelGroup>
                                                                                 <gc:confirmRemoveAjax bean="#{analisisController.deleteAnalisisActor(analisis)}" classGC="confirmarTemas12#{analisis.actor.id}" />
                                                                                 <script>
                                                                                     function confirmarTemas12#{analisis.actor.id}() {
@@ -188,9 +186,11 @@
                                                         $(".confirmarTemas").modal("show");
                                                     }
                                                 </script>
-                                                <a class="btn btn-primary" onclick="confirmarTemas()">
-                                                    <span class="glyphicon glyphicon-floppy-disk"/>Guardar
-                                                </a>
+                                                <h:panelGroup rendered="#{casoController.esComisionadoRegistro}">
+                                                    <a class="btn btn-primary" onclick="confirmarTemas()">
+                                                        <span class="glyphicon glyphicon-floppy-disk"/>Guardar
+                                                    </a>
+                                                </h:panelGroup>
                                             </td>
                                         </tr>
                                     </table>
@@ -277,12 +277,14 @@
                             <tr>
                                 <td>
                                     <gc:confirmSubmit bean="#{analisisController.saveProblema()}" />
-                                    <span class="text-resalt-primary">Síntesis de problemas</span>
+                                    <span class="text-resalt-primary">Síntesis del problema</span>
                                 </td>
                                 <td style="text-align:right">
-                                    <a class="btn btn-primary" onclick="confirmar()">
-                                        <span class="glyphicon glyphicon-floppy-disk"/>Guardar
-                                    </a>
+                                    <h:panelGroup rendered="#{casoController.esComisionadoRegistro}">
+                                        <a class="btn btn-primary" onclick="confirmar()">
+                                            <span class="glyphicon glyphicon-floppy-disk"/>Guardar
+                                        </a>
+                                    </h:panelGroup>
                                 </td>
                             </tr>
                         </table>
@@ -308,10 +310,11 @@
                                             <div class="form-group">
                                                 <table style="width:100%">
                                                     <tr>
-                                                        <td style="width:30%;vertical-align:top">
+                                                        <td style="width:90%;vertical-align:top">
+                                                            <label><b>Nombre:</b></label>
                                                             <input type="text" jsf:value="#{det.nombre}" placeholder="Nombre"/>
-                                                        </td>
-                                                        <td style="width:65%">
+                                                            <br/>
+                                                            <label><b>Síntesis del problema:</b></label>
                                                             <textarea jsf:value="#{det.detalle}" rows="5" style="width:100%" placeholder="Sintesis Problema"/>
                                                         </td>
                                                         <td>
@@ -331,15 +334,18 @@
                                                                                 $(".confirm#{rowdet.rowIndex+1}").modal("show");
                                                                             }                                                                                
                                                                         </script>
-                                                                        <a onclick="confirm#{rowdet.rowIndex+1}()" style="cursor:pointer">
-                                                                            <span style="color:red;font-size:medium" class="glyphicon glyphicon-remove"></span>
-                                                                        </a>
+                                                                        <h:panelGroup rendered="#{casoController.esComisionadoRegistro}">
+                                                                            <a onclick="confirm#{rowdet.rowIndex+1}()" style="cursor:pointer">
+                                                                                <span style="color:red;font-size:medium" class="glyphicon glyphicon-remove"></span>
+                                                                            </a>
+                                                                        </h:panelGroup>    
                                                                     </td>
                                                                 </tr>
                                                             </table>
                                                         </td>
                                                     </tr>
                                                 </table>
+                                                <br/>
                                             </div>
                                             <br/>
                                         </h:column>
@@ -422,8 +428,8 @@
                                                         </div>
                                                         <h:panelGroup id="addAcciones">
                                                             <div class="form-group has-success has-feedback">
-                                                                <label class="control-label" for="inputSuccess2">Título del Tema</label>
-                                                                <input type="text" jsf:value="#{analisisController.tema.detalle}" class="txtTema" placeholder="Nuevo Tema" aria-describedby="inputSuccess2Status"/>
+                                                                <label class="control-label" for="inputSuccess2">Título del tema</label>
+                                                                <input type="text" jsf:value="#{analisisController.tema.detalle}" class="txtTema" placeholder="Nuevo tema" aria-describedby="inputSuccess2Status"/>
                                                                 <a jsf:onclick="return validaCampoTema()" jsf:action="#{analisisController.saveTema()}">
                                                                     <span class="glyphicon glyphicon-share-alt form-control-feedback" aria-hidden="true"></span>
                                                                     <f:ajax render="@form" execute="@form"/>

@@ -66,6 +66,61 @@
                     sessionStorage.setItem("stateMenu", b);
                 });
             });
+
+            $(document).ready(function () {
+                $('[data-toggle="tooltip"]').tooltip();
+            });
+
+            function sumaDias(fecha, dias) {
+                var fec = converterFecha(fecha);
+                return new Date(fec.valueOf() + (dias * 24 * 3600 * 1000));
+            }
+            function converterFecha(stringFecha) {
+                var parts = stringFecha.split("/");
+                var dt = new Date(parseInt(parts[2], 10), parseInt(parts[1], 10) - 1, parseInt(parts[0], 10));
+                return dt;
+            }
+            function soloNumbero(e)
+            {
+                var keynum = window.event ? window.event.keyCode : e.which;
+                if ((keynum === 8) || (keynum === 46))
+                    return true;
+                return /\d/.test(String.fromCharCode(keynum));
+            }
+            function comparaFechas(date1, date2) {
+                var date_dia1 = date1.getDate();
+                var date_mes1 = date1.getMonth();
+                var date_anho1 = date1.getFullYear();
+                var date_dia2 = date2.getDate();
+                var date_mes2 = date2.getMonth();
+                var date_anho2 = date2.getFullYear();
+                if (parseInt(date_anho1) > parseInt(date_anho2)) {
+                    return 1;
+                }
+                if (parseInt(date_anho2) > parseInt(date_anho1)) {
+                    return 1;
+                }
+                if (parseInt(date_anho1) === parseInt(date_anho2)) {
+                    if (parseInt(date_mes1) > parseInt(date_mes2)) {
+                        return 1;
+                    }
+                    if (parseInt(date_mes2) > parseInt(date_mes1)) {
+                        return 2;
+                    }
+                    if (parseInt(date_mes1) === parseInt(date_mes2)) {
+                        if (date_dia1 > date_dia2) {
+                            return 1;
+                        }
+                        if (date_dia2 > date_dia1) {
+                            return 2;
+                        }
+                        if (date_dia1 === date_dia2) {
+                            return 0;
+                        }
+                    }
+                }
+            }
+
         </script>
     </h:form>
     <body>
@@ -93,40 +148,44 @@
                 display: table-cell;
                 height:100%;
             }
-            
+
             .alink:hover{
                 text-decoration:none
             }
-             
+
             .alink:link{
                 text-decoration:none
             }
-            
+
             .alink:active{
                 text-decoration:none
             }
-            
+
             #project-label{display:block;
                            font-weight:bold;
                            margin-bottom:1em
             }
-                    
+
             #project-icon{float:left;
                           height:32px;
                           width:32px
             }
-            
+
             #project-description{margin:0;
                                  padding:0
             }
-                  
+
             .ocultar{
                 display:none
             }
-            
+
             .df_input_error{
                 background: #F2DEDE;
                 border: solid red;
+            }
+            
+            .ui-autocomplete {
+                z-index: 10000000;
             }
         </style>
         <div class="modal fade" id="idAlerta">
@@ -456,7 +515,7 @@
                     $(".modal-backdrop").removeClass("modal-backdrop");
                 }
             }
-            
+
             function closeModalInfo(a) {
                 if (a.status === "success") {
                     $("#loadModal").modal("hide");
@@ -465,11 +524,11 @@
                     info("Se han realizado los cambios correctamente");
                 }
             }
-            
+
             function loadingModal() {
                 $("#loadModal").modal("show");
             }
-            
+
             function soloNumbero(a) {
                 var b = window.event ? window.event.keyCode : a.which;
                 if ((b === 8) || (b === 46)) {
@@ -486,6 +545,7 @@
             function error() {
                 window.location = "#{facesContext.externalContext.requestContextPath}/cerrarSesion.jsp"
             }
+
         </script>
     </body>
 </html>

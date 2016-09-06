@@ -277,7 +277,7 @@ public class InvestigacionController extends AbstractManagedBean implements Seri
             }
         }
         listarHistorialActividad();
-        msg.messageInfo("Se registro la investigación", null);
+        msg.messageInfo("Se registró la investigación", null);
     }
 
     public void addUsuario() {
