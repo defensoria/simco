@@ -154,7 +154,20 @@
                             </tr>
                         </table>
                         <br/>
-                        <h:dataTable value="#{reporteSimcoController.listReporteCasos}" var="item" class="table table-striped" rendered="#{reporteSimcoController.listReporteCasos.size() > 0}">
+                        <div>
+                            <a jsf:actionListener="#{reporteSimcoController.reporteSimcoCasoExcel()}">
+                        <img src="../../bootstrap/img/excel.png" height="45" width="45"/>
+                    </a>
+                            <a jsf:actionListener="#{reporteSimcoController.reporteSimcoCasoPdf()}">
+                        <img src="../../bootstrap/img/pdf.png" height="45" width="45"/>
+                    </a>
+                        </div>
+                        <h:dataTable value="#{reporteSimcoController.listReporteCasos}" var="item" class="table table-bordered table-striped table-hover" rendered="#{reporteSimcoController.listReporteCasos.size() > 0}" 
+                                     headerClass="header_data_table" binding="#{itemC}">
+                            <h:column>
+                                <f:facet name="header">#</f:facet>
+                                <h:outputText value="#{itemC.rowIndex+1}" />
+                            </h:column>
                             <h:column>
                                 <f:facet name="header">Código del Caso</f:facet>
                                 <h:outputText value="#{item.codigoCaso}" />
@@ -190,6 +203,14 @@
                             <h:column>
                                 <f:facet name="header">Acuerdos registrados</f:facet>
                                 <h:outputText value="#{item.acuerdos == null? 0 : item.acuerdos}" />
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">Indicador de participación de empresas mineras</f:facet>
+                                <h:outputText value="#{item.esEmpresaMinera}" />
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">Indicador de participación comunidades nativas</f:facet>
+                                <h:outputText value="#{item.esComunidadNativa}" />
                             </h:column>
                         </h:dataTable>
                     </div>

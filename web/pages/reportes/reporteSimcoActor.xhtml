@@ -10,13 +10,13 @@
                 <div class="panel panel-primary">
                     <div class="panel-body">
                         <ul class="nav nav-tabs" role="tablist">
-                        <li role="presentation" class="active">
+                        <li role="presentation">
                             <a jsf:action="#{reporteSimcoController.cargarReporteCaso()}" aria-controls="home" role="tab" data-toggle="tab">
                                 <span class="text-resalt-comun"/>Reporte de casos
                             </a>
                         </li>
-                        <li role="presentation">
-                            <a  jsf:action="#{actorController.cargarPaginaEmpresa()}" aria-controls="profile" role="tab" data-toggle="tab">
+                        <li role="presentation" class="active">
+                            <a  jsf:action="#{reporteSimcoController.cargarReporteActor()}" aria-controls="profile" role="tab" data-toggle="tab">
                                 <span class="text-resalt-comun"/>Reporte de actores
                             </a>
                         </li>
@@ -28,7 +28,7 @@
                         </li>
                     </ul>
                         <div class="tab-content">
-                            <div role="tabpanel" class="tab-pane active" id="home">
+                            <div role="tabpanel" class="tab-pane active" id="home2">
                         <table style="width: 100%">
                             <tr>
                                 <td style="width: 50%">
@@ -117,7 +117,7 @@
                                                         <td>
                                                             <a class="btn btn-info" jsf:action="#{actorController.limpiarModalBusquedaActor()}">
                                                                 <span class="glyphicon glyphicon-search" />Buscar
-                                                                <f:ajax render="idPanelModalActor" onevent="openModalBusquedaActor()" />
+                                                                <f:ajax render="idPanelModalActor2" onevent="openModalBusquedaActor()" />
                                                             </a>
                                                         </td>
                                                     </tr>
@@ -195,7 +195,7 @@
                     </div>
                 </div>
 
-                <div class="modal fade" tabindex="-1" role="dialog" id="idModalBusquedaActor">
+                <div class="modal fade" tabindex="-1" role="dialog" id="idModalBusquedaActor2">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -205,19 +205,19 @@
                                 <span class="modal-title text-resalt-primary">Búsqueda de actor</span>
                             </div>
                             <div class="modal-body">
-                                <h:panelGroup id="idPanelModalActor">
-                                    <div id="idDivRegistro" class="form-group has-feedback" style="width:100%;margin:auto">
+                                <h:panelGroup id="idPanelModalActor2">
+                                    <div class="form-group has-feedback" style="width:100%;margin:auto">
                                         <input type="text" name="nombreActor" placeholder="Buscar por nombre de actor"/>
                                         <a style="float:right;font-size:large;margin:auto" jsf:action="#{actorController.buscarActorXnombrePaginado(1)}" jsf:onclick="loadingModal()">
                                             <span class="glyphicon glyphicon-search form-control-feedback"/>
-                                            <f:ajax render="idPanelModalActor" execute="@form" onevent="closeModal"/>
+                                            <f:ajax render="idPanelModalActor2" execute="@form" onevent="closeModal"/>
                                         </a>
                                     </div>
                                     <br/>
-                                    <h:dataTable value="#{actorController.listaActorBusquedaGeneral}" rendered="#{actorController.listaActorBusquedaGeneral.size() > 0}" var="item" class="table table-striped" style="font-size:small" binding="#{row}">
+                                    <h:dataTable value="#{actorController.listaActorBusquedaGeneral}" rendered="#{actorController.listaActorBusquedaGeneral.size() > 0}" var="item" class="table table-striped" style="font-size:small" binding="#{row2}">
                                         <h:column>
                                             <f:facet name="header">N.°</f:facet>
-                                            <h:outputText value="#{(actorController.nroPagina-1)*10+row.rowIndex+1}" />
+                                            <h:outputText value="#{(actorController.nroPagina-1)*10+row2.rowIndex+1}" />
                                         </h:column>
                                         <h:column>
                                             <f:facet name="header">Nombres</f:facet>
@@ -244,12 +244,12 @@
                                     <ul class="pager">
                                         <li>
                                             <a jsf:rendered="#{actorController.listaActorBusquedaGeneral.size() > 0}" jsf:action="#{actorController.buscarActorXnombrePaginado(actorController.nroPagina -1)}">Anterior
-                                                <f:ajax render="idPanelModalActor" />
+                                                <f:ajax render="idPanelModalActor2" />
                                             </a>
                                         </li>
                                         <li>
                                             <a jsf:rendered="#{actorController.listaActorBusquedaGeneral.size() > 0}" jsf:action="#{actorController.buscarActorXnombrePaginado(actorController.nroPagina +1)}">Siguiente
-                                                <f:ajax render="idPanelModalActor" />
+                                                <f:ajax render="idPanelModalActor2" />
                                             </a>
                                         </li>
                                     </ul>
@@ -260,7 +260,7 @@
                 </div>
                 <script>
                     function openModalBusquedaActor() {
-                        $("#idModalBusquedaActor").modal('show');
+                        $("#idModalBusquedaActor2").modal('show');
                     }
                 </script>
                         </div>

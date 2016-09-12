@@ -665,19 +665,7 @@
     <select id="actorxCasoBuscar" resultMap="actorMap" parameterType="long">
         SELECT 
         DISTINCT
-        A.N_ID_ACTOR, 
-        A.C_NOMACTOR, 
-        A.C_APELLIDOPATACTOR,
-        A.C_APELLIDOMATACTOR,
-        A.C_DNIACTOR,
-        A.C_RUCACTOR,
-        A.C_SEXO,
-        A.C_DIRECCIONACTOR,
-        A.C_TELEFONOACTOR,
-        A.C_EMAILACTOR,
-        A.C_ANEXOACTOR,
-        A.D_FECNACIMIENTOACTOR,
-        A.C_TIPOGENERAL,
+        A.*,
         E.N_ID_CASO
         FROM SIMCO_REG_ACTOR A
         INNER JOIN SIMCO_REG_ACTIVIDAD_ACTOR B ON A.N_ID_ACTOR = B.N_ID_ACTOR

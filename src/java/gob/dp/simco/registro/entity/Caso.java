@@ -77,6 +77,8 @@ public class Caso implements Serializable{
     
     private Date fechaPublicacion;
     
+    private String inversionInvolucrada;
+    
     //AGREGADOS
     private String tipoCaso;
     
@@ -354,6 +356,14 @@ public class Caso implements Serializable{
 
     public void setNombreComisionadoRegistro(String nombreComisionadoRegistro) {
         this.nombreComisionadoRegistro = nombreComisionadoRegistro;
+    }
+
+    public String getInversionInvolucrada() {
+        return inversionInvolucrada;
+    }
+
+    public void setInversionInvolucrada(String inversionInvolucrada) {
+        this.inversionInvolucrada = inversionInvolucrada;
     }
     
 }

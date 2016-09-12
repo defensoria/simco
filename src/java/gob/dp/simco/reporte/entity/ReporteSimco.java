@@ -23,13 +23,25 @@ public class ReporteSimco implements Serializable{
     
     private String regionPrincial;
     
+    private String provinciaPrincial;
+    
+    private String distritoPrincial;
+    
     private String tipologia;
     
     private String idRegion;
     
     private String tipoAcontecimiento;
     
+    private String primerNivel;
+    
+    private String segundoNivel;
+    
+    private String tercerNivel;
+    
     private String esComunidadNativa;
+    
+    private String esEmpresaMinera;
     
     private String estado;
     
@@ -44,6 +56,16 @@ public class ReporteSimco implements Serializable{
     private String nombreActor;
     
     private Long idActor;
+    
+    private Long idCaso;
+    
+    private String fechaModificacion;
+    
+    private String momentoDialogo;
+    
+    private String mecanismoDialogo;
+    
+    private String participacion;
 
     public String getCodigoCaso() {
         return codigoCaso;
@@ -171,6 +193,94 @@ public class ReporteSimco implements Serializable{
 
     public void setIdActor(Long idActor) {
         this.idActor = idActor;
+    }
+
+    public Long getIdCaso() {
+        return idCaso;
+    }
+
+    public void setIdCaso(Long idCaso) {
+        this.idCaso = idCaso;
+    }
+
+    public String getEsEmpresaMinera() {
+        return esEmpresaMinera;
+    }
+
+    public void setEsEmpresaMinera(String esEmpresaMinera) {
+        this.esEmpresaMinera = esEmpresaMinera;
+    }
+
+    public String getProvinciaPrincial() {
+        return provinciaPrincial;
+    }
+
+    public void setProvinciaPrincial(String provinciaPrincial) {
+        this.provinciaPrincial = provinciaPrincial;
+    }
+
+    public String getDistritoPrincial() {
+        return distritoPrincial;
+    }
+
+    public void setDistritoPrincial(String distritoPrincial) {
+        this.distritoPrincial = distritoPrincial;
+    }
+
+    public String getPrimerNivel() {
+        return primerNivel;
+    }
+
+    public void setPrimerNivel(String primerNivel) {
+        this.primerNivel = primerNivel;
+    }
+
+    public String getSegundoNivel() {
+        return segundoNivel;
+    }
+
+    public void setSegundoNivel(String segundoNivel) {
+        this.segundoNivel = segundoNivel;
+    }
+
+    public String getTercerNivel() {
+        return tercerNivel;
+    }
+
+    public void setTercerNivel(String tercerNivel) {
+        this.tercerNivel = tercerNivel;
+    }
+
+    public String getFechaModificacion() {
+        return fechaModificacion;
+    }
+
+    public void setFechaModificacion(String fechaModificacion) {
+        this.fechaModificacion = fechaModificacion;
+    }
+
+    public String getMomentoDialogo() {
+        return momentoDialogo;
+    }
+
+    public void setMomentoDialogo(String momentoDialogo) {
+        this.momentoDialogo = momentoDialogo;
+    }
+
+    public String getMecanismoDialogo() {
+        return mecanismoDialogo;
+    }
+
+    public void setMecanismoDialogo(String mecanismoDialogo) {
+        this.mecanismoDialogo = mecanismoDialogo;
+    }
+
+    public String getParticipacion() {
+        return participacion;
+    }
+
+    public void setParticipacion(String participacion) {
+        this.participacion = participacion;
     }
     
 }

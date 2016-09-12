@@ -39,6 +39,8 @@ import gob.dp.simco.registro.service.CasoRegionService;
 import gob.dp.simco.registro.service.CasoService;
 import gob.dp.simco.registro.service.NivelService;
 import gob.dp.simco.registro.service.ParametroService;
+import gob.dp.simco.registro.type.MesEnum;
+import gob.dp.simco.registro.type.TipologiaCasoType;
 import gob.dp.simco.registro.vo.ReporteActorVO;
 import gob.dp.simco.registro.vo.ReporteActuacionDefensorialVO;
 import java.io.IOException;
@@ -746,7 +748,11 @@ public class CasoController extends AbstractManagedBean implements Serializable 
         caso = new Caso();
     }
 
-    public void registrarCaso() {
+    public boolean registrarCaso() {
+        if(StringUtils.equals(caso.getTipo(), "0")){
+            msg.messageAlert("Debe ingresar la tipología del caso", null);
+            return false;
+        }
         usuarioSession();
         try {
             StringBuilder sb = new StringBuilder();
@@ -781,6 +787,7 @@ public class CasoController extends AbstractManagedBean implements Serializable 
         } catch (Exception ex) {
             log.error(ex);
         }
+        return true;
     }
 
     private void ordenarParametros() {
@@ -865,10 +872,16 @@ public class CasoController extends AbstractManagedBean implements Serializable 
     }
 
     private String generarCodigoCaso() {
-        String numero = String.format("%8s", casoService.casoCodigoGenerado().toString()).replace(' ', '0');
-        return "CN" + numero;
+        SimpleDateFormat simpleDateFormatMes = new SimpleDateFormat("MM");
+        SimpleDateFormat simpleDateFormatAnho = new SimpleDateFormat("yyyy");
+        String mes = simpleDateFormatMes.format(caso.getCreacion());
+        String anho = simpleDateFormatAnho.format(caso.getCreacion());
+        String numero = String.format("%4s", casoService.casoCodigoGenerado().toString()).replace(' ', '0');
+        String mesDescripcion = MesEnum.verMes(mes);
+        String tipo = TipologiaCasoType.tipoClasificacionNombre(caso.getTipo());
+        return anho + mesDescripcion + numero + "-" + tipo;
     }
-
+    
     public void cargarListaActividadesSinCaso(int tipo) {
         verTitulo = tipo == 1;
         List<Actividad> lista = new ArrayList<>();

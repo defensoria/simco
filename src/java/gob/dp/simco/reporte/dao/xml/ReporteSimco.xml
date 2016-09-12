@@ -6,24 +6,45 @@
         <result property="codigoCaso" column="C_CODIGOCASO"/>
         <result property="nombreCaso" column="C_NOMCASO"/>
         <result property="fechaInicioCaso" column="FECHA_INICIO"/>
+        <result property="fechaModificacion" column="FECHA_MODIFICACION"/>
         <result property="regionPrincial" column="C_DESCDPTO"/>
+        <result property="provinciaPrincial" column="C_DESCPROV"/>
+        <result property="distritoPrincial" column="C_DESCDSTRO"/>
         <result property="tipologia" column="TIPOCASO"/>
         <result property="estado" column="TIPOESTADO"/>
         <result property="actividad" column="TIPOACTIVIDAD"/>
         <result property="fase" column="FASE"/>
         <result property="acuerdos" column="ACUERDOS"/>
+        <result property="idCaso" column="N_ID_CASO"/>
+        <result property="primerNivel" column="PRIMERNIVEL"/>
+        <result property="segundoNivel" column="SEGUNDONIVEL"/>
+        <result property="tercerNivel" column="TERCERNIVEL"/>
+        <result property="momentoDialogo" column="MOMENTO_DIALOGO"/>
+        <result property="mecanismoDialogo" column="MECANISMO_DIALOGO"/>
+        <result property="participacion" column="PARTICIPACION"/>
+        
     </resultMap>      
 
     <select id="reporteCasos" parameterType="reporteSimco"  resultMap="reporteSimcoMap">
-        SELECT DISTINCT A.C_CODIGOCASO, A.C_NOMCASO, TO_CHAR(A.D_FECHAPUBLICACION, 'dd/mm/yyyy') FECHA_INICIO, 
-B.C_DESCDPTO, C.NOMBRE_PARAMETRO TIPOCASO, D.NOMBRE_PARAMETRO TIPOESTADO, E.NOMBRE_PARAMETRO TIPOACTIVIDAD, 
-F.NOMBRE_PARAMETRO FASE, G.ACUERDOS 
+                        SELECT DISTINCT A.N_ID_CASO, A.C_CODIGOCASO, A.C_NOMCASO, TO_CHAR(A.D_FECHAPUBLICACION, 'dd/mm/yyyy') FECHA_INICIO, 
+B.C_DESCDPTO, M.C_DESCPROV, N.C_DESCDSTRO, C.NOMBRE_PARAMETRO TIPOCASO, D.NOMBRE_PARAMETRO TIPOESTADO, E.NOMBRE_PARAMETRO TIPOACTIVIDAD, 
+F.NOMBRE_PARAMETRO FASE, G.ACUERDOS, O.C_NOMBRE PRIMERNIVEL, P.C_NOMBRE SEGUNDONIVEL, Q.C_NOMBRE TERCERNIVEL, 
+TO_CHAR(A.D_FECHAMODIFICACION, 'dd/mm/yyyy') FECHA_MODIFICACION, R.NOMBRE_PARAMETRO MOMENTO_DIALOGO, S.NOMBRE_PARAMETRO MECANISMO_DIALOGO, 
+T.NOMBRE_PARAMETRO PARTICIPACION
 FROM SIMCO_REG_CASO A
 LEFT JOIN SIMCO_UBIGEO_DPTO B ON A.C_IDDEPART = B.C_ID_DPTO
+LEFT JOIN SIMCO_UBIGEO_PROV M ON A.C_IDPROV = M.C_ID_PROV AND B.C_ID_DPTO = M.C_ID_DPTO
+LEFT JOIN SIMCO_UBIGEO_DSTRO N ON A.C_IDDISTR = N.C_ID_DSTRO AND B.C_ID_DPTO = N.C_ID_DPTO AND M.C_ID_PROV = N.C_ID_PROV
 LEFT JOIN SIMCO_PARAMETRO C ON C.VALOR_PARAMETRO = A.C_TIPOCASO AND C.PADRE_PARAMETRO = 90
 LEFT JOIN SIMCO_PARAMETRO D ON D.VALOR_PARAMETRO = A.C_TIPOESTADO AND D.PADRE_PARAMETRO = 120
 LEFT JOIN SIMCO_PARAMETRO E ON E.VALOR_PARAMETRO = A.C_SUBTIPOCASO AND E.PADRE_PARAMETRO = 130
 LEFT JOIN SIMCO_PARAMETRO F ON F.VALOR_PARAMETRO = A.C_TIPODIALOGO AND F.PADRE_PARAMETRO = 210
+LEFT JOIN SIMCO_PARAMETRO R ON R.VALOR_PARAMETRO = A.C_MOMENTODIALOGO AND R.PADRE_PARAMETRO = 240
+LEFT JOIN SIMCO_PARAMETRO S ON S.VALOR_PARAMETRO = A.C_TIPOMECANISMO AND S.PADRE_PARAMETRO = 220
+LEFT JOIN SIMCO_PARAMETRO T ON T.VALOR_PARAMETRO = A.C_TIPOPARTICIPACION AND T.PADRE_PARAMETRO = 230
+LEFT JOIN SIMCO_REG_PRIMER_NIVEL O ON O.C_ID_CODIGOPRIMERO = A.C_PRIMERNIVEL
+LEFT JOIN SIMCO_REG_SEGUNDO_NIVEL P ON P.C_IDCODIGOSEGUNDO = A.C_SEGUNDONIVEL
+LEFT JOIN SIMCO_REG_TERCER_NIVEL Q ON Q.C_ID_CODIGOTERCERO = A.C_TERCERNIVEL
 LEFT JOIN (
 SELECT COUNT(*) ACUERDOS, D1.N_ID_CASO FROM SIMCO_REG_DET_ACTA_ACUERDO A1
 INNER JOIN SIMCO_REG_ACTA_ACUERDO B1 ON A1.N_ID_ACTA = B1.N_ID_ACTA
@@ -37,28 +58,28 @@ INNER JOIN SIMCO_REG_CASO_ACTIVIDAD B2 ON A2.N_ID_ACTIVIDAD = B2.N_ID_ACTIVIDAD
 ) J ON A.N_ID_CASO = J.N_ID_CASO 
 LEFT JOIN SIMCO_REG_ACTIVIDAD_ACTOR K ON J.N_ID_ACTIVIDAD = K.N_ID_ACTIVIDAD       
 LEFT JOIN SIMCO_REG_ACTOR L ON K.N_ID_ACTOR = L.N_ID_ACTOR         
-WHERE A.C_INDVIGENTE = 'A' AND A.D_FECHAPUBLICACION IS NOT NULL
+WHERE A.C_INDVIGENTE = 'A'
         <if test="anho != 0">
-                AND TO_CHAR(A.D_FECHAPUBLICACION, 'yyyy') = #{anho} 
-            </if>
+            AND TO_CHAR(A.D_FECHAPUBLICACION, 'yyyy') = #{anho} 
+        </if>
         <if test="tipologia != 0">
-                AND A.C_TIPOCASO = #{tipologia} 
-            </if>
+            AND A.C_TIPOCASO = #{tipologia} 
+        </if>
         <if test="estado != 0">
-                AND A.C_TIPOESTADO = #{estado} 
-            </if> 
+            AND A.C_TIPOESTADO = #{estado} 
+        </if> 
         <if test="idRegion != 0">
-                AND A.C_IDDEPART = #{idRegion} 
-            </if> 
+            AND A.C_IDDEPART = #{idRegion} 
+        </if> 
         <if test="tipoAcontecimiento != 0">
-                AND J.C_TIPOACONTECIMIENTO = #{tipoAcontecimiento} 
-            </if>
+            AND J.C_TIPOACONTECIMIENTO = #{tipoAcontecimiento} 
+        </if>
         <if test="idActor != null">
-                AND K.N_ID_ACTOR = #{idActor} 
-            </if>
+            AND K.N_ID_ACTOR = #{idActor} 
+        </if>
         <if test="tipoActor != 'NN'">
-                AND L.C_TIPOGENERAL = #{tipoActor} 
-            </if>                          
+            AND L.C_TIPOGENERAL = #{tipoActor} 
+        </if>             
     </select>
     
 </mapper>

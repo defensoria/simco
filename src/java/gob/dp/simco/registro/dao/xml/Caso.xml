@@ -35,6 +35,7 @@
         <result property="tipoMomentoDialogo" column="C_MOMENTODIALOGO"/>
         <result property="version" column="N_VERSION"/>
         <result property="indicador" column="C_INDVIGENTE"/>
+        <result property="inversionInvolucrada" column="C_INVERSIONINVOLUCRADA"/>
     </resultMap>  
 
 
@@ -157,6 +158,9 @@
         <if test="indicador != null">
             C_INDVIGENTE,
         </if>
+        <if test="inversionInvolucrada != null">
+            C_INVERSIONINVOLUCRADA,
+        </if>
         C_NOMCASO
         )
         VALUES 
@@ -242,6 +246,9 @@
         </if>
         <if test="indicador != null">
             #{indicador},
+        </if>
+        <if test="inversionInvolucrada != null">
+            #{inversionInvolucrada},
         </if>
         #{nombre}
         )
@@ -335,6 +342,9 @@
             <if test="tipoMomentoDialogo != null">
                 C_MOMENTODIALOGO = #{tipoMomentoDialogo},
             </if>
+            <if test="inversionInvolucrada != null">
+                C_INVERSIONINVOLUCRADA = #{inversionInvolucrada},
+            </if>
             C_NOMCASO=#{nombre}
         </set>
         <where>
@@ -379,6 +389,7 @@
     <select id="casoCodigoGenerado" resultType="java.lang.Integer" >
         SELECT COUNT(*) FROM SIMCO_REG_CASO
         WHERE C_INDVIGENTE = 'A'
+        AND TO_CHAR(D_FECHACREACION, 'MM') = TO_CHAR(SYSDATE, 'MM')
     </select>
     
     <select id="casoxActaAcuerdoDetalle" resultMap="casoMap" parameterType="long" >
