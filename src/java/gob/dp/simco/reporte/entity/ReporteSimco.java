@@ -13,13 +13,15 @@ import java.io.Serializable;
  */
 public class ReporteSimco implements Serializable{
     
-    private String anho;
+    private Long anho;
     
     private String codigoCaso;
     
     private String nombreCaso;
     
     private String fechaInicioCaso;
+    
+    private String fechaFinCaso;
     
     private String regionPrincial;
     
@@ -66,6 +68,36 @@ public class ReporteSimco implements Serializable{
     private String mecanismoDialogo;
     
     private String participacion;
+    
+    private String fechaResolucion;
+    
+    private String inversion;
+    
+    private Integer mesesResolucion;
+    
+    private Integer cantidadAcontecimientos;
+    
+    private Integer cantidadActuaciones;
+    
+    private Integer cantidadAnalisis;
+    
+    private Integer cantidadIntervencion;
+    
+    private Integer cantidadAcuerdos;
+    
+    private String cantidadEmpresasMineras;
+    
+    private Integer cantidadMuertoCiviles;
+    
+    private Integer cantidadMuertoPNP;
+    
+    private Integer cantidadMuertoFFAA;
+    
+    private Integer cantidadHeridoCiviles;
+    
+    private Integer cantidadHeridoPNP;
+    
+    private Integer cantidadHeridoFFAA;
 
     public String getCodigoCaso() {
         return codigoCaso;
@@ -107,11 +139,11 @@ public class ReporteSimco implements Serializable{
         this.tipologia = tipologia;
     }
 
-    public String getAnho() {
+    public Long getAnho() {
         return anho;
     }
 
-    public void setAnho(String anho) {
+    public void setAnho(Long anho) {
         this.anho = anho;
     }
 
@@ -281,6 +313,134 @@ public class ReporteSimco implements Serializable{
 
     public void setParticipacion(String participacion) {
         this.participacion = participacion;
+    }
+
+    public String getFechaResolucion() {
+        return fechaResolucion;
+    }
+
+    public void setFechaResolucion(String fechaResolucion) {
+        this.fechaResolucion = fechaResolucion;
+    }
+
+    public String getInversion() {
+        return inversion;
+    }
+
+    public void setInversion(String inversion) {
+        this.inversion = inversion;
+    }
+
+    public Integer getMesesResolucion() {
+        return mesesResolucion;
+    }
+
+    public void setMesesResolucion(Integer mesesResolucion) {
+        this.mesesResolucion = mesesResolucion;
+    }
+
+    public String getFechaFinCaso() {
+        return fechaFinCaso;
+    }
+
+    public void setFechaFinCaso(String fechaFinCaso) {
+        this.fechaFinCaso = fechaFinCaso;
+    }
+
+    public Integer getCantidadAcontecimientos() {
+        return cantidadAcontecimientos;
+    }
+
+    public void setCantidadAcontecimientos(Integer cantidadAcontecimientos) {
+        this.cantidadAcontecimientos = cantidadAcontecimientos;
+    }
+
+    public Integer getCantidadActuaciones() {
+        return cantidadActuaciones;
+    }
+
+    public void setCantidadActuaciones(Integer cantidadActuaciones) {
+        this.cantidadActuaciones = cantidadActuaciones;
+    }
+
+    public Integer getCantidadAnalisis() {
+        return cantidadAnalisis;
+    }
+
+    public void setCantidadAnalisis(Integer cantidadAnalisis) {
+        this.cantidadAnalisis = cantidadAnalisis;
+    }
+
+    public Integer getCantidadIntervencion() {
+        return cantidadIntervencion;
+    }
+
+    public void setCantidadIntervencion(Integer cantidadIntervencion) {
+        this.cantidadIntervencion = cantidadIntervencion;
+    }
+
+    public Integer getCantidadAcuerdos() {
+        return cantidadAcuerdos;
+    }
+
+    public void setCantidadAcuerdos(Integer cantidadAcuerdos) {
+        this.cantidadAcuerdos = cantidadAcuerdos;
+    }
+
+    public String getCantidadEmpresasMineras() {
+        return cantidadEmpresasMineras;
+    }
+
+    public void setCantidadEmpresasMineras(String cantidadEmpresasMineras) {
+        this.cantidadEmpresasMineras = cantidadEmpresasMineras;
+    }
+
+    public Integer getCantidadMuertoCiviles() {
+        return cantidadMuertoCiviles;
+    }
+
+    public void setCantidadMuertoCiviles(Integer cantidadMuertoCiviles) {
+        this.cantidadMuertoCiviles = cantidadMuertoCiviles;
+    }
+
+    public Integer getCantidadMuertoPNP() {
+        return cantidadMuertoPNP;
+    }
+
+    public void setCantidadMuertoPNP(Integer cantidadMuertoPNP) {
+        this.cantidadMuertoPNP = cantidadMuertoPNP;
+    }
+
+    public Integer getCantidadMuertoFFAA() {
+        return cantidadMuertoFFAA;
+    }
+
+    public void setCantidadMuertoFFAA(Integer cantidadMuertoFFAA) {
+        this.cantidadMuertoFFAA = cantidadMuertoFFAA;
+    }
+
+    public Integer getCantidadHeridoCiviles() {
+        return cantidadHeridoCiviles;
+    }
+
+    public void setCantidadHeridoCiviles(Integer cantidadHeridoCiviles) {
+        this.cantidadHeridoCiviles = cantidadHeridoCiviles;
+    }
+
+    public Integer getCantidadHeridoPNP() {
+        return cantidadHeridoPNP;
+    }
+
+    public void setCantidadHeridoPNP(Integer cantidadHeridoPNP) {
+        this.cantidadHeridoPNP = cantidadHeridoPNP;
+    }
+
+    public Integer getCantidadHeridoFFAA() {
+        return cantidadHeridoFFAA;
+    }
+
+    public void setCantidadHeridoFFAA(Integer cantidadHeridoFFAA) {
+        this.cantidadHeridoFFAA = cantidadHeridoFFAA;
     }
     
 }

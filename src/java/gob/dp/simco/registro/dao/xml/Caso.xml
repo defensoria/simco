@@ -36,6 +36,9 @@
         <result property="version" column="N_VERSION"/>
         <result property="indicador" column="C_INDVIGENTE"/>
         <result property="inversionInvolucrada" column="C_INVERSIONINVOLUCRADA"/>
+        <result property="fechaInicio" column="D_FECHAINICIO"/>
+        <result property="fechaFin" column="D_FECHAFIN"/>
+        
     </resultMap>  
 
 
@@ -161,6 +164,12 @@
         <if test="inversionInvolucrada != null">
             C_INVERSIONINVOLUCRADA,
         </if>
+        <if test="fechaInicio != null">
+            D_FECHAINICIO,
+        </if>
+        <if test="fechaFin != null">
+            D_FECHAFIN,
+        </if>
         C_NOMCASO
         )
         VALUES 
@@ -249,6 +258,12 @@
         </if>
         <if test="inversionInvolucrada != null">
             #{inversionInvolucrada},
+        </if>
+        <if test="fechaInicio != null">
+            #{fechaInicio},
+        </if>
+        <if test="fechaFin != null">
+            #{fechaFin},
         </if>
         #{nombre}
         )
@@ -345,6 +360,12 @@
             <if test="inversionInvolucrada != null">
                 C_INVERSIONINVOLUCRADA = #{inversionInvolucrada},
             </if>
+            <if test="fechaInicio != null">
+            D_FECHAINICIO = #{fechaInicio},
+        </if>
+        <if test="fechaFin != null">
+            D_FECHAFIN = #{fechaFin},
+        </if>
             C_NOMCASO=#{nombre}
         </set>
         <where>

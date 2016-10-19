@@ -819,4 +819,16 @@
         SELECT COUNT(*) FROM SIMCO_REG_ACTIVIDAD
         WHERE TO_CHAR(D_FECREGISTRO, 'YYYYMM') = TO_CHAR(SYSDATE,  'YYYYMM')
     </select>
+    
+    <select id="contadorAcontecimiento" resultType="java.lang.Integer" parameterType="long">
+        SELECT COUNT(A.N_ID_ACTIVIDAD) FROM SIMCO_REG_ACTIVIDAD A
+INNER JOIN SIMCO_REG_CASO_ACTIVIDAD B ON A.N_ID_ACTIVIDAD = B.N_ID_ACTIVIDAD AND B.C_ESTADOACTCASO = 'ACT' AND A.C_TIPO = 'AC'
+WHERE B.N_ID_CASO = #{id}
+    </select>
+    
+    <select id="contadorActuacion" resultType="java.lang.Integer" parameterType="long">
+        SELECT COUNT(A.N_ID_ACTIVIDAD) FROM SIMCO_REG_ACTIVIDAD A
+INNER JOIN SIMCO_REG_CASO_ACTIVIDAD B ON A.N_ID_ACTIVIDAD = B.N_ID_ACTIVIDAD AND B.C_ESTADOACTCASO = 'ACT' AND A.C_TIPO = 'AD'
+WHERE B.N_ID_CASO = #{id}
+    </select>
 </mapper>

@@ -47,10 +47,10 @@
                     /*]]>*/
                 </script>
                 <div>
-                    <a jsf:rendered="#{casoController.caso.id != null}" jsf:actionListener="#{casoController.pdf()}">
+                    <a jsf:rendered="#{casoController.caso.id != null}" jsf:action="#{casoController.pdf()}">
                         <img src="../../bootstrap/img/pdf.png" alt="Plan de Intervención" height="45" width="45"/>
                     </a>
-                    <a jsf:rendered="#{casoController.caso.id != null}" jsf:actionListener="#{casoController.docx()}">
+                    <a jsf:rendered="#{casoController.caso.id != null}" jsf:action="#{casoController.docx()}">
                         <img src="../../bootstrap/img/doc.png" alt="Plan de Intervención" height="45" width="45"/>
                     </a>
                     <h:panelGroup rendered="#{(casoController.caso.id == null) or (casoController.esComisionadoRegistro)}">
@@ -535,9 +535,22 @@
                                                 </td>
                                             </tr>
                                         </table>
-
-
                                     </h:panelGroup>
+                                </tr>
+                                    <tr>
+                                        <br/>
+                                            <table>
+                                                    <tr>
+                                                        <td style="padding-right: 10px">
+                                                <b>Fecha Inicio</b><gc:calendar value="#{casoController.caso.fechaInicio}"/>
+                                        </td> 
+                                                        <td style="padding-left: 10px">
+                                                <b>Fecha Fin</b><gc:calendar value="#{casoController.caso.fechaFin}" />
+                                        </td> 
+                                        <td colspan="2"></td> 
+                                                </tr>
+                                        </table>
+                                        
                                 </tr>
                             </table>
                         </h:panelGroup>

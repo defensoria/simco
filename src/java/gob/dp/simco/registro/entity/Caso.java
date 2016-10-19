@@ -79,6 +79,10 @@ public class Caso implements Serializable{
     
     private String inversionInvolucrada;
     
+    private Date fechaInicio;
+    
+    private Date fechaFin;
+    
     //AGREGADOS
     private String tipoCaso;
     
@@ -364,6 +368,22 @@ public class Caso implements Serializable{
 
     public void setInversionInvolucrada(String inversionInvolucrada) {
         this.inversionInvolucrada = inversionInvolucrada;
+    }
+
+    public Date getFechaInicio() {
+        return fechaInicio;
+    }
+
+    public void setFechaInicio(Date fechaInicio) {
+        this.fechaInicio = fechaInicio;
+    }
+
+    public Date getFechaFin() {
+        return fechaFin;
+    }
+
+    public void setFechaFin(Date fechaFin) {
+        this.fechaFin = fechaFin;
     }
     
 }

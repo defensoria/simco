@@ -69,4 +69,8 @@ public interface ActividadDao {
    
    public Actividad actividadBusquedaPorAcontecimiento(long idAcontecimiento);
    
+   public Integer contadorAcontecimiento(long idCaso);
+   
+   public Integer contadorActuacion(long idCaso);
+   
 }

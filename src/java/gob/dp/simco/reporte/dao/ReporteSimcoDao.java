@@ -16,4 +16,21 @@ public interface ReporteSimcoDao {
     
     public List<ReporteSimco> reporteCasos(ReporteSimco reporteSimco);
     
+    public Integer cantidadAcuerdosCaso(long idCaso);
+    
+    public Integer cantidadEmpresaMineraCaso(String codigoCaso);
+    
+    public Integer cantidadMuertosPNP(String codigoCaso);
+    
+    public Integer cantidadMuertosCiviles(String codigoCaso);
+    
+    public Integer cantidadMuertosFFAA(String codigoCaso);
+    
+    public Integer cantidadHeridosPNP(String codigoCaso);
+    
+    public Integer cantidadHeridosCiviles(String codigoCaso);
+    
+    public Integer cantidadHeridosFFAA(String codigoCaso);
+    
+    
 }

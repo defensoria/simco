@@ -51,5 +51,10 @@ public class IntervencionDaoImpl extends SqlSessionDaoSupport implements Interve
     public Intervencion intervencionBuscarCaso(String codigo) {
         return getSqlSession().selectOne("gob.dp.simco.intervencion.dao.IntervencionDao.intervencionBuscarCaso", codigo);
     }
+
+    @Override
+    public Integer intervencionBuscarCasoCount(String codigo) {
+        return getSqlSession().selectOne("gob.dp.simco.intervencion.dao.IntervencionDao.intervencionBuscarCasoCount", codigo);
+    }
     
 }

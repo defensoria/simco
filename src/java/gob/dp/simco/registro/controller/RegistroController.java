@@ -283,12 +283,14 @@ public class RegistroController extends AbstractManagedBean implements Serializa
             caso = new Caso();
             caso.setNombre(acti.getNombreCaso());
             caso.setId(acti.getIdCaso());
-            if (!StringUtils.equals(acti.getIdDepartamento(), "0")) {
-                comboProvincia();
-            }
-            if (!StringUtils.equals(acti.getIdProvincia(), "0")) {
-                comboDistrito();
-            }
+            if(acti.getIdDepartamento() != null)
+                if (!StringUtils.equals(acti.getIdDepartamento(), "0")) {
+                    comboProvincia();
+                }
+            if(acti.getIdProvincia() != null)
+                if (!StringUtils.equals(acti.getIdProvincia(), "0")) {
+                    comboDistrito();
+                }
             actorController.listarActoresXcaso(acti.getId());
             nroActaAcuerdoDetalle = 0;
             nroActaAcuerdoDetalle = actaAcuerdoDetalleService.actaAcuerdoDetalleCount(acti.getId());

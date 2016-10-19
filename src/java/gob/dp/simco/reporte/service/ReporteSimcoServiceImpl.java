@@ -8,6 +8,7 @@ package gob.dp.simco.reporte.service;
 import gob.dp.simco.reporte.dao.ReporteSimcoDao;
 import gob.dp.simco.reporte.entity.ReporteSimco;
 import java.util.List;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +25,43 @@ public class ReporteSimcoServiceImpl implements ReporteSimcoService{
     @Override
     public List<ReporteSimco> reporteCasos(ReporteSimco reporteSimco) {
         return reporteSimcoDao.reporteCasos(reporteSimco);
+    }
+
+    @Override
+    public Integer cantidadAcuerdosCaso(long idCaso) {
+        return reporteSimcoDao.cantidadAcuerdosCaso(idCaso);
+    }
+
+    @Override
+    public Integer cantidadEmpresaMineraCaso(String codigoCaso) {
+        return reporteSimcoDao.cantidadEmpresaMineraCaso(codigoCaso);
+    }
+
+    @Override
+    public Integer cantidadMuertosHeridos(String codigoCaso, String estado, String estadoTipo) {
+        if(StringUtils.equals(estado, "01")){
+            if(StringUtils.equals(estadoTipo, "01")){
+                return reporteSimcoDao.cantidadMuertosCiviles(codigoCaso);
+            }
+            if(StringUtils.equals(estadoTipo, "02")){
+                return reporteSimcoDao.cantidadMuertosPNP(codigoCaso);
+            }
+            if(StringUtils.equals(estadoTipo, "03")){
+                return reporteSimcoDao.cantidadMuertosFFAA(codigoCaso);
+            }
+        }
+        if(StringUtils.equals(estado, "02")){
+            if(StringUtils.equals(estadoTipo, "01")){
+                return reporteSimcoDao.cantidadHeridosCiviles(codigoCaso);
+            }
+            if(StringUtils.equals(estadoTipo, "02")){
+                return reporteSimcoDao.cantidadHeridosPNP(codigoCaso);
+            }
+            if(StringUtils.equals(estadoTipo, "03")){
+                return reporteSimcoDao.cantidadHeridosFFAA(codigoCaso);
+            }
+        }
+        return null;
     }
     
     

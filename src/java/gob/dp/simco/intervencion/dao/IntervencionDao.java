@@ -28,5 +28,7 @@ public interface IntervencionDao {
     
     public Intervencion intervencionBuscarCaso(String codigo);
     
+    public Integer intervencionBuscarCasoCount(String codigo);
+    
     
 }

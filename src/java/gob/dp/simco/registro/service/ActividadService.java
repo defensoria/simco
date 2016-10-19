@@ -68,4 +68,7 @@ public interface ActividadService {
    public void actividadUpdateAcontecimientoQuitar(long idActividad);
    
    public Actividad actividadBusquedaPorAcontecimiento(long idAcontecimiento);
+   
+   public Integer contadorActuacionesAcontecimientos(long idCaso, int tipo);
+   
 }

@@ -99,4 +99,12 @@
         FROM SIMCO_INTER_INTERVENCION 
         WHERE C_CODIGOCASO = #{value}
     </select>
+    
+    
+    <select id="intervencionBuscarCasoCount"  resultType="java.lang.Integer"  parameterType="String">
+        SELECT 
+            COUNT(N_IDINTERVENCION) 
+        FROM SIMCO_INTER_INTERVENCION 
+        WHERE C_CODIGOCASO = #{value}
+    </select>
 </mapper>

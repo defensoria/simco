@@ -176,5 +176,14 @@ public class ActividadServiceImpl implements ActividadService{
     public Actividad actividadBusquedaPorAcontecimiento(long idAcontecimiento) {
         return actividadDao.actividadBusquedaPorAcontecimiento(idAcontecimiento);
     }
+
+    @Override
+    public Integer contadorActuacionesAcontecimientos(long idCaso, int tipo) {
+        if(tipo == 1)
+            return actividadDao.contadorAcontecimiento(idCaso);
+        if(tipo == 2)
+            return actividadDao.contadorActuacion(idCaso);
+        return null;
+    }
     
 }

@@ -20,7 +20,7 @@ public enum EstadosType {
 	
 	
 	/** La Constante list. */
-	private static final List<EstadosType> list = new ArrayList<EstadosType>();
+	private static final List<EstadosType> list = new ArrayList<>();
 	
 	/** La Constante lookup. */
 	private static final Map<String, EstadosType> lookup = new HashMap<String, EstadosType>();

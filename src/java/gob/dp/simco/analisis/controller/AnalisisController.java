@@ -698,7 +698,7 @@ public class AnalisisController extends AbstractManagedBean implements Serializa
 
     }
 
-    public final void initRelacionActorVOAlianza() {
+    public void initRelacionActorVOAlianza() {
         Actor actor1 = new Actor();
         Actor actor2 = new Actor();
         relacionActorVOAlianza = new RelacionActorVO();
@@ -706,7 +706,7 @@ public class AnalisisController extends AbstractManagedBean implements Serializa
         relacionActorVOAlianza.setActor2(actor2);
     }
 
-    public final void initRelacionActorVOVinculoCercano() {
+    public void initRelacionActorVOVinculoCercano() {
         Actor actor1 = new Actor();
         Actor actor2 = new Actor();
         relacionActorVOVinculoCercano = new RelacionActorVO();
@@ -714,7 +714,7 @@ public class AnalisisController extends AbstractManagedBean implements Serializa
         relacionActorVOVinculoCercano.setActor2(actor2);
     }
 
-    public final void initRelacionActorVOVinculoDebil() {
+    public void initRelacionActorVOVinculoDebil() {
         Actor actor1 = new Actor();
         Actor actor2 = new Actor();
         relacionActorVOVinculoDebil = new RelacionActorVO();
@@ -722,7 +722,7 @@ public class AnalisisController extends AbstractManagedBean implements Serializa
         relacionActorVOVinculoDebil.setActor2(actor2);
     }
 
-    public final void initRelacionActorVOTension() {
+    public void initRelacionActorVOTension() {
         Actor actor1 = new Actor();
         Actor actor2 = new Actor();
         relacionActorVOTension = new RelacionActorVO();
@@ -730,7 +730,7 @@ public class AnalisisController extends AbstractManagedBean implements Serializa
         relacionActorVOTension.setActor2(actor2);
     }
 
-    public final void initRelacionActorVOConflicto() {
+    public void initRelacionActorVOConflicto() {
         Actor actor1 = new Actor();
         Actor actor2 = new Actor();
         relacionActorVOConflicto = new RelacionActorVO();

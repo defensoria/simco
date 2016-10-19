@@ -5,9 +5,15 @@
  */
 package gob.dp.simco.reporte.controller;
 
+import gob.dp.simco.analisis.entity.AnalisisActorIntensidad;
+import gob.dp.simco.analisis.service.AnalisisActorIntensidadService;
 import gob.dp.simco.comun.ConstantesUtil;
+import gob.dp.simco.comun.FunctionUtil;
 import gob.dp.simco.comun.type.AnhosEnum;
+import gob.dp.simco.intervencion.entity.Intervencion;
+import gob.dp.simco.intervencion.service.IntervencionService;
 import gob.dp.simco.registro.entity.Actor;
+import gob.dp.simco.registro.service.ActividadService;
 import gob.dp.simco.registro.service.ActorService;
 import gob.dp.simco.reporte.entity.ReporteSimco;
 import gob.dp.simco.reporte.entity.ReporteSimcoActor;
@@ -15,10 +21,13 @@ import gob.dp.simco.reporte.service.ReporteSimcoActorService;
 import gob.dp.simco.reporte.service.ReporteSimcoService;
 import java.io.IOException;
 import java.io.Serializable;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import javax.inject.Named;
@@ -52,6 +61,15 @@ public class ReporteSimcoController implements Serializable {
 
     @Autowired
     private ActorService actorService;
+    
+    @Autowired
+    private AnalisisActorIntensidadService analisisActorIntensidadService;
+    
+    @Autowired
+    private ActividadService actividadService;
+    
+    @Autowired
+    private IntervencionService intervencionService;
 
     private List<SelectItem> listaAnhos;
 
@@ -81,6 +99,7 @@ public class ReporteSimcoController implements Serializable {
 
     public void reporteCasos() {
         listReporteCasos = reporteSimcoService.reporteCasos(reporteSimco);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
         for (ReporteSimco rs : listReporteCasos) {
             String esEmpresaMinera = "No";
             String esComunidadNativa = "No";
@@ -95,6 +114,39 @@ public class ReporteSimcoController implements Serializable {
             }
             rs.setEsEmpresaMinera(esEmpresaMinera);
             rs.setEsComunidadNativa(esComunidadNativa);
+            if(StringUtils.equals(rs.getEstado(), "Resuelto")){//resuelto
+                rs.setFechaResolucion(rs.getFechaFinCaso());
+                try {
+                    rs.setMesesResolucion(FunctionUtil.calcularMesesAFecha(simpleDateFormat.parse(rs.getFechaInicioCaso()), simpleDateFormat.parse(rs.getFechaFinCaso())));
+                } catch (ParseException ex) {
+                    Logger.getLogger(ReporteSimcoController.class.getName()).log(Level.SEVERE, null, ex);
+                    rs.setMesesResolucion(null);
+                }
+            }
+            rs.setCantidadAcontecimientos(actividadService.contadorActuacionesAcontecimientos(rs.getIdCaso(), 1));
+            rs.setCantidadActuaciones(actividadService.contadorActuacionesAcontecimientos(rs.getIdCaso(), 2));
+            
+            List<AnalisisActorIntensidad> listaAnalisis = analisisActorIntensidadService.analisisActorIntensidadBuscar(rs.getIdCaso());
+            if(listaAnalisis.size() > 0)
+                rs.setCantidadAnalisis(1);
+            else
+                rs.setCantidadAnalisis(0);
+            
+            Intervencion interv = intervencionService.intervencionBuscarCaso(rs.getCodigoCaso());
+            if(interv != null)
+                rs.setCantidadIntervencion(1);
+            else
+                rs.setCantidadIntervencion(0);
+            
+            rs.setCantidadAcuerdos(reporteSimcoService.cantidadAcuerdosCaso(rs.getIdCaso()));
+            
+            rs.setCantidadMuertoCiviles(reporteSimcoService.cantidadMuertosHeridos(rs.getCodigoCaso(), "01", "01"));
+            rs.setCantidadMuertoPNP(reporteSimcoService.cantidadMuertosHeridos(rs.getCodigoCaso(), "01", "02"));
+            rs.setCantidadMuertoFFAA(reporteSimcoService.cantidadMuertosHeridos(rs.getCodigoCaso(), "01", "03"));
+            rs.setCantidadHeridoCiviles(reporteSimcoService.cantidadMuertosHeridos(rs.getCodigoCaso(), "02", "01"));
+            rs.setCantidadHeridoPNP(reporteSimcoService.cantidadMuertosHeridos(rs.getCodigoCaso(), "02", "02"));
+            rs.setCantidadHeridoFFAA(reporteSimcoService.cantidadMuertosHeridos(rs.getCodigoCaso(), "02", "03"));
+            
         }
     }
 

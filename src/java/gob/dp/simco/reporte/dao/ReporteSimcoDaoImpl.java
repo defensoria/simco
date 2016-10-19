@@ -21,5 +21,45 @@ public class ReporteSimcoDaoImpl extends SqlSessionDaoSupport implements Reporte
     public List<ReporteSimco> reporteCasos(ReporteSimco reporteSimco) {
         return getSqlSession().selectList("gob.dp.simco.reporte.dao.ReporteSimcoDao.reporteCasos",reporteSimco);
     }
+
+    @Override
+    public Integer cantidadAcuerdosCaso(long idCaso) {
+        return getSqlSession().selectOne("gob.dp.simco.reporte.dao.ReporteSimcoDao.cantidadAcuerdosCaso",idCaso);
+    }
+
+    @Override
+    public Integer cantidadEmpresaMineraCaso(String codigoCaso) {
+        return getSqlSession().selectOne("gob.dp.simco.reporte.dao.ReporteSimcoDao.cantidadEmpresaMineraCaso",codigoCaso);
+    }
+
+    @Override
+    public Integer cantidadMuertosPNP(String codigoCaso) {
+        return getSqlSession().selectOne("gob.dp.simco.reporte.dao.ReporteSimcoDao.cantidadMuertosPNP",codigoCaso);
+    }
+
+    @Override
+    public Integer cantidadMuertosCiviles(String codigoCaso) {
+        return getSqlSession().selectOne("gob.dp.simco.reporte.dao.ReporteSimcoDao.cantidadMuertosCiviles",codigoCaso);
+    }
+
+    @Override
+    public Integer cantidadMuertosFFAA(String codigoCaso) {
+        return getSqlSession().selectOne("gob.dp.simco.reporte.dao.ReporteSimcoDao.cantidadMuertosFFAA",codigoCaso);
+    }
+
+    @Override
+    public Integer cantidadHeridosPNP(String codigoCaso) {
+        return getSqlSession().selectOne("gob.dp.simco.reporte.dao.ReporteSimcoDao.cantidadHeridosPNP",codigoCaso);
+    }
+
+    @Override
+    public Integer cantidadHeridosCiviles(String codigoCaso) {
+        return getSqlSession().selectOne("gob.dp.simco.reporte.dao.ReporteSimcoDao.cantidadHeridosCiviles",codigoCaso);
+    }
+
+    @Override
+    public Integer cantidadHeridosFFAA(String codigoCaso) {
+        return getSqlSession().selectOne("gob.dp.simco.reporte.dao.ReporteSimcoDao.cantidadMuertosPNP",codigoCaso);
+    }
     
 }

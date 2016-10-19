@@ -27,4 +27,6 @@ public interface IntervencionService {
     public List<Intervencion> intervencionBuscarActivas();
     
     public Intervencion intervencionBuscarCaso(String codigo);
+    
+    public Integer intervencionBuscarCasoCount(String codigo);
 }

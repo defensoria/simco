@@ -55,5 +55,10 @@ public class IntervencionServiceImpl implements IntervencionService{
     public Intervencion intervencionBuscarCaso(String codigo) {
         return intervencionDao.intervencionBuscarCaso(codigo);
     }
+
+    @Override
+    public Integer intervencionBuscarCasoCount(String codigo) {
+        return intervencionDao.intervencionBuscarCasoCount(codigo);
+    }
     
 }

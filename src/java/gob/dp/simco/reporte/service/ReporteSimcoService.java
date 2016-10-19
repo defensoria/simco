@@ -16,4 +16,10 @@ public interface ReporteSimcoService {
     
     public List<ReporteSimco> reporteCasos(ReporteSimco reporteSimco);
     
+    public Integer cantidadAcuerdosCaso(long idCaso);
+    
+    public Integer cantidadEmpresaMineraCaso(String codigoCaso);
+    
+    public Integer cantidadMuertosHeridos(String codigoCaso, String estado, String estadoTipo);
+    
 }
