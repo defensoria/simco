@@ -134,11 +134,7 @@ public class ListasComunesController {
     public List<Parametro> buscarAnhos(boolean insertarTODOS, boolean insertarNINGUNO, boolean insertarSELECCIONE) {
         return insertarValoresDefectoParametro(cacheService.buscarAnhos(), insertarTODOS, insertarNINGUNO, insertarSELECCIONE);
     }
-    
-    public List<Parametro> buscarDepartamentos(boolean insertarTODOS, boolean insertarNINGUNO, boolean insertarSELECCIONE) {
-        return insertarValoresDefectoParametro(cacheService.buscarDepartamentos(), insertarTODOS, insertarNINGUNO, insertarSELECCIONE);
-    }
-    
+
     public List<Parametro> buscarTipoInvestigacion(boolean insertarTODOS, boolean insertarNINGUNO, boolean insertarSELECCIONE) {
         return insertarValoresDefectoParametro(cacheService.buscarTipoInvestigacion(), insertarTODOS, insertarNINGUNO, insertarSELECCIONE);
     }

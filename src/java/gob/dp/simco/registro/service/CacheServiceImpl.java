@@ -77,8 +77,6 @@ public class CacheServiceImpl implements CacheService{
     
     private static final Integer CACHE_PARAMETRO_ANHO = 280;
     
-    private static final Integer CACHE_PARAMETRO_DEPARTAMENTO = 290;
-    
     private static final Integer CACHE_PARAMETRO_TIPO_INVESTIGACION = 300;
     
     private static final Integer CACHE_PARAMETRO_TIPO_ARCHIVO = 310;
@@ -246,11 +244,6 @@ public class CacheServiceImpl implements CacheService{
     @Override
     public List<Parametro> buscarAnhos() {
         return buscarParametro(CACHE_PARAMETRO_ANHO, CACHE_PARAMETRO_ANHO);
-    }
-    
-    @Override
-    public List<Parametro> buscarDepartamentos() {
-        return buscarParametro(CACHE_PARAMETRO_DEPARTAMENTO, CACHE_PARAMETRO_DEPARTAMENTO);
     }
     
     @Override

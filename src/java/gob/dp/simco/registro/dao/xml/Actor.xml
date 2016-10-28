@@ -102,7 +102,7 @@
         FROM SIMCO_REG_ACTOR A
         <where>
             <if test="nombre != null">
-                UPPER(A.C_NOMACTOR||A.C_APELLIDOPATACTOR||A.C_APELLIDOMATACTOR) LIKE '%'||UPPER(#{nombre})||'%'
+                UPPER(A.C_NOMACTOR||' '||A.C_APELLIDOPATACTOR||' '||A.C_APELLIDOMATACTOR) LIKE '%'||UPPER(#{nombre})||'%'
             </if>
             <if test="dni != null">
                 A.C_DNIACTOR=#{dni}
@@ -284,8 +284,6 @@
         <if test="tipoGeneral != null">
             C_TIPOGENERAL,
         </if>
-   
-   
         <if test="tipoPoblacion != null">
             C_TIPOPOBLACION,
         </if>
@@ -328,7 +326,12 @@
         <if test="clasificacion != null">
             C_CLASIFICACION,
         </if>
-        
+        <if test="fechaRegistro != null">
+            D_FECHAREGISTRO,
+        </if>
+        <if test="usuarioRegistro != null">
+            C_USUREGISTRO,
+        </if>
         C_NOMACTOR
         
         )
@@ -439,6 +442,12 @@
         </if>
         <if test="clasificacion != null">
             #{clasificacion},
+        </if>
+        <if test="fechaRegistro != null">
+            #{fechaRegistro},
+        </if>
+        <if test="usuarioRegistro != null">
+            #{usuarioRegistro},
         </if>
         #{nombre}
         )

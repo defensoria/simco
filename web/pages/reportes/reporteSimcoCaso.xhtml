@@ -42,7 +42,7 @@
                                                         <b>Año:</b>
                                                     </td>
                                                     <td>
-                                                        <h:selectOneMenu value="#{reporteSimcoController.reporteSimco.anho}">
+                                                        <h:selectOneMenu value="#{reporteSimcoController.reporteSimcoCaso.anho}">
                                                             <f:selectItem itemLabel="Seleccione" itemValue="0" />
                                                             <f:selectItems value="#{reporteSimcoController.listaAnhos}" />
                                                         </h:selectOneMenu>
@@ -53,7 +53,7 @@
                                                         <b>Tipología del caso</b>
                                                     </td>
                                                     <td>
-                                                        <h:selectOneMenu value="#{reporteSimcoController.reporteSimco.tipologia}">
+                                                        <h:selectOneMenu value="#{reporteSimcoController.reporteSimcoCaso.tipologia}">
                                                             <f:selectItem itemLabel="Seleccione" itemValue="0"/>
                                                             <f:selectItems value="#{listasComunesController.buscarTipoCaso(false, false, false)}" var="y" itemLabel="#{y.nombreParametro}" itemValue="#{y.valorParametro}" />
                                                         </h:selectOneMenu>
@@ -64,8 +64,8 @@
                                                         <b>Región del caso</b>
                                                     </td>
                                                     <td>
-                                                        <h:selectOneMenu value="#{reporteSimcoController.reporteSimco.idRegion}" >
-                                                            <f:selectItem itemLabel="Seleccione" itemValue="0"/>
+                                                        <h:selectOneMenu value="#{reporteSimcoController.reporteSimcoCaso.idRegion}" >
+                                                            <f:selectItem itemLabel="Seleccione" itemValue=""/>
                                                             <f:selectItems value="#{casoController.listaDepartamento}" var="y" itemLabel="#{y.value}" itemValue="#{y.label}" />
                                                         </h:selectOneMenu>
                                                     </td>
@@ -75,7 +75,7 @@
                                                         <b>Estado del caso</b>
                                                     </td>
                                                     <td>
-                                                        <h:selectOneMenu value="#{reporteSimcoController.reporteSimco.estado}">
+                                                        <h:selectOneMenu value="#{reporteSimcoController.reporteSimcoCaso.estado}">
                                                             <f:selectItem itemLabel="Seleccione" itemValue="0"/>
                                                             <f:selectItems value="#{listasComunesController.buscarEstadoCaso(false, false, false)}" var="y" itemLabel="#{y.nombreParametro}" itemValue="#{y.valorParametro}" />
                                                         </h:selectOneMenu>
@@ -86,8 +86,8 @@
                                                         <b>Que incluya este tipo de aconteciminento</b>
                                                     </td>
                                                     <td>
-                                                        <h:selectOneMenu value="#{reporteSimcoController.reporteSimco.tipoAcontecimiento}">
-                                                            <f:selectItem itemLabel="Seleccione" itemValue="0"/>
+                                                        <h:selectOneMenu value="#{reporteSimcoController.reporteSimcoCaso.tipoAcontecimiento}">
+                                                            <f:selectItem itemLabel="Seleccione" itemValue=""/>
                                                             <f:selectItems value="#{listasComunesController.buscarTipoAcontecimiento(false,false,false)}" var="y" itemLabel="#{y.nombreParametro}" itemValue="#{y.valorParametro}" />
                                                         </h:selectOneMenu>
                                                     </td>
@@ -97,10 +97,10 @@
                                                         <b>Que incluyan como actor a comunidades nativas</b>
                                                     </td>
                                                     <td>
-                                                        <h:selectOneMenu value="#{reporteSimcoController.reporteSimco.esComunidadNativa}">
-                                                            <f:selectItem itemLabel="Seleccione" itemValue="0"/>
-                                                            <f:selectItem itemLabel="Si" itemValue="S"/>
-                                                            <f:selectItem itemLabel="No" itemValue="N"/>
+                                                        <h:selectOneMenu value="#{reporteSimcoController.reporteSimcoCaso.esComunidadNativaInt}">
+                                                            <f:selectItem itemLabel="Seleccione" itemValue=""/>
+                                                            <f:selectItem itemLabel="Si" itemValue="1"/>
+                                                            <f:selectItem itemLabel="No" itemValue="0"/>
                                                         </h:selectOneMenu>
                                                     </td>
                                                 </tr>
@@ -110,8 +110,8 @@
                                                         <table style="width: 100%">
                                                             <tr>
                                                                 <td style="width: 95%">
-                                                                    <input type="text" jsf:value="#{reporteSimcoController.reporteSimco.nombreActor}" placeholder="Actor" readonly="true" style="background: silver"/>
-                                                                    <h:inputHidden value="#{reporteSimcoController.reporteSimco.idActor}" />
+                                                                    <input type="text" jsf:value="#{reporteSimcoController.reporteSimcoCaso.nombreActor}" placeholder="Actor" readonly="true" style="background: silver"/>
+                                                                    <h:inputHidden value="#{reporteSimcoController.reporteSimcoCaso.idActor}" />
                                                                 </td>
                                                                 <td>
                                                                     <a class="btn btn-info" jsf:action="#{actorController.limpiarModalBusquedaActor()}">
@@ -126,7 +126,7 @@
                                                 <tr>
                                                     <td><b>Tipo de actor </b></td>
                                                     <td>
-                                                        <h:selectOneMenu value="#{reporteSimcoController.reporteSimco.tipoActor}">
+                                                        <h:selectOneMenu value="#{reporteSimcoController.reporteSimcoCaso.tipoActor}">
                                                             <f:selectItem itemLabel="Seleccione" itemValue="NN"/>
                                                             <f:selectItem itemLabel="Población" itemValue="PE"/>
                                                             <f:selectItem itemLabel="Organización / empresa" itemValue="EM"/>
@@ -142,7 +142,7 @@
                                             </table>
                                         </td>
                                         <td style="vertical-align: top; text-align: right">
-                                            <a class="btn btn-warning" jsf:action="#{reporteSimcoController.limpiar()}">
+                                            <a class="btn btn-warning" jsf:action="#{reporteSimcoController.limpiarReporteCaso()}">
                                                 <span class="glyphicon glyphicon-asterisk" />Limpiar  
                                             </a>
                                             &#160;&#160;&#160;

@@ -5,16 +5,16 @@
  */
 package gob.dp.simco.reporte.service;
 
-import gob.dp.simco.reporte.entity.ReporteSimco;
+import gob.dp.simco.reporte.entity.ReporteSimcoCaso;
 import java.util.List;
 
 /**
  *
  * @author carlos
  */
-public interface ReporteSimcoService {
+public interface ReporteSimcoCasoService {
     
-    public List<ReporteSimco> reporteCasos(ReporteSimco reporteSimco);
+    public List<ReporteSimcoCaso> reporteCasos(ReporteSimcoCaso reporteSimco);
     
     public Integer cantidadAcuerdosCaso(long idCaso);
     

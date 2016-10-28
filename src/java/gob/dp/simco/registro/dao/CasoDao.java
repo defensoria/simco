@@ -40,4 +40,7 @@ public interface CasoDao {
    public List<Caso> reporteCaso(FiltroReporte filtroReporte);
    
    public void casoUpdateSistesis(Caso caso);
+   
+   public List<Caso> buscarCasoXnombreCodigo(FiltroCaso filtroCaso);
+   
 }

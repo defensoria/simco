@@ -118,4 +118,9 @@ public class CasoServiceImpl implements CasoService {
         casoDao.casoUpdateSistesis(caso);
     }
 
+    @Override
+    public List<Caso> buscarCasoXnombreCodigo(FiltroCaso filtroCaso) {
+        return casoDao.buscarCasoXnombreCodigo(filtroCaso);
+    }
+
 }

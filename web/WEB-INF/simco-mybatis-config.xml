@@ -96,7 +96,7 @@
         
         <typeAlias type="gob.dp.simco.reporte.entity.FiltroReporte" alias="filtroReporte"/>
         <typeAlias type="gob.dp.simco.reporte.entity.ElementoResumenEjecutivo" alias="elementoResumenEjecutivo"/>
-        <typeAlias type="gob.dp.simco.reporte.entity.ReporteSimco" alias="reporteSimco"/>
+        <typeAlias type="gob.dp.simco.reporte.entity.ReporteSimcoCaso" alias="reporteSimcoCaso"/>
         <typeAlias type="gob.dp.simco.reporte.entity.ReporteSimcoActor" alias="reporteSimcoActor"/>
     </typeAliases>
 
@@ -174,7 +174,7 @@
         <mapper resource="gob/dp/simco/comun/dao/xml/Maestro.xml" />
         
         <mapper resource="gob/dp/simco/reporte/dao/xml/ReporteEjecutivo.xml" />
-        <mapper resource="gob/dp/simco/reporte/dao/xml/ReporteSimco.xml" />
+        <mapper resource="gob/dp/simco/reporte/dao/xml/ReporteSimcoCaso.xml" />
         <mapper resource="gob/dp/simco/reporte/dao/xml/ReporteSimcoActor.xml" />
         
     </mappers>

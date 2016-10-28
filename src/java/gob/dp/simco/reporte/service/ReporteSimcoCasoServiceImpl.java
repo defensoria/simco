@@ -5,8 +5,8 @@
  */
 package gob.dp.simco.reporte.service;
 
-import gob.dp.simco.reporte.dao.ReporteSimcoDao;
-import gob.dp.simco.reporte.entity.ReporteSimco;
+import gob.dp.simco.reporte.dao.ReporteSimcoCasoDao;
+import gob.dp.simco.reporte.entity.ReporteSimcoCaso;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,14 +17,14 @@ import org.springframework.stereotype.Service;
  * @author carlos
  */
 @Service
-public class ReporteSimcoServiceImpl implements ReporteSimcoService{
+public class ReporteSimcoCasoServiceImpl implements ReporteSimcoCasoService{
     
     @Autowired
-    private ReporteSimcoDao reporteSimcoDao;
+    private ReporteSimcoCasoDao reporteSimcoDao;
 
     @Override
-    public List<ReporteSimco> reporteCasos(ReporteSimco reporteSimco) {
-        return reporteSimcoDao.reporteCasos(reporteSimco);
+    public List<ReporteSimcoCaso> reporteCasos(ReporteSimcoCaso reporteSimcoCaso) {
+        return reporteSimcoDao.reporteCasos(reporteSimcoCaso);
     }
 
     @Override

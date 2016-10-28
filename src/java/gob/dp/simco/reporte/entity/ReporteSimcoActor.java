@@ -11,34 +11,55 @@ import java.io.Serializable;
  *
  * @author carlos
  */
-public class ReporteSimcoActor implements Serializable{
-    
-    private String anho;
-    
+public class ReporteSimcoActor implements Serializable {
+
+    private Integer anho;
+
     private String codigoCaso;
-    
-    private String tipologia;
-    
-    private String idRegion;
-    
-    private String tipoAcontecimiento;
-    
-    private String estado;
-    
+
+    private String nombreCaso;
+
+    private Integer tipologia;
+
+    private Integer idRegion;
+
+    private Integer tipoAcontecimiento;
+
+    private Integer estado;
+
     private String tipoActor;
-    
+
     private String nombreActor;
-    
+
     private Long idActor;
-    
+
     private String esComunidadNativa;
-    /**/
+
+    private String nombreDepartamento;
     
-    public String getAnho() {
+    private Integer contadorActorAcontecimiento;
+    
+    private Integer contadorActorAcuerdoComprometido;
+    
+    private Integer contadorActorAcuerdoBeneficiario;
+    
+    private Double ponderado;
+    
+    private String documento;
+    
+    private String ruc;
+    /**
+     *
+     * @return
+     */
+    
+    
+
+    public Integer getAnho() {
         return anho;
     }
 
-    public void setAnho(String anho) {
+    public void setAnho(Integer anho) {
         this.anho = anho;
     }
 
@@ -50,35 +71,35 @@ public class ReporteSimcoActor implements Serializable{
         this.codigoCaso = codigoCaso;
     }
 
-    public String getTipologia() {
+    public Integer getTipologia() {
         return tipologia;
     }
 
-    public void setTipologia(String tipologia) {
+    public void setTipologia(Integer tipologia) {
         this.tipologia = tipologia;
     }
 
-    public String getIdRegion() {
+    public Integer getIdRegion() {
         return idRegion;
     }
 
-    public void setIdRegion(String idRegion) {
+    public void setIdRegion(Integer idRegion) {
         this.idRegion = idRegion;
     }
 
-    public String getTipoAcontecimiento() {
+    public Integer getTipoAcontecimiento() {
         return tipoAcontecimiento;
     }
 
-    public void setTipoAcontecimiento(String tipoAcontecimiento) {
+    public void setTipoAcontecimiento(Integer tipoAcontecimiento) {
         this.tipoAcontecimiento = tipoAcontecimiento;
     }
 
-    public String getEstado() {
+    public Integer getEstado() {
         return estado;
     }
 
-    public void setEstado(String estado) {
+    public void setEstado(Integer estado) {
         this.estado = estado;
     }
 
@@ -113,7 +134,71 @@ public class ReporteSimcoActor implements Serializable{
     public void setEsComunidadNativa(String esComunidadNativa) {
         this.esComunidadNativa = esComunidadNativa;
     }
+
+    public String getNombreCaso() {
+        return nombreCaso;
+    }
+
+    public void setNombreCaso(String nombreCaso) {
+        this.nombreCaso = nombreCaso;
+    }
+
+    public String getNombreDepartamento() {
+        return nombreDepartamento;
+    }
+
+    public void setNombreDepartamento(String nombreDepartamento) {
+        this.nombreDepartamento = nombreDepartamento;
+    }
+
+    public Integer getContadorActorAcontecimiento() {
+        return contadorActorAcontecimiento;
+    }
+
+    public void setContadorActorAcontecimiento(Integer contadorActorAcontecimiento) {
+        this.contadorActorAcontecimiento = contadorActorAcontecimiento;
+    }
+
+    public Integer getContadorActorAcuerdoComprometido() {
+        return contadorActorAcuerdoComprometido;
+    }
+
+    public void setContadorActorAcuerdoComprometido(Integer contadorActorAcuerdoComprometido) {
+        this.contadorActorAcuerdoComprometido = contadorActorAcuerdoComprometido;
+    }
+
+    public Integer getContadorActorAcuerdoBeneficiario() {
+        return contadorActorAcuerdoBeneficiario;
+    }
+
+    public void setContadorActorAcuerdoBeneficiario(Integer contadorActorAcuerdoBeneficiario) {
+        this.contadorActorAcuerdoBeneficiario = contadorActorAcuerdoBeneficiario;
+    }
+
+    public Double getPonderado() {
+        return ponderado;
+    }
+
+    public void setPonderado(Double ponderado) {
+        this.ponderado = ponderado;
+    }
+
+    public String getDocumento() {
+        return documento;
+    }
+
+    public void setDocumento(String documento) {
+        this.documento = documento;
+    }
+
+    public String getRuc() {
+        return ruc;
+    }
+
+    public void setRuc(String ruc) {
+        this.ruc = ruc;
+    }
+
     
-    
-    
+
 }

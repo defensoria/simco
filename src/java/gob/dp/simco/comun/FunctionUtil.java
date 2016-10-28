@@ -9,9 +9,12 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 import javax.servlet.http.Part;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -121,6 +124,22 @@ public class FunctionUtil {
         } catch (Exception ex) {
             return fechaFormateada;
         }
-    }  
+    } 
+    
+    
+    public static String formateaDecimal(double numero){
+		if(numero > 0){
+			Locale locale  = new Locale("en", "UK");
+			String pattern = "###,###.##";
+
+			DecimalFormat decimalFormat = (DecimalFormat)
+			        NumberFormat.getNumberInstance(locale);
+			decimalFormat.applyPattern(pattern);
+
+			String format = decimalFormat.format(numero);
+			return format;
+		}
+		return null;
+	}
     
 }

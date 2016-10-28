@@ -11,7 +11,7 @@ import java.io.Serializable;
  *
  * @author carlos
  */
-public class ReporteSimco implements Serializable{
+public class ReporteSimcoCaso implements Serializable{
     
     private Long anho;
     
@@ -31,9 +31,9 @@ public class ReporteSimco implements Serializable{
     
     private String tipologia;
     
-    private String idRegion;
+    private Integer idRegion;
     
-    private String tipoAcontecimiento;
+    private Integer tipoAcontecimiento;
     
     private String primerNivel;
     
@@ -42,6 +42,8 @@ public class ReporteSimco implements Serializable{
     private String tercerNivel;
     
     private String esComunidadNativa;
+    
+    private Integer esComunidadNativaInt;
     
     private String esEmpresaMinera;
     
@@ -147,19 +149,19 @@ public class ReporteSimco implements Serializable{
         this.anho = anho;
     }
 
-    public String getIdRegion() {
+    public Integer getIdRegion() {
         return idRegion;
     }
 
-    public void setIdRegion(String idRegion) {
+    public void setIdRegion(Integer idRegion) {
         this.idRegion = idRegion;
     }
 
-    public String getTipoAcontecimiento() {
+    public Integer getTipoAcontecimiento() {
         return tipoAcontecimiento;
     }
 
-    public void setTipoAcontecimiento(String tipoAcontecimiento) {
+    public void setTipoAcontecimiento(Integer tipoAcontecimiento) {
         this.tipoAcontecimiento = tipoAcontecimiento;
     }
 
@@ -441,6 +443,14 @@ public class ReporteSimco implements Serializable{
 
     public void setCantidadHeridoFFAA(Integer cantidadHeridoFFAA) {
         this.cantidadHeridoFFAA = cantidadHeridoFFAA;
+    }
+
+    public Integer getEsComunidadNativaInt() {
+        return esComunidadNativaInt;
+    }
+
+    public void setEsComunidadNativaInt(Integer esComunidadNativaInt) {
+        this.esComunidadNativaInt = esComunidadNativaInt;
     }
     
 }

@@ -27,5 +27,7 @@ public interface ActividadActorDao {
    public List<ActividadActor> actividadActorXcaso(FiltroCasoActor filtroCasoActor);
    
    public List<ActividadActor> actividadActorNivelAD(ActividadActor actividadActor);
+   
+   public List<ActividadActor> listaActorAD(long idActor);
 
 }

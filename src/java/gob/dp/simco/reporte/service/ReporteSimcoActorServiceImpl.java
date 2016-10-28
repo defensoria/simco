@@ -6,8 +6,6 @@
 package gob.dp.simco.reporte.service;
 
 import gob.dp.simco.reporte.dao.ReporteSimcoActorDao;
-import gob.dp.simco.reporte.dao.ReporteSimcoDao;
-import gob.dp.simco.reporte.entity.ReporteSimco;
 import gob.dp.simco.reporte.entity.ReporteSimcoActor;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +24,21 @@ public class ReporteSimcoActorServiceImpl implements ReporteSimcoActorService{
     @Override
     public List<ReporteSimcoActor> reporteActor(ReporteSimcoActor reporteSimcoActor) {
         return reporteSimcoActorDao.reporteActor(reporteSimcoActor);
+    }
+
+    @Override
+    public Integer contarActorAcontecimiento(long idActor) {
+        return reporteSimcoActorDao.contarActorAcontecimiento(idActor);
+    }
+
+    @Override
+    public Integer contarActorAcuerdoComprometido(long idActor) {
+        return reporteSimcoActorDao.contarActorAcuerdoComprometido(idActor);
+    }
+
+    @Override
+    public Integer contarActorAcuerdoBeneficiario(long idActor) {
+        return reporteSimcoActorDao.contarActorAcuerdoBeneficiario(idActor);
     }
     
 }

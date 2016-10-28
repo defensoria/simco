@@ -105,6 +105,10 @@ public class Actor implements Serializable{
     
     private String clasificacion;
     
+    private String usuarioRegistro;
+    
+    private Date fechaRegistro;
+    
     //temporal
     private Double promedio;
     
@@ -496,6 +500,22 @@ public class Actor implements Serializable{
 
     public void setSubTipo3Empresa(String subTipo3Empresa) {
         this.subTipo3Empresa = subTipo3Empresa;
+    }
+
+    public String getUsuarioRegistro() {
+        return usuarioRegistro;
+    }
+
+    public void setUsuarioRegistro(String usuarioRegistro) {
+        this.usuarioRegistro = usuarioRegistro;
+    }
+
+    public Date getFechaRegistro() {
+        return fechaRegistro;
+    }
+
+    public void setFechaRegistro(Date fechaRegistro) {
+        this.fechaRegistro = fechaRegistro;
     }
         
 }

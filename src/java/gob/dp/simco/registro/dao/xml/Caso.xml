@@ -422,6 +422,20 @@
         WHERE A.N_ID_ACUERDO = #{id}
     </select>
     
+    <select id="buscarCasoXnombreCodigo" resultMap="casoMap" parameterType="filtroCaso">
+        SELECT distinct A.*
+        FROM (
+        SELECT B.*,
+        ROWNUM numfila
+        FROM (
+        SELECT  D.*
+        FROM SIMCO_REG_CASO D WHERE  D.C_INDVIGENTE = 'A'
+        ) B
+        ) A WHERE a.numfila BETWEEN #{ini} AND #{fin}
+        AND UPPER(A.C_CODIGOCASO||A.C_NOMCASO) LIKE '%'||UPPER(#{nombre})||'%'
+       
+    </select>
+    
     <select id="reporteCaso" resultMap="casoMap" parameterType="filtroReporte">
         SELECT * FROM SIMCO_REG_CASO WHERE C_INDVIGENTE = 'A' AND D_FECHAPUBLICACION IS NOT NULL
         <if test="listaDepartamentosSize != null">

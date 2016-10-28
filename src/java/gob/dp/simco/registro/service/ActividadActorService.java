@@ -26,6 +26,8 @@ public interface ActividadActorService {
    
    public List<ActividadActor> actividadActorXcaso(FiltroCasoActor filtroCasoActor);
    
-   public List<ActividadActor> actividadActorNivelAD(ActividadActor actividadActor);   
+   public List<ActividadActor> actividadActorNivelAD(ActividadActor actividadActor); 
+   
+   public Double ponderadoAD(long idActor);
     
 }

@@ -48,4 +48,9 @@ public class ActividadActorDaoImpl extends SqlSessionDaoSupport implements Activ
     public List<ActividadActor> actividadActorNivelAD(ActividadActor actividadActor) {
         return getSqlSession().selectList("gob.dp.simco.registro.dao.ActividadActorDao.actividadActorNivelAD",actividadActor);
     }
+
+    @Override
+    public List<ActividadActor> listaActorAD(long idActor) {
+        return getSqlSession().selectList("gob.dp.simco.registro.dao.ActividadActorDao.listaActorAD",idActor);
+    }
 }

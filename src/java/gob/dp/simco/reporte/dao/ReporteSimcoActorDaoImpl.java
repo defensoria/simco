@@ -21,4 +21,19 @@ public class ReporteSimcoActorDaoImpl extends SqlSessionDaoSupport implements Re
     public List<ReporteSimcoActor> reporteActor(ReporteSimcoActor reporteSimcoActor) {
         return getSqlSession().selectList("gob.dp.simco.reporte.dao.ReporteSimcoActorDao.reporteActor",reporteSimcoActor);
     }
+
+    @Override
+    public Integer contarActorAcontecimiento(long idActor) {
+        return getSqlSession().selectOne("gob.dp.simco.reporte.dao.ReporteSimcoActorDao.contarActorAcontecimiento",idActor);
+    }
+
+    @Override
+    public Integer contarActorAcuerdoComprometido(long idActor) {
+        return getSqlSession().selectOne("gob.dp.simco.reporte.dao.ReporteSimcoActorDao.contarActorAcuerdoComprometido",idActor);
+    }
+
+    @Override
+    public Integer contarActorAcuerdoBeneficiario(long idActor) {
+        return getSqlSession().selectOne("gob.dp.simco.reporte.dao.ReporteSimcoActorDao.contarActorAcuerdoBeneficiario",idActor);
+    }
 }

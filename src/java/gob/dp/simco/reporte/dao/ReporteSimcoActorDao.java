@@ -16,4 +16,10 @@ public interface ReporteSimcoActorDao {
     
     public List<ReporteSimcoActor> reporteActor(ReporteSimcoActor reporteSimcoActor);
     
+    public Integer contarActorAcontecimiento(long idActor);
+    
+    public Integer contarActorAcuerdoComprometido(long idActor);
+    
+    public Integer contarActorAcuerdoBeneficiario(long idActor);
+    
 }

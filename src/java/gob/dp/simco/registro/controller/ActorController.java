@@ -210,6 +210,7 @@ public class ActorController extends AbstractManagedBean implements Serializable
             actorMiembro = new ActorMiembro();
             actorMiembroEntidad = new ActorMiembro();
             actorMiembroPesona = new ActorMiembro();
+            usuarioSession();
         } catch (Exception e) {
             log.error("ERROR - cargarPagina()" + e);
         }
@@ -1327,9 +1328,10 @@ public class ActorController extends AbstractManagedBean implements Serializable
                     }
                 } else {
                     actor.setTipoGeneral("PE");
+                    actor.setFechaRegistro(new Date());
+                    actor.setUsuarioRegistro(usuarioSession.getCodigo());
                     actorService.actorNuevo(actor);
                 }
-                //bloquearFormularioPersona();
                 msg.messageInfo("El actor se ha registrado correctamente ahora puede añadirlo a alguna Empresa o Entidad", null);
             } else {
                 if (actor.getId() != null) {

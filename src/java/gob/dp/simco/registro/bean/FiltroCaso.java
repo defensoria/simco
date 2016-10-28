@@ -17,6 +17,10 @@ public class FiltroCaso {
     private String nombre;
     
     private String descripcionPreliminar;
+    
+    private Long ini;
+    
+    private Long fin;
 
     public String getNombre() {
         return nombre;
@@ -41,7 +45,21 @@ public class FiltroCaso {
     public void setId(Long id) {
         this.id = id;
     }
-    
-    
+
+    public Long getIni() {
+        return ini;
+    }
+
+    public void setIni(Long ini) {
+        this.ini = ini;
+    }
+
+    public Long getFin() {
+        return fin;
+    }
+
+    public void setFin(Long fin) {
+        this.fin = fin;
+    }
     
 }

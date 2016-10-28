@@ -79,5 +79,10 @@ public class CasoDaoImpl extends SqlSessionDaoSupport implements CasoDao{
     public void casoUpdateSistesis(Caso caso) {
         getSqlSession().update("gob.dp.simco.registro.dao.CasoDao.casoUpdateSistesis", caso);
     }
+
+    @Override
+    public List<Caso> buscarCasoXnombreCodigo(FiltroCaso filtroCaso) {
+        return getSqlSession().selectList("gob.dp.simco.registro.dao.CasoDao.buscarCasoXnombreCodigo",filtroCaso);
+    }
     
 }

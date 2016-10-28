@@ -260,7 +260,7 @@ public class CasoController extends AbstractManagedBean implements Serializable 
 
     public boolean addRegion() {
         try {
-            if (StringUtils.isNotBlank(casoRegion.getIdDepartamento()) && StringUtils.isNotBlank(casoRegion.getIdDepartamento())) {
+            if (StringUtils.isNotBlank(casoRegion.getIdDepartamento()) && !StringUtils.equals(casoRegion.getIdDepartamento(),"0")) {
                 casoRegion.setEstado("ACT");
                 casoRegion.setIdCaso(caso.getId());
                 casoRegionService.casoRegionInsertar(casoRegion);
@@ -268,18 +268,18 @@ public class CasoController extends AbstractManagedBean implements Serializable 
                 msg.messageAlert("Debe de ingresar como minimo un departamento", null);
                 return false;
             }
-            if (StringUtils.isNotBlank(casoRegion.getIdDepartamento()) && StringUtils.isNotBlank(casoRegion.getIdDepartamento())) {
+            if (StringUtils.isNotBlank(casoRegion.getIdDepartamento()) && !StringUtils.equals(casoRegion.getIdDepartamento(),"0")) {
                 String depar = ubigeoService.departamentoOne(casoRegion.getIdDepartamento()).getDescripcion();
                 casoRegion.setNombreDepartamento(depar);
             }
-            if (StringUtils.isNotBlank(casoRegion.getIdProvincia()) && StringUtils.isNotBlank(casoRegion.getIdProvincia())) {
+            if (StringUtils.isNotBlank(casoRegion.getIdProvincia()) && !StringUtils.equals(casoRegion.getIdProvincia(),"0")) {
                 Provincia p = new Provincia();
                 p.setIdDepartamento(casoRegion.getIdDepartamento());
                 p.setIdProvincia(casoRegion.getIdProvincia());
                 String prov = ubigeoService.provinciaOne(p).getDescripcion();
                 casoRegion.setNombreProvincia(prov);
             }
-            if (StringUtils.isNotBlank(casoRegion.getIdDistrito()) && StringUtils.isNotBlank(casoRegion.getIdDistrito())) {
+            if (StringUtils.isNotBlank(casoRegion.getIdDistrito()) && !StringUtils.equals(casoRegion.getIdDistrito(),"0")) {
                 Distrito d = new Distrito();
                 d.setIdDepartamento(casoRegion.getIdDepartamento());
                 d.setIdProvincia(casoRegion.getIdProvincia());
@@ -361,11 +361,11 @@ public class CasoController extends AbstractManagedBean implements Serializable 
             listaCasoRegion = new ArrayList<>();
             List<CasoRegion> list = casoRegionService.casoRegionBuscar(caso.getId());
             for (CasoRegion cr : list) {
-                if (StringUtils.isNotBlank(cr.getIdDepartamento()) && StringUtils.isNotBlank(cr.getIdDepartamento())) {
+                if (StringUtils.isNotBlank(cr.getIdDepartamento()) && !StringUtils.equals(cr.getIdDepartamento(),"0")) {
                     String depar = ubigeoService.departamentoOne(cr.getIdDepartamento()).getDescripcion();
                     cr.setNombreDepartamento(depar);
                 }
-                if (StringUtils.isNotBlank(cr.getIdProvincia()) && StringUtils.isNotBlank(cr.getIdProvincia())) {
+                if (StringUtils.isNotBlank(cr.getIdProvincia()) && !StringUtils.equals(cr.getIdProvincia(),"0")) {
                     Provincia p = new Provincia();
                     p.setIdDepartamento(cr.getIdDepartamento());
                     p.setIdProvincia(cr.getIdProvincia());
@@ -374,7 +374,7 @@ public class CasoController extends AbstractManagedBean implements Serializable 
                 } else {
                     cr.setNombreProvincia("");
                 }
-                if (StringUtils.isNotBlank(cr.getIdDistrito()) && StringUtils.isNotBlank(cr.getIdDistrito())) {
+                if (StringUtils.isNotBlank(cr.getIdDistrito()) && !StringUtils.equals(cr.getIdDistrito(),"0")) {
                     Distrito d = new Distrito();
                     d.setIdDepartamento(cr.getIdDepartamento());
                     d.setIdProvincia(cr.getIdProvincia());

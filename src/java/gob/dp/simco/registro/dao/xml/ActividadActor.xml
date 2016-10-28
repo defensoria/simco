@@ -123,4 +123,8 @@
     </select>
 
 
+    <select id="listaActorAD" resultMap="actividadActorMap" parameterType="Long">
+        SELECT * FROM SIMCO_REG_ACTIVIDAD_ACTOR WHERE N_ID_ACTOR = #{id}
+    </select>
+
 </mapper>

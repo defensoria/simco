@@ -41,4 +41,6 @@ public interface CasoService {
    public void casoUpdateIndicador(Caso caso);
    
    public void casoUpdateSistesis(Caso caso);
+   
+   public List<Caso> buscarCasoXnombreCodigo(FiltroCaso filtroCaso);
 }

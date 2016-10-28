@@ -6,6 +6,7 @@
 
 package gob.dp.simco.registro.service;
 
+import gob.dp.simco.comun.FunctionUtil;
 import gob.dp.simco.registro.bean.FiltroCasoActor;
 import gob.dp.simco.registro.dao.ActividadActorDao;
 import gob.dp.simco.registro.entity.ActividadActor;
@@ -57,5 +58,22 @@ public class ActividadActorServiceImpl implements ActividadActorService{
     public List<ActividadActor> actividadActorNivelAD(ActividadActor actividadActor) {
         return actividadActorDao.actividadActorNivelAD(actividadActor);
     }
+
+    @Override
+    public Double ponderadoAD(long idActor) {
+        List<ActividadActor> lista = actividadActorDao.listaActorAD(idActor);
+        Double ponderado = 0.0;
+        Double suma = 0.0;
+        for(ActividadActor aa : lista){
+            if(aa.getNivel() != null)
+                suma = suma + aa.getNivel();
+        }
+        if(suma != null && suma > 0.0){
+            ponderado = suma/lista.size();
+            return Double.parseDouble(FunctionUtil.formateaDecimal(ponderado));
+        }
+        return null;
+    }
+
     
 }
