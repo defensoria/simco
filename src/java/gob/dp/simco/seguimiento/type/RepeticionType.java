@@ -53,7 +53,7 @@ public enum RepeticionType {
 	}
 
 	public static List<SelectVO> getList() {
-		List<SelectVO> rList = new ArrayList<SelectVO>();
+		List<SelectVO> rList = new ArrayList<>();
 		for (RepeticionType s : list) {
 			SelectVO select = new SelectVO();
 			select.setId(s.getKey());

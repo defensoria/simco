@@ -49,7 +49,7 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td><b>Caso</b></td>
+                                                    <td><b>Caso:</b></td>
                                                     <td>
                                                         <table style="width: 100%">
                                                             <tr>
@@ -58,7 +58,7 @@
                                                                     <h:inputHidden value="#{reporteSimcoController.reporteSimcoActor.codigoCaso}" />
                                                                 </td>
                                                                 <td>
-                                                                    <a class="btn btn-info" jsf:action="#{reporteSimcoController.limpiarCasos()}">
+                                                                    <a class="btn btn-info" jsf:action="#{reporteSimcoController.limpiarReporteActor()}">
                                                                         <span class="glyphicon glyphicon-search" />Buscar
                                                                         <f:ajax render="idPanelModalCaso" onevent="openModalBusquedaCaso()" />
                                                                     </a>
@@ -69,7 +69,7 @@
                                                 </tr>
                                                 <tr>
                                                     <td>
-                                                        <b>Tipología del caso</b>
+                                                        <b>Tipología del caso:</b>
                                                     </td>
                                                     <td>
                                                         <h:selectOneMenu value="#{reporteSimcoController.reporteSimcoActor.tipologia}">
@@ -80,7 +80,7 @@
                                                 </tr>
                                                 <tr>
                                                     <td>
-                                                        <b>Región del caso</b>
+                                                        <b>Región del caso:</b>
                                                     </td>
                                                     <td>
                                                         <h:selectOneMenu value="#{reporteSimcoController.reporteSimcoActor.idRegion}" >
@@ -91,7 +91,7 @@
                                                 </tr>
                                                 <tr>
                                                     <td>
-                                                        <b>Estado del caso</b>
+                                                        <b>Estado del caso:</b>
                                                     </td>
                                                     <td>
                                                         <h:selectOneMenu value="#{reporteSimcoController.reporteSimcoActor.estado}">
@@ -102,7 +102,7 @@
                                                 </tr>
                                                 <tr>
                                                     <td>
-                                                        <b>Que incluya este tipo de aconteciminento</b>
+                                                        <b>Que incluya este tipo de aconteciminento:</b>
                                                     </td>
                                                     <td>
                                                         <h:selectOneMenu value="#{reporteSimcoController.reporteSimcoActor.tipoAcontecimiento}">
@@ -113,7 +113,7 @@
                                                 </tr>
                                                 <tr>
                                                     <td>
-                                                        <b>Que incluyan como actor a comunidades nativas</b>
+                                                        <b>Que incluyan como actor a comunidades nativas:</b>
                                                     </td>
                                                     <td>
                                                         <h:selectOneMenu value="#{reporteSimcoController.reporteSimcoActor.esComunidadNativa}">
@@ -124,7 +124,7 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td><b>Actor involucrado</b></td>
+                                                    <td><b>Actor involucrado:</b></td>
                                                     <td>
                                                         <table style="width: 100%">
                                                             <tr>
@@ -161,7 +161,7 @@
                                             </table>
                                         </td>
                                         <td style="vertical-align: top; text-align: right">
-                                            <a class="btn btn-warning" jsf:action="#{reporteSimcoController.limpiar()}">
+                                            <a class="btn btn-warning" jsf:action="#{reporteSimcoController.limpiarReporteActor()}">
                                                 <span class="glyphicon glyphicon-asterisk" />Limpiar  
                                             </a>
                                             &#160;&#160;&#160;
@@ -171,6 +171,15 @@
                                         </td>
                                     </tr>
                                 </table>
+                                <br/>
+                                <div>
+                                    <a jsf:action="#{reporteSimcoController.reporteSimcoActorExcel()}">
+                                        <img src="../../bootstrap/img/excel.png" height="45" width="45"/>
+                                    </a>
+                                    <a jsf:action="#{reporteSimcoController.reporteSimcoCasoPdf()}">
+                                        <img src="../../bootstrap/img/pdf.png" height="45" width="45"/>
+                                    </a>
+                                </div>
                                 <br/>
                                 <h:dataTable value="#{reporteSimcoController.listReporteActor}" var="actor" class="table table-striped" rendered="#{reporteSimcoController.listReporteActor.size() > 0}"  binding="#{itemD}">
                                     <h:column>
@@ -182,16 +191,24 @@
                                         <h:outputText value="#{actor.nombreActor}" />
                                     </h:column>
                                     <h:column>
-                                        <f:facet name="header">Documento</f:facet>
-                                        <h:outputText rendered="#{actor.tipoActor == 'PE'}" value="#{actor.documento}" />
-                                        <h:outputText rendered="#{actor.tipoActor == 'EM'}" value="#{actor.ruc}" />
-                                        <h:outputText rendered="#{actor.tipoActor == 'EN'}" value="#{actor.ruc}" />
+                                        <f:facet name="header">Categoría</f:facet>
+                                        <h:outputText value="#{actor.descripcionTipoActor}" />
                                     </h:column>
                                     <h:column>
-                                        <f:facet name="header">Categoría</f:facet>
-                                        <h:outputText rendered="#{actor.tipoActor == 'PE'}" value="Población" />
-                                        <h:outputText rendered="#{actor.tipoActor == 'EM'}" value="Organización / empresa" />
-                                        <h:outputText rendered="#{actor.tipoActor == 'EN'}" value="Entidad estatal" />
+                                        <f:facet name="header">Tipo actor</f:facet>
+                                        <h:outputText value="#{actor.subtipo}" />
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">Subtipo 1</f:facet>
+                                        <h:outputText value="#{actor.subtipo1}" />
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">Subtipo 2</f:facet>
+                                        <h:outputText value="#{actor.subtipo2}" />
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">Subtipo 3</f:facet>
+                                        <h:outputText value="#{actor.subtipo3}" />
                                     </h:column>
                                     <h:column>
                                         <f:facet name="header">Departamento</f:facet>
@@ -200,7 +217,7 @@
 
                                     <h:column>
                                         <f:facet name="header">Número de conflitos en los que participa</f:facet>
-                                        <h:outputText value="#{actor.contadorActorAcontecimiento}" />
+                                        <h:outputText value="#{actor.contadorActorCaso}" />
                                     </h:column>
 
                                     <h:column>
@@ -296,7 +313,7 @@
                                     <div class="modal-body">
                                         <h:panelGroup id="idPanelModalActor">
                                             <div id="idDivRegistro" class="form-group has-feedback" style="width:100%;margin:auto">
-                                                <input type="text" name="nombreActor" placeholder="Buscar por nombre de actor"/>
+                                                <input type="text" autocomplete="false" name="nombreActor" placeholder="Buscar por nombre de actor"/>
                                                 <a style="float:right;font-size:large;margin:auto" jsf:action="#{actorController.buscarActorXnombrePaginado(1)}" jsf:onclick="loadingModal()">
                                                     <span class="glyphicon glyphicon-search form-control-feedback"/>
                                                     <f:ajax render="idPanelModalActor" execute="@form" onevent="closeModal"/>

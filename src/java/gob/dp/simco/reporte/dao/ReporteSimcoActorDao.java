@@ -5,6 +5,7 @@
  */
 package gob.dp.simco.reporte.dao;
 
+import gob.dp.simco.registro.entity.CasoActor;
 import gob.dp.simco.reporte.entity.ReporteSimcoActor;
 import java.util.List;
 
@@ -21,5 +22,13 @@ public interface ReporteSimcoActorDao {
     public Integer contarActorAcuerdoComprometido(long idActor);
     
     public Integer contarActorAcuerdoBeneficiario(long idActor);
+    
+    public Integer contarCasosPorActor(Long idActor);
+    
+    public Integer contarActorAcontecimientoProtesta(Long idActor);
+    
+    public Integer contarActorAcontecimientoProtestaViolencia(Long idActor);
+    
+    public Integer contarCasosPorActorParticipacion(CasoActor casoActor);
     
 }

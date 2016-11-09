@@ -227,7 +227,7 @@
                                     <div class="modal-body">
                                         <h:panelGroup id="idPanelModalActor">
                                             <div id="idDivRegistro" class="form-group has-feedback" style="width:100%;margin:auto">
-                                                <input type="text" name="nombreActor" placeholder="Buscar por nombre de actor"/>
+                                                <input type="text"  autocomplete="false" name="nombreActor" placeholder="Buscar por nombre de actor"/>
                                                 <a style="float:right;font-size:large;margin:auto" jsf:action="#{actorController.buscarActorXnombrePaginado(1)}" jsf:onclick="loadingModal()">
                                                     <span class="glyphicon glyphicon-search form-control-feedback"/>
                                                     <f:ajax render="idPanelModalActor" execute="@form" onevent="closeModal"/>

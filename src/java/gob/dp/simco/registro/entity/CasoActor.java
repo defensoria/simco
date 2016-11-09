@@ -26,6 +26,14 @@ public class CasoActor implements Serializable{
     
     private Actor actor;
 
+    public CasoActor(Long idActor, String tipo) {
+        this.idActor = idActor;
+        this.tipo = tipo;
+    }
+
+    public CasoActor() {
+    }
+    
     public Long getIdCaso() {
         return idCaso;
     }

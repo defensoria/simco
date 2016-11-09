@@ -15,6 +15,7 @@ import gob.dp.simco.intervencion.service.IntervencionService;
 import gob.dp.simco.registro.bean.FiltroCaso;
 import gob.dp.simco.registro.entity.Actor;
 import gob.dp.simco.registro.entity.Caso;
+import gob.dp.simco.registro.entity.CasoActor;
 import gob.dp.simco.registro.service.ActividadActorService;
 import gob.dp.simco.registro.service.ActividadService;
 import gob.dp.simco.registro.service.ActorService;
@@ -107,7 +108,7 @@ public class ReporteSimcoController implements Serializable {
     public String cargarReporteActor() {
         listaAnhos = AnhosEnum.getList();
         reporteSimcoActor = new ReporteSimcoActor();
-        listReporteCasos = null;
+        limpiarReporteActor();
         return "reporteSimcoActor";
     }
 
@@ -177,7 +178,29 @@ public class ReporteSimcoController implements Serializable {
         initJasperSimcoCaso(1);
         FacesContext facesContext = FacesContext.getCurrentInstance();
         HttpServletResponse httpServletResponse = (HttpServletResponse) facesContext.getCurrentInstance().getExternalContext().getResponse();
-        httpServletResponse.addHeader("Content-disposition", "attachment; filename=" + fecha + "_reporteSimcoCaso.xls");
+        httpServletResponse.addHeader("Content-disposition", "attachment; filename=" + fecha + "_reporteCasos.xlsx");
+        ServletOutputStream servletOutputStream = httpServletResponse.getOutputStream();
+        JRXlsxExporter jrXlsxExporter = new JRXlsxExporter();
+        jrXlsxExporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
+        jrXlsxExporter.setParameter(JRXlsExporterParameter.IS_ONE_PAGE_PER_SHEET, Boolean.TRUE);
+        jrXlsxExporter.setParameter(JRExporterParameter.OUTPUT_STREAM, servletOutputStream);
+        jrXlsxExporter.setParameter(JRXlsExporterParameter.IS_ONE_PAGE_PER_SHEET, Boolean.FALSE);
+        jrXlsxExporter.setParameter(JRXlsExporterParameter.IS_DETECT_CELL_TYPE, Boolean.TRUE);
+        jrXlsxExporter.setParameter(JRXlsExporterParameter.IS_WHITE_PAGE_BACKGROUND, Boolean.FALSE);
+        jrXlsxExporter.setParameter(JRXlsExporterParameter.IS_REMOVE_EMPTY_SPACE_BETWEEN_ROWS, Boolean.TRUE);
+        jrXlsxExporter.exportReport();
+        facesContext.responseComplete();
+        facesContext.renderResponse();
+    }
+    
+    public void reporteSimcoActorExcel() throws JRException, IOException {
+        Date date = new Date();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String fecha = simpleDateFormat.format(date);
+        initJasperSimcoActor(1);
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        HttpServletResponse httpServletResponse = (HttpServletResponse) facesContext.getCurrentInstance().getExternalContext().getResponse();
+        httpServletResponse.addHeader("Content-disposition", "attachment; filename=" + fecha + "_reporteActores.xlsx");
         ServletOutputStream servletOutputStream = httpServletResponse.getOutputStream();
         JRXlsxExporter jrXlsxExporter = new JRXlsxExporter();
         jrXlsxExporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
@@ -211,6 +234,14 @@ public class ReporteSimcoController implements Serializable {
         JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(listReporteCasos);
         if(tipo == 1)
             jasperPrint = JasperFillManager.fillReport(ConstantesUtil.BASE_URL_REPORT + "reporteSimcoCasoExcel.jasper", new HashMap(), beanCollectionDataSource);
+        else
+            jasperPrint = JasperFillManager.fillReport(ConstantesUtil.BASE_URL_REPORT + "reporteSimcoCasoPdf.jasper", new HashMap(), beanCollectionDataSource);
+    }
+    
+    public void initJasperSimcoActor(int tipo) throws JRException {
+        JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(listReporteActor);
+        if(tipo == 1)
+            jasperPrint = JasperFillManager.fillReport(ConstantesUtil.BASE_URL_REPORT + "reporteSimcoActorExcel.jasper", new HashMap(), beanCollectionDataSource);
         else
             jasperPrint = JasperFillManager.fillReport(ConstantesUtil.BASE_URL_REPORT + "reporteSimcoCasoPdf.jasper", new HashMap(), beanCollectionDataSource);
     }
@@ -256,23 +287,61 @@ public class ReporteSimcoController implements Serializable {
         if(StringUtils.isNotBlank(actor.getNombre()))
             sb.append(actor.getNombre());
         if(StringUtils.isNotBlank(actor.getApellidoPat()))
-            sb.append(actor.getApellidoPat());
+            sb.append(" ").append(actor.getApellidoPat());
         if(StringUtils.isNotBlank(actor.getApellidoMat()))
-            sb.append(actor.getApellidoMat());
+            sb.append(" ").append(actor.getApellidoMat());
         reporteSimcoActor.setNombreActor(sb.toString());
-    }
-    
-    public void limpiarCasos(){
-        listadoCasos = null;
     }
 
     public void reporteActores() {
         listReporteActor = reporteSimcoActorService.reporteActor(reporteSimcoActor);
         for(ReporteSimcoActor a : listReporteActor){
+            if(StringUtils.equals(a.getTipoActor(),"PE"))
+                a.setDescripcionTipoActor("Población");
+            if(StringUtils.equals(a.getTipoActor(),"EN"))
+                a.setDescripcionTipoActor("Entidad estatal");
+            if(StringUtils.equals(a.getTipoActor(),"EM") && StringUtils.equals(a.getClasificacion(),"OR"))
+                a.setDescripcionTipoActor("Organización");
+            if(StringUtils.equals(a.getTipoActor(),"EM") && StringUtils.equals(a.getClasificacion(),"EM"))
+                a.setDescripcionTipoActor("Empresa");
+            
+            if(StringUtils.equals(a.getSexo(),"M"))
+                a.setSexo("Masculino");
+            if(StringUtils.equals(a.getSexo(),"F"))
+                a.setSexo("Femenino");
+            
+            if(StringUtils.equals(a.getTipoActor(),"PE")){
+                a.setSubtipo(a.getTipoPoblacion());
+                a.setSubtipo1(a.getSubTipo1Poblacion());
+                a.setSubtipo2(a.getSubTipo2Poblacion());
+            }
+            if(StringUtils.equals(a.getTipoActor(),"EN")){
+                a.setSubtipo(a.getTipoEntidad());
+                a.setSubtipo1(a.getSubTipo1Entidad());
+                a.setSubtipo2(a.getSubTipo2Entidad());
+            }   
+            if(StringUtils.equals(a.getTipoActor(),"EM") && StringUtils.equals(a.getClasificacion(),"OR")){
+                a.setSubtipo(a.getTipoOrganizacion());
+                a.setSubtipo1(a.getSubTipo1Organizacion());
+                a.setSubtipo2(a.getSubTipo2Organizacion());
+            }
+            if(StringUtils.equals(a.getTipoActor(),"EM") && StringUtils.equals(a.getClasificacion(),"EM")){
+                a.setSubtipo(a.getTipoEmpresa());
+                a.setSubtipo1(a.getSubTipo1Empresa());
+                a.setSubtipo2(a.getSubTipo2Empresa());
+                a.setSubtipo3(a.getSubTipo3Empresa());
+            }
+            
             a.setContadorActorAcontecimiento(reporteSimcoActorService.contarActorAcontecimiento(a.getIdActor()));
+            a.setContadorActorAcontecimientoProtesta(reporteSimcoActorService.contarActorAcontecimientoProtesta(a.getIdActor()));
+            a.setContadorActorAcontecimientoProtestaViolencia(reporteSimcoActorService.contarActorAcontecimientoProtestaViolencia(a.getIdActor()));
             a.setContadorActorAcuerdoComprometido(reporteSimcoActorService.contarActorAcuerdoComprometido(a.getIdActor()));
             a.setContadorActorAcuerdoBeneficiario(reporteSimcoActorService.contarActorAcuerdoBeneficiario(a.getIdActor()));
             a.setPonderado(actividadActorService.ponderadoAD(a.getIdActor()));
+            a.setContadorActorCaso(reporteSimcoActorService.contarCasosPorActor(a.getIdActor()));
+            a.setContadorCasosPorActorPrimario(reporteSimcoActorService.contarCasosPorActorParticipacion(new CasoActor(a.getIdActor(), "01")));
+            a.setContadorCasosPorActorSecundario(reporteSimcoActorService.contarCasosPorActorParticipacion(new CasoActor(a.getIdActor(), "02")));
+            a.setContadorCasosPorActorTerciario(reporteSimcoActorService.contarCasosPorActorParticipacion(new CasoActor(a.getIdActor(), "03")));
         }
     }
 
@@ -292,10 +361,10 @@ public class ReporteSimcoController implements Serializable {
             sb.append(actor.getNombre());
         }
         if (StringUtils.isNotBlank(actor.getApellidoPat())) {
-            sb.append(" " + actor.getApellidoPat());
+            sb.append(" ").append(actor.getApellidoPat());
         }
         if (StringUtils.isNotBlank(actor.getApellidoMat())) {
-            sb.append(" " + actor.getApellidoMat());
+            sb.append(" ").append(actor.getApellidoMat());
         }
         reporteSimcoCaso.setNombreActor(sb.toString());
     }

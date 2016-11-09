@@ -1355,7 +1355,11 @@ public class ActorController extends AbstractManagedBean implements Serializable
         }
     }
 
-    public void registrarActorEmpresa() {
+    public boolean registrarActorEmpresa() {
+        if(StringUtils.isBlank(empresa.getClasificacion())){
+            msg.messageAlert("Debe señalar si es Organización o Empresa", null);
+            return false;
+        }
         try {
             if (empresa.getRuc() != null && !StringUtils.equals(empresa.getRuc(), "")) {
                 int cont = actorService.actorBuscarTotalSimpleCountRUC(empresa);
@@ -1390,6 +1394,7 @@ public class ActorController extends AbstractManagedBean implements Serializable
         } catch (Exception ex) {
             log.error("ERROR - registrarActorEmpresa()" + ex);
         }
+        return true;
     }
 
     public void registrarActorEntidad() {

@@ -5,6 +5,7 @@
  */
 package gob.dp.simco.reporte.service;
 
+import gob.dp.simco.registro.entity.CasoActor;
 import gob.dp.simco.reporte.dao.ReporteSimcoActorDao;
 import gob.dp.simco.reporte.entity.ReporteSimcoActor;
 import java.util.List;
@@ -39,6 +40,26 @@ public class ReporteSimcoActorServiceImpl implements ReporteSimcoActorService{
     @Override
     public Integer contarActorAcuerdoBeneficiario(long idActor) {
         return reporteSimcoActorDao.contarActorAcuerdoBeneficiario(idActor);
+    }
+
+    @Override
+    public Integer contarCasosPorActor(Long idCaso) {
+        return reporteSimcoActorDao.contarCasosPorActor(idCaso);
+    }
+
+    @Override
+    public Integer contarActorAcontecimientoProtesta(Long idActor) {
+        return reporteSimcoActorDao.contarActorAcontecimientoProtesta(idActor);
+    }
+
+    @Override
+    public Integer contarActorAcontecimientoProtestaViolencia(Long idActor) {
+        return reporteSimcoActorDao.contarActorAcontecimientoProtestaViolencia(idActor);
+    }
+
+    @Override
+    public Integer contarCasosPorActorParticipacion(CasoActor casoActor) {
+        return reporteSimcoActorDao.contarCasosPorActorParticipacion(casoActor);
     }
     
 }

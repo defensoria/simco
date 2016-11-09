@@ -5,6 +5,7 @@
  */
 package gob.dp.simco.reporte.dao;
 
+import gob.dp.simco.registro.entity.CasoActor;
 import gob.dp.simco.reporte.entity.ReporteSimcoActor;
 import java.util.List;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
@@ -35,5 +36,25 @@ public class ReporteSimcoActorDaoImpl extends SqlSessionDaoSupport implements Re
     @Override
     public Integer contarActorAcuerdoBeneficiario(long idActor) {
         return getSqlSession().selectOne("gob.dp.simco.reporte.dao.ReporteSimcoActorDao.contarActorAcuerdoBeneficiario",idActor);
+    }
+
+    @Override
+    public Integer contarCasosPorActor(Long idActor) {
+        return getSqlSession().selectOne("gob.dp.simco.reporte.dao.ReporteSimcoActorDao.contarCasosPorActor",idActor);
+    }
+
+    @Override
+    public Integer contarActorAcontecimientoProtesta(Long idActor) {
+        return getSqlSession().selectOne("gob.dp.simco.reporte.dao.ReporteSimcoActorDao.contarActorAcontecimientoProtesta",idActor);
+    }
+
+    @Override
+    public Integer contarActorAcontecimientoProtestaViolencia(Long idActor) {
+        return getSqlSession().selectOne("gob.dp.simco.reporte.dao.ReporteSimcoActorDao.contarActorAcontecimientoProtestaViolencia",idActor);
+    }
+
+    @Override
+    public Integer contarCasosPorActorParticipacion(CasoActor casoActor) {
+        return getSqlSession().selectOne("gob.dp.simco.reporte.dao.ReporteSimcoActorDao.contarCasosPorActorParticipacion",casoActor);
     }
 }
