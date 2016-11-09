@@ -459,6 +459,13 @@
             <to-view-id>/pages/reportes/reporteSimcoActor.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
+    
+    <navigation-rule>
+        <navigation-case>
+            <from-outcome>reporteSimcoActividad</from-outcome>
+            <to-view-id>/pages/reportes/reporteSimcoActividad.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
   
     <navigation-rule>
         <navigation-case>

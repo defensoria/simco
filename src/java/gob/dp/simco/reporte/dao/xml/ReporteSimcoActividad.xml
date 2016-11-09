@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD iBatis Mapper 3.0 //EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="gob.dp.simco.reporte.dao.ReporteSimcoActividadDao">
+    
+    <resultMap id="reporteSimcoActividadMap" type="reporteSimcoActividad">
+        <result property="codigoActividad" column="C_CODIGOACTIVIDAD"/>
+        <result property="nombreActividad" column="C_NOMACTIVIDAD"/>
+        <result property="claseActividad" column="C_TIPO"/>
+        <result property="fecha" column="FECHA_REGISTRO"/>
+        
+        
+        
+    </resultMap>      
+
+    <select id="reporteActividad" parameterType="reporteSimcoActividad"  resultMap="reporteSimcoActividadMap">
+        SELECT A.C_CODIGOACTIVIDAD, A.C_NOMACTIVIDAD, TO_CHAR(D_FECREGISTRO, 'DD/MM/YYYY') FECHA_REGISTRO, C_TIPO FROM SIMCO_REG_ACTIVIDAD A     
+    </select>
+    
+    
+</mapper>

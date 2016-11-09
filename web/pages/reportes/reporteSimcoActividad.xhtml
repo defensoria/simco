@@ -14,19 +14,19 @@
                                     <span class="text-resalt-comun"/>Reporte de casos
                                 </a>
                             </li>
-                            <li role="presentation" class="active">
+                            <li role="presentation">
                                 <a  jsf:action="#{reporteSimcoController.cargarReporteActor()}" aria-controls="profile" role="tab" data-toggle="tab">
                                     <span class="text-resalt-comun"/>Reporte de actores
                                 </a>
                             </li>
-                            <li role="presentation">
+                            <li role="presentation" class="active">
                                 <a jsf:action="#{reporteSimcoController.cargarReporteActividad()}" aria-controls="messages" role="tab" data-toggle="tab">
                                     <span class="text-resalt-comun"/>Reporte de actividades
                                 </a>
                             </li>
                         </ul>
                         <div class="tab-content">
-                            <div role="tabpanel" class="tab-pane active">
+                            <div role="tabpanel" class="tab-pane active" >
                                 <table style="width: 100%">
                                     <tr>
                                         <td style="width: 50%">
@@ -41,7 +41,7 @@
                                                         <b>Año de Registro:</b>
                                                     </td>
                                                     <td>
-                                                        <h:selectOneMenu value="#{reporteSimcoController.reporteSimcoActor.anho}">
+                                                        <h:selectOneMenu value="#{reporteSimcoController.reporteSimcoActividad.anho}">
                                                             <f:selectItem itemLabel="Seleccione" itemValue="" />
                                                             <f:selectItems value="#{reporteSimcoController.listaAnhos}" />
                                                         </h:selectOneMenu>
@@ -53,13 +53,13 @@
                                                         <table style="width: 100%">
                                                             <tr>
                                                                 <td style="width: 95%">
-                                                                    <input type="text" jsf:value="#{reporteSimcoController.reporteSimcoActor.nombreCaso}" placeholder="Caso" readonly="true" style="background: silver"/>
-                                                                    <h:inputHidden value="#{reporteSimcoController.reporteSimcoActor.codigoCaso}" />
+                                                                    <input type="text" jsf:value="#{reporteSimcoController.reporteSimcoActividad.nombreCaso}" placeholder="Caso" readonly="true" style="background: silver"/>
+                                                                    <h:inputHidden value="#{reporteSimcoController.reporteSimcoActividad.codigoCaso}" />
                                                                 </td>
                                                                 <td>
-                                                                    <a class="btn btn-info" jsf:action="#{reporteSimcoController.limpiarReporteActor()}">
+                                                                    <a class="btn btn-info" jsf:action="#{reporteSimcoController.limpiarReporteActividad()}">
                                                                         <span class="glyphicon glyphicon-search" />Buscar
-                                                                        <f:ajax render="idPanelModalCaso" onevent="openModalBusquedaCaso()" />
+                                                                        <f:ajax render="idPanelModalCaso1" onevent="openModalBusquedaCaso()" />
                                                                     </a>
                                                                 </td>
                                                             </tr>
@@ -71,7 +71,7 @@
                                                         <b>Tipología del caso:</b>
                                                     </td>
                                                     <td>
-                                                        <h:selectOneMenu value="#{reporteSimcoController.reporteSimcoActor.tipologia}">
+                                                        <h:selectOneMenu value="#{reporteSimcoController.reporteSimcoActividad.tipologia}">
                                                             <f:selectItem itemLabel="Seleccione" itemValue=""/>
                                                             <f:selectItems value="#{listasComunesController.buscarTipoCaso(false, false, false)}" var="y" itemLabel="#{y.nombreParametro}" itemValue="#{y.valorParametro}" />
                                                         </h:selectOneMenu>
@@ -82,7 +82,7 @@
                                                         <b>Región del caso:</b>
                                                     </td>
                                                     <td>
-                                                        <h:selectOneMenu value="#{reporteSimcoController.reporteSimcoActor.idRegion}" >
+                                                        <h:selectOneMenu value="#{reporteSimcoController.reporteSimcoActividad.idRegion}" >
                                                             <f:selectItem itemLabel="Seleccione" itemValue=""/>
                                                             <f:selectItems value="#{casoController.listaDepartamento}" var="y" itemLabel="#{y.value}" itemValue="#{y.label}" />
                                                         </h:selectOneMenu>
@@ -93,7 +93,7 @@
                                                         <b>Estado del caso:</b>
                                                     </td>
                                                     <td>
-                                                        <h:selectOneMenu value="#{reporteSimcoController.reporteSimcoActor.estado}">
+                                                        <h:selectOneMenu value="#{reporteSimcoController.reporteSimcoActividad.estado}">
                                                             <f:selectItem itemLabel="Seleccione" itemValue=""/>
                                                             <f:selectItems value="#{listasComunesController.buscarEstadoCaso(false, false, false)}" var="y" itemLabel="#{y.nombreParametro}" itemValue="#{y.valorParametro}" />
                                                         </h:selectOneMenu>
@@ -104,7 +104,7 @@
                                                         <b>Que incluya este tipo de aconteciminento:</b>
                                                     </td>
                                                     <td>
-                                                        <h:selectOneMenu value="#{reporteSimcoController.reporteSimcoActor.tipoAcontecimiento}">
+                                                        <h:selectOneMenu value="#{reporteSimcoController.reporteSimcoActividad.tipoAcontecimiento}">
                                                             <f:selectItem itemLabel="Seleccione" itemValue=""/>
                                                             <f:selectItems value="#{listasComunesController.buscarTipoAcontecimiento(false,false,false)}" var="y" itemLabel="#{y.nombreParametro}" itemValue="#{y.valorParametro}" />
                                                         </h:selectOneMenu>
@@ -115,7 +115,7 @@
                                                         <b>Que incluyan como actor a comunidades nativas:</b>
                                                     </td>
                                                     <td>
-                                                        <h:selectOneMenu value="#{reporteSimcoController.reporteSimcoActor.esComunidadNativa}">
+                                                        <h:selectOneMenu value="#{reporteSimcoController.reporteSimcoActividad.esComunidadNativa}">
                                                             <f:selectItem itemLabel="Seleccione" itemValue="0"/>
                                                             <f:selectItem itemLabel="Si" itemValue="S"/>
                                                             <f:selectItem itemLabel="No" itemValue="N"/>
@@ -128,13 +128,13 @@
                                                         <table style="width: 100%">
                                                             <tr>
                                                                 <td style="width: 95%">
-                                                                    <input type="text" jsf:value="#{reporteSimcoController.reporteSimcoActor.nombreActor}" placeholder="Actor" readonly="true" style="background: silver"/>
-                                                                    <h:inputHidden value="#{reporteSimcoController.reporteSimcoActor.idActor}" />
+                                                                    <input type="text" jsf:value="#{reporteSimcoController.reporteSimcoActividad.nombreActor}" placeholder="Actor" readonly="true" style="background: silver"/>
+                                                                    <h:inputHidden value="#{reporteSimcoController.reporteSimcoActividad.idActor}" />
                                                                 </td>
                                                                 <td>
                                                                     <a class="btn btn-info" jsf:action="#{actorController.limpiarModalBusquedaActor()}">
                                                                         <span class="glyphicon glyphicon-search" />Buscar
-                                                                        <f:ajax render="idPanelModalActor" onevent="openModalBusquedaActor()" />
+                                                                        <f:ajax render="idPanelModalActor1" onevent="openModalBusquedaActor()" />
                                                                     </a>
                                                                 </td>
                                                             </tr>
@@ -144,7 +144,7 @@
                                                 <tr>
                                                     <td><b>Tipo de actor </b></td>
                                                     <td>
-                                                        <h:selectOneMenu value="#{reporteSimcoController.reporteSimcoActor.tipoActor}">
+                                                        <h:selectOneMenu value="#{reporteSimcoController.reporteSimcoActividad.tipoActor}">
                                                             <f:selectItem itemLabel="Seleccione" itemValue=""/>
                                                             <f:selectItem itemLabel="Población" itemValue="PE"/>
                                                             <f:selectItem itemLabel="Organización / empresa" itemValue="EM"/>
@@ -160,11 +160,11 @@
                                             </table>
                                         </td>
                                         <td style="vertical-align: top; text-align: right">
-                                            <a class="btn btn-warning" jsf:action="#{reporteSimcoController.limpiarReporteActor()}">
+                                            <a class="btn btn-warning" jsf:action="#{reporteSimcoController.limpiarReporteActividad()}">
                                                 <span class="glyphicon glyphicon-asterisk" />Limpiar  
                                             </a>
                                             &#160;&#160;&#160;
-                                            <a class="btn btn-primary" jsf:action="#{reporteSimcoController.reporteActores()}">
+                                            <a class="btn btn-primary" jsf:action="#{reporteSimcoController.reporteActividades()}">
                                                 <span class="glyphicon glyphicon-search" />Buscar  
                                             </a>
                                         </td>
@@ -180,64 +180,32 @@
                                     </a>
                                 </div>
                                 <br/>
-                                <h:dataTable value="#{reporteSimcoController.listReporteActor}" var="actor" class="table table-striped" rendered="#{reporteSimcoController.listReporteActor.size() > 0}"  binding="#{itemD}">
+                                <h:dataTable value="#{reporteSimcoController.listReporteActividad}" var="actividad" class="table table-striped" rendered="#{reporteSimcoController.listReporteActividad.size() > 0}"  binding="#{itemD1}">
                                     <h:column>
                                         <f:facet name="header">#</f:facet>
-                                        <h:outputText value="#{itemD.rowIndex+1}" />
+                                        <h:outputText value="#{itemD1.rowIndex+1}" />
                                     </h:column>
                                     <h:column>
-                                        <f:facet name="header">Nombre completo</f:facet>
-                                        <h:outputText value="#{actor.nombreActor}" />
+                                        <f:facet name="header">Código del acontecimiento / actuación</f:facet>
+                                        <h:outputText value="#{actividad.codigoActividad}" />
                                     </h:column>
                                     <h:column>
-                                        <f:facet name="header">Categoría</f:facet>
-                                        <h:outputText value="#{actor.descripcionTipoActor}" />
+                                        <f:facet name="header">Nombre del acontecimiento / actuación</f:facet>
+                                        <h:outputText value="#{actividad.nombreActividad}" />
                                     </h:column>
                                     <h:column>
-                                        <f:facet name="header">Tipo actor</f:facet>
-                                        <h:outputText value="#{actor.subtipo}" />
+                                        <f:facet name="header">Acontecimiento / Actuación</f:facet>
+                                        <h:outputText value="#{actividad.claseActividad}" />
                                     </h:column>
                                     <h:column>
-                                        <f:facet name="header">Subtipo 1</f:facet>
-                                        <h:outputText value="#{actor.subtipo1}" />
-                                    </h:column>
-                                    <h:column>
-                                        <f:facet name="header">Subtipo 2</f:facet>
-                                        <h:outputText value="#{actor.subtipo2}" />
-                                    </h:column>
-                                    <h:column>
-                                        <f:facet name="header">Subtipo 3</f:facet>
-                                        <h:outputText value="#{actor.subtipo3}" />
-                                    </h:column>
-                                    <h:column>
-                                        <f:facet name="header">Departamento</f:facet>
-                                        <h:outputText value="#{actor.nombreDepartamento}" />
-                                    </h:column>
-
-                                    <h:column>
-                                        <f:facet name="header">Número de conflitos en los que participa</f:facet>
-                                        <h:outputText value="#{actor.contadorActorCaso}" />
-                                    </h:column>
-
-                                    <h:column>
-                                        <f:facet name="header">Acuerdos en los que el actor está comprometido a cumplir</f:facet>
-                                        <h:outputText value="#{actor.contadorActorAcuerdoComprometido}" />
-                                    </h:column>
-
-                                    <h:column>
-                                        <f:facet name="header">Acuerdos en los que el actor es beneficiario</f:facet>
-                                        <h:outputText value="#{actor.contadorActorAcuerdoBeneficiario}" />
-                                    </h:column>
-
-                                    <h:column>
-                                        <f:facet name="header">Actitud frente al diálogo</f:facet>
-                                        <h:outputText value="#{actor.ponderado}" />
+                                        <f:facet name="header">Fecha</f:facet>
+                                        <h:outputText value="#{actividad.fecha}" />
                                     </h:column>
                                 </h:dataTable>
                             </div>
                         </div>
 
-                        <div class="modal fade" tabindex="-1" role="dialog" id="idModalBusquedaCaso">
+                        <div class="modal fade" tabindex="-1" role="dialog" id="idModalBusquedaCaso1">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -247,19 +215,19 @@
                                         <span class="modal-title text-resalt-primary">Búsqueda de casos</span>
                                     </div>
                                     <div class="modal-body">
-                                        <h:panelGroup id="idPanelModalCaso">
+                                        <h:panelGroup id="idPanelModalCaso1">
                                             <div class="form-group has-feedback" style="width:100%;margin:auto">
                                                 <input type="text" name="nombreCaso" placeholder="Buscar por nombre o código del caso"/>
                                                 <a style="float:right;font-size:large;margin:auto" jsf:action="#{reporteSimcoController.listaCasos(1)}" jsf:onclick="loadingModal()">
                                                     <span class="glyphicon glyphicon-search form-control-feedback"/>
-                                                    <f:ajax render="idPanelModalCaso" execute="@form" onevent="closeModal"/>
+                                                    <f:ajax render="idPanelModalCaso1" execute="@form" onevent="closeModal"/>
                                                 </a>
                                             </div>
                                             <br/>
-                                            <h:dataTable value="#{reporteSimcoController.listadoCasos}" rendered="#{reporteSimcoController.listadoCasos.size() > 0}" var="caso" class="table table-striped" style="font-size:small" binding="#{rowy}">
+                                            <h:dataTable value="#{reporteSimcoController.listadoCasos}" rendered="#{reporteSimcoController.listadoCasos.size() > 0}" var="caso" class="table table-striped" style="font-size:small" binding="#{rowy1}">
                                                 <h:column>
                                                     <f:facet name="header">N.°</f:facet>
-                                                    <h:outputText value="#{(reporteSimcoController.nroPagina-1)*10+rowy.rowIndex+1}" />
+                                                    <h:outputText value="#{(reporteSimcoController.nroPagina-1)*10+rowy1.rowIndex+1}" />
                                                 </h:column>
                                                 <h:column>
                                                     <f:facet name="header">Nombre</f:facet>
@@ -279,12 +247,12 @@
                                             <ul class="pager">
                                                 <li>
                                                     <a jsf:rendered="#{reporteSimcoController.listadoCasos.size() > 0}" jsf:action="#{reporteSimcoController.listaCasos(reporteSimcoController.nroPagina -1)}">Anterior
-                                                        <f:ajax render="idPanelModalCaso" />
+                                                        <f:ajax render="idPanelModalCaso1" />
                                                     </a>
                                                 </li>
                                                 <li>
                                                     <a jsf:rendered="#{reporteSimcoController.listadoCasos.size() > 0}" jsf:action="#{reporteSimcoController.listaCasos(reporteSimcoController.nroPagina +1)}">Siguiente
-                                                        <f:ajax render="idPanelModalCaso" />
+                                                        <f:ajax render="idPanelModalCaso1" />
                                                     </a>
                                                 </li>
                                             </ul>
@@ -296,11 +264,11 @@
 
                         <script>
                             function openModalBusquedaCaso() {
-                                $("#idModalBusquedaCaso").modal('show');
+                                $("#idModalBusquedaCaso1").modal('show');
                             }
                         </script>
 
-                        <div class="modal fade" tabindex="-1" role="dialog" id="idModalBusquedaActor">
+                        <div class="modal fade" tabindex="-1" role="dialog" id="idModalBusquedaActor1">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -310,19 +278,19 @@
                                         <span class="modal-title text-resalt-primary">Búsqueda de actor</span>
                                     </div>
                                     <div class="modal-body">
-                                        <h:panelGroup id="idPanelModalActor">
+                                        <h:panelGroup id="idPanelModalActor1">
                                             <div class="form-group has-feedback" style="width:100%;margin:auto">
                                                 <input type="text" autocomplete="false" name="nombreActor" placeholder="Buscar por nombre de actor"/>
                                                 <a style="float:right;font-size:large;margin:auto" jsf:action="#{actorController.buscarActorXnombrePaginado(1)}" jsf:onclick="loadingModal()">
                                                     <span class="glyphicon glyphicon-search form-control-feedback"/>
-                                                    <f:ajax render="idPanelModalActor" execute="@form" onevent="closeModal"/>
+                                                    <f:ajax render="idPanelModalActor1" execute="@form" onevent="closeModal"/>
                                                 </a>
                                             </div>
                                             <br/>
-                                            <h:dataTable value="#{actorController.listaActorBusquedaGeneral}" rendered="#{actorController.listaActorBusquedaGeneral.size() > 0}" var="item" class="table table-striped" style="font-size:small" binding="#{rowz}">
+                                            <h:dataTable value="#{actorController.listaActorBusquedaGeneral}" rendered="#{actorController.listaActorBusquedaGeneral.size() > 0}" var="item" class="table table-striped" style="font-size:small" binding="#{rowz1}">
                                                 <h:column>
                                                     <f:facet name="header">N.°</f:facet>
-                                                    <h:outputText value="#{(actorController.nroPagina-1)*10+rowz.rowIndex+1}" />
+                                                    <h:outputText value="#{(actorController.nroPagina-1)*10+rowz1.rowIndex+1}" />
                                                 </h:column>
                                                 <h:column>
                                                     <f:facet name="header">Nombres</f:facet>
@@ -349,12 +317,12 @@
                                             <ul class="pager">
                                                 <li>
                                                     <a jsf:rendered="#{actorController.listaActorBusquedaGeneral.size() > 0}" jsf:action="#{actorController.buscarActorXnombrePaginado(actorController.nroPagina -1)}">Anterior
-                                                        <f:ajax render="idPanelModalActor" />
+                                                        <f:ajax render="idPanelModalActor1" />
                                                     </a>
                                                 </li>
                                                 <li>
                                                     <a jsf:rendered="#{actorController.listaActorBusquedaGeneral.size() > 0}" jsf:action="#{actorController.buscarActorXnombrePaginado(actorController.nroPagina +1)}">Siguiente
-                                                        <f:ajax render="idPanelModalActor" />
+                                                        <f:ajax render="idPanelModalActor1" />
                                                     </a>
                                                 </li>
                                             </ul>
@@ -365,7 +333,7 @@
                         </div>
                         <script>
                             function openModalBusquedaActor() {
-                                $("#idModalBusquedaActor").modal('show');
+                                $("#idModalBusquedaActor1").modal('show');
                             }
                         </script>
                     </div>

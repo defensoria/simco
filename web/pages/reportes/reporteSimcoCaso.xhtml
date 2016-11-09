@@ -20,14 +20,13 @@
                                 </a>
                             </li>
                             <li role="presentation">
-                                <a jsf:action="#{actorController.cargarPaginaEntidad()}" aria-controls="messages" role="tab" data-toggle="tab">
-                                    <span class="glyphicon glyphicon-user" style="font-size:medium"/>
-                                    <span class="text-resalt-comun"/>Entidad estatal
+                                <a jsf:action="#{reporteSimcoController.cargarReporteActividad()}" aria-controls="messages" role="tab" data-toggle="tab">
+                                    <span class="text-resalt-comun"/>Reporte de actividades
                                 </a>
                             </li>
                         </ul>
                         <div class="tab-content">
-                            <div role="tabpanel" class="tab-pane active" id="home">
+                            <div role="tabpanel" class="tab-pane active">
                                 <table style="width: 100%">
                                     <tr>
                                         <td style="width: 50%">
@@ -226,7 +225,7 @@
                                     </div>
                                     <div class="modal-body">
                                         <h:panelGroup id="idPanelModalActor">
-                                            <div id="idDivRegistro" class="form-group has-feedback" style="width:100%;margin:auto">
+                                            <div class="form-group has-feedback" style="width:100%;margin:auto">
                                                 <input type="text"  autocomplete="false" name="nombreActor" placeholder="Buscar por nombre de actor"/>
                                                 <a style="float:right;font-size:large;margin:auto" jsf:action="#{actorController.buscarActorXnombrePaginado(1)}" jsf:onclick="loadingModal()">
                                                     <span class="glyphicon glyphicon-search form-control-feedback"/>

@@ -20,8 +20,10 @@ import gob.dp.simco.registro.service.ActividadActorService;
 import gob.dp.simco.registro.service.ActividadService;
 import gob.dp.simco.registro.service.ActorService;
 import gob.dp.simco.registro.service.CasoService;
+import gob.dp.simco.reporte.entity.ReporteSimcoActividad;
 import gob.dp.simco.reporte.entity.ReporteSimcoCaso;
 import gob.dp.simco.reporte.entity.ReporteSimcoActor;
+import gob.dp.simco.reporte.service.ReporteSimcoActividadService;
 import gob.dp.simco.reporte.service.ReporteSimcoActorService;
 import gob.dp.simco.reporte.service.ReporteSimcoCasoService;
 import java.io.IOException;
@@ -81,6 +83,9 @@ public class ReporteSimcoController implements Serializable {
     
     @Autowired
     private ActividadActorService actividadActorService;
+    
+    @Autowired
+    private ReporteSimcoActividadService reporteSimcoActividadService;
 
     private List<SelectItem> listaAnhos;
 
@@ -88,11 +93,15 @@ public class ReporteSimcoController implements Serializable {
 
     private List<ReporteSimcoActor> listReporteActor;
     
+    private List<ReporteSimcoActividad> listReporteActividad;
+    
     private List<Caso> listadoCasos;
 
     private ReporteSimcoCaso reporteSimcoCaso;
 
     private ReporteSimcoActor reporteSimcoActor;
+    
+    private ReporteSimcoActividad reporteSimcoActividad;
 
     JasperPrint jasperPrint;
     
@@ -110,6 +119,13 @@ public class ReporteSimcoController implements Serializable {
         reporteSimcoActor = new ReporteSimcoActor();
         limpiarReporteActor();
         return "reporteSimcoActor";
+    }
+    
+    public String cargarReporteActividad() {
+        listaAnhos = AnhosEnum.getList();
+        reporteSimcoActividad = new ReporteSimcoActividad();
+        limpiarReporteActor();
+        return "reporteSimcoActividad";
     }
 
     public void reporteCasos() {
@@ -344,6 +360,16 @@ public class ReporteSimcoController implements Serializable {
             a.setContadorCasosPorActorTerciario(reporteSimcoActorService.contarCasosPorActorParticipacion(new CasoActor(a.getIdActor(), "03")));
         }
     }
+    
+    public void reporteActividades() {
+        listReporteActividad = reporteSimcoActividadService.reporteActividad(reporteSimcoActividad);
+        for(ReporteSimcoActividad ac : listReporteActividad){
+            if(StringUtils.equals(ac.getClaseActividad(), "AD"))
+                ac.setClaseActividad("Actuacion defensorial");
+            if(StringUtils.equals(ac.getClaseActividad(), "AC"))
+                ac.setClaseActividad("Acontecimiento");
+        }
+    }
 
     public void limpiarReporteCaso() {
         reporteSimcoCaso = new ReporteSimcoCaso();
@@ -353,6 +379,11 @@ public class ReporteSimcoController implements Serializable {
     public void limpiarReporteActor() {
         reporteSimcoActor = new ReporteSimcoActor();
         listReporteActor = null;
+    }
+    
+    public void limpiarReporteActividad() {
+        reporteSimcoActividad = new ReporteSimcoActividad();
+        listReporteActividad = null;
     }
     
     public void setearActor(Actor actor) {
@@ -423,6 +454,22 @@ public class ReporteSimcoController implements Serializable {
 
     public void setNroPagina(Long nroPagina) {
         this.nroPagina = nroPagina;
+    }
+
+    public ReporteSimcoActividad getReporteSimcoActividad() {
+        return reporteSimcoActividad;
+    }
+
+    public void setReporteSimcoActividad(ReporteSimcoActividad reporteSimcoActividad) {
+        this.reporteSimcoActividad = reporteSimcoActividad;
+    }
+
+    public List<ReporteSimcoActividad> getListReporteActividad() {
+        return listReporteActividad;
+    }
+
+    public void setListReporteActividad(List<ReporteSimcoActividad> listReporteActividad) {
+        this.listReporteActividad = listReporteActividad;
     }
 
 }
