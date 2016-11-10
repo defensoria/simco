@@ -13,13 +13,17 @@ import gob.dp.simco.comun.type.AnhosEnum;
 import gob.dp.simco.intervencion.entity.Intervencion;
 import gob.dp.simco.intervencion.service.IntervencionService;
 import gob.dp.simco.registro.bean.FiltroCaso;
+import gob.dp.simco.registro.bean.FiltroParametro;
 import gob.dp.simco.registro.entity.Actor;
 import gob.dp.simco.registro.entity.Caso;
 import gob.dp.simco.registro.entity.CasoActor;
+import gob.dp.simco.registro.entity.Parametro;
+import gob.dp.simco.registro.service.ActaAcuerdoDetalleService;
 import gob.dp.simco.registro.service.ActividadActorService;
 import gob.dp.simco.registro.service.ActividadService;
 import gob.dp.simco.registro.service.ActorService;
 import gob.dp.simco.registro.service.CasoService;
+import gob.dp.simco.registro.service.ParametroService;
 import gob.dp.simco.reporte.entity.ReporteSimcoActividad;
 import gob.dp.simco.reporte.entity.ReporteSimcoCaso;
 import gob.dp.simco.reporte.entity.ReporteSimcoActor;
@@ -30,6 +34,8 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -86,6 +92,12 @@ public class ReporteSimcoController implements Serializable {
     
     @Autowired
     private ReporteSimcoActividadService reporteSimcoActividadService;
+    
+    @Autowired
+    private ParametroService parametroService;
+    
+    @Autowired
+    private ActaAcuerdoDetalleService actaAcuerdoDetalleService;
 
     private List<SelectItem> listaAnhos;
 
@@ -124,7 +136,7 @@ public class ReporteSimcoController implements Serializable {
     public String cargarReporteActividad() {
         listaAnhos = AnhosEnum.getList();
         reporteSimcoActividad = new ReporteSimcoActividad();
-        limpiarReporteActor();
+        limpiarReporteActividad();
         return "reporteSimcoActividad";
     }
 
@@ -297,6 +309,11 @@ public class ReporteSimcoController implements Serializable {
         reporteSimcoActor.setNombreCaso(caso.getCodigo()+" "+caso.getNombre());
     }
     
+    public void setearCasoActividad(Caso caso){
+        reporteSimcoActividad.setCodigoCaso(caso.getCodigo());
+        reporteSimcoActividad.setNombreCaso(caso.getCodigo()+" "+caso.getNombre());
+    }
+    
     public void setearActorActor(Actor actor){
         reporteSimcoActor.setIdActor(actor.getId());
         StringBuilder sb = new StringBuilder();
@@ -307,6 +324,18 @@ public class ReporteSimcoController implements Serializable {
         if(StringUtils.isNotBlank(actor.getApellidoMat()))
             sb.append(" ").append(actor.getApellidoMat());
         reporteSimcoActor.setNombreActor(sb.toString());
+    }
+    
+    public void setearActorActividad(Actor actor){
+        reporteSimcoActividad.setIdActor(actor.getId());
+        StringBuilder sb = new StringBuilder();
+        if(StringUtils.isNotBlank(actor.getNombre()))
+            sb.append(actor.getNombre());
+        if(StringUtils.isNotBlank(actor.getApellidoPat()))
+            sb.append(" ").append(actor.getApellidoPat());
+        if(StringUtils.isNotBlank(actor.getApellidoMat()))
+            sb.append(" ").append(actor.getApellidoMat());
+        reporteSimcoActividad.setNombreActor(sb.toString());
     }
 
     public void reporteActores() {
@@ -364,10 +393,34 @@ public class ReporteSimcoController implements Serializable {
     public void reporteActividades() {
         listReporteActividad = reporteSimcoActividadService.reporteActividad(reporteSimcoActividad);
         for(ReporteSimcoActividad ac : listReporteActividad){
-            if(StringUtils.equals(ac.getClaseActividad(), "AD"))
+            if(StringUtils.equals(ac.getClaseActividad(), "AD")){
                 ac.setClaseActividad("Actuacion defensorial");
-            if(StringUtils.equals(ac.getClaseActividad(), "AC"))
+                ac.setTipoActividadDetalle(ac.getTipoActuacionDefensorialDetalle());
+            }
+            if(StringUtils.equals(ac.getClaseActividad(), "AC")){
                 ac.setClaseActividad("Acontecimiento");
+                ac.setTipoActividadDetalle(ac.getTipoAcontecimientoDetalle());
+                if(StringUtils.isNotBlank(ac.getTipoViolencia())){
+                    List<String> itemsTipoViolencia = Arrays.asList(ac.getTipoViolencia().split("\\s*,\\s*"));
+                    List<String> ses = new ArrayList<>();
+                    for(String s : itemsTipoViolencia){
+                        Parametro p = parametroService.consultarParametroValor(new FiltroParametro(250, s));
+                        ses.add(p.getNombreParametro());
+                    }
+                    ac.setListaTipoViolencia(ses);
+                }
+                if(StringUtils.isNotBlank(ac.getResultadoViolencia())){
+                    List<String> itemsResultadoViolencia = Arrays.asList(ac.getResultadoViolencia().split("\\s*,\\s*"));
+                    List<String> ses = new ArrayList<>();
+                    for(String s : itemsResultadoViolencia){
+                        Parametro p = parametroService.consultarParametroValor(new FiltroParametro(260, s));
+                        ses.add(p.getNombreParametro());
+                    }
+                    ac.setListaResultadoViolencia(ses);
+                }
+                
+                ac.setCantidadAcuerdos(actaAcuerdoDetalleService.actaAcuerdoDetalleCount(ac.getIdActividad())); 
+            }
         }
     }
 

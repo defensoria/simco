@@ -5,13 +5,15 @@
  */
 package gob.dp.simco.reporte.entity;
 
-import java.util.Date;
+import java.util.List;
 
 /**
  *
  * @author carlos
  */
 public class ReporteSimcoActividad {
+    
+    private Long idActividad;
     
     private String anho;
     
@@ -31,7 +33,7 @@ public class ReporteSimcoActividad {
                                     
     private String nombreActor;
                                     
-    private String idActor;
+    private Long idActor;
                                             
     private String tipoActor;
     
@@ -43,7 +45,26 @@ public class ReporteSimcoActividad {
     private String claseActividad;
     
     private String fecha;
-
+    
+    private String tipoActuacionDefensorialDetalle;
+    
+    private String tipoAcontecimientoDetalle;
+    
+    private String tipoActividadDetalle;
+    
+    private String tipoViolencia;
+    
+    private String resultadoViolencia;
+    
+    private List<String> listaTipoViolencia;
+    
+    private List<String> listaResultadoViolencia;
+    
+    private String nombreRegion;
+    
+    private Integer cantidadAcuerdos;
+    
+    
     public String getAnho() {
         return anho;
     }
@@ -116,11 +137,11 @@ public class ReporteSimcoActividad {
         this.nombreActor = nombreActor;
     }
 
-    public String getIdActor() {
+    public Long getIdActor() {
         return idActor;
     }
 
-    public void setIdActor(String idActor) {
+    public void setIdActor(Long idActor) {
         this.idActor = idActor;
     }
 
@@ -162,6 +183,86 @@ public class ReporteSimcoActividad {
 
     public void setClaseActividad(String claseActividad) {
         this.claseActividad = claseActividad;
+    }
+
+    public String getTipoActuacionDefensorialDetalle() {
+        return tipoActuacionDefensorialDetalle;
+    }
+
+    public void setTipoActuacionDefensorialDetalle(String tipoActuacionDefensorialDetalle) {
+        this.tipoActuacionDefensorialDetalle = tipoActuacionDefensorialDetalle;
+    }
+
+    public String getTipoAcontecimientoDetalle() {
+        return tipoAcontecimientoDetalle;
+    }
+
+    public void setTipoAcontecimientoDetalle(String tipoAcontecimientoDetalle) {
+        this.tipoAcontecimientoDetalle = tipoAcontecimientoDetalle;
+    }
+
+    public String getTipoActividadDetalle() {
+        return tipoActividadDetalle;
+    }
+
+    public void setTipoActividadDetalle(String tipoActividadDetalle) {
+        this.tipoActividadDetalle = tipoActividadDetalle;
+    }
+
+    public String getTipoViolencia() {
+        return tipoViolencia;
+    }
+
+    public void setTipoViolencia(String tipoViolencia) {
+        this.tipoViolencia = tipoViolencia;
+    }
+
+    public String getResultadoViolencia() {
+        return resultadoViolencia;
+    }
+
+    public void setResultadoViolencia(String resultadoViolencia) {
+        this.resultadoViolencia = resultadoViolencia;
+    }
+
+    public List<String> getListaTipoViolencia() {
+        return listaTipoViolencia;
+    }
+
+    public void setListaTipoViolencia(List<String> listaTipoViolencia) {
+        this.listaTipoViolencia = listaTipoViolencia;
+    }
+
+    public List<String> getListaResultadoViolencia() {
+        return listaResultadoViolencia;
+    }
+
+    public void setListaResultadoViolencia(List<String> listaResultadoViolencia) {
+        this.listaResultadoViolencia = listaResultadoViolencia;
+    }
+
+    public String getNombreRegion() {
+        return nombreRegion;
+    }
+
+    public void setNombreRegion(String nombreRegion) {
+        this.nombreRegion = nombreRegion;
+    }
+
+    public Integer getCantidadAcuerdos() {
+        return cantidadAcuerdos;
+    }
+
+    public void setCantidadAcuerdos(Integer cantidadAcuerdos) {
+        this.cantidadAcuerdos = cantidadAcuerdos;
+    }
+
+    public Long getIdActividad() {
+        return idActividad;
+    }
+
+    public void setIdActividad(Long idActividad) {
+        this.idActividad = idActividad;
     }
          
 }

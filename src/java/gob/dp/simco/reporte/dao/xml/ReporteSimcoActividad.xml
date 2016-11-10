@@ -7,13 +7,26 @@
         <result property="nombreActividad" column="C_NOMACTIVIDAD"/>
         <result property="claseActividad" column="C_TIPO"/>
         <result property="fecha" column="FECHA_REGISTRO"/>
+        <result property="tipoActuacionDefensorialDetalle" column="TIPOACTUACIONDEFENSORIAL"/>
+        <result property="tipoAcontecimientoDetalle" column="TIPOACONTECIMIENTO"/>
+        <result property="tipoViolencia" column="C_TIPOVIOLENCIA"/>
+        <result property="resultadoViolencia" column="C_RESULTADOVIOLENCIA"/>
+        <result property="nombreRegion" column="C_DESCDPTO"/>
+        <result property="idActividad" column="N_ID_ACTIVIDAD"/>
         
         
         
     </resultMap>      
 
     <select id="reporteActividad" parameterType="reporteSimcoActividad"  resultMap="reporteSimcoActividadMap">
-        SELECT A.C_CODIGOACTIVIDAD, A.C_NOMACTIVIDAD, TO_CHAR(D_FECREGISTRO, 'DD/MM/YYYY') FECHA_REGISTRO, C_TIPO FROM SIMCO_REG_ACTIVIDAD A     
+        SELECT A.N_ID_ACTIVIDAD, A.C_CODIGOACTIVIDAD, A.C_NOMACTIVIDAD, TO_CHAR(D_FECREGISTRO, 'DD/MM/YYYY') FECHA_REGISTRO, C_TIPO,
+B.NOMBRE_PARAMETRO TIPOACTUACIONDEFENSORIAL, C.NOMBRE_PARAMETRO TIPOACONTECIMIENTO, C_TIPOVIOLENCIA, C_RESULTADOVIOLENCIA,
+        D.C_DESCDPTO
+FROM SIMCO_REG_ACTIVIDAD A 
+LEFT JOIN SIMCO_PARAMETRO B ON B.VALOR_PARAMETRO = A.C_TIPO_ACTIVIDAD AND B.PADRE_PARAMETRO = 10 AND A.C_TIPO = 'AD'
+LEFT JOIN SIMCO_PARAMETRO C ON C.VALOR_PARAMETRO = A.C_TIPOACONTECIMIENTO AND C.PADRE_PARAMETRO = 70 AND A.C_TIPO = 'AC'
+        LEFT JOIN SIMCO_UBIGEO_DPTO D ON A.CIDDEPART = D.C_ID_DPTO
+ORDER BY A.N_ID_ACTIVIDAD  
     </select>
     
     

@@ -169,10 +169,10 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>
+                                    <td style="padding-top: 15px">
                                         <span class="text-primary" style="font-size:1.2em;font-weight:bold">Descripción general</span>
                                     </td>
-                                    <td>
+                                    <td style="padding-top: 15px">
                                         <span class="text-primary" style="font-size:1.2em;font-weight:bold">Comentarios</span>
                                     </td>
                                 </tr>
@@ -547,7 +547,7 @@
                                 return false;
                             } else {
                                 $('#txtFechaCumplimiento').removeClass('error');
-                                var dt = converterFecha($('#txtFechaCumplimiento').val());
+                                /*var dt = converterFecha($('#txtFechaCumplimiento').val());
                                 var dat = new Date();
                                 if (comparaFechas(dt, dat) === 2) {
                                     $('#txtFechaCumplimiento').addClass('error');
@@ -555,7 +555,7 @@
                                     return false;
                                 } else {
                                     $('#txtFechaCumplimiento').removeClass('error');
-                                }
+                                }*/
                             }
                         }
                         if ($('#idFormAgregarAcuerdo\\:checkIndAlertar').is(':checked')) {
