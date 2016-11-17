@@ -55,6 +55,8 @@ public interface ActorDao {
     
     public Integer actorBuscarTotalSimpleCountRUC(Actor actor);
     
+    public Integer actorXactividadSimpleBuscarCount(Long idActividad);
+    
     public List<Actor> actorxActaAcuerdoBuscar(long idAcuerdoDetalle);
     
     public int actorValidadDNI(Actor actor);

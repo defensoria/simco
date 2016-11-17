@@ -7,7 +7,6 @@
 package gob.dp.simco.registro.dao;
 
 import gob.dp.simco.registro.entity.ActividadCaso;
-import org.apache.log4j.Logger;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.springframework.stereotype.Repository;
 
@@ -36,6 +35,11 @@ public class ActividadCasoDaoImpl extends SqlSessionDaoSupport implements Activi
     @Override
     public int actividadCasoValida(long idActividad) {
         return getSqlSession().selectOne("gob.dp.simco.registro.dao.ActividadCasoDao.actividadCasoValida", idActividad);
+    }
+
+    @Override
+    public void actividadesCasoUpdate(ActividadCaso actividadCaso) {
+        getSqlSession().update("gob.dp.simco.registro.dao.ActividadCasoDao.actividadesCasoUpdate", actividadCaso);
     }
     
 }

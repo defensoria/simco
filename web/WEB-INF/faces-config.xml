@@ -466,6 +466,13 @@
             <to-view-id>/pages/reportes/reporteSimcoActividad.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
+    
+    <navigation-rule>
+        <navigation-case>
+            <from-outcome>reporteSimcoVictima</from-outcome>
+            <to-view-id>/pages/reportes/reporteSimcoVictima.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
   
     <navigation-rule>
         <navigation-case>

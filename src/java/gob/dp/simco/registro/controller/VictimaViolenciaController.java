@@ -129,6 +129,50 @@ public class VictimaViolenciaController extends AbstractManagedBean implements S
         tiposVictima.put("Otros", nroOtros);
         tiposVictima.put("NN", nN);
     }
+    
+    public Map<String, String> mapearTipos(List<ActividadVictima> listaV) {
+        Map tipoVictima = new HashMap();
+        int nroMuertos = 0;
+        int nroSecuestrados = 0;
+        int nroHerido = 0;
+        int nroDetenidos = 0;
+        int nroOtros = 0;
+        int nroDesaparecidos = 0;
+        int nN = 0;
+        if (listaV != null) {
+            for (ActividadVictima av : listaV) {
+                if (StringUtils.equals(av.getTipo(), "01")) {
+                    nroMuertos++;
+                }
+                if (StringUtils.equals(av.getTipo(), "02")) {
+                    nroHerido++;
+                }
+                if (StringUtils.equals(av.getTipo(), "03")) {
+                    nroSecuestrados++;
+                }
+                if (StringUtils.equals(av.getTipo(), "04")) {
+                    nroDetenidos++;
+                }
+                if (StringUtils.equals(av.getTipo(), "05")) {
+                    nroDesaparecidos++;
+                }
+                if (StringUtils.equals(av.getTipo(), "06")) {
+                    nroOtros++;
+                }
+                if (StringUtils.equals(av.getTipo(), "0")) {
+                    nN++;
+                }
+            }
+        }
+        tipoVictima.put("Muertos", nroMuertos);
+        tipoVictima.put("Heridos", nroHerido);
+        tipoVictima.put("Secuestrados", nroSecuestrados);
+        tipoVictima.put("Detenidos", nroDetenidos);
+        tipoVictima.put("Desaparecidos", nroDesaparecidos);
+        tipoVictima.put("Otros", nroOtros);
+        tipoVictima.put("NN", nN);
+        return tipoVictima;
+    }
 
     public void nuevo() {
         long id = actividadVictima.getIdActividad();
@@ -170,8 +214,16 @@ public class VictimaViolenciaController extends AbstractManagedBean implements S
         msg.messageInfo("Se agrego la víctima", null);
     }
 
-    private void listarVictimas(long idActivida) {
+    private void listarVictimas(Long idActivida) {
         listaVictimas = actividadVictimaService.actividadVictimaBuscar(idActivida);
+    }
+    
+    public Map listaVictimas(Long idActividad) {
+        if(idActividad != null){
+            listaVictimas = actividadVictimaService.actividadVictimaBuscar(idActividad);
+            return mapearTipos(listaVictimas);
+        }
+        return null;
     }
 
     private void remonbrarArchivo() {

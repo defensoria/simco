@@ -226,5 +226,10 @@ public class ActorServiceImpl implements ActorService{
     public List<Actor> actorBuscarNombrePaginado(FiltroActor filtroActor) {
         return actorDao.actorBuscarNombrePaginado(filtroActor);
     }
+
+    @Override
+    public Integer actorXactividadSimpleBuscarCount(Long idActividad) {
+        return actorDao.actorXactividadSimpleBuscarCount(idActividad);
+    }
     
 }

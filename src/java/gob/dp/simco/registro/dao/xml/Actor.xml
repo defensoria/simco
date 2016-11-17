@@ -757,6 +757,18 @@
         </where>
     </select>
     
+    <select id="actorXactividadSimpleBuscarCount" parameterType="actor" resultType="java.lang.Integer" >
+        SELECT 
+        COUNT(DISTINCT
+        A.N_ID_ACTOR)
+        FROM SIMCO_REG_ACTOR A 
+        INNER JOIN SIMCO_REG_ACTIVIDAD_ACTOR B
+        ON A.N_ID_ACTOR = B.N_ID_ACTOR
+        INNER JOIN SIMCO_REG_ACTIVIDAD C
+        ON C.N_ID_ACTIVIDAD = B.N_ID_ACTIVIDAD
+        WHERE C.N_ID_ACTIVIDAD =#{id}
+    </select>
+    
     <select id="actorXactividadSimpleBuscar" resultMap="actorMap" parameterType="long">
         SELECT 
         DISTINCT

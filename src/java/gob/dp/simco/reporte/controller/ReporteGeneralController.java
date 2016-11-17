@@ -25,7 +25,6 @@ import gob.dp.simco.reporte.entity.EstadoConflicto;
 import gob.dp.simco.reporte.entity.FaceTotal;
 import gob.dp.simco.reporte.entity.FiltroReporte;
 import gob.dp.simco.reporte.entity.NuevoCaso;
-import gob.dp.simco.reporte.entity.ReporteMapa;
 import gob.dp.simco.reporte.service.ReporteEjecutivoService;
 import gob.dp.simco.reporte.service.ReporteGeneralService;
 import java.io.IOException;

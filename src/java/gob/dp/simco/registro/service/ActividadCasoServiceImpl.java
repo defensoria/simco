@@ -40,5 +40,10 @@ public class ActividadCasoServiceImpl implements ActividadCasoService{
     public int actividadCasoValida(long idActividad) {
         return actividadCasoDao.actividadCasoValida(idActividad);
     }
+
+    @Override
+    public void actividadesCasoUpdate(ActividadCaso actividadCaso) {
+        actividadCasoDao.actividadesCasoUpdate(actividadCaso);
+    }
     
 }

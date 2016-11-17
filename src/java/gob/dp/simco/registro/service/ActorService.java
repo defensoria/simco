@@ -65,4 +65,6 @@ public interface ActorService {
     public List<Actor> actoresSigues(String codigoUsuario);
     
     public List<Actor> actorBuscarNombrePaginado(FiltroActor filtroActor);
+    
+    public Integer actorXactividadSimpleBuscarCount(Long idActividad);
 }

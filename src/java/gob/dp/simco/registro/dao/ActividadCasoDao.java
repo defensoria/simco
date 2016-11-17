@@ -18,6 +18,8 @@ public interface ActividadCasoDao {
    
    public void actividadCasoUpdate(ActividadCaso actividadCaso);
    
+   public void actividadesCasoUpdate(ActividadCaso actividadCaso);
+   
    public void actividadCasoDelete(ActividadCaso actividadCaso);
    
    public int actividadCasoValida(long idActividad);

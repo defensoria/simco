@@ -330,7 +330,7 @@ public class CasoController extends AbstractManagedBean implements Serializable 
         c.setId(a.getIdCaso());
         ac.setCaso(c);
         ac.setEstado("INA");
-        actividadCasoService.actividadCasoUpdate(ac);
+        actividadCasoService.actividadesCasoUpdate(ac);
     }
 
     public void removeRegion(long idCasoRegion) {

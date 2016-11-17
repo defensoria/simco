@@ -138,5 +138,10 @@ public class ActorDaoImpl extends SqlSessionDaoSupport implements ActorDao {
     public List<Actor> actorBuscarNombrePaginado(FiltroActor filtroActor) {
         return getSqlSession().selectList("gob.dp.simco.registro.dao.ActorDao.actorBuscarNombrePaginado",filtroActor);
     }
+
+    @Override
+    public Integer actorXactividadSimpleBuscarCount(Long idActividad) {
+        return getSqlSession().selectOne("gob.dp.simco.registro.dao.ActorDao.actorXactividadSimpleBuscarCount",idActividad);
+    }
     
 }

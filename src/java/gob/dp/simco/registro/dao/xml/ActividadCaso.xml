@@ -35,6 +35,16 @@
         </where>
     </update>
     
+    <update id="actividadesCasoUpdate" parameterType="actividadCaso">
+        UPDATE SIMCO_REG_CASO_ACTIVIDAD
+        <set>
+            C_ESTADOACTCASO = #{estado}
+        </set>
+        <where>
+            N_ID_ACTIVIDAD=#{actividad.id}
+        </where>
+    </update>
+    
     <delete id="actividadCasoDelete" parameterType="actividadCaso">
         DELETE FROM SIMCO_REG_CASO_ACTIVIDAD
         where N_ID_ACTIVIDAD = #{actividad.id}

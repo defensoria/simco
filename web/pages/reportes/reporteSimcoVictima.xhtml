@@ -42,7 +42,7 @@
                                                         <b>Año de Registro:</b>
                                                     </td>
                                                     <td>
-                                                        <h:selectOneMenu value="#{reporteSimcoController.reporteSimcoActividad.anho}">
+                                                        <h:selectOneMenu value="#{reporteSimcoController.reporteSimcoVictima.anho}">
                                                             <f:selectItem itemLabel="Seleccione" itemValue="" />
                                                             <f:selectItems value="#{reporteSimcoController.listaAnhos}" />
                                                         </h:selectOneMenu>
@@ -54,11 +54,11 @@
                                                         <table style="width: 100%">
                                                             <tr>
                                                                 <td style="width: 95%">
-                                                                    <input type="text" jsf:value="#{reporteSimcoController.reporteSimcoActividad.nombreCaso}" placeholder="Caso" readonly="true" style="background: silver"/>
-                                                                    <h:inputHidden value="#{reporteSimcoController.reporteSimcoActividad.codigoCaso}" />
+                                                                    <input type="text" jsf:value="#{reporteSimcoController.reporteSimcoVictima.nombreCaso}" placeholder="Caso" readonly="true" style="background: silver"/>
+                                                                    <h:inputHidden value="#{reporteSimcoController.reporteSimcoVictima.codigoCaso}" />
                                                                 </td>
                                                                 <td>
-                                                                    <a class="btn btn-info" jsf:action="#{reporteSimcoController.limpiarReporteActividad()}">
+                                                                    <a class="btn btn-info" jsf:action="#{reporteSimcoController.limpiarReporteVictima()}">
                                                                         <span class="glyphicon glyphicon-search" />Buscar
                                                                         <f:ajax render="idPanelModalCaso1" onevent="openModalBusquedaCaso()" />
                                                                     </a>
@@ -72,7 +72,7 @@
                                                         <b>Tipología del caso:</b>
                                                     </td>
                                                     <td>
-                                                        <h:selectOneMenu value="#{reporteSimcoController.reporteSimcoActividad.tipologiaCaso}">
+                                                        <h:selectOneMenu value="#{reporteSimcoController.reporteSimcoVictima.tipologiaCaso}">
                                                             <f:selectItem itemLabel="Seleccione" itemValue=""/>
                                                             <f:selectItems value="#{listasComunesController.buscarTipoCaso(false, false, false)}" var="y" itemLabel="#{y.nombreParametro}" itemValue="#{y.valorParametro}" />
                                                         </h:selectOneMenu>
@@ -83,7 +83,7 @@
                                                         <b>Región del caso:</b>
                                                     </td>
                                                     <td>
-                                                        <h:selectOneMenu value="#{reporteSimcoController.reporteSimcoActividad.idRegion}" >
+                                                        <h:selectOneMenu value="#{reporteSimcoController.reporteSimcoVictima.idRegion}" >
                                                             <f:selectItem itemLabel="Seleccione" itemValue=""/>
                                                             <f:selectItems value="#{casoController.listaDepartamento}" var="y" itemLabel="#{y.value}" itemValue="#{y.label}" />
                                                         </h:selectOneMenu>
@@ -94,7 +94,7 @@
                                                         <b>Estado del caso:</b>
                                                     </td>
                                                     <td>
-                                                        <h:selectOneMenu value="#{reporteSimcoController.reporteSimcoActividad.estado}">
+                                                        <h:selectOneMenu value="#{reporteSimcoController.reporteSimcoVictima.estado}">
                                                             <f:selectItem itemLabel="Seleccione" itemValue=""/>
                                                             <f:selectItems value="#{listasComunesController.buscarEstadoCaso(false, false, false)}" var="y" itemLabel="#{y.nombreParametro}" itemValue="#{y.valorParametro}" />
                                                         </h:selectOneMenu>
@@ -105,7 +105,7 @@
                                                         <b>Que incluya este tipo de aconteciminento:</b>
                                                     </td>
                                                     <td>
-                                                        <h:selectOneMenu value="#{reporteSimcoController.reporteSimcoActividad.tipoAcontecimiento}">
+                                                        <h:selectOneMenu value="#{reporteSimcoController.reporteSimcoVictima.tipoAcontecimiento}">
                                                             <f:selectItem itemLabel="Seleccione" itemValue=""/>
                                                             <f:selectItems value="#{listasComunesController.buscarTipoAcontecimiento(false,false,false)}" var="y" itemLabel="#{y.nombreParametro}" itemValue="#{y.valorParametro}" />
                                                         </h:selectOneMenu>
@@ -116,7 +116,7 @@
                                                         <b>Que incluyan como actor a comunidades nativas:</b>
                                                     </td>
                                                     <td>
-                                                        <h:selectOneMenu value="#{reporteSimcoController.reporteSimcoActividad.esComunidadNativaInt}">
+                                                        <h:selectOneMenu value="#{reporteSimcoController.reporteSimcoVictima.esComunidadNativaInt}">
                                                             <f:selectItem itemLabel="Seleccione" itemValue=""/>
                                                             <f:selectItem itemLabel="Si" itemValue="1"/>
                                                             <f:selectItem itemLabel="No" itemValue="0"/>
@@ -129,8 +129,8 @@
                                                         <table style="width: 100%">
                                                             <tr>
                                                                 <td style="width: 95%">
-                                                                    <input type="text" jsf:value="#{reporteSimcoController.reporteSimcoActividad.nombreActor}" placeholder="Actor" readonly="true" style="background: silver"/>
-                                                                    <h:inputHidden value="#{reporteSimcoController.reporteSimcoActividad.idActor}" />
+                                                                    <input type="text" jsf:value="#{reporteSimcoController.reporteSimcoVictima.nombreActor}" placeholder="Actor" readonly="true" style="background: silver"/>
+                                                                    <h:inputHidden value="#{reporteSimcoController.reporteSimcoVictima.idActor}" />
                                                                 </td>
                                                                 <td>
                                                                     <a class="btn btn-info" jsf:action="#{actorController.limpiarModalBusquedaActor()}">

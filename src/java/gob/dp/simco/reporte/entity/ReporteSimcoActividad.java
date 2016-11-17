@@ -21,13 +21,19 @@ public class ReporteSimcoActividad {
             
     private String codigoCaso;
             
-    private String tipologia;
+    private String tipologiaCaso;
+    
+    private String detalleTipologiaCaso;
+    
+    private String actividadCaso;
                     
     private String idRegion;
                     
     private String estado;
                             
     private String tipoAcontecimiento;
+    
+    private String tipoActuacionDefensorial;
                             
     private String esComunidadNativa;
                                     
@@ -36,7 +42,6 @@ public class ReporteSimcoActividad {
     private Long idActor;
                                             
     private String tipoActor;
-    
     
     private String codigoActividad;
     
@@ -50,7 +55,13 @@ public class ReporteSimcoActividad {
     
     private String tipoAcontecimientoDetalle;
     
+    private String subTipoAcontecimientoDetalle;
+    
+    private String grupoAcontecimientoDetalle;
+    
     private String tipoActividadDetalle;
+    
+    private String grupoActividadDetalle;
     
     private String tipoViolencia;
     
@@ -63,6 +74,46 @@ public class ReporteSimcoActividad {
     private String nombreRegion;
     
     private Integer cantidadAcuerdos;
+    
+    private Integer cantidadActores;
+    
+    private String codigoAcontecimientoVinculado;
+    
+    private String nombreAcontecimientoVinculado;
+    
+    private String nombreProvincia;
+    
+    private String nombreDistrito;
+    
+    private Integer esComunidadNativaInt;
+    
+    private String tipoViolenciaItem1;
+    
+    private String tipoViolenciaItem2;
+    
+    private String tipoViolenciaItem3;
+    
+    private String tipoViolenciaItem4;
+    
+    private String tipoViolenciaItem5;
+    
+    private String tipoViolenciaItem6;
+    
+    private String tipoViolenciaItem7;
+    
+    private Integer resultadoViolenciaItem1;
+    
+    private Integer resultadoViolenciaItem2;
+    
+    private Integer resultadoViolenciaItem3;
+    
+    private Integer resultadoViolenciaItem4;
+    
+    private Integer resultadoViolenciaItem5;
+    
+    private Integer resultadoViolenciaItem6;
+    
+    private Integer resultadoViolenciaItem7;
     
     
     public String getAnho() {
@@ -89,14 +140,22 @@ public class ReporteSimcoActividad {
         this.codigoCaso = codigoCaso;
     }
 
-    public String getTipologia() {
-        return tipologia;
+    public String getTipologiaCaso() {
+        return tipologiaCaso;
     }
 
-    public void setTipologia(String tipologia) {
-        this.tipologia = tipologia;
+    public void setTipologiaCaso(String tipologiaCaso) {
+        this.tipologiaCaso = tipologiaCaso;
     }
 
+    public String getActividadCaso() {
+        return actividadCaso;
+    }
+
+    public void setActividadCaso(String actividadCaso) {
+        this.actividadCaso = actividadCaso;
+    }
+    
     public String getIdRegion() {
         return idRegion;
     }
@@ -264,5 +323,205 @@ public class ReporteSimcoActividad {
     public void setIdActividad(Long idActividad) {
         this.idActividad = idActividad;
     }
-         
+
+    public String getDetalleTipologiaCaso() {
+        return detalleTipologiaCaso;
+    }
+
+    public void setDetalleTipologiaCaso(String detalleTipologiaCaso) {
+        this.detalleTipologiaCaso = detalleTipologiaCaso;
+    }
+
+    public String getCodigoAcontecimientoVinculado() {
+        return codigoAcontecimientoVinculado;
+    }
+
+    public void setCodigoAcontecimientoVinculado(String codigoAcontecimientoVinculado) {
+        this.codigoAcontecimientoVinculado = codigoAcontecimientoVinculado;
+    }
+
+    public String getNombreAcontecimientoVinculado() {
+        return nombreAcontecimientoVinculado;
+    }
+
+    public void setNombreAcontecimientoVinculado(String nombreAcontecimientoVinculado) {
+        this.nombreAcontecimientoVinculado = nombreAcontecimientoVinculado;
+    }
+
+    public String getSubTipoAcontecimientoDetalle() {
+        return subTipoAcontecimientoDetalle;
+    }
+
+    public void setSubTipoAcontecimientoDetalle(String subTipoAcontecimientoDetalle) {
+        this.subTipoAcontecimientoDetalle = subTipoAcontecimientoDetalle;
+    }
+
+    public String getGrupoAcontecimientoDetalle() {
+        return grupoAcontecimientoDetalle;
+    }
+
+    public void setGrupoAcontecimientoDetalle(String grupoAcontecimientoDetalle) {
+        this.grupoAcontecimientoDetalle = grupoAcontecimientoDetalle;
+    }
+
+    public String getGrupoActividadDetalle() {
+        return grupoActividadDetalle;
+    }
+
+    public void setGrupoActividadDetalle(String grupoActividadDetalle) {
+        this.grupoActividadDetalle = grupoActividadDetalle;
+    }
+
+    public String getTipoActuacionDefensorial() {
+        return tipoActuacionDefensorial;
+    }
+
+    public void setTipoActuacionDefensorial(String tipoActuacionDefensorial) {
+        this.tipoActuacionDefensorial = tipoActuacionDefensorial;
+    }
+
+    public String getTipoViolenciaItem1() {
+        return tipoViolenciaItem1;
+    }
+
+    public void setTipoViolenciaItem1(String tipoViolenciaItem1) {
+        this.tipoViolenciaItem1 = tipoViolenciaItem1;
+    }
+
+    public String getTipoViolenciaItem2() {
+        return tipoViolenciaItem2;
+    }
+
+    public void setTipoViolenciaItem2(String tipoViolenciaItem2) {
+        this.tipoViolenciaItem2 = tipoViolenciaItem2;
+    }
+
+    public String getTipoViolenciaItem3() {
+        return tipoViolenciaItem3;
+    }
+
+    public void setTipoViolenciaItem3(String tipoViolenciaItem3) {
+        this.tipoViolenciaItem3 = tipoViolenciaItem3;
+    }
+
+    public String getTipoViolenciaItem4() {
+        return tipoViolenciaItem4;
+    }
+
+    public void setTipoViolenciaItem4(String tipoViolenciaItem4) {
+        this.tipoViolenciaItem4 = tipoViolenciaItem4;
+    }
+
+    public String getTipoViolenciaItem5() {
+        return tipoViolenciaItem5;
+    }
+
+    public void setTipoViolenciaItem5(String tipoViolenciaItem5) {
+        this.tipoViolenciaItem5 = tipoViolenciaItem5;
+    }
+
+    public String getTipoViolenciaItem6() {
+        return tipoViolenciaItem6;
+    }
+
+    public void setTipoViolenciaItem6(String tipoViolenciaItem6) {
+        this.tipoViolenciaItem6 = tipoViolenciaItem6;
+    }
+
+    public String getTipoViolenciaItem7() {
+        return tipoViolenciaItem7;
+    }
+
+    public void setTipoViolenciaItem7(String tipoViolenciaItem7) {
+        this.tipoViolenciaItem7 = tipoViolenciaItem7;
+    }
+
+    public Integer getResultadoViolenciaItem1() {
+        return resultadoViolenciaItem1;
+    }
+
+    public void setResultadoViolenciaItem1(Integer resultadoViolenciaItem1) {
+        this.resultadoViolenciaItem1 = resultadoViolenciaItem1;
+    }
+
+    public Integer getResultadoViolenciaItem2() {
+        return resultadoViolenciaItem2;
+    }
+
+    public void setResultadoViolenciaItem2(Integer resultadoViolenciaItem2) {
+        this.resultadoViolenciaItem2 = resultadoViolenciaItem2;
+    }
+
+    public Integer getResultadoViolenciaItem3() {
+        return resultadoViolenciaItem3;
+    }
+
+    public void setResultadoViolenciaItem3(Integer resultadoViolenciaItem3) {
+        this.resultadoViolenciaItem3 = resultadoViolenciaItem3;
+    }
+
+    public Integer getResultadoViolenciaItem4() {
+        return resultadoViolenciaItem4;
+    }
+
+    public void setResultadoViolenciaItem4(Integer resultadoViolenciaItem4) {
+        this.resultadoViolenciaItem4 = resultadoViolenciaItem4;
+    }
+
+    public Integer getResultadoViolenciaItem5() {
+        return resultadoViolenciaItem5;
+    }
+
+    public void setResultadoViolenciaItem5(Integer resultadoViolenciaItem5) {
+        this.resultadoViolenciaItem5 = resultadoViolenciaItem5;
+    }
+
+    public Integer getResultadoViolenciaItem6() {
+        return resultadoViolenciaItem6;
+    }
+
+    public void setResultadoViolenciaItem6(Integer resultadoViolenciaItem6) {
+        this.resultadoViolenciaItem6 = resultadoViolenciaItem6;
+    }
+
+    public Integer getResultadoViolenciaItem7() {
+        return resultadoViolenciaItem7;
+    }
+
+    public void setResultadoViolenciaItem7(Integer resultadoViolenciaItem7) {
+        this.resultadoViolenciaItem7 = resultadoViolenciaItem7;
+    }
+
+    public String getNombreProvincia() {
+        return nombreProvincia;
+    }
+
+    public void setNombreProvincia(String nombreProvincia) {
+        this.nombreProvincia = nombreProvincia;
+    }
+
+    public String getNombreDistrito() {
+        return nombreDistrito;
+    }
+
+    public void setNombreDistrito(String nombreDistrito) {
+        this.nombreDistrito = nombreDistrito;
+    }
+
+    public Integer getCantidadActores() {
+        return cantidadActores;
+    }
+
+    public void setCantidadActores(Integer cantidadActores) {
+        this.cantidadActores = cantidadActores;
+    }
+
+    public Integer getEsComunidadNativaInt() {
+        return esComunidadNativaInt;
+    }
+
+    public void setEsComunidadNativaInt(Integer esComunidadNativaInt) {
+        this.esComunidadNativaInt = esComunidadNativaInt;
+    }
+
 }
