@@ -73,8 +73,6 @@ public class ReporteSimcoCaso implements Serializable{
     
     private String fechaResolucion;
     
-    private String inversion;
-    
     private Integer mesesResolucion;
     
     private Integer cantidadAcontecimientos;
@@ -100,6 +98,8 @@ public class ReporteSimcoCaso implements Serializable{
     private Integer cantidadHeridoPNP;
     
     private Integer cantidadHeridoFFAA;
+    
+    private Double inversionInvolucrada;
 
     public String getCodigoCaso() {
         return codigoCaso;
@@ -325,14 +325,6 @@ public class ReporteSimcoCaso implements Serializable{
         this.fechaResolucion = fechaResolucion;
     }
 
-    public String getInversion() {
-        return inversion;
-    }
-
-    public void setInversion(String inversion) {
-        this.inversion = inversion;
-    }
-
     public Integer getMesesResolucion() {
         return mesesResolucion;
     }
@@ -451,6 +443,14 @@ public class ReporteSimcoCaso implements Serializable{
 
     public void setEsComunidadNativaInt(Integer esComunidadNativaInt) {
         this.esComunidadNativaInt = esComunidadNativaInt;
+    }
+
+    public Double getInversionInvolucrada() {
+        return inversionInvolucrada;
+    }
+
+    public void setInversionInvolucrada(Double inversionInvolucrada) {
+        this.inversionInvolucrada = inversionInvolucrada;
     }
     
 }

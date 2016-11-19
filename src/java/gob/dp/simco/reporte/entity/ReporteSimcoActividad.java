@@ -115,6 +115,8 @@ public class ReporteSimcoActividad {
     
     private Integer resultadoViolenciaItem7;
     
+    private Double inversionInvolucrada;
+    
     
     public String getAnho() {
         return anho;
@@ -522,6 +524,14 @@ public class ReporteSimcoActividad {
 
     public void setEsComunidadNativaInt(Integer esComunidadNativaInt) {
         this.esComunidadNativaInt = esComunidadNativaInt;
+    }
+
+    public Double getInversionInvolucrada() {
+        return inversionInvolucrada;
+    }
+
+    public void setInversionInvolucrada(Double inversionInvolucrada) {
+        this.inversionInvolucrada = inversionInvolucrada;
     }
 
 }

@@ -77,7 +77,7 @@ public class Caso implements Serializable{
     
     private Date fechaPublicacion;
     
-    private String inversionInvolucrada;
+    private Double inversionInvolucrada;
     
     private Date fechaInicio;
     
@@ -362,11 +362,11 @@ public class Caso implements Serializable{
         this.nombreComisionadoRegistro = nombreComisionadoRegistro;
     }
 
-    public String getInversionInvolucrada() {
+    public Double getInversionInvolucrada() {
         return inversionInvolucrada;
     }
 
-    public void setInversionInvolucrada(String inversionInvolucrada) {
+    public void setInversionInvolucrada(Double inversionInvolucrada) {
         this.inversionInvolucrada = inversionInvolucrada;
     }
 

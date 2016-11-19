@@ -24,6 +24,11 @@
                                     <span class="text-resalt-comun"/>Reporte de actividades
                                 </a>
                             </li>
+                            <li role="presentation">
+                                <a jsf:action="#{reporteSimcoController.cargarReporteVictima()}" aria-controls="messages" role="tab" data-toggle="tab">
+                                    <span class="text-resalt-comun"/>Reporte de victimas
+                                </a>
+                            </li>
                         </ul>
                         <div class="tab-content">
                             <div role="tabpanel" class="tab-pane active">
@@ -135,9 +140,10 @@
                                                 </tr>
                                                 <tr>
                                                     <td><b>Inversión involucrada</b></td>
-                                                    <td></td>
+                                                    <td>
+                                                        <input type="text" jsf:value="#{reporteSimcoController.reporteSimcoCaso.inversionInvolucrada}" style="width: 50%" onkeypress="return validarNumeros(event)"/>
+                                                    </td>
                                                 </tr>
-
                                             </table>
                                         </td>
                                         <td style="vertical-align: top; text-align: right">
@@ -153,10 +159,10 @@
                                 </table>
                                 <br/>
                                 <div>
-                                    <a jsf:action="#{reporteSimcoController.reporteSimcoCasoExcel()}">
+                                    <a jsf:rendered="#{reporteSimcoController.listReporteCasos.size() > 0}" jsf:action="#{reporteSimcoController.reporteSimcoCasoExcel()}">
                                         <img src="../../bootstrap/img/excel.png" height="45" width="45"/>
                                     </a>
-                                    <a jsf:action="#{reporteSimcoController.reporteSimcoCasoPdf()}">
+                                    <a jsf:rendered="#{reporteSimcoController.listReporteCasos.size() > 0}" jsf:action="#{reporteSimcoController.reporteSimcoCasoPdf()}">
                                         <img src="../../bootstrap/img/pdf.png" height="45" width="45"/>
                                     </a>
                                 </div>

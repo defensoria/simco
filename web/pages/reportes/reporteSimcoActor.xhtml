@@ -24,6 +24,11 @@
                                     <span class="text-resalt-comun"/>Reporte de actividades
                                 </a>
                             </li>
+                            <li role="presentation">
+                                <a jsf:action="#{reporteSimcoController.cargarReporteVictima()}" aria-controls="messages" role="tab" data-toggle="tab">
+                                    <span class="text-resalt-comun"/>Reporte de victimas
+                                </a>
+                            </li>
                         </ul>
                         <div class="tab-content">
                             <div role="tabpanel" class="tab-pane active">
@@ -154,9 +159,10 @@
                                                 </tr>
                                                 <tr>
                                                     <td><b>Inversión involucrada</b></td>
-                                                    <td></td>
+                                                    <td>
+                                                        <input type="text" jsf:value="#{reporteSimcoController.reporteSimcoActor.inversionInvolucrada}" style="width: 50%" onkeypress="return validarNumeros(event)"/>
+                                                    </td>
                                                 </tr>
-
                                             </table>
                                         </td>
                                         <td style="vertical-align: top; text-align: right">
@@ -172,15 +178,15 @@
                                 </table>
                                 <br/>
                                 <div>
-                                    <a jsf:action="#{reporteSimcoController.reporteSimcoActorExcel()}">
+                                    <a jsf:rendered="#{reporteSimcoController.listReporteActor.size() > 0}" jsf:action="#{reporteSimcoController.reporteSimcoActorExcel()}">
                                         <img src="../../bootstrap/img/excel.png" height="45" width="45"/>
                                     </a>
-                                    <a jsf:action="#{reporteSimcoController.reporteSimcoCasoPdf()}">
+                                    <a jsf:rendered="#{reporteSimcoController.listReporteActor.size() > 0}" jsf:action="#{reporteSimcoController.reporteSimcoActorPdf()}">
                                         <img src="../../bootstrap/img/pdf.png" height="45" width="45"/>
                                     </a>
                                 </div>
                                 <br/>
-                                <h:dataTable value="#{reporteSimcoController.listReporteActor}" var="actor" class="table table-striped" rendered="#{reporteSimcoController.listReporteActor.size() > 0}"  binding="#{itemD}">
+                                <h:dataTable value="#{reporteSimcoController.listReporteActor}" var="actor" class="table table-bordered table-striped table-hover" headerClass="header_data_table" rendered="#{reporteSimcoController.listReporteActor.size() > 0}"  binding="#{itemD}">
                                     <h:column>
                                         <f:facet name="header">#</f:facet>
                                         <h:outputText value="#{itemD.rowIndex+1}" />

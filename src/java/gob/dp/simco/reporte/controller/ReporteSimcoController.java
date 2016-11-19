@@ -32,6 +32,7 @@ import gob.dp.simco.reporte.entity.ReporteSimcoVictima;
 import gob.dp.simco.reporte.service.ReporteSimcoActividadService;
 import gob.dp.simco.reporte.service.ReporteSimcoActorService;
 import gob.dp.simco.reporte.service.ReporteSimcoCasoService;
+import gob.dp.simco.reporte.service.ReporteSimcoVictimaService;
 import java.io.IOException;
 import java.io.Serializable;
 import java.text.ParseException;
@@ -101,6 +102,9 @@ public class ReporteSimcoController implements Serializable {
 
     @Autowired
     private ActaAcuerdoDetalleService actaAcuerdoDetalleService;
+    
+    @Autowired
+    private ReporteSimcoVictimaService reporteSimcoVictimaService;
 
     private List<SelectItem> listaAnhos;
 
@@ -131,6 +135,7 @@ public class ReporteSimcoController implements Serializable {
         listaAnhos = AnhosEnum.getList();
         reporteSimcoCaso = new ReporteSimcoCaso();
         listReporteCasos = null;
+        limpiarReporteCaso();
         return "reporteSimcoCaso";
     }
 
@@ -151,6 +156,7 @@ public class ReporteSimcoController implements Serializable {
     public String cargarReporteVictima(){
         listaAnhos = AnhosEnum.getList();
         reporteSimcoVictima = new ReporteSimcoVictima();
+        limpiarReporteVictima();
         return "reporteSimcoVictima";
     }
 
@@ -326,15 +332,6 @@ public class ReporteSimcoController implements Serializable {
                     }
                     ac.setListaTipoViolencia(ses);
                 }
-                /*if (StringUtils.isNotBlank(ac.getResultadoViolencia())) {
-                    List<String> itemsResultadoViolencia = Arrays.asList(ac.getResultadoViolencia().split("\\s*,\\s*"));
-                    List<String> ses = new ArrayList<>();
-                    for (String s : itemsResultadoViolencia) {
-                        Parametro p = parametroService.consultarParametroValor(new FiltroParametro(260, s));
-                        ses.add(p.getNombreParametro());
-                    }
-                    ac.setListaResultadoViolencia(ses);
-                }*/
                 ac.setCantidadAcuerdos(actaAcuerdoDetalleService.actaAcuerdoDetalleCount(ac.getIdActividad()));
                 
                 if(StringUtils.isNotBlank(ac.getTipoAcontecimiento())){
@@ -344,7 +341,6 @@ public class ReporteSimcoController implements Serializable {
                     ac.setTipoActividadDetalle(ac.getTipoAcontecimientoDetalle());
                     ac.setGrupoActividadDetalle(ac.getGrupoAcontecimientoDetalle());
                 }
-                
                 FacesContext context = FacesContext.getCurrentInstance();
                 VictimaViolenciaController victimaViolenciaController = (VictimaViolenciaController) context.getELContext().getELResolver().getValue(context.getELContext(), null, "victimaViolenciaController");
                 Map<String, String> victimas = victimaViolenciaController.listaVictimas(ac.getIdActividad());
@@ -356,8 +352,7 @@ public class ReporteSimcoController implements Serializable {
                 ac.setResultadoViolenciaItem5(0);
                 ac.setResultadoViolenciaItem6(0);
                 ac.setResultadoViolenciaItem7(0);
-                for (Map.Entry entry : victimas.entrySet())
-                {
+                for (Map.Entry entry : victimas.entrySet()){
                     String item = entry.getKey()+": "+entry.getValue();
                     itemsResultadoViolencia.add(item);
                     if(StringUtils.equals(entry.getKey().toString(), "Muertos"))
@@ -379,6 +374,20 @@ public class ReporteSimcoController implements Serializable {
             }
         }
     }
+    
+    public void reporteVictimas(){
+        listReporteVictima  = reporteSimcoVictimaService.reporteVictima(reporteSimcoVictima);
+        for(ReporteSimcoVictima rsv : listReporteVictima){
+            if(StringUtils.isNotBlank(rsv.getTipoAcontecimiento())){
+                rsv.setSubTipoAcontecimientoDetalle(obtenerSubTipoAcontecimiento(rsv.getTipoAcontecimiento()));
+                rsv.setTipoAcontecimientoDetalle(obtenerTipoAcontecimiento(rsv.getTipoAcontecimiento()));
+                rsv.setGrupoAcontecimientoDetalle(obtenerGrupoAcontecimiento(rsv.getTipoAcontecimiento()));
+                if(rsv.getIndicadorNN() != null && rsv.getIndicadorNN() == 1)
+                    rsv.setTipoVictima("NN");    
+            }
+            rsv.setCantidadActores(actorService.actorXactividadSimpleBuscarCount(rsv.getIdActividad()));
+        }
+    }
 
     public void reporteSimcoCasoExcel() throws JRException, IOException {
         Date date = new Date();
@@ -398,6 +407,21 @@ public class ReporteSimcoController implements Serializable {
         jrXlsxExporter.setParameter(JRXlsExporterParameter.IS_WHITE_PAGE_BACKGROUND, Boolean.FALSE);
         jrXlsxExporter.setParameter(JRXlsExporterParameter.IS_REMOVE_EMPTY_SPACE_BETWEEN_ROWS, Boolean.TRUE);
         jrXlsxExporter.exportReport();
+        facesContext.responseComplete();
+        facesContext.renderResponse();
+    }
+    
+    public void reporteSimcoCasoPdf() throws JRException, IOException {
+        Date date = new Date();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        String fecha = simpleDateFormat.format(date);
+        initJasperSimcoCaso(2);
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        HttpServletResponse httpServletResponse;
+        httpServletResponse = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+        httpServletResponse.addHeader("Content-disposition", "attachment; filename=" + fecha + "_reporteSimcoCaso.pdf");
+        ServletOutputStream servletOutputStream = httpServletResponse.getOutputStream();
+        JasperExportManager.exportReportToPdfStream(jasperPrint, servletOutputStream);
         facesContext.responseComplete();
         facesContext.renderResponse();
     }
@@ -423,6 +447,21 @@ public class ReporteSimcoController implements Serializable {
         facesContext.responseComplete();
         facesContext.renderResponse();
     }
+    
+    public void reporteSimcoActorPdf() throws JRException, IOException {
+        Date date = new Date();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        String fecha = simpleDateFormat.format(date);
+        initJasperSimcoActor(2);
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        HttpServletResponse httpServletResponse;
+        httpServletResponse = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+        httpServletResponse.addHeader("Content-disposition", "attachment; filename=" + fecha + "_reporteSimcoActor.pdf");
+        ServletOutputStream servletOutputStream = httpServletResponse.getOutputStream();
+        JasperExportManager.exportReportToPdfStream(jasperPrint, servletOutputStream);
+        facesContext.responseComplete();
+        facesContext.renderResponse();
+    }
 
     public void reporteSimcoActividadExcel() throws JRException, IOException {
         Date date = new Date();
@@ -431,7 +470,7 @@ public class ReporteSimcoController implements Serializable {
         initJasperSimcoActividad(1);
         FacesContext facesContext = FacesContext.getCurrentInstance();
         HttpServletResponse httpServletResponse = (HttpServletResponse) facesContext.getCurrentInstance().getExternalContext().getResponse();
-        httpServletResponse.addHeader("Content-disposition", "attachment; filename=" + fecha + "_reporteActores.xlsx");
+        httpServletResponse.addHeader("Content-disposition", "attachment; filename=" + fecha + "_reporteActividad.xlsx");
         ServletOutputStream servletOutputStream = httpServletResponse.getOutputStream();
         JRXlsxExporter jrXlsxExporter = new JRXlsxExporter();
         jrXlsxExporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
@@ -445,16 +484,53 @@ public class ReporteSimcoController implements Serializable {
         facesContext.responseComplete();
         facesContext.renderResponse();
     }
-
-    public void reporteSimcoCasoPdf() throws JRException, IOException {
+    
+    public void reporteSimcoActividadPdf() throws JRException, IOException {
         Date date = new Date();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         String fecha = simpleDateFormat.format(date);
-        initJasperSimcoCaso(2);
+        initJasperSimcoActividad(2);
         FacesContext facesContext = FacesContext.getCurrentInstance();
         HttpServletResponse httpServletResponse;
         httpServletResponse = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
-        httpServletResponse.addHeader("Content-disposition", "attachment; filename=" + fecha + "_reporteSimcoCaso.pdf");
+        httpServletResponse.addHeader("Content-disposition", "attachment; filename=" + fecha + "_reporteSimcoActividad.pdf");
+        ServletOutputStream servletOutputStream = httpServletResponse.getOutputStream();
+        JasperExportManager.exportReportToPdfStream(jasperPrint, servletOutputStream);
+        facesContext.responseComplete();
+        facesContext.renderResponse();
+    }
+    
+    public void reporteSimcoVictimaExcel() throws JRException, IOException {
+        Date date = new Date();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String fecha = simpleDateFormat.format(date);
+        initJasperSimcoVictima(1);
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        HttpServletResponse httpServletResponse = (HttpServletResponse) facesContext.getCurrentInstance().getExternalContext().getResponse();
+        httpServletResponse.addHeader("Content-disposition", "attachment; filename=" + fecha + "_reporteVictima.xlsx");
+        ServletOutputStream servletOutputStream = httpServletResponse.getOutputStream();
+        JRXlsxExporter jrXlsxExporter = new JRXlsxExporter();
+        jrXlsxExporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
+        jrXlsxExporter.setParameter(JRXlsExporterParameter.IS_ONE_PAGE_PER_SHEET, Boolean.TRUE);
+        jrXlsxExporter.setParameter(JRExporterParameter.OUTPUT_STREAM, servletOutputStream);
+        jrXlsxExporter.setParameter(JRXlsExporterParameter.IS_ONE_PAGE_PER_SHEET, Boolean.FALSE);
+        jrXlsxExporter.setParameter(JRXlsExporterParameter.IS_DETECT_CELL_TYPE, Boolean.TRUE);
+        jrXlsxExporter.setParameter(JRXlsExporterParameter.IS_WHITE_PAGE_BACKGROUND, Boolean.FALSE);
+        jrXlsxExporter.setParameter(JRXlsExporterParameter.IS_REMOVE_EMPTY_SPACE_BETWEEN_ROWS, Boolean.TRUE);
+        jrXlsxExporter.exportReport();
+        facesContext.responseComplete();
+        facesContext.renderResponse();
+    }
+    
+    public void reporteSimcoVictimaPdf() throws JRException, IOException {
+        Date date = new Date();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        String fecha = simpleDateFormat.format(date);
+        initJasperSimcoVictima(2);
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        HttpServletResponse httpServletResponse;
+        httpServletResponse = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+        httpServletResponse.addHeader("Content-disposition", "attachment; filename=" + fecha + "_reporteSimcoVictima.pdf");
         ServletOutputStream servletOutputStream = httpServletResponse.getOutputStream();
         JasperExportManager.exportReportToPdfStream(jasperPrint, servletOutputStream);
         facesContext.responseComplete();
@@ -475,7 +551,7 @@ public class ReporteSimcoController implements Serializable {
         if (tipo == 1) {
             jasperPrint = JasperFillManager.fillReport(ConstantesUtil.BASE_URL_REPORT + "reporteSimcoActorExcel.jasper", new HashMap(), beanCollectionDataSource);
         } else {
-            jasperPrint = JasperFillManager.fillReport(ConstantesUtil.BASE_URL_REPORT + "reporteSimcoCasoPdf.jasper", new HashMap(), beanCollectionDataSource);
+            jasperPrint = JasperFillManager.fillReport(ConstantesUtil.BASE_URL_REPORT + "reporteSimcoActorPdf.jasper", new HashMap(), beanCollectionDataSource);
         }
     }
 
@@ -485,6 +561,15 @@ public class ReporteSimcoController implements Serializable {
             jasperPrint = JasperFillManager.fillReport(ConstantesUtil.BASE_URL_REPORT + "reporteSimcoActividadExcel.jasper", new HashMap(), beanCollectionDataSource);
         } else {
             jasperPrint = JasperFillManager.fillReport(ConstantesUtil.BASE_URL_REPORT + "reporteSimcoActividadPdf.jasper", new HashMap(), beanCollectionDataSource);
+        }
+    }
+    
+    public void initJasperSimcoVictima(int tipo) throws JRException {
+        JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(listReporteVictima);
+        if (tipo == 1) {
+            jasperPrint = JasperFillManager.fillReport(ConstantesUtil.BASE_URL_REPORT + "reporteSimcoVictimaExcel.jasper", new HashMap(), beanCollectionDataSource);
+        } else {
+            jasperPrint = JasperFillManager.fillReport(ConstantesUtil.BASE_URL_REPORT + "reporteSimcoVictimaPdf.jasper", new HashMap(), beanCollectionDataSource);
         }
     }
 
@@ -527,6 +612,11 @@ public class ReporteSimcoController implements Serializable {
         reporteSimcoActividad.setCodigoCaso(caso.getCodigo());
         reporteSimcoActividad.setNombreCaso(caso.getCodigo() + " " + caso.getNombre());
     }
+    
+    public void setearCasoVictima(Caso caso) {
+        reporteSimcoVictima.setCodigoCaso(caso.getCodigo());
+        reporteSimcoVictima.setNombreCaso(caso.getCodigo() + " " + caso.getNombre());
+    }
 
     public void setearActorActor(Actor actor) {
         reporteSimcoActor.setIdActor(actor.getId());
@@ -556,6 +646,21 @@ public class ReporteSimcoController implements Serializable {
             sb.append(" ").append(actor.getApellidoMat());
         }
         reporteSimcoActividad.setNombreActor(sb.toString());
+    }
+    
+    public void setearActorVictima(Actor actor) {
+        reporteSimcoVictima.setIdActor(actor.getId());
+        StringBuilder sb = new StringBuilder();
+        if (StringUtils.isNotBlank(actor.getNombre())) {
+            sb.append(actor.getNombre());
+        }
+        if (StringUtils.isNotBlank(actor.getApellidoPat())) {
+            sb.append(" ").append(actor.getApellidoPat());
+        }
+        if (StringUtils.isNotBlank(actor.getApellidoMat())) {
+            sb.append(" ").append(actor.getApellidoMat());
+        }
+        reporteSimcoVictima.setNombreActor(sb.toString());
     }
 
     public void limpiarReporteCaso() {

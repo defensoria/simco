@@ -99,6 +99,7 @@
         <typeAlias type="gob.dp.simco.reporte.entity.ReporteSimcoCaso" alias="reporteSimcoCaso"/>
         <typeAlias type="gob.dp.simco.reporte.entity.ReporteSimcoActor" alias="reporteSimcoActor"/>
         <typeAlias type="gob.dp.simco.reporte.entity.ReporteSimcoActividad" alias="reporteSimcoActividad"/>
+        <typeAlias type="gob.dp.simco.reporte.entity.ReporteSimcoVictima" alias="reporteSimcoVictima"/>
     </typeAliases>
 
     <mappers>
@@ -178,6 +179,7 @@
         <mapper resource="gob/dp/simco/reporte/dao/xml/ReporteSimcoCaso.xml" />
         <mapper resource="gob/dp/simco/reporte/dao/xml/ReporteSimcoActor.xml" />
         <mapper resource="gob/dp/simco/reporte/dao/xml/ReporteSimcoActividad.xml" />
+        <mapper resource="gob/dp/simco/reporte/dao/xml/ReporteSimcoVictima.xml" />
         
     </mappers>
     

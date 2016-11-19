@@ -23,7 +23,7 @@
         <result property="momentoDialogo" column="MOMENTO_DIALOGO"/>
         <result property="mecanismoDialogo" column="MECANISMO_DIALOGO"/>
         <result property="participacion" column="PARTICIPACION"/>
-        <result property="inversion" column="C_INVERSIONINVOLUCRADA"/>
+        <result property="inversionInvolucrada" column="N_INVERSIONINVOLUCRADA"/>
         
     </resultMap>      
 
@@ -32,7 +32,7 @@
         B.C_DESCDPTO, M.C_DESCPROV, N.C_DESCDSTRO, C.NOMBRE_PARAMETRO TIPOCASO, D.NOMBRE_PARAMETRO TIPOESTADO, E.NOMBRE_PARAMETRO TIPOACTIVIDAD, 
         F.NOMBRE_PARAMETRO FASE, G.ACUERDOS, O.C_NOMBRE PRIMERNIVEL, P.C_NOMBRE SEGUNDONIVEL, Q.C_NOMBRE TERCERNIVEL, 
         TO_CHAR(A.D_FECHAMODIFICACION, 'dd/mm/yyyy') FECHA_MODIFICACION, R.NOMBRE_PARAMETRO MOMENTO_DIALOGO, S.NOMBRE_PARAMETRO MECANISMO_DIALOGO, 
-        T.NOMBRE_PARAMETRO PARTICIPACION, A.C_INVERSIONINVOLUCRADA
+        T.NOMBRE_PARAMETRO PARTICIPACION, A.N_INVERSIONINVOLUCRADA, A.D_FECHACREACION
         FROM SIMCO_REG_CASO A
         LEFT JOIN SIMCO_UBIGEO_DPTO B ON A.C_IDDEPART = B.C_ID_DPTO
         LEFT JOIN SIMCO_UBIGEO_PROV M ON A.C_IDPROV = M.C_ID_PROV AND B.C_ID_DPTO = M.C_ID_DPTO
@@ -60,9 +60,9 @@
         ) J ON A.N_ID_CASO = J.N_ID_CASO 
         LEFT JOIN SIMCO_REG_ACTIVIDAD_ACTOR K ON J.N_ID_ACTIVIDAD = K.N_ID_ACTIVIDAD       
         LEFT JOIN SIMCO_REG_ACTOR L ON K.N_ID_ACTOR = L.N_ID_ACTOR         
-        WHERE A.C_INDVIGENTE = 'A'
+        WHERE A.C_INDVIGENTE = 'A' 
         <if test="anho != 0">
-            AND TO_CHAR(A.D_FECHAPUBLICACION, 'yyyy') = #{anho} 
+            AND TO_CHAR(A.D_FECHACREACION, 'yyyy') = #{anho} 
         </if>
         <if test="tipologia != 0">
             AND A.C_TIPOCASO = #{tipologia} 
@@ -88,8 +88,13 @@
         </if>
         <if test="esComunidadNativaInt == 0">
             AND L.C_TIPOORGANIZACION NOT IN ('10') 
-            AND L.C_CLASIFICACION = 'OR'
-        </if>                    
+            AND L.C_CLASIFICACION = 'OR' 
+        </if>
+        <if test="inversionInvolucrada != null">
+            AND A.N_INVERSIONINVOLUCRADA &gt; #{inversionInvolucrada} 
+        </if> 
+        
+        ORDER BY A.D_FECHACREACION
     </select>
     
     <select id="cantidadAcuerdosCaso" resultType="java.lang.Integer" parameterType="long">

@@ -8,6 +8,7 @@
         <meta name="description" content=""/>
         <meta name="author" content=""/>
         <title>Ingreso SIMCO</title>
+<link href="/simco/faces/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
     </h:head>
     <h:body>
         <center>
@@ -24,8 +25,9 @@
                     <input type="checkbox" value="remember-me"/> Recordar
                 </label>
                 <button class="btn btn-lg btn-primary btn-block" jsf:action="#{loginController.ingresarSistema}" type="submit">Ingresar
+					<span class="glyphicon glyphicon-user"></span>
                 </button>
-                <link href="/simco/faces/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+                
                 <style>
                     body{
                         padding-top:40px;
@@ -65,8 +67,18 @@
                         border-top-left-radius:0;
                         border-top-right-radius:0
                     }
+#footer {
+   position:absolute;
+   bottom:0;
+   text-align: right;
+   padding-right: 20px;
+   padding-bottom: 20px;
+}
                 </style>
             </h:form>
+            <div id="footer" class="">
+                <div style="padding-left:80px"> <img alt="" src="/simco/faces/bootstrap/img/giz.png" width="15%" /></div>
+    </div>
         </div>
         <link href="/simco/faces/bootstrap/css/theme.min.css" rel="stylesheet" type="text/css"/>
         <link href="/simco/faces/bootstrap/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>

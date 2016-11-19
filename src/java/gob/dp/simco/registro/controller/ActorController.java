@@ -1374,6 +1374,8 @@ public class ActorController extends AbstractManagedBean implements Serializable
                 } else {
                     if (empresa.getId() == null) {
                         empresa.setTipoGeneral("EM");
+                        empresa.setUsuarioRegistro(usuarioSession.getCodigo());
+                        empresa.setFechaRegistro(new Date());
                         actorService.actorNuevo(empresa);
                         msg.messageInfo("Se ha registrado correctamente la Empresa ahora puede agregar sus miembros", null);
                     } else {
@@ -1413,6 +1415,8 @@ public class ActorController extends AbstractManagedBean implements Serializable
                     }
                 } else {
                     entidad.setTipoGeneral("EN");
+                    entidad.setUsuarioRegistro(usuarioSession.getCodigo());
+                    entidad.setFechaRegistro(new Date());
                     actorService.actorNuevo(entidad);
                     msg.messageInfo("Se ha registrado correctamente la Entidad ahora puede agregar sus miembros", null);
                 }

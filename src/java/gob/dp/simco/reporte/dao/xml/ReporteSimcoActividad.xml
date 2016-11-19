@@ -48,7 +48,7 @@ LEFT JOIN SIMCO_PARAMETRO G ON G.VALOR_PARAMETRO = F.C_TIPOCASO AND G.PADRE_PARA
         LEFT JOIN SIMCO_REG_ACTOR M ON M.N_ID_ACTOR = L.N_ID_ACTOR
         WHERE 1 = 1
         <if test="anho != 0">
-            AND TO_CHAR(A.D_FECREGISTRO, 'yyyy') = #{anho} 
+            AND TO_CHAR(F.D_FECHACREACION, 'yyyy') = #{anho} 
         </if>
         <if test="codigoCaso != ''">
             AND F.C_CODIGOCASO = #{codigoCaso}
@@ -79,6 +79,9 @@ LEFT JOIN SIMCO_PARAMETRO G ON G.VALOR_PARAMETRO = F.C_TIPOCASO AND G.PADRE_PARA
             AND M.C_TIPOORGANIZACION NOT IN ('10') 
             AND M.C_CLASIFICACION = 'OR'
         </if> 
+        <if test="inversionInvolucrada != null">
+            AND F.N_INVERSIONINVOLUCRADA &gt; #{inversionInvolucrada} 
+        </if>
 ORDER BY A.N_ID_ACTIVIDAD
     </select>
     

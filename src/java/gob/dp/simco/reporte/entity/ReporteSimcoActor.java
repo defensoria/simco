@@ -107,6 +107,8 @@ public class ReporteSimcoActor implements Serializable {
     
     private String subtipo3;
     
+    private Double inversionInvolucrada;
+    
     
     /**
      *
@@ -487,6 +489,14 @@ public class ReporteSimcoActor implements Serializable {
 
     public void setContadorCasosPorActorTerciario(Integer contadorCasosPorActorTerciario) {
         this.contadorCasosPorActorTerciario = contadorCasosPorActorTerciario;
+    }
+
+    public Double getInversionInvolucrada() {
+        return inversionInvolucrada;
+    }
+
+    public void setInversionInvolucrada(Double inversionInvolucrada) {
+        this.inversionInvolucrada = inversionInvolucrada;
     }
 
 }

@@ -64,7 +64,7 @@
         LEFT JOIN SIMCO_PARAMETRO F ON F.VALOR_PARAMETRO = A.C_EMPRESAAMBITO AND F.PADRE_PARAMETRO = 170
         WHERE 1 = 1 
         <if test="anho != null">
-            AND TO_CHAR(A.D_FECHAREGISTRO, 'YYYY') = TO_CHAR(#{anho}) 
+            AND TO_CHAR(E.D_FECHACREACION, 'YYYY') = TO_CHAR(#{anho}) 
         </if>
         <if test="codigoCaso != ''">
             AND E.C_CODIGOCASO = #{codigoCaso}
@@ -86,6 +86,9 @@
         </if>
         <if test="tipoActor != ''">
             AND A.C_TIPOGENERAL = #{tipoActor} 
+        </if>
+        <if test="inversionInvolucrada != null">
+            AND E.N_INVERSIONINVOLUCRADA &gt; #{inversionInvolucrada} 
         </if>
     </select>
     

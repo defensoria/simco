@@ -35,7 +35,7 @@
         <result property="tipoMomentoDialogo" column="C_MOMENTODIALOGO"/>
         <result property="version" column="N_VERSION"/>
         <result property="indicador" column="C_INDVIGENTE"/>
-        <result property="inversionInvolucrada" column="C_INVERSIONINVOLUCRADA"/>
+        <result property="inversionInvolucrada" column="N_INVERSIONINVOLUCRADA"/>
         <result property="fechaInicio" column="D_FECHAINICIO"/>
         <result property="fechaFin" column="D_FECHAFIN"/>
         
@@ -162,7 +162,7 @@
             C_INDVIGENTE,
         </if>
         <if test="inversionInvolucrada != null">
-            C_INVERSIONINVOLUCRADA,
+            N_INVERSIONINVOLUCRADA,
         </if>
         <if test="fechaInicio != null">
             D_FECHAINICIO,
@@ -358,7 +358,7 @@
                 C_MOMENTODIALOGO = #{tipoMomentoDialogo},
             </if>
             <if test="inversionInvolucrada != null">
-                C_INVERSIONINVOLUCRADA = #{inversionInvolucrada},
+                N_INVERSIONINVOLUCRADA = #{inversionInvolucrada},
             </if>
             <if test="fechaInicio != null">
             D_FECHAINICIO = #{fechaInicio},

@@ -36,6 +36,13 @@
     </h:head>
     <h:form>
         <script>
+     function validarNumeros(e) {
+    tecla = (document.all) ? e.keyCode : e.which;
+    if (tecla==8) return true;
+    patron =/\d/;
+    te = String.fromCharCode(tecla);
+    return patron.test(te);
+} 
             $(document).ready(function () {
                 $('.selectRadio').multiselect();
                 var a;

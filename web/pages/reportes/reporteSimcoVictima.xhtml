@@ -20,9 +20,14 @@
                                     <span class="text-resalt-comun"/>Reporte de actores
                                 </a>
                             </li>
-                            <li role="presentation" class="active">
+                            <li role="presentation">
                                 <a jsf:action="#{reporteSimcoController.cargarReporteActividad()}" aria-controls="messages" role="tab" data-toggle="tab">
                                     <span class="text-resalt-comun"/>Reporte de actividades
+                                </a>
+                            </li>
+                            <li role="presentation" class="active">
+                                <a jsf:action="#{reporteSimcoController.cargarReporteVictima()}" aria-controls="messages" role="tab" data-toggle="tab">
+                                    <span class="text-resalt-comun"/>Reporte de victimas
                                 </a>
                             </li>
                         </ul>
@@ -60,7 +65,7 @@
                                                                 <td>
                                                                     <a class="btn btn-info" jsf:action="#{reporteSimcoController.limpiarReporteVictima()}">
                                                                         <span class="glyphicon glyphicon-search" />Buscar
-                                                                        <f:ajax render="idPanelModalCaso1" onevent="openModalBusquedaCaso()" />
+                                                                        <f:ajax render="idPanelModalCaso2" onevent="openModalBusquedaCaso()" />
                                                                     </a>
                                                                 </td>
                                                             </tr>
@@ -112,60 +117,19 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td>
-                                                        <b>Que incluyan como actor a comunidades nativas:</b>
-                                                    </td>
-                                                    <td>
-                                                        <h:selectOneMenu value="#{reporteSimcoController.reporteSimcoVictima.esComunidadNativaInt}">
-                                                            <f:selectItem itemLabel="Seleccione" itemValue=""/>
-                                                            <f:selectItem itemLabel="Si" itemValue="1"/>
-                                                            <f:selectItem itemLabel="No" itemValue="0"/>
-                                                        </h:selectOneMenu>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td><b>Actor involucrado:</b></td>
-                                                    <td>
-                                                        <table style="width: 100%">
-                                                            <tr>
-                                                                <td style="width: 95%">
-                                                                    <input type="text" jsf:value="#{reporteSimcoController.reporteSimcoVictima.nombreActor}" placeholder="Actor" readonly="true" style="background: silver"/>
-                                                                    <h:inputHidden value="#{reporteSimcoController.reporteSimcoVictima.idActor}" />
-                                                                </td>
-                                                                <td>
-                                                                    <a class="btn btn-info" jsf:action="#{actorController.limpiarModalBusquedaActor()}">
-                                                                        <span class="glyphicon glyphicon-search" />Buscar
-                                                                        <f:ajax render="idPanelModalActor1" onevent="openModalBusquedaActor()" />
-                                                                    </a>
-                                                                </td>
-                                                            </tr>
-                                                        </table>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td><b>Tipo de actor </b></td>
-                                                    <td>
-                                                        <h:selectOneMenu value="#{reporteSimcoController.reporteSimcoActividad.tipoActor}">
-                                                            <f:selectItem itemLabel="Seleccione" itemValue=""/>
-                                                            <f:selectItem itemLabel="Población" itemValue="PE"/>
-                                                            <f:selectItem itemLabel="Organización / empresa" itemValue="EM"/>
-                                                            <f:selectItem itemLabel="Entidad estatal" itemValue="EN"/>
-                                                        </h:selectOneMenu>
-                                                    </td>
-                                                </tr>
-                                                <tr>
                                                     <td><b>Inversión involucrada</b></td>
-                                                    <td></td>
+                                                    <td>
+                                                        <input type="text" jsf:value="#{reporteSimcoController.reporteSimcoVictima.inversionInvolucrada}" style="width: 50%" onkeypress="return validarNumeros(event)"/>
+                                                    </td>
                                                 </tr>
-
                                             </table>
                                         </td>
                                         <td style="vertical-align: top; text-align: right">
-                                            <a class="btn btn-warning" jsf:action="#{reporteSimcoController.limpiarReporteActividad()}">
+                                            <a class="btn btn-warning" jsf:action="#{reporteSimcoController.limpiarReporteVictima()}">
                                                 <span class="glyphicon glyphicon-asterisk" />Limpiar  
                                             </a>
                                             &#160;&#160;&#160;
-                                            <a class="btn btn-primary" jsf:action="#{reporteSimcoController.reporteActividades()}">
+                                            <a class="btn btn-primary" jsf:action="#{reporteSimcoController.reporteVictimas()}">
                                                 <span class="glyphicon glyphicon-search" />Buscar  
                                             </a>
                                         </td>
@@ -173,74 +137,60 @@
                                 </table>
                                 <br/>
                                 <div>
-                                    <a jsf:action="#{reporteSimcoController.reporteSimcoActividadExcel()}">
+                                    <a jsf:rendered="#{reporteSimcoController.listReporteVictima.size() > 0}" jsf:action="#{reporteSimcoController.reporteSimcoVictimaExcel()}">
                                         <img src="../../bootstrap/img/excel.png" height="45" width="45"/>
                                     </a>
-                                    <a jsf:action="#{reporteSimcoController.reporteSimcoCasoPdf()}">
+                                    <a jsf:rendered="#{reporteSimcoController.listReporteVictima.size() > 0}" jsf:action="#{reporteSimcoController.reporteSimcoVictimaPdf()}">
                                         <img src="../../bootstrap/img/pdf.png" height="45" width="45"/>
                                     </a>
                                 </div>
                                 <br/>
-                                <h:dataTable value="#{reporteSimcoController.listReporteActividad}" var="actividad" class="table table-striped" rendered="#{reporteSimcoController.listReporteActividad.size() > 0}"  binding="#{itemD1}">
+                                <h:dataTable value="#{reporteSimcoController.listReporteVictima}" var="victima" class="table table-bordered table-striped table-hover" headerClass="header_data_table"  rendered="#{reporteSimcoController.listReporteVictima.size() > 0}"  binding="#{itemD2}">
                                     <h:column>
                                         <f:facet name="header">#</f:facet>
-                                        <h:outputText value="#{itemD1.rowIndex+1}" />
+                                        <h:outputText value="#{itemD2.rowIndex+1}" />
                                     </h:column>
                                     <h:column>
-                                        <f:facet name="header">Código del acontecimiento / actuación</f:facet>
-                                        <h:outputText value="#{actividad.codigoActividad}" />
-                                    </h:column>
-                                    <h:column>
-                                        <f:facet name="header">Nombre del acontecimiento / actuación</f:facet>
-                                        <h:outputText value="#{actividad.nombreActividad}" />
-                                    </h:column>
-                                    <h:column>
-                                        <f:facet name="header">Acontecimiento / Actuación</f:facet>
-                                        <h:outputText value="#{actividad.claseActividad}" />
-                                    </h:column>
-                                    <h:column>
-                                        <f:facet name="header">Fecha</f:facet>
-                                        <h:outputText value="#{actividad.fecha}" />
+                                        <f:facet name="header">Acontecimiento</f:facet>
+                                        <h:outputText value="#{victima.nombreActividad}" />
                                     </h:column>
                                     <h:column>
                                         <f:facet name="header">Tipo</f:facet>
-                                        <h:outputText value="#{actividad.tipoActividadDetalle}" />
+                                        <h:outputText value="#{victima.tipoAcontecimientoDetalle}" />
                                     </h:column>
                                     <h:column>
                                         <f:facet name="header">Subtipo</f:facet>
-                                        <h:outputText value="#{actividad.subTipoAcontecimientoDetalle}" />
-                                    </h:column>
-                                    <h:column>
-                                        <f:facet name="header">Tipo de violencia</f:facet>
-                                        <ul type = "square">
-                                            <ui:repeat var="item1" value="#{actividad.listaTipoViolencia}"> 
-                                                <li>#{item1}</li>                                                   
-                                            </ui:repeat> 
-                                        </ul>
-                                    </h:column>
-                                    <h:column>
-                                        <f:facet name="header">Resultado de la violencia</f:facet>
-                                        <table style="width:100%">
-                                            <ul type = "square">
-                                                <ui:repeat var="item2" value="#{actividad.listaResultadoViolencia}"> 
-                                                <li>#{item2}</li>                                                   
-                                            </ui:repeat> 
-                                        </ul> 
-                                        </table>
+                                        <h:outputText value="#{victima.subTipoAcontecimientoDetalle}" />
                                     </h:column>
                                     <h:column>
                                         <f:facet name="header">Región</f:facet>
-                                        <h:outputText value="#{actividad.nombreRegion}" />
+                                        <h:outputText value="#{victima.departamento}" />
                                     </h:column>
                                     <h:column>
-                                        <f:facet name="header">Número de acuerdos</f:facet>
-                                        <h:outputText value="#{actividad.cantidadAcuerdos}" />
+                                        <f:facet name="header">Tipo de victima de la violencia</f:facet>
+                                        <h:outputText value="#{victima.tipoVictima}" />
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">Apellidos y Nombres</f:facet>
+                                        <h:outputText value="#{victima.nombreCompletoVictima}" />
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">Edad</f:facet>
+                                        <h:outputText value="#{victima.edadVictima}" />
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">Sexo</f:facet>
+                                        <h:outputText value="#{victima.sexoVictima}" />
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">Civil/PNP/FFAA</f:facet>
+                                        <h:outputText value="#{victima.tipoEstadoVictima}" />
                                     </h:column>
                                 </h:dataTable>
                             </div>
                         </div>
 
-                        <div class="modal fade" tabindex="-1" role="dialog" id="idModalBusquedaCaso1">
+                        <div class="modal fade" tabindex="-1" role="dialog" id="idModalBusquedaCaso2">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -250,19 +200,19 @@
                                         <span class="modal-title text-resalt-primary">Búsqueda de casos</span>
                                     </div>
                                     <div class="modal-body">
-                                        <h:panelGroup id="idPanelModalCaso1">
+                                        <h:panelGroup id="idPanelModalCaso2">
                                             <div class="form-group has-feedback" style="width:100%;margin:auto">
                                                 <input type="text" name="nombreCaso" placeholder="Buscar por nombre o código del caso"/>
                                                 <a style="float:right;font-size:large;margin:auto" jsf:action="#{reporteSimcoController.listaCasos(1)}" jsf:onclick="loadingModal()">
                                                     <span class="glyphicon glyphicon-search form-control-feedback"/>
-                                                    <f:ajax render="idPanelModalCaso1" execute="@form" onevent="closeModal"/>
+                                                    <f:ajax render="idPanelModalCaso2" execute="@form" onevent="closeModal"/>
                                                 </a>
                                             </div>
                                             <br/>
-                                            <h:dataTable value="#{reporteSimcoController.listadoCasos}" rendered="#{reporteSimcoController.listadoCasos.size() > 0}" var="caso" class="table table-striped" style="font-size:small" binding="#{rowy1}">
+                                            <h:dataTable value="#{reporteSimcoController.listadoCasos}" rendered="#{reporteSimcoController.listadoCasos.size() > 0}" var="caso" class="table table-striped" style="font-size:small" binding="#{rowy2}">
                                                 <h:column>
                                                     <f:facet name="header">N.°</f:facet>
-                                                    <h:outputText value="#{(reporteSimcoController.nroPagina-1)*10+rowy1.rowIndex+1}" />
+                                                    <h:outputText value="#{(reporteSimcoController.nroPagina-1)*10+rowy2.rowIndex+1}" />
                                                 </h:column>
                                                 <h:column>
                                                     <f:facet name="header">Nombre</f:facet>
@@ -274,7 +224,7 @@
                                                 </h:column>
                                                 <h:column>
                                                     <f:facet name="header"></f:facet>
-                                                    <a jsf:action="#{reporteSimcoController.setearCasoActividad(caso)}">
+                                                    <a jsf:action="#{reporteSimcoController.setearCasoVictima(caso)}">
                                                         <span class="glyphicon glyphicon-edit" style="font-size:medium"/>
                                                     </a>
                                                 </h:column>
@@ -282,12 +232,12 @@
                                             <ul class="pager">
                                                 <li>
                                                     <a jsf:rendered="#{reporteSimcoController.listadoCasos.size() > 0}" jsf:action="#{reporteSimcoController.listaCasos(reporteSimcoController.nroPagina -1)}">Anterior
-                                                        <f:ajax render="idPanelModalCaso1" />
+                                                        <f:ajax render="idPanelModalCaso2" />
                                                     </a>
                                                 </li>
                                                 <li>
                                                     <a jsf:rendered="#{reporteSimcoController.listadoCasos.size() > 0}" jsf:action="#{reporteSimcoController.listaCasos(reporteSimcoController.nroPagina +1)}">Siguiente
-                                                        <f:ajax render="idPanelModalCaso1" />
+                                                        <f:ajax render="idPanelModalCaso2" />
                                                     </a>
                                                 </li>
                                             </ul>
@@ -299,11 +249,11 @@
 
                         <script>
                             function openModalBusquedaCaso() {
-                                $("#idModalBusquedaCaso1").modal('show');
+                                $("#idModalBusquedaCaso2").modal('show');
                             }
                         </script>
 
-                        <div class="modal fade" tabindex="-1" role="dialog" id="idModalBusquedaActor1">
+                        <div class="modal fade" tabindex="-1" role="dialog" id="idModalBusquedaActor2">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -313,19 +263,19 @@
                                         <span class="modal-title text-resalt-primary">Búsqueda de actor</span>
                                     </div>
                                     <div class="modal-body">
-                                        <h:panelGroup id="idPanelModalActor1">
+                                        <h:panelGroup id="idPanelModalActor2">
                                             <div class="form-group has-feedback" style="width:100%;margin:auto">
                                                 <input type="text" autocomplete="false" name="nombreActor" placeholder="Buscar por nombre de actor"/>
                                                 <a style="float:right;font-size:large;margin:auto" jsf:action="#{actorController.buscarActorXnombrePaginado(1)}" jsf:onclick="loadingModal()">
                                                     <span class="glyphicon glyphicon-search form-control-feedback"/>
-                                                    <f:ajax render="idPanelModalActor1" execute="@form" onevent="closeModal"/>
+                                                    <f:ajax render="idPanelModalActor2" execute="@form" onevent="closeModal"/>
                                                 </a>
                                             </div>
                                             <br/>
-                                            <h:dataTable value="#{actorController.listaActorBusquedaGeneral}" rendered="#{actorController.listaActorBusquedaGeneral.size() > 0}" var="item" class="table table-striped" style="font-size:small" binding="#{rowz1}">
+                                            <h:dataTable value="#{actorController.listaActorBusquedaGeneral}" rendered="#{actorController.listaActorBusquedaGeneral.size() > 0}" var="item" class="table table-striped" style="font-size:small" binding="#{rowz2}">
                                                 <h:column>
                                                     <f:facet name="header">N.°</f:facet>
-                                                    <h:outputText value="#{(actorController.nroPagina-1)*10+rowz1.rowIndex+1}" />
+                                                    <h:outputText value="#{(actorController.nroPagina-1)*10+rowz2.rowIndex+1}" />
                                                 </h:column>
                                                 <h:column>
                                                     <f:facet name="header">Nombres</f:facet>
@@ -344,7 +294,7 @@
                                                 </h:column>
                                                 <h:column>
                                                     <f:facet name="header"></f:facet>
-                                                    <a jsf:action="#{reporteSimcoController.setearActorActividad(item)}">
+                                                    <a jsf:action="#{reporteSimcoController.setearActorVictima(item)}">
                                                         <span class="glyphicon glyphicon-edit" style="font-size:medium"/>
                                                     </a>
                                                 </h:column>
@@ -352,12 +302,12 @@
                                             <ul class="pager">
                                                 <li>
                                                     <a jsf:rendered="#{actorController.listaActorBusquedaGeneral.size() > 0}" jsf:action="#{actorController.buscarActorXnombrePaginado(actorController.nroPagina -1)}">Anterior
-                                                        <f:ajax render="idPanelModalActor1" />
+                                                        <f:ajax render="idPanelModalActor2" />
                                                     </a>
                                                 </li>
                                                 <li>
                                                     <a jsf:rendered="#{actorController.listaActorBusquedaGeneral.size() > 0}" jsf:action="#{actorController.buscarActorXnombrePaginado(actorController.nroPagina +1)}">Siguiente
-                                                        <f:ajax render="idPanelModalActor1" />
+                                                        <f:ajax render="idPanelModalActor2" />
                                                     </a>
                                                 </li>
                                             </ul>
@@ -368,7 +318,7 @@
                         </div>
                         <script>
                             function openModalBusquedaActor() {
-                                $("#idModalBusquedaActor1").modal('show');
+                                $("#idModalBusquedaActor2").modal('show');
                             }
                         </script>
                     </div>
