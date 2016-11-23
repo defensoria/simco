@@ -18,6 +18,7 @@
         FROM SIMCO_UBIGEO_DSTRO
         WHERE C_ID_PROV = #{idProvincia}
         AND C_ID_DPTO = #{idDepartamento}
+        ORDER BY C_DESCDSTRO
     </select>   
     
     <select id="distritoOne" resultMap="distritoMap" parameterType="distrito">

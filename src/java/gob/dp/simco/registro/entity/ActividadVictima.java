@@ -55,6 +55,10 @@ public class ActividadVictima implements Serializable{
     private String nombreTipo;
     
     private Boolean noIdentificado;
+    
+    private String sexo;
+    
+    private String establecimientoAtencion;
 
     public Long getId() {
         return id;
@@ -222,6 +226,22 @@ public class ActividadVictima implements Serializable{
 
     public void setNoIdentificado(Boolean noIdentificado) {
         this.noIdentificado = noIdentificado;
+    }
+
+    public String getSexo() {
+        return sexo;
+    }
+
+    public void setSexo(String sexo) {
+        this.sexo = sexo;
+    }
+
+    public String getEstablecimientoAtencion() {
+        return establecimientoAtencion;
+    }
+
+    public void setEstablecimientoAtencion(String establecimientoAtencion) {
+        this.establecimientoAtencion = establecimientoAtencion;
     }
     
 }

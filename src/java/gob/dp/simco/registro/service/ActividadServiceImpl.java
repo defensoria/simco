@@ -185,5 +185,10 @@ public class ActividadServiceImpl implements ActividadService{
             return actividadDao.contadorActuacion(idCaso);
         return null;
     }
+
+    @Override
+    public List<Actividad> actividadxCodigoCasoBuscarTotalAD(String codigo) {
+        return actividadDao.actividadxCodigoCasoBuscarTotalAD(codigo);
+    }
     
 }

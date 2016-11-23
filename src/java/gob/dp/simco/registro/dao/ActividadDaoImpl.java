@@ -162,5 +162,10 @@ public class ActividadDaoImpl extends SqlSessionDaoSupport implements ActividadD
     public Integer contadorActuacion(long idCaso) {
         return getSqlSession().selectOne("gob.dp.simco.registro.dao.ActividadDao.contadorActuacion",idCaso);
     }
+
+    @Override
+    public List<Actividad> actividadxCodigoCasoBuscarTotalAD(String codigo) {
+        return getSqlSession().selectList("gob.dp.simco.registro.dao.ActividadDao.actividadxCodigoCasoBuscarTotalAD",codigo);
+    }
     
 }

@@ -71,4 +71,6 @@ public interface ActividadService {
    
    public Integer contadorActuacionesAcontecimientos(long idCaso, int tipo);
    
+   public List<Actividad> actividadxCodigoCasoBuscarTotalAD(String codigo);
+   
 }

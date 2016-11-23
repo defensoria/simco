@@ -39,6 +39,8 @@ public interface ActividadDao {
    
    public List<Actividad> actividadxCodigoCasoBuscarTotal(String codigo);
    
+   public List<Actividad> actividadxCodigoCasoBuscarTotalAD(String codigo);
+   
    public List<Actividad> actividadxActaAcuerdoBuscar(Long idActaAcuerdo);
    
    public List<Actividad> actividadxActaAcuerdoBuscarTotal(Long idActaAcuerdo);

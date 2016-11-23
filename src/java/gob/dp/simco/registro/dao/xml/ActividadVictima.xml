@@ -24,6 +24,8 @@
         <result property="ruta" column="C_RUTA"/>
         <result property="nombreTipo" column="NOMBRE_PARAMETRO"/>
         <result property="noIdentificado" column="N_NOIDENTIFICADO"/>
+        <result property="sexo" column="C_SEXO"/>
+        <result property="establecimientoAtencion" column="C_ESTABLECIMIENTO_ATENCION"/>
     </resultMap>  
 
     <insert id="actividadVictimaInsertar" parameterType="actividadVictima">
@@ -79,6 +81,12 @@
         <if test="noIdentificado != null">
             N_NOIDENTIFICADO,
         </if>
+        <if test="sexo != null">
+            C_SEXO,
+        </if>
+        <if test="establecimientoAtencion != null">
+            C_ESTABLECIMIENTO_ATENCION,
+        </if>
         D_FECHAREGISTRO
         )
         VALUES 
@@ -132,6 +140,12 @@
         </if>
         <if test="noIdentificado != null">
             #{noIdentificado},
+        </if>
+        <if test="sexo != null">
+            #{sexo},
+        </if>
+        <if test="establecimientoAtencion != null">
+            #{establecimientoAtencion},
         </if>
         #{fechaRegistro}
         )
@@ -192,6 +206,12 @@
             <if test="noIdentificado != null">
                 N_NOIDENTIFICADO = #{noIdentificado},
             </if>
+            <if test="sexo != null">
+                C_SEXO = #{sexo},
+            </if>
+            <if test="establecimientoAtencion != null">
+                C_ESTABLECIMIENTO_ATENCION = #{establecimientoAtencion},
+            </if>
             D_FECHAMODIFICACOIN = #{fechaModificacion}
         </set>
         <where>
@@ -221,7 +241,9 @@
         A.D_FECHAMODIFICACOIN,
         A.C_RUTA,
         A.N_NOIDENTIFICADO,
-        B.NOMBRE_PARAMETRO
+        B.NOMBRE_PARAMETRO,
+        A.C_SEXO,
+        A.C_ESTABLECIMIENTO_ATENCION
         FROM
         SIMCO_REG_ACTIVIDAD_VICTIMA A 
         LEFT JOIN SIMCO_PARAMETRO B ON TRIM(A.C_TIPO) = TRIM(B.VALOR_PARAMETRO)

@@ -652,7 +652,7 @@ public class IntervencionController extends AbstractManagedBean implements Seria
 
     public void openModalRegistroDescripcion(IntervencionEtapa etapa) {
         try {
-            actividads = actividadService.actividadxCodigoCasoBuscarTotal(intervencion.getCodigoCaso());
+            actividads = actividadService.actividadxCodigoCasoBuscarTotalAD(intervencion.getCodigoCaso());
             intervencionAccionSelect = new IntervencionAccion();
             descripcionActuacion = "";
             usuarioSession();

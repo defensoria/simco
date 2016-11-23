@@ -11,13 +11,13 @@
                 <table style="width:100%">
                     <tr>
                         <td style="width:50%;padding-right:5px">
-                            <div class="panel panel-featured-top-primary" style="min-height:600px">
+                            <div class="panel panel-featured-top-primary" style="min-height:700px">
                                 <div class="panel-body">
                                     <table style="width:100%">
                                         <tr>
                                             <td>
                                                 <span class="text-resalt-primary" style="font-size:2em">Víctimas de la violencia&#160;&#160;&#160;&#160;&#160;</span>
-                                                <a jsf:action="#{victimaViolenciaController.nuevo()}">Nuevo
+                                                <a class="btn btn-warning" jsf:action="#{victimaViolenciaController.nuevo()}">Nuevo
                                                     <span class="glyphicon glyphicon-user" style="font-size:2em"/>
                                                 </a>
                                                 <br/><br/>
@@ -46,74 +46,94 @@
                                             <h:selectBooleanCheckbox class="checkNN" value="#{victimaViolenciaController.actividadVictima.noIdentificado}">
                                                 <f:ajax listener="#{victimaViolenciaController.seleccionarNoIdentificados()}" render="idPanelVictimaUpdate"/>
                                             </h:selectBooleanCheckbox>
-                                            <br/>
+                                            <br/><br/><br/>
                                         </tr>
                                     </table>
                                     <h:panelGroup id="idPanelVictimaUpdate">
                                         <table style="width:100%">
                                             <tr>
-                                                <td style="width:90%">
+                                                <td style="width:90%" colspan="2">
                                                     <label>Nombre</label>
                                                     <input type="text" id="idActorPersonaNombre" jsf:value="#{victimaViolenciaController.actividadVictima.nombre}" placeholder="Nombre" maxlength="200" />
                                                     <br/>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td>
+                                                <td colspan="2">
                                                     <label>Apellido Paterno</label>
                                                     <input type="text" id="idActorPersonaAP" jsf:value="#{victimaViolenciaController.actividadVictima.apellidoPaterno}" placeholder="Apellido paterno" maxlength="150"/>
                                                     <br/>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td>
+                                                <td colspan="2">
                                                     <label>Apellido Materno</label>
                                                     <input type="text" id="idActorPersonaAM" jsf:value="#{victimaViolenciaController.actividadVictima.apellidoMaterno}" placeholder="Apellido materno" maxlength="150"/>
                                                     <br/>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td>
+                                                <td colspan="2">
                                                     <label>DNI</label>
                                                     <input type="text" id="idActorPersonaDNI" jsf:value="#{victimaViolenciaController.actividadVictima.dni}" style="width:50%" placeholder="DNI" maxlength="8" onkeypress="return soloNumbero(event)"/>
                                                     <br/>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td>
-                                                    <table style="width:100%">
-                                                        <tr>
-                                                            <td style="width:40%">
-                                                                <label>Edad</label>
-                                                                <input type="text" jsf:value="#{victimaViolenciaController.actividadVictima.edad}" style="width:50%" placeholder="Edad" maxlength="2" onkeypress="return soloNumbero(event)"/>
-                                                                <br/>
-                                                            </td>
-                                                            <td style="width:60%">
-                                                                <label>Civil/PNP/FFAA</label>
-                                                                <h:selectOneMenu value="#{victimaViolenciaController.actividadVictima.tipoEstado}">
-                                                                    <f:selectItem itemLabel="Seleccione" itemValue="0"/>
-                                                                    <f:selectItems value="#{listasComunesController.buscarTipoCivilPNPFFAA(false,false,false)}" var="y" itemLabel="#{y.nombreParametro}" itemValue="#{y.valorParametro}" />
-                                                                </h:selectOneMenu>
-                                                                <br/>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>
-                                                                <label>Tipo</label>
-                                                                <h:selectOneMenu value="#{victimaViolenciaController.actividadVictima.tipo}" id="idVictimaTipo">
-                                                                    <f:selectItem itemLabel="Seleccione" itemValue="0"/>
-                                                                    <f:selectItems value="#{listasComunesController.buscarTipoVictima(false,false,false)}" var="y" itemLabel="#{y.nombreParametro}" itemValue="#{y.valorParametro}" />
-                                                                </h:selectOneMenu>
-                                                                <br/>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <label>Adjuntar</label>
-                                                            <h:inputFile class="cMedio" value="#{victimaViolenciaController.file1}"/>
-                                                        </tr>
-                                                    </table>
+
+                                                <td style="width:50%">
+                                                    <label>Edad</label>
+                                                    <input type="text" jsf:value="#{victimaViolenciaController.actividadVictima.edad}" style="width:50%" placeholder="Edad" maxlength="2" onkeypress="return soloNumbero(event)"/>
+                                                    <br/>
+                                                </td>
+                                                <td style="width:50%">
+                                                    <label>Sexo</label>
+                                                    <h:selectOneMenu value="#{victimaViolenciaController.actividadVictima.sexo}">
+                                                        <f:selectItem itemLabel="Seleccione" itemValue="0"/>
+                                                        <f:selectItem itemLabel="Masculino" itemValue="M"/>
+                                                        <f:selectItem itemLabel="Femenino" itemValue="F"/>
+                                                    </h:selectOneMenu>
+                                                    <br/>
                                                 </td>
                                             </tr>
+                                            <tr>
+                                                <td style="padding-right: 5px">
+                                                    <label>Tipo</label>
+                                                    <h:selectOneMenu value="#{victimaViolenciaController.actividadVictima.tipo}" id="idVictimaTipo">
+                                                        <f:selectItem itemLabel="Seleccione" itemValue="0"/>
+                                                        <f:selectItems value="#{listasComunesController.buscarTipoVictima(false,false,false)}" var="y" itemLabel="#{y.nombreParametro}" itemValue="#{y.valorParametro}" />
+                                                    </h:selectOneMenu>
+                                                    <br/>
+                                                </td>
+                                                <td>
+                                                    <label>Civil/PNP/FFAA</label>
+                                                    <h:selectOneMenu value="#{victimaViolenciaController.actividadVictima.tipoEstado}">
+                                                        <f:selectItem itemLabel="Seleccione" itemValue="0"/>
+                                                        <f:selectItems value="#{listasComunesController.buscarTipoCivilPNPFFAA(false,false,false)}" var="y" itemLabel="#{y.nombreParametro}" itemValue="#{y.valorParametro}" />
+                                                    </h:selectOneMenu>
+                                                    <br/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <label>Establecimiento de atención</label>
+                                                    <input type="text" jsf:value="#{victimaViolenciaController.actividadVictima.establecimientoAtencion}" placeholder="Establecimiento de atención" />
+                                                    <br/>
+                                                </td>
+                                                <td>
+
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+
+                                                </td>
+                                                <td>
+                                                    <label>Adjuntar</label>
+                                                    <h:inputFile class="cMedio" value="#{victimaViolenciaController.file1}"/>
+                                                </td>
+                                            </tr>
+
                                         </table>
                                     </h:panelGroup>
                                     <script>
@@ -150,7 +170,7 @@
                                                     $("#idForm1\\:idVictimaTipo").removeClass("error");
                                                 }
                                                 confirmar();
-                                            }else{
+                                            } else {
                                                 confirmar();
                                             }
                                         });
@@ -166,7 +186,7 @@
                             </div>
                         </td>
                         <td style="width:50%;padding-left:5px;vertical-align:top">
-                            <div class="panel panel-featured-top-primary" style="min-height:600px">
+                            <div class="panel panel-featured-top-primary" style="min-height:700px">
                                 <div class="panel-body">
                                     <h:panelGroup rendered="#{victimaViolenciaController.actividadVictima.id != null}">
                                         <table style="width:90%">
