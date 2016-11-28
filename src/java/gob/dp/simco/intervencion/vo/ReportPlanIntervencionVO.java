@@ -25,6 +25,8 @@ public class ReportPlanIntervencionVO {
     
     private List<IntervencionAccion> accionesSeleccionadas;
     
+    private List<IntervencionEtapa> etapasTotales;
+    
     private String imagePath;
     
     
@@ -74,6 +76,14 @@ public class ReportPlanIntervencionVO {
 
     public void setImagePath(String imagePath) {
         this.imagePath = imagePath;
+    }
+
+    public List<IntervencionEtapa> getEtapasTotales() {
+        return etapasTotales;
+    }
+
+    public void setEtapasTotales(List<IntervencionEtapa> etapasTotales) {
+        this.etapasTotales = etapasTotales;
     }
     
     

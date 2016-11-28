@@ -200,6 +200,13 @@ public class IntervencionController extends AbstractManagedBean implements Seria
         DateFormat df2 = DateFormat.getDateInstance(DateFormat.MEDIUM);
         DateFormat df4 = DateFormat.getDateInstance(DateFormat.FULL);
         if (intervencion.getId() != null) {
+            List<IntervencionEtapa> etapasTotales = intervencionEtapaService.intervencionEtapaxIntervencion(intervencion.getId());
+            for(IntervencionEtapa ei : etapasTotales){
+                List<IntervencionEtapaActuacion> listiea = intervencionEtapaActuacionService.intervencionEtapaActuacionBuscarActividadGSA(ei.getId());
+                ei.setIeas(listiea);
+            }
+            vo.setEtapasTotales(etapasTotales);
+            
             List<IntervencionAccion> accionesSeleccionadas = intervencionAccionService.intervencionAccionBuscarxIntervencion(intervencion.getId());
             int j = 0;
             for (IntervencionAccion ia : accionesSeleccionadas) {
@@ -275,11 +282,12 @@ public class IntervencionController extends AbstractManagedBean implements Seria
 
     public void pdf() throws JRException, IOException {
         Date date = new Date();
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String fecha = simpleDateFormat.format(date);
         if (initJasper()) {
             FacesContext facesContext = FacesContext.getCurrentInstance();
             HttpServletResponse httpServletResponse = (HttpServletResponse) facesContext.getCurrentInstance().getExternalContext().getResponse();
+            httpServletResponse.setContentType("application/pdf");
             httpServletResponse.addHeader("Content-disposition", "attachment; filename=" + fecha + "_planIntervencion.pdf");
             ServletOutputStream servletOutputStream = httpServletResponse.getOutputStream();
             JasperExportManager.exportReportToPdfStream(jasperPrint, servletOutputStream);

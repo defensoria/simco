@@ -51,4 +51,9 @@ public class IntervencionEtapaDaoImpl  extends SqlSessionDaoSupport implements I
     public List<IntervencionEtapa> intervencionEtapaxAccion(long idEtapaAccion) {
         return getSqlSession().selectList("gob.dp.simco.intervencion.dao.IntervencionEtapaDao.intervencionEtapaxAccion",idEtapaAccion); 
     }
+
+    @Override
+    public List<IntervencionEtapa> intervencionEtapaxIntervencion(long idIntervencion) {
+        return getSqlSession().selectList("gob.dp.simco.intervencion.dao.IntervencionEtapaDao.intervencionEtapaxIntervencion",idIntervencion); 
+    }
 }

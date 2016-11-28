@@ -41,5 +41,10 @@ public class IntervencionEtapaActuacionDaoImpl extends SqlSessionDaoSupport impl
     public List<IntervencionEtapaActuacion> intervencionEtapaActuacionBuscarActividad(Long idEtapa) {
         return getSqlSession().selectList("gob.dp.simco.intervencion.dao.IntervencionEtapaActuacionDao.intervencionEtapaActuacionBuscarActividad",idEtapa); 
     }
+
+    @Override
+    public List<IntervencionEtapaActuacion> intervencionEtapaActuacionBuscarActividadGSA(Long idEtapa) {
+        return getSqlSession().selectList("gob.dp.simco.intervencion.dao.IntervencionEtapaActuacionDao.intervencionEtapaActuacionBuscarActividadGSA",idEtapa); 
+    }
     
 }

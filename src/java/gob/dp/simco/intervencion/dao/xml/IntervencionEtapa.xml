@@ -122,5 +122,10 @@
             ORDER BY A.N_ID_ETAPA
     </select>
     
+    <select id="intervencionEtapaxIntervencion" resultMap="intervencionEtapaMap" parameterType="long">
+        SELECT * FROM SIMCO_INTER_ETAPA WHERE N_IDINTERVENCION = #{id}
+        ORDER BY N_ID_ETAPA
+    </select>
+    
     
 </mapper>

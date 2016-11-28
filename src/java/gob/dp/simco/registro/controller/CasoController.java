@@ -711,6 +711,7 @@ public class CasoController extends AbstractManagedBean implements Serializable 
         FacesContext facesContext = FacesContext.getCurrentInstance();
         HttpServletResponse httpServletResponse;
         httpServletResponse = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+        httpServletResponse.setContentType("application/pdf");
         httpServletResponse.addHeader("Content-disposition", "attachment; filename=" + fecha + "_caso.pdf");
         ServletOutputStream servletOutputStream = httpServletResponse.getOutputStream();
         JasperExportManager.exportReportToPdfStream(jasperPrint, servletOutputStream);
@@ -726,6 +727,7 @@ public class CasoController extends AbstractManagedBean implements Serializable 
         initJasper();
         FacesContext facesContext = FacesContext.getCurrentInstance();
         HttpServletResponse httpServletResponse = (HttpServletResponse) facesContext.getCurrentInstance().getExternalContext().getResponse();
+        httpServletResponse.setContentType("application/vnd.openxmlformats-officedocument.wordprocessingml.document");
         httpServletResponse.addHeader("Content-disposition", "attachment; filename=" + fecha + "_documento_caso.docx");
         ServletOutputStream servletOutputStream = httpServletResponse.getOutputStream();
         JRDocxExporter docxExporter = new JRDocxExporter();

@@ -20,6 +20,8 @@ public interface IntervencionEtapaActuacionDao {
     
     public List<IntervencionEtapaActuacion> intervencionEtapaActuacionBuscarActividad(Long idEtapa);
     
+    public List<IntervencionEtapaActuacion> intervencionEtapaActuacionBuscarActividadGSA(Long idEtapa);
+    
     public void intervencionEtapaActuacionUpdate(IntervencionEtapaActuacion intervencionEtapaActuacion);    
     
     public void intervencionEtapaActuacionEliminar(long id);    

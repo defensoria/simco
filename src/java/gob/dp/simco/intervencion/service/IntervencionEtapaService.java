@@ -28,4 +28,6 @@ public interface IntervencionEtapaService {
     
     public List<IntervencionEtapa> intervencionEtapaxAccion(long idEtapaAccion);
     
+    public List<IntervencionEtapa> intervencionEtapaxIntervencion(long idIntervencion);
+    
 }

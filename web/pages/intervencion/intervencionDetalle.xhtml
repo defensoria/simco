@@ -591,7 +591,7 @@
                                                                         <table style="width:100%;text-align:left">
                                                                             <tr>
                                                                                 <td style="width:5%">
-                                                                                    <h:selectBooleanCheckbox id="idCheckbox" value="#{actuacion.indCheck}">
+                                                                                    <h:selectBooleanCheckbox value="#{actuacion.indCheck}">
                                                                                         <f:ajax render="@form"/>
                                                                                     </h:selectBooleanCheckbox>
                                                                                 </td>
@@ -609,6 +609,10 @@
                                                                                         <span style="font-size:large;padding:5px" class="glyphicon glyphicon-trash"></span>
                                                                                         <f:ajax render="@form"/>
                                                                                     </a>
+                                                                                </td>
+                                                                                <td style="text-align: center">
+                                                                                    <label>G.S.A.</label><br/>
+                                                                                    <h:selectBooleanCheckbox value="#{actuacion.indGSA}" />
                                                                                 </td>
                                                                             </tr>
                                                                         </table>

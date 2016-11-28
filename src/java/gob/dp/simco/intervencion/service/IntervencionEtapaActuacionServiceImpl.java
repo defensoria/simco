@@ -50,5 +50,10 @@ public class IntervencionEtapaActuacionServiceImpl implements IntervencionEtapaA
     public List<IntervencionEtapaActuacion> intervencionEtapaActuacionBuscarActividad(Long idEtapa) {
         return intervencionEtapaActuacionDao.intervencionEtapaActuacionBuscarActividad(idEtapa);
     }
+
+    @Override
+    public List<IntervencionEtapaActuacion> intervencionEtapaActuacionBuscarActividadGSA(Long idEtapa) {
+        return intervencionEtapaActuacionDao.intervencionEtapaActuacionBuscarActividadGSA(idEtapa);
+    }
     
 }

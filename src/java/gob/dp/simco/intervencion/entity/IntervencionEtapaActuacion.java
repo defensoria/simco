@@ -25,7 +25,9 @@ public class IntervencionEtapaActuacion implements Serializable{
     
     private Actividad actividad;
     
-    private boolean indCheck;
+    private Boolean indCheck;
+    
+    private Boolean indGSA;
     
     private Date fechaRegistro;
     
@@ -146,5 +148,12 @@ public class IntervencionEtapaActuacion implements Serializable{
         this.detalleReporte = detalleReporte;
     }
 
-    
+    public Boolean getIndGSA() {
+        return indGSA;
+    }
+
+    public void setIndGSA(Boolean indGSA) {
+        this.indGSA = indGSA;
+    }
+
 }

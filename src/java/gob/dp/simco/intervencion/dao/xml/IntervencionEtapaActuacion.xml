@@ -8,6 +8,7 @@
         <result property="estado" column="C_ESTADO"/>
         <result property="intervencionEtapa.id" column="N_ID_ETAPA" />
         <result property="indCheck" column="N_INDICE_CHECK" />
+        <result property="indGSA" column="N_INDICE_GSA" />
         <result property="actividadId" column="N_ID_ACTIVIDAD"/>
         <result property="fechaRegistro" column="D_FECREGISTRO"/>
         <result property="fechaCulminacion" column="D_FECCULMINACION"/>
@@ -29,6 +30,9 @@
         <if test="indCheck!=null">
             N_INDICE_CHECK,
         </if>
+        <if test="indGSA!=null">
+            N_INDICE_GSA,
+        </if>
         <if test="fechaRegistro !=null">
             D_FECREGISTRO,
         </if>
@@ -46,6 +50,9 @@
         </if>
         <if test="indCheck!=null">
             #{indCheck},
+        </if>
+        <if test="indGSA!=null">
+            #{indGSA},
         </if>
         <if test="fechaRegistro !=null">
             #{fechaRegistro},
@@ -68,12 +75,14 @@
         <if test="actividadId == null">
             N_ID_ACTIVIDAD = null,
         </if>
-        
         <if test="descripcion!=null">
             C_DESCRIPCION = #{descripcion},
         </if>
         <if test="indCheck!=null">
             N_INDICE_CHECK = #{indCheck},
+        </if>
+        <if test="indGSA!=null">
+            N_INDICE_GSA = #{indGSA},
         </if>
         <if test="fechaCulminacion !=null">
             D_FECCULMINACION = #{fechaCulminacion},
@@ -88,16 +97,7 @@
     
 
     <select id="intervencionEtapaActuacionBuscar" resultMap="intervencionEtapaActuacionMap" parameterType="long">
-        SELECT 
-            N_ID_ETAPAACT,
-            N_ID_ETAPA,
-            N_ID_ACTIVIDAD,
-            C_DESCRIPCION,
-            N_INDICE_CHECK,
-            C_ESTADO,
-            D_FECREGISTRO,
-            D_FECCULMINACION
-        FROM SIMCO_INTER_ETAPA_ACT
+        SELECT * FROM SIMCO_INTER_ETAPA_ACT
         WHERE N_ID_ETAPA = #{id}
         ORDER BY N_ID_ETAPAACT
     </select>
@@ -109,6 +109,7 @@
             A.N_ID_ACTIVIDAD,
             A.C_DESCRIPCION,
             A.N_INDICE_CHECK,
+            A.N_INDICE_GSA,
             A.C_ESTADO,
             A.D_FECREGISTRO,
             A.D_FECCULMINACION,
@@ -117,6 +118,26 @@
         FROM SIMCO_INTER_ETAPA_ACT A
         LEFT JOIN SIMCO_REG_ACTIVIDAD B ON A.N_ID_ACTIVIDAD = B.N_ID_ACTIVIDAD
         WHERE N_ID_ETAPA = #{id}
+        ORDER BY N_ID_ETAPAACT
+    </select>
+    
+    <select id="intervencionEtapaActuacionBuscarActividadGSA" resultMap="intervencionEtapaActuacionMap" parameterType="long">
+        SELECT 
+            A.N_ID_ETAPAACT,
+            A.N_ID_ETAPA,
+            A.N_ID_ACTIVIDAD,
+            A.C_DESCRIPCION,
+            A.N_INDICE_CHECK,
+            A.N_INDICE_GSA,
+            A.C_ESTADO,
+            A.D_FECREGISTRO,
+            A.D_FECCULMINACION,
+            B.C_NOMACTIVIDAD,
+            B.C_CODIGOACTIVIDAD
+        FROM SIMCO_INTER_ETAPA_ACT A
+        LEFT JOIN SIMCO_REG_ACTIVIDAD B ON A.N_ID_ACTIVIDAD = B.N_ID_ACTIVIDAD
+        WHERE N_ID_ETAPA = #{id}
+        AND A.N_INDICE_GSA = 1
         ORDER BY N_ID_ETAPAACT
     </select>
     

@@ -23,4 +23,6 @@ public interface IntervencionEtapaActuacionService {
     public void intervencionEtapaActuacionUpdate(IntervencionEtapaActuacion intervencionEtapaActuacion);   
     
     public void intervencionEtapaActuacionEliminar(long id);
+    
+    public List<IntervencionEtapaActuacion> intervencionEtapaActuacionBuscarActividadGSA(Long idEtapa);
 }
