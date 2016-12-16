@@ -607,7 +607,7 @@ public class ReporteSimcoController implements Serializable {
                 nroPagina = pagina;
             }
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
     }
 

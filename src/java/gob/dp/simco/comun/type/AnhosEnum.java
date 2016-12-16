@@ -9,8 +9,6 @@ package gob.dp.simco.comun.type;
  *
  * @author carlos
  */
-
-import gob.dp.simco.seguimiento.vo.SelectVO;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.HashMap;
