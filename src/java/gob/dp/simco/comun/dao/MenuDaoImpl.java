@@ -26,5 +26,10 @@ public class MenuDaoImpl extends SqlSessionDaoSupport implements MenuDao{
     public List<Menu> menuHijo(int padre) {
         return getSqlSession().selectList("gob.dp.simco.comun.dao.MenuDao.menuHijo", padre);
     }
+
+    @Override
+    public Menu menuPadreOne(int codigo) {
+        return getSqlSession().selectOne("gob.dp.simco.comun.dao.MenuDao.menuPadreOne", codigo);
+    }
     
 }

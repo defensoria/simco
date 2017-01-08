@@ -10,10 +10,14 @@
         <ui:define name="content">
             <h:form id="idForm3" class="form-horizontal" enctype="multipart/form-data">
                 <gc:confirmSubmit bean="#{registroController.registrarActividad()}"/>
+                <gc:confirmSubmit bean="#{registroController.inactivarActividad()}" classGC="confirmacion2" mensaje="Esta seguro inactivar el registro?"/>
                 <input type="hidden" jsf:value="#{registroController.actividad.coordenadaX}" id="idCoordenadaX"/>
                 <input type="hidden" jsf:value="#{registroController.actividad.coordenadaY}" id="idCoordenadaY"/>
                 <input type="hidden" jsf:value="#{registroController.actividad.zoom}" id="idZoom"/>
                 <script>
+                    function confirmar2() {
+                        $(".confirmacion2").modal('show');
+                    }
                     /*<![CDATA[*/
                     $(function () {
                         #{registroController.cadenaAutocomplete}
@@ -106,7 +110,13 @@
                                     });
                                 </script>
                             </td>
-                            <td>
+                            <td style="padding-bottom: 10px">
+                                <h:panelGroup rendered="#{registroController.actividad.id != null}">
+                                    <a class="btn btn-warning" onclick="confirmar2()">
+                                        <span class="glyphicon glyphicon-floppy-disk" />Inactivar
+                                    </a>
+                                </h:panelGroup>
+                                <br/>
                                 <input type="text" id="nombreCaso" jsf:value="#{registroController.caso.nombre}" style="width:80%" placeholder="vincular a caso" />
                                 <input type="hidden" id="idCaso" jsf:value="#{registroController.caso.id}"/>
                             </td>
@@ -299,7 +309,7 @@
                                 </div>
                             </td>
                             <td style="padding-left:5px">
-                                <script src="https://maps.googleapis.com/maps/api/js?key=" />
+                                <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBv3EboW4Y30kZ5cy5KYjex-jPYYcVcTw4" />
                                 <div class="panel panel-featured-top-primary" id="idUbicacion" style="width:100%;height:540px;vertical-align:top">
                                     <span class="text-resalt-primary">Ubicación</span>
                                     <br/>

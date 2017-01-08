@@ -30,5 +30,10 @@ public class MenuServiceImpl implements MenuService {
     public List<Menu> menuHijo(int padre) {
         return menuDao.menuHijo(padre);
     }
+
+    @Override
+    public Menu menuPadreOne(int codigo) {
+        return menuDao.menuPadreOne(codigo);
+    }
     
 }

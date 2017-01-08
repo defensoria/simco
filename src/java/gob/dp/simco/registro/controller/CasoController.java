@@ -20,6 +20,7 @@ import gob.dp.simco.comun.service.UbigeoService;
 import gob.dp.simco.registro.bean.AdjuntiaDefensorialVO;
 import gob.dp.simco.registro.bean.FiltroParametro;
 import gob.dp.simco.comun.ConstantesUtil;
+import gob.dp.simco.comun.Mail;
 import gob.dp.simco.comun.mb.AbstractManagedBean;
 import gob.dp.simco.registro.entity.Actividad;
 import gob.dp.simco.registro.entity.ActividadCaso;
@@ -755,6 +756,10 @@ public class CasoController extends AbstractManagedBean implements Serializable 
             msg.messageAlert("Debe ingresar la tipología del caso", null);
             return false;
         }
+        if(StringUtils.equals(caso.getTipoEstado(), "0")){
+            msg.messageAlert("Debe ingresar el estado del caso", null);
+            return false;
+        }
         usuarioSession();
         try {
             StringBuilder sb = new StringBuilder();
@@ -764,7 +769,6 @@ public class CasoController extends AbstractManagedBean implements Serializable 
             caso.setAdjuntiaDefensorial(sb.toString());
             if (caso.getVersion() == null) {
                 caso.setCreacion(new Date());
-                caso.setCodigo(generarCodigoCaso());
                 caso.setVersion(1);
                 caso.setUsuarioRegistro(usuarioSession.getCodigo());
             } else {
@@ -778,6 +782,8 @@ public class CasoController extends AbstractManagedBean implements Serializable 
             definirFechaPublicacion();
             ordenarParametros();
             casoService.casoNuevo(caso);
+            if(StringUtils.equals(caso.getTipoEstado(), "02"))
+                enviarSolicitudAprobacion();
             msg.messageInfo("Se registró Correctamente el Caso.", null);
             if (listaCasoRegion.size() > 0) {
                 updateListaRegion();
@@ -791,7 +797,36 @@ public class CasoController extends AbstractManagedBean implements Serializable 
         }
         return true;
     }
+    public void enviarSolicitudAprobacion(){
+        Mail mail = new Mail();	
+		//tblEmailDetalle.setNIdDestinatarioPersona(tblEmailPersona.getNIdEmail());
+		mail.send("careli_2710@hotmail.com","asunto","cuerpo");
 
+    }
+    
+    public void aprobarSolicitudAprobacion(){
+        if(caso.getIndAprobado() == null){
+            if(StringUtils.isBlank(caso.getCodigo())){
+                caso.setCodigo(generarCodigoCaso());
+                caso.setTipoEstado("04");
+                Caso c = new Caso();
+        c.setIndAprobado("A");
+        c.setUsuAprobado(usuarioSession.getCodigo());
+        c.setFechaAprobado(new Date());
+        c.setCodigo(caso.getCodigo());
+        c.setTipoEstado(caso.getTipoEstado());
+        c.setId(caso.getId());
+        c.setFechaPublicacion(new Date());
+        casoService.casoUpdateAprobar(c);
+        Mail mail = new Mail();	
+		//tblEmailDetalle.setNIdDestinatarioPersona(tblEmailPersona.getNIdEmail());
+		mail.send("careli_2710@hotmail.com","asunto","cuerpo");
+                msg.messageInfo("Se aprobo el caso", null);
+            }            
+        }
+        setearFichaCaso(caso);
+    }
+    
     private void ordenarParametros() {
         if (!caso.getTipoEstado().equals("04")) {
             caso.setTipoDialogo("0");

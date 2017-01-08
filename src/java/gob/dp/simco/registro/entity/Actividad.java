@@ -86,6 +86,8 @@ public class Actividad implements Serializable{
     
     private String resultadoViolencia;
     
+    private Integer indiceActivo;
+    
     //agregados
     
     private String nombreCaso;
@@ -406,6 +408,14 @@ public class Actividad implements Serializable{
 
     public void setTipoActividad(String tipoActividad) {
         this.tipoActividad = tipoActividad;
+    }
+
+    public Integer getIndiceActivo() {
+        return indiceActivo;
+    }
+
+    public void setIndiceActivo(Integer indiceActivo) {
+        this.indiceActivo = indiceActivo;
     }
     
 }

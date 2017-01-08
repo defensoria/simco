@@ -372,6 +372,12 @@ public class RegistroController extends AbstractManagedBean implements Serializa
         }
     }
     
+    public void inactivarActividad(){
+        actividadService.actividadInactivar(actividad.getId());
+        cargarPagina();
+        msg.messageInfo("Se ha inactividado el registro", null);
+    }
+    
     public void removeAcontecimientoVinculadoFichaAD(Actividad activi){
         try {
             actividadService.actividadUpdateDesVincular(activi.getIdAcontecimiento());

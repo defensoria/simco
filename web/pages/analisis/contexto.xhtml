@@ -17,7 +17,7 @@
                             <h2>Contexto</h2>
                         </td>
                         <td style="text-align: right">
-                            <a jsf:rendered="#{casoController.esComisionadoRegistro}" class="btn btn-primary" jsf:action="#{analisisController.guardarContexto()}">
+                            <a jsf:rendered="#{casoController.esComisionadoRegistro and casoController.caso.indAprobado != null}" class="btn btn-primary" jsf:action="#{analisisController.guardarContexto()}">
                                 <span class="glyphicon glyphicon-floppy-disk" />Guardar
                             </a>
                         </td>

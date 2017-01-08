@@ -86,7 +86,7 @@
                                     <span class="text-resalt-green">Anális de poder/influencia</span>
                                 </td>
                                 <td style="width:50%;text-align:right">
-                                    <h:panelGroup rendered="#{casoController.esComisionadoRegistro}">
+                                    <h:panelGroup rendered="#{casoController.esComisionadoRegistro and casoController.caso.indAprobado != null}">
                                         <a class="btn btn-primary" onclick="confirmar()">
                                             <span class="glyphicon glyphicon-floppy-disk"/>Guardar
                                         </a>
@@ -182,7 +182,7 @@
                                         <span class="text-resalt-warning">Relaciones</span>
                                     </td>
                                     <td style="text-align:right">
-                                        <h:panelGroup rendered="#{casoController.esComisionadoRegistro}">
+                                        <h:panelGroup rendered="#{casoController.esComisionadoRegistro and casoController.caso.indAprobado != null}">
                                             <a class="btn btn-primary" onclick="confirmacionRelacion()">
                                                 <span class="glyphicon glyphicon-floppy-disk"/>Guardar
                                             </a>

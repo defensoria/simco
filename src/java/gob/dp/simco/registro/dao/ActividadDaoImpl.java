@@ -167,5 +167,10 @@ public class ActividadDaoImpl extends SqlSessionDaoSupport implements ActividadD
     public List<Actividad> actividadxCodigoCasoBuscarTotalAD(String codigo) {
         return getSqlSession().selectList("gob.dp.simco.registro.dao.ActividadDao.actividadxCodigoCasoBuscarTotalAD",codigo);
     }
+
+    @Override
+    public void actividadInactivar(long idActividad) {
+        getSqlSession().update("gob.dp.simco.registro.dao.ActividadDao.actividadInactivar", idActividad);
+    }
     
 }

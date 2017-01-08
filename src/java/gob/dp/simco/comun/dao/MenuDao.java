@@ -18,6 +18,8 @@ public interface MenuDao {
     
     public List<Menu> menuHijo(int padre);
     
+    public Menu menuPadreOne(int codigo);
+    
 }
 
 

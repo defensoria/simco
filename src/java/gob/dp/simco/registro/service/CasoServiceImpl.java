@@ -123,4 +123,9 @@ public class CasoServiceImpl implements CasoService {
         return casoDao.buscarCasoXnombreCodigo(filtroCaso);
     }
 
+    @Override
+    public void casoUpdateAprobar(Caso caso) {
+        casoDao.casoUpdateAprobar(caso);
+    }
+
 }

@@ -9,7 +9,7 @@
         <result property="nombreProvincia" column="C_DESCPROV"/>
         <result property="nombreDistrito" column="C_DESCDSTRO"/>
         <result property="idActor" column="N_ID_ACTOR"/>
-        <result property="documento" column="N_ID_ACTOR"/>
+        <result property="documento" column="C_DNIACTOR"/>
         <result property="ruc" column="C_RUCACTOR"/>
         
         <result property="tipoPoblacion" column="DES_TIPOPOBLACION"/>

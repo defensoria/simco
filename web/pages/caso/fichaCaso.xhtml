@@ -10,7 +10,11 @@
             <h:form id="idForm" class="form-horizontal">
                 <h:messages id="idMessages"/>
                 <gc:confirmSubmit bean="#{casoController.registrarCaso()}"/>
+                <gc:confirmSubmit bean="#{casoController.aprobarSolicitudAprobacion()}" classGC="confirmacion2" mensaje="Esta seguro de aprobar y generar el Caso?"/>
                 <script>
+                    function confirmar2() {
+                        $(".confirmacion2").modal('show');
+                    }
                     /*<![CDATA[*/
                     sessionStorage.setItem('menuHijoSession', 'Panel');
                     sessionStorage.setItem('idCaso', '#{casoController.caso.id}');
@@ -62,13 +66,28 @@
                 </div>
                 <div class="panel panel-featured-top-primary">
                     <br/>
-                    <span class="text-resalt-primary" style="padding:15px">Datos generales</span>
+                    <table style="width: 50%">
+                        <tr>
+                            <td style="width: 50%">
+                                <span class="text-resalt-primary" style="padding:15px">Datos generales</span>
+                            </td>
+                            <td>
+                                <h:panelGroup rendered="#{casoController.caso.tipoEstado == '02' and casoController.caso.indAprobado == null and seguridadUtilController.tieneRecurso('REC_007')}">
+                                <a class="btn btn-warning" onclick="confirmar2()">
+                                    <span class="glyphicon glyphicon-save" />Aprobar el caso
+                                </a>
+                                    </h:panelGroup>
+                            </td>
+                        </tr>
+                    </table>
+                    
+                    
                     <div class="panel-body">
                         <table style="width:100%">
                             <tr>
                                 <td style="width:70%">
                                     <span class="text-resalt-comun" style="font-weight:bold">#{casoController.caso.nombre} </span>
-                                    <h:outputText rendered="#{casoController.caso.id != null}" class="text-resalt-comun" value="código: #{casoController.caso.codigo}" />
+                                    <h:outputText rendered="#{casoController.caso.id != null and !casoController.caso.indicador eq null}" class="text-resalt-comun" value="código: #{casoController.caso.codigo}" />
                                     <input style="width:50%" jsf:rendered="#{casoController.caso.id == null}" type="text" id="idNombreCaso" jsf:value="#{casoController.caso.nombre}" placeholder="Nombre"/>
                                 </td>
                                 <td>
@@ -112,7 +131,12 @@
                                             <tr>
                                                 <td style="width:90%">
                                                     <label>Estado</label>
-                                                    <h:selectOneMenu value="#{casoController.caso.tipoEstado}" class="btn-info cTipoEstado">
+                                                    <h:selectOneMenu value="#{casoController.caso.tipoEstado}" class="btn-info cTipoEstadoPreliminar" rendered="#{casoController.caso.indAprobado eq null}">
+                                                        <f:selectItem itemLabel="--Seleccione--" itemValue="0"/>
+                                                        <f:selectItem itemLabel="Borrador" itemValue="01"/>
+                                                        <f:selectItem itemLabel="Propuesta" itemValue="02"/>
+                                                    </h:selectOneMenu>
+                                                    <h:selectOneMenu value="#{casoController.caso.tipoEstado}" class="btn-info cTipoEstado" rendered="#{casoController.caso.indAprobado != null}">
                                                         <f:selectItem itemLabel="--Seleccione--" itemValue="0"/>
                                                         <f:selectItems value="#{listasComunesController.buscarEstadoCaso(false, false, false)}" var="y" itemLabel="#{y.nombreParametro}" itemValue="#{y.valorParametro}" />
                                                     </h:selectOneMenu>

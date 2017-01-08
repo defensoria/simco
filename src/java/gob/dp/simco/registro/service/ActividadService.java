@@ -73,4 +73,6 @@ public interface ActividadService {
    
    public List<Actividad> actividadxCodigoCasoBuscarTotalAD(String codigo);
    
+   public void actividadInactivar(long idActividad);
+   
 }

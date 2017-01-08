@@ -22,6 +22,19 @@
         AND N_ID_MENU NOT IN (27)
         AND C_ESTADO = 'ACT'
         ORDER BY N_ID_MENU
+    </select>
+    
+      <select id="menuPadreOne" resultMap="menuMap" parameterType="int">
+        select 
+        N_ID_MENU, 
+        C_INDPADRE,
+        C_DESCRIPCION,
+        C_ENLACE,
+        C_CLASS
+        FROM SIMCO_MENU
+        WHERE C_INDPADRE IS NULL
+        AND N_ID_MENU = #{id}
+        AND C_ESTADO = 'ACT'
     </select>  
     
     <select id="menuHijo" resultMap="menuMap" parameterType="int">

@@ -84,7 +84,7 @@
                                         <tr>
                                             <td style="width:50%">
                                                 <span class="text-resalt-green">Resumen de las demandas y posiciones</span>&#160;&#160;
-                                                <a jsf:rendered="#{casoController.esComisionadoRegistro}" jsf:action="#{analisisController.desarchivarTodas()}" jsf:onclick="loadingModal()" title="hábilitar resumenes de demandas">
+                                                <a jsf:rendered="#{casoController.esComisionadoRegistro and casoController.caso.indAprobado != null}" jsf:action="#{analisisController.desarchivarTodas()}" jsf:onclick="loadingModal()" title="hábilitar resumenes de demandas">
                                                     <span class="glyphicon glyphicon-ok-circle" style="font-size:large;color:blue"/>
                                                     <f:ajax render="@form" onevent="closeModal"/>
                                                 </a>
@@ -100,7 +100,7 @@
                                                             </h:selectOneMenu>
                                                         </td>
                                                         <td style="float: right">
-                                                            <a jsf:rendered="#{casoController.esComisionadoRegistro}" style="float:right;font-size:large;margin:auto" jsf:action="#{analisisController.analisisDemandaxActor()}" jsf:onclick="loadingModal()" title="Agregar tema">
+                                                            <a jsf:rendered="#{casoController.esComisionadoRegistro and casoController.caso.indAprobado != null}" style="float:right;font-size:large;margin:auto" jsf:action="#{analisisController.analisisDemandaxActor()}" jsf:onclick="loadingModal()" title="Agregar tema">
                                                                 <span class="glyphicon glyphicon-plus" style="font-size: large"/>
                                                                 <f:ajax render=":idForm1" onevent="openModal"/>
                                                             </a>
@@ -186,7 +186,7 @@
                                                         $(".confirmarTemas").modal("show");
                                                     }
                                                 </script>
-                                                <h:panelGroup rendered="#{casoController.esComisionadoRegistro}">
+                                                <h:panelGroup rendered="#{casoController.esComisionadoRegistro and casoController.caso.indAprobado != null}">
                                                     <a class="btn btn-primary" onclick="confirmarTemas()">
                                                         <span class="glyphicon glyphicon-floppy-disk"/>Guardar
                                                     </a>
@@ -280,7 +280,7 @@
                                     <span class="text-resalt-primary">Síntesis del problema</span>
                                 </td>
                                 <td style="text-align:right">
-                                    <h:panelGroup rendered="#{casoController.esComisionadoRegistro}">
+                                    <h:panelGroup rendered="#{casoController.esComisionadoRegistro and casoController.caso.indAprobado != null}">
                                         <a class="btn btn-primary" onclick="confirmar()">
                                             <span class="glyphicon glyphicon-floppy-disk"/>Guardar
                                         </a>

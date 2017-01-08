@@ -43,4 +43,6 @@ public interface CasoDao {
    
    public List<Caso> buscarCasoXnombreCodigo(FiltroCaso filtroCaso);
    
+   public void casoUpdateAprobar(Caso caso);
+   
 }

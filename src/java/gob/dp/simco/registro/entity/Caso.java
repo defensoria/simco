@@ -83,6 +83,12 @@ public class Caso implements Serializable{
     
     private Date fechaFin;
     
+    private String indAprobado;
+    
+    private String usuAprobado;
+            
+    private Date fechaAprobado;
+    
     //AGREGADOS
     private String tipoCaso;
     
@@ -384,6 +390,30 @@ public class Caso implements Serializable{
 
     public void setFechaFin(Date fechaFin) {
         this.fechaFin = fechaFin;
+    }
+
+    public String getIndAprobado() {
+        return indAprobado;
+    }
+
+    public void setIndAprobado(String indAprobado) {
+        this.indAprobado = indAprobado;
+    }
+
+    public String getUsuAprobado() {
+        return usuAprobado;
+    }
+
+    public void setUsuAprobado(String usuAprobado) {
+        this.usuAprobado = usuAprobado;
+    }
+
+    public Date getFechaAprobado() {
+        return fechaAprobado;
+    }
+
+    public void setFechaAprobado(Date fechaAprobado) {
+        this.fechaAprobado = fechaAprobado;
     }
     
 }

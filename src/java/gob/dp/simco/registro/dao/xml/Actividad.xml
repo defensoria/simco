@@ -48,6 +48,7 @@
         <result property="resultadoViolencia" column="C_RESULTADOVIOLENCIA"/>
         <result property="idAcontecimiento" column="N_ID_ACONTECIMIENTO"/>
         <result property="indiceVinculado" column="N_INDICEVINCULADO"/>
+        <result property="indiceActivo" column="N_INDICEACTIVO"/>
     </resultMap> 
 
     <sql id="sqlBuscarActividad">
@@ -69,12 +70,13 @@
         A.C_TIPOVIOLENCIA,
         A.C_RESULTADOVIOLENCIA,
         A.N_ID_ACONTECIMIENTO,
-        A.N_INDICEVINCULADO
+        A.N_INDICEVINCULADO,
+        A.N_INDICEACTIVO
         FROM
         SIMCO_REG_ACTIVIDAD A 
         LEFT JOIN
         SIMCO_PARAMETRO B ON A.C_TIPO_ACTIVIDAD = B.VALOR_PARAMETRO
-        AND B.PADRE_PARAMETRO = 10
+        AND B.PADRE_PARAMETRO = 10 AND A.N_INDICEACTIVO = 1
         <where>
             <if test="nombre != null">
                 A.C_NOMACTIVIDAD=#{nombre}
@@ -106,7 +108,8 @@
         A.C_TIPOVIOLENCIA,
         A.C_RESULTADOVIOLENCIA,
         A.N_ID_ACONTECIMIENTO,
-        A.N_INDICEVINCULADO
+        A.N_INDICEVINCULADO,
+        A.N_INDICEACTIVO
         FROM
         SIMCO_REG_ACTIVIDAD A 
         LEFT JOIN
@@ -114,7 +117,7 @@
         AND B.PADRE_PARAMETRO = 10
         INNER JOIN SIMCO_REG_ACTI_ACTIVI D ON A.N_ID_ACTIVIDAD = D.N_ID_ACTIVIDAD_HIJO   
         WHERE D.N_ID_ACTIVIDAD_PADRE =#{id}
-        AND D.C_ESTADOACTACT = 'ACT'
+        AND D.C_ESTADOACTACT = 'ACT' AND A.N_INDICEACTIVO = 1
         
     </select>
     
@@ -136,14 +139,15 @@
         A.C_TIPOVIOLENCIA,
         A.C_RESULTADOVIOLENCIA,
         A.N_ID_ACONTECIMIENTO,
-        A.N_INDICEVINCULADO
+        A.N_INDICEVINCULADO,
+        A.N_INDICEACTIVO
         FROM
         SIMCO_REG_ACTIVIDAD A 
         LEFT JOIN
         SIMCO_PARAMETRO B ON A.C_TIPO_ACTIVIDAD = B.VALOR_PARAMETRO
         AND B.PADRE_PARAMETRO = 10
         INNER JOIN SIMCO_REG_ACTI_ACTIVI D ON A.N_ID_ACTIVIDAD = D.N_ID_ACTIVIDAD_HIJO   
-        WHERE D.N_ID_ACTIVIDAD_PADRE =#{id}
+        WHERE D.N_ID_ACTIVIDAD_PADRE =#{id} AND A.N_INDICEACTIVO = 1
     </select>
     
     <select id="actividadxActorBuscar" resultMap="actividadMap" parameterType="long">
@@ -164,7 +168,8 @@
         A.C_TIPOVIOLENCIA,
         A.C_RESULTADOVIOLENCIA,
         A.N_ID_ACONTECIMIENTO,
-        A.N_INDICEVINCULADO
+        A.N_INDICEVINCULADO,
+        A.N_INDICEACTIVO
         FROM
         SIMCO_REG_ACTIVIDAD A 
         LEFT JOIN
@@ -172,7 +177,7 @@
         AND B.PADRE_PARAMETRO = 10
         INNER JOIN SIMCO_REG_ACTIVIDAD_ACTOR D ON A.N_ID_ACTIVIDAD = D.N_ID_ACTIVIDAD
         WHERE D.N_ID_ACTOR =#{id}
-        AND D.C_ESTADO_ACTI_ACTOR = 'ACT'
+        AND D.C_ESTADO_ACTI_ACTOR = 'ACT' AND A.N_INDICEACTIVO = 1
         
     </select>
     
@@ -194,14 +199,15 @@
         A.C_TIPOVIOLENCIA,
         A.C_RESULTADOVIOLENCIA,
         A.N_ID_ACONTECIMIENTO,
-        A.N_INDICEVINCULADO
+        A.N_INDICEVINCULADO,
+        A.N_INDICEACTIVO
         FROM
         SIMCO_REG_ACTIVIDAD A 
         LEFT JOIN
         SIMCO_PARAMETRO B ON A.C_TIPO_ACTIVIDAD = B.VALOR_PARAMETRO
         AND B.PADRE_PARAMETRO = 10
         INNER JOIN SIMCO_REG_ACTIVIDAD_ACTOR D ON A.N_ID_ACTIVIDAD = D.N_ID_ACTIVIDAD
-        WHERE D.N_ID_ACTOR =#{id}
+        WHERE D.N_ID_ACTOR =#{id} AND A.N_INDICEACTIVO = 1
     </select>
 
     <select id="actividadBuscarOne" resultMap="actividadMap" parameterType="actividad">
@@ -278,7 +284,11 @@
         <if test="resultadoViolencia != null">
             C_RESULTADOVIOLENCIA,
         </if>
-        C_NOMACTIVIDAD
+        <if test="nombre != null">
+            C_NOMACTIVIDAD,
+        </if>
+        N_INDICEACTIVO
+        
         )
         VALUES 
         (
@@ -349,7 +359,10 @@
         <if test="resultadoViolencia != null">
             #{resultadoViolencia},
         </if>
-        #{nombre}
+        <if test="nombre != null">
+            #{nombre},
+        </if>
+        1
         )
     
         <selectKey keyProperty="id" resultType="Long">
@@ -468,6 +481,16 @@
         </where>
     </update>
     
+    <update id="actividadInactivar" parameterType="long">
+        UPDATE SIMCO_REG_ACTIVIDAD
+        <set>
+            N_INDICEACTIVO = 0
+        </set>
+        <where>
+            N_ID_ACTIVIDAD=#{id}
+        </where>
+    </update>
+    
     <select id="actividadxCasoBuscarTotal" resultMap="actividadMap" parameterType="long">
         SELECT 
         A.N_ID_ACTIVIDAD,
@@ -505,7 +528,8 @@
         A.C_TIPOVIOLENCIA,
         A.C_RESULTADOVIOLENCIA,
         A.N_ID_ACONTECIMIENTO,
-        A.N_INDICEVINCULADO
+        A.N_INDICEVINCULADO,
+        A.N_INDICEACTIVO
         FROM
         SIMCO_REG_ACTIVIDAD A 
         LEFT JOIN
@@ -514,7 +538,7 @@
         INNER JOIN SIMCO_REG_CASO_ACTIVIDAD B ON A.N_ID_ACTIVIDAD = B.N_ID_ACTIVIDAD
         INNER JOIN SIMCO_REG_CASO C ON B.N_ID_CASO = C.N_ID_CASO
         INNER JOIN SIMCO_SEG_USUARIO D ON A.C_USUREGISTRO = D.CODIGO_USUARIO
-        WHERE C.N_ID_CASO =#{id}
+        WHERE C.N_ID_CASO =#{id} AND A.N_INDICEACTIVO = 1
         ORDER BY A.D_FECHAREALIZACIONINI desc
     </select>
     
@@ -555,7 +579,8 @@
         A.C_TIPOVIOLENCIA,
         A.C_RESULTADOVIOLENCIA,
         A.N_ID_ACONTECIMIENTO,
-        A.N_INDICEVINCULADO
+        A.N_INDICEVINCULADO,
+        A.N_INDICEACTIVO
         FROM
         SIMCO_REG_ACTIVIDAD A 
         LEFT JOIN
@@ -564,7 +589,7 @@
         INNER JOIN SIMCO_REG_CASO_ACTIVIDAD B ON A.N_ID_ACTIVIDAD = B.N_ID_ACTIVIDAD
         INNER JOIN SIMCO_REG_CASO C ON B.N_ID_CASO = C.N_ID_CASO
         INNER JOIN SIMCO_SEG_USUARIO D ON A.C_USUREGISTRO = D.CODIGO_USUARIO
-        WHERE C.C_CODIGOCASO =#{value} AND C.C_INDVIGENTE = 'A'
+        WHERE C.C_CODIGOCASO =#{value} AND C.C_INDVIGENTE = 'A' AND A.N_INDICEACTIVO = 1
         ORDER BY A.D_FECHAREALIZACIONINI desc
     </select>
     
@@ -605,7 +630,8 @@
         A.C_TIPOVIOLENCIA,
         A.C_RESULTADOVIOLENCIA,
         A.N_ID_ACONTECIMIENTO,
-        A.N_INDICEVINCULADO
+        A.N_INDICEVINCULADO,
+        A.N_INDICEACTIVO
         FROM
         SIMCO_REG_ACTIVIDAD A 
         LEFT JOIN SIMCO_PARAMETRO D ON A.C_TIPO_ACTIVIDAD = D.VALOR_PARAMETRO
@@ -613,7 +639,7 @@
         INNER JOIN SIMCO_REG_CASO_ACTIVIDAD B ON A.N_ID_ACTIVIDAD = B.N_ID_ACTIVIDAD
         INNER JOIN SIMCO_REG_CASO C ON B.N_ID_CASO = C.N_ID_CASO
         INNER JOIN SIMCO_SEG_USUARIO D ON A.C_USUREGISTRO = D.CODIGO_USUARIO
-        WHERE C.C_CODIGOCASO =#{value} AND C.C_INDVIGENTE = 'A' AND A.C_TIPO = 'AD'
+        WHERE C.C_CODIGOCASO =#{value} AND C.C_INDVIGENTE = 'A' AND A.C_TIPO = 'AD' AND A.N_INDICEACTIVO = 1
         ORDER BY A.D_FECHAREALIZACIONINI desc
     </select>
     
@@ -646,7 +672,8 @@
         A.C_RESULTADOVIOLENCIA,
         A.C_RUTA,
         A.N_ID_ACONTECIMIENTO,
-        A.N_INDICEVINCULADO
+        A.N_INDICEVINCULADO,
+        A.N_INDICEACTIVO
         FROM
         SIMCO_REG_ACTIVIDAD A 
         LEFT JOIN
@@ -657,7 +684,7 @@
         INNER JOIN SIMCO_REG_CASO_ACTIVIDAD E 
         ON F.N_ID_CASO = E.N_ID_CASO AND F.C_INDVIGENTE = 'A'
         ) C ON A.N_ID_ACTIVIDAD = C.N_ID_ACTIVIDAD
-        WHERE A.N_ID_ACTIVIDAD = #{id}
+        WHERE A.N_ID_ACTIVIDAD = #{id} AND A.N_INDICEACTIVO = 1
     </select>
     
     <select id="actividadxCasoBuscar" resultMap="actividadMap" parameterType="long">
@@ -678,14 +705,15 @@
         A.C_TIPOVIOLENCIA,
         A.C_RESULTADOVIOLENCIA,
         A.N_ID_ACONTECIMIENTO,
-        A.N_INDICEVINCULADO
+        A.N_INDICEVINCULADO,
+        A.N_INDICEACTIVO
         FROM
         SIMCO_REG_ACTIVIDAD A 
         LEFT JOIN
         SIMCO_PARAMETRO B ON A.C_TIPO_ACTIVIDAD = B.VALOR_PARAMETRO
         AND B.PADRE_PARAMETRO = 10
         INNER JOIN SIMCO_REG_CASO_ACTIVIDAD D ON A.N_ID_ACTIVIDAD = D.N_ID_ACTIVIDAD
-        WHERE D.N_ID_CASO =#{id}
+        WHERE D.N_ID_CASO =#{id} AND A.N_INDICEACTIVO = 1
         AND D.C_ESTADOACTCASO = 'ACT'
     </select>
 
@@ -707,7 +735,8 @@
         A.C_TIPOVIOLENCIA,
         A.C_RESULTADOVIOLENCIA,
         A.N_ID_ACONTECIMIENTO,
-        A.N_INDICEVINCULADO
+        A.N_INDICEVINCULADO,
+        A.N_INDICEACTIVO
         FROM
         SIMCO_REG_ACTIVIDAD A 
         LEFT JOIN
@@ -715,7 +744,7 @@
         AND B.PADRE_PARAMETRO = 10
         LEFT JOIN
         INNER JOIN SIMCO_REG_ACTIVIDAD_ACTAS D ON A.N_ID_ACTIVIDAD = D.N_ID_ACTIVIDAD
-        WHERE D.N_ID_ACTA =#{id}
+        WHERE D.N_ID_ACTA =#{id} AND A.N_INDICEACTIVO = 1
     </select>
     
     <select id="actividadxActaAcuerdoBuscar" resultMap="actividadMap" parameterType="long">
@@ -736,7 +765,8 @@
         A.C_TIPOVIOLENCIA,
         A.C_RESULTADOVIOLENCIA,
         A.N_ID_ACONTECIMIENTO,
-        A.N_INDICEVINCULADO
+        A.N_INDICEVINCULADO,
+        A.N_INDICEACTIVO
         FROM
         SIMCO_REG_ACTIVIDAD A 
         LEFT JOIN
@@ -744,7 +774,7 @@
         AND B.PADRE_PARAMETRO = 10
         INNER JOIN SIMCO_REG_ACTIVIDAD_ACTAS D ON A.N_ID_ACTIVIDAD = D.N_ID_ACTIVIDAD
         WHERE D.N_ID_ACTA =#{id}
-        AND D.C_ESTADOACTIACTA = 'ACT'
+        AND D.C_ESTADOACTIACTA = 'ACT' AND A.N_INDICEACTIVO = 1
     </select>
     
     <select id="actividadxMedioVerificacionBuscarTotal" resultMap="actividadMap" parameterType="long">
@@ -765,14 +795,15 @@
         A.C_TIPOVIOLENCIA,
         A.C_RESULTADOVIOLENCIA,
         A.N_ID_ACONTECIMIENTO,
-        A.N_INDICEVINCULADO
+        A.N_INDICEVINCULADO,
+        A.N_INDICEACTIVO
         FROM
         SIMCO_REG_ACTIVIDAD A 
         LEFT JOIN
         SIMCO_PARAMETRO B ON A.C_TIPO_ACTIVIDAD = B.VALOR_PARAMETRO
         AND B.PADRE_PARAMETRO = 10
         INNER JOIN SIMCO_REG_ACTIVIDAD_MEDIOS D ON A.N_ID_ACTIVIDAD = D.N_ID_ACTIVIDAD
-        WHERE D.N_ID_MEDIO =#{id}
+        WHERE D.N_ID_MEDIO =#{id} AND A.N_INDICEACTIVO = 1
     </select>
     
     <select id="actividadxMedioVerificacionBuscar" resultMap="actividadMap" parameterType="long">
@@ -793,7 +824,8 @@
         A.C_TIPOVIOLENCIA,
         A.C_RESULTADOVIOLENCIA,
         A.N_ID_ACONTECIMIENTO,
-        A.N_INDICEVINCULADO
+        A.N_INDICEVINCULADO,
+        A.N_INDICEACTIVO
         FROM
         SIMCO_REG_ACTIVIDAD A 
         LEFT JOIN
@@ -801,7 +833,7 @@
         AND B.PADRE_PARAMETRO = 10
         INNER JOIN SIMCO_REG_ACTIVIDAD_MEDIOS D ON A.N_ID_ACTIVIDAD = D.N_ID_ACTIVIDAD
         WHERE D.N_ID_MEDIO =#{id}
-        AND D.C_ESTADOACTMEDIO = 'ACT'
+        AND D.C_ESTADOACTMEDIO = 'ACT' AND A.N_INDICEACTIVO = 1
     </select>
     
     
@@ -821,21 +853,22 @@
         A.C_TIPOVIOLENCIA,
         A.C_RESULTADOVIOLENCIA,
         A.N_ID_ACONTECIMIENTO,
-        A.N_INDICEVINCULADO
-        from simco_reg_actividad A
+        A.N_INDICEVINCULADO,
+        A.N_INDICEACTIVO
+        from simco_reg_actividad A AND A.N_INDICEACTIVO = 1
     </select>
     
     <select id="actividadBusquedaSinCasoAC" resultMap="actividadMap">
         select a.* from SIMCO_REG_ACTIVIDAD a
         left JOIN SIMCO_REG_CASO_ACTIVIDAD b on a.N_ID_ACTIVIDAD = b.N_ID_ACTIVIDAD
-        where b.N_ID_CASO is null and a.C_TIPO = 'AC'
+        where b.N_ID_CASO is null and a.C_TIPO = 'AC' AND A.N_INDICEACTIVO = 1
         UNION
         select a.* from SIMCO_REG_ACTIVIDAD a
         INNER JOIN SIMCO_REG_CASO_ACTIVIDAD b on a.N_ID_ACTIVIDAD = b.N_ID_ACTIVIDAD
-        where b.N_ID_CASO is not null and a.C_TIPO = 'AC' AND a.N_ID_ACTIVIDAD NOT IN (
+        where b.N_ID_CASO is not null and a.C_TIPO = 'AC' AND A.N_INDICEACTIVO = 1 AND a.N_ID_ACTIVIDAD NOT IN (
         select a.N_ID_ACTIVIDAD from SIMCO_REG_ACTIVIDAD a
         INNER JOIN SIMCO_REG_CASO_ACTIVIDAD b on a.N_ID_ACTIVIDAD = b.N_ID_ACTIVIDAD
-        where b.N_ID_CASO is not null and a.C_TIPO = 'AC' and  b.C_ESTADOACTCASO = 'ACT'
+        where b.N_ID_CASO is not null and a.C_TIPO = 'AC' AND A.N_INDICEACTIVO = 1 and  b.C_ESTADOACTCASO = 'ACT'
         )
     </select>
     
@@ -843,41 +876,42 @@
         SELECT A.* FROM SIMCO_REG_ACTIVIDAD A
         INNER JOIN SIMCO_REG_CASO_ACTIVIDAD B ON A.N_ID_ACTIVIDAD = B.N_ID_ACTIVIDAD AND B.C_ESTADOACTCASO = 'ACT'
         INNER JOIN SIMCO_REG_CASO C ON B.N_ID_CASO = C.N_ID_CASO AND C.C_INDVIGENTE = 'A'
-        WHERE nvl(A.N_INDICEVINCULADO, 0) != 1 AND A.C_TIPO = 'AC' AND C.N_ID_CASO = #{id}
+        WHERE nvl(A.N_INDICEVINCULADO, 0) != 1 AND A.C_TIPO = 'AC' AND C.N_ID_CASO = #{id} AND A.N_INDICEACTIVO = 1
     </select>
     
     <select id="actividadBusquedaPorAcontecimiento" resultMap="actividadMap" parameterType="long">
-        SELECT * FROM SIMCO_REG_ACTIVIDAD A WHERE N_ID_ACONTECIMIENTO = #{id}
+        SELECT * FROM SIMCO_REG_ACTIVIDAD A WHERE N_ID_ACONTECIMIENTO = #{id} AND A.N_INDICEACTIVO = 1
     </select>
     
     <select id="actividadBusquedaSinCasoAD" resultMap="actividadMap">
         select a.* from SIMCO_REG_ACTIVIDAD a
         left JOIN SIMCO_REG_CASO_ACTIVIDAD b on a.N_ID_ACTIVIDAD = b.N_ID_ACTIVIDAD
-        where b.N_ID_CASO is null and a.C_TIPO = 'AD'
+        where b.N_ID_CASO is null and a.C_TIPO = 'AD' AND A.N_INDICEACTIVO = 1
         UNION
         select a.* from SIMCO_REG_ACTIVIDAD a
         INNER JOIN SIMCO_REG_CASO_ACTIVIDAD b on a.N_ID_ACTIVIDAD = b.N_ID_ACTIVIDAD
-        where b.N_ID_CASO is not null and a.C_TIPO = 'AD' AND a.N_ID_ACTIVIDAD NOT IN (
+        where b.N_ID_CASO is not null and a.C_TIPO = 'AD' AND A.N_INDICEACTIVO = 1 AND a.N_ID_ACTIVIDAD NOT IN (
         select a.N_ID_ACTIVIDAD from SIMCO_REG_ACTIVIDAD a
         INNER JOIN SIMCO_REG_CASO_ACTIVIDAD b on a.N_ID_ACTIVIDAD = b.N_ID_ACTIVIDAD
-        where b.N_ID_CASO is not null and a.C_TIPO = 'AD' and  b.C_ESTADOACTCASO = 'ACT'
+        where b.N_ID_CASO is not null and a.C_TIPO = 'AD' AND A.N_INDICEACTIVO = 1 and  b.C_ESTADOACTCASO = 'ACT'
         )
     </select>
     
     <select id="actividadADCodigoGenerado" resultType="java.lang.Integer" >
         SELECT COUNT(*) FROM SIMCO_REG_ACTIVIDAD
         WHERE TO_CHAR(D_FECREGISTRO, 'YYYYMM') = TO_CHAR(SYSDATE,  'YYYYMM')
+        AND N_INDICEACTIVO = 1
     </select>
     
     <select id="contadorAcontecimiento" resultType="java.lang.Integer" parameterType="long">
         SELECT COUNT(A.N_ID_ACTIVIDAD) FROM SIMCO_REG_ACTIVIDAD A
 INNER JOIN SIMCO_REG_CASO_ACTIVIDAD B ON A.N_ID_ACTIVIDAD = B.N_ID_ACTIVIDAD AND B.C_ESTADOACTCASO = 'ACT' AND A.C_TIPO = 'AC'
-WHERE B.N_ID_CASO = #{id}
+WHERE B.N_ID_CASO = #{id} AND A.N_INDICEACTIVO = 1
     </select>
     
     <select id="contadorActuacion" resultType="java.lang.Integer" parameterType="long">
         SELECT COUNT(A.N_ID_ACTIVIDAD) FROM SIMCO_REG_ACTIVIDAD A
 INNER JOIN SIMCO_REG_CASO_ACTIVIDAD B ON A.N_ID_ACTIVIDAD = B.N_ID_ACTIVIDAD AND B.C_ESTADOACTCASO = 'ACT' AND A.C_TIPO = 'AD'
-WHERE B.N_ID_CASO = #{id}
+WHERE B.N_ID_CASO = #{id} AND A.N_INDICEACTIVO = 1
     </select>
 </mapper>

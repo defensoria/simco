@@ -59,8 +59,41 @@ public class MenuController implements Serializable {
     public void cargarMenu() {
         cargarBusquedaGeneral();
         caso = new Caso();
-        menuPadre = menuService.menuPadre();
+        menuPadre = cargarMenuPadre();
         cargarPagina(0);
+    }
+    
+    private List<Menu> cargarMenuPadre(){
+        FacesContext context = FacesContext.getCurrentInstance();
+        SeguridadUtilController seguridadUtilController = (SeguridadUtilController) context.getELContext().getELResolver().getValue(context.getELContext(), null, "seguridadUtilController");
+        List<Menu> listaMenu = new ArrayList<>();
+        
+            if(seguridadUtilController.tieneRecurso("REC_001")){
+                listaMenu.add(menuService.menuPadreOne(1));
+            }
+            if(seguridadUtilController.tieneRecurso("REC_002")){
+                listaMenu.add(menuService.menuPadreOne(2));
+            }
+            if(seguridadUtilController.tieneRecurso("REC_003")){
+                listaMenu.add(menuService.menuPadreOne(5));
+            }
+            if(seguridadUtilController.tieneRecurso("REC_004")){
+                listaMenu.add(menuService.menuPadreOne(19));
+            }
+            if(seguridadUtilController.tieneRecurso("REC_005")){
+                listaMenu.add(menuService.menuPadreOne(12));
+            }
+            if(seguridadUtilController.tieneRecurso("REC_006")){
+                listaMenu.add(menuService.menuPadreOne(15));
+            }
+            if(seguridadUtilController.tieneRecurso("REC_008")){
+                listaMenu.add(menuService.menuPadreOne(35));
+            }
+            if(seguridadUtilController.tieneRecurso("REC_009")){
+                listaMenu.add(menuService.menuPadreOne(36));
+            }    
+        
+        return listaMenu;
     }
 
     private void cargarBusquedaGeneral() {

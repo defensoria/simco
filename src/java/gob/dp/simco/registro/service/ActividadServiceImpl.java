@@ -190,5 +190,10 @@ public class ActividadServiceImpl implements ActividadService{
     public List<Actividad> actividadxCodigoCasoBuscarTotalAD(String codigo) {
         return actividadDao.actividadxCodigoCasoBuscarTotalAD(codigo);
     }
+
+    @Override
+    public void actividadInactivar(long idActividad) {
+        actividadDao.actividadInactivar(idActividad);
+    }
     
 }
