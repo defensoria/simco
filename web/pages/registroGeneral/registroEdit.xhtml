@@ -133,7 +133,7 @@
                                 </script>
                             </td>
                             <td style="text-align: right; padding-right: 20px; padding-bottom: 10px">
-                                <h:panelGroup rendered="#{registroController.actividad.id != null}">
+                                <h:panelGroup rendered="#{registroController.actividad.id != null and registroController.esUsuarioRegistro}">
                                     <a class="btn btn-warning" onclick="confirmar2()">
                                         <span class="glyphicon glyphicon-floppy-disk" />Inactivar
                                     </a>
@@ -259,10 +259,12 @@
                                     </h:panelGroup>
                                     <div class="form-group">
                                         <div class="col-sm-offset-2 col-sm-10">
+                                            <h:panelGroup rendered="#{registroController.esUsuarioRegistro}">
                                             <button class="btn btn-primary" id="idBotonGuardar">
                                                 <span class="glyphicon glyphicon-floppy-disk">
                                                 </span> Guardar
                                             </button>
+                                                </h:panelGroup>
                                         </div>
                                     </div>
                                 </td>

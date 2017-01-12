@@ -752,12 +752,16 @@ public class CasoController extends AbstractManagedBean implements Serializable 
     }
 
     public boolean registrarCaso() {
+        if(StringUtils.equals(caso.getTipoEstado(), "0")){
+            msg.messageAlert("Debe ingresar el estado del caso", null);
+            return false;
+        }
         if(StringUtils.equals(caso.getTipo(), "0")){
             msg.messageAlert("Debe ingresar la tipología del caso", null);
             return false;
         }
-        if(StringUtils.equals(caso.getTipoEstado(), "0")){
-            msg.messageAlert("Debe ingresar el estado del caso", null);
+        if(caso.getFechaInicio() == null){
+            msg.messageAlert("Debe ingresar la fecha de inicio del caso", null);
             return false;
         }
         usuarioSession();

@@ -57,13 +57,13 @@
                                     $(".confirmacionGuardarTodo").modal("show");
                                 }
                             </script>
-                            <h:panelGroup rendered="#{casoController.esComisionadoRegistro and casoController.caso.indAprobado != null}">
+                            <h:panelGroup rendered="#{(casoController.esComisionadoRegistro) and casoController.caso.indAprobado != null}">
                                 <a class="btn btn-primary" onclick="confirmacionGuardarTodo()">
                                     <span class="glyphicon glyphicon-floppy-disk"/>Guardar
                                 </a>
                             </h:panelGroup>
                             &#160;
-                            <a class="btn btn-default" jsf:rendered="#{casoController.esComisionadoRegistro and casoController.caso.indAprobado != null}" jsf:action="#{intervencionController.archivar()}">
+                            <a class="btn btn-default" jsf:rendered="#{(casoController.esComisionadoRegistro) and casoController.caso.indAprobado != null}" jsf:action="#{intervencionController.archivar()}">
                                 <span class="glyphicon glyphicon-folder-open"/>Archivar
                             </a>
                         </td>
@@ -266,7 +266,7 @@
                                         <textarea class="form-control" id="idDescripcionGeneral" jsf:value="#{intervencionController.intervencion.descripcion}" rows="6" style="width:100%" maxlength="3700"/>
                                         <br/>
                                         <div>
-                                            <h:panelGroup rendered="#{casoController.esComisionadoRegistro and casoController.caso.indAprobado != null}">
+                                            <h:panelGroup rendered="#{(casoController.esComisionadoRegistro) and casoController.caso.indAprobado != null}">
                                             <a class="btn btn-primary" jsf:onclick="return validaDetalleGeneral()"  jsf:action="#{intervencionController.updateIntervencion()}">
                                                 <span class="glyphicon glyphicon-floppy-disk"/>Guardar
                                                 <f:ajax render="@form" execute="@form" onevent="closeModalDetalle"/>
@@ -348,7 +348,7 @@
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <a class="btn btn-primary" jsf:rendered="#{casoController.esComisionadoRegistro and casoController.caso.indAprobado != null}" jsf:onclick="return validaCampoAccion()" jsf:action="#{intervencionController.saveIntervencionAccion()}">
+                                    <a class="btn btn-primary" jsf:rendered="#{(casoController.esComisionadoRegistro) and casoController.caso.indAprobado != null}" jsf:onclick="return validaCampoAccion()" jsf:action="#{intervencionController.saveIntervencionAccion()}">
                                         <span class="glyphicon glyphicon-floppy-disk"/>Guardar
                                         <f:ajax render="@form" execute="@form" onevent="closeModalCampoAccion"/>
                                     </a>

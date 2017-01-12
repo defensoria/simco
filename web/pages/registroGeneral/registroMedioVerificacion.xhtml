@@ -80,6 +80,7 @@
                                         <table>
                                             <tr>
                                                 <td style="padding-right:5px">
+                                                    <h:panelGroup rendered="#{registroController.esUsuarioRegistro}">
                                                     <a style="float:right" class="btn btn-primary" id="idBotenAnadir">
                                                         <h:panelGroup rendered="#{medioVerificacionController.medioVerificacion.id == null}">
                                                             <span class="glyphicon glyphicon-plus" />Añadir
@@ -88,6 +89,7 @@
                                                             <span class="glyphicon glyphicon-edit" />Editar
                                                         </h:panelGroup>
                                                     </a>
+                                                        </h:panelGroup>
                                                 </td>
                                                 <td style="padding-left:5px">
                                                     <a style="float:right" class="btn btn-danger" jsf:action="registroNuevo">

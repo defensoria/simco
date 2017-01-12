@@ -18,10 +18,12 @@
                                     <a class="btn btn-danger" jsf:action="#{registroController.regresarDeNoticias()}">
                                         <span class="glyphicon glyphicon-share"/>Regresar
                                     </a>
+                                    <h:panelGroup rendered="#{registroController.esUsuarioRegistro}">
                                     <a class="btn btn-primary" onclick="confirmar()">
                                         <span class="glyphicon glyphicon-floppy-disk"/>
                                         Guardar
                                     </a>
+                                        </h:panelGroup>
                                 </td>
                             </tr>
                         </table>

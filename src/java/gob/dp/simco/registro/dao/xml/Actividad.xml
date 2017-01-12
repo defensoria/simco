@@ -645,35 +645,11 @@
     
     <select id="actividadxCasoBuscarID" resultMap="actividadMap" parameterType="long">
         SELECT 
-        A.N_ID_ACTIVIDAD,
-        A.C_NOMACTIVIDAD,
-        A.C_DESCRIPACTIVIDAD,
-        A.C_COMENTARIOACTIVIDAD,
-        A.C_LUGARREALIZACION,
-        A.D_FECHAREALIZACIONINI,
-        A.D_FECHAREALIZACIONFIN,
-        A.T_HORAREALIZACIONINI,
-        A.T_HORAREALIZACIONFIN,
-        A.D_FECREGISTRO,
-        A.N_INDCURSO,
+        A.*,
         D.VALOR_PARAMETRO AS PARAM_TIPO_ACTIVIDAD_VAL, 
         D.NOMBRE_PARAMETRO AS PARAM_TIPO_ACTIVIDAD_NOM,
-        A.CIDDEPART,
-        A.CIDPROV,
-        A.CIDDISTR,
-        A.N_COORDENADAX,
-        A.N_COORDENADAY,
-        A.N_ZOOM,
-        A.C_TIPO,
         C.N_ID_CASO,
-        C.C_NOMCASO,
-        A.C_TIPOACONTECIMIENTO,
-        A.C_TIPOVIOLENCIA,
-        A.C_RESULTADOVIOLENCIA,
-        A.C_RUTA,
-        A.N_ID_ACONTECIMIENTO,
-        A.N_INDICEVINCULADO,
-        A.N_INDICEACTIVO
+        C.C_NOMCASO
         FROM
         SIMCO_REG_ACTIVIDAD A 
         LEFT JOIN
@@ -689,24 +665,10 @@
     
     <select id="actividadxCasoBuscar" resultMap="actividadMap" parameterType="long">
         SELECT 
-        A.N_ID_ACTIVIDAD,
-        A.C_NOMACTIVIDAD,
-        A.C_DESCRIPACTIVIDAD,
-        A.C_LUGARREALIZACION,
-        A.D_FECHAREALIZACIONINI,
-        A.D_FECHAREALIZACIONFIN,
-        A.T_HORAREALIZACIONINI,
-        A.T_HORAREALIZACIONFIN,
-        A.C_JUSTINTERVENCION,
+        A.*,
         B.VALOR_PARAMETRO AS PARAM_TIPO_ACTIVIDAD_VAL, 
         B.NOMBRE_PARAMETRO AS PARAM_TIPO_ACTIVIDAD_NOM,
-        D.C_ESTADOACTCASO,
-        A.C_TIPOACONTECIMIENTO,
-        A.C_TIPOVIOLENCIA,
-        A.C_RESULTADOVIOLENCIA,
-        A.N_ID_ACONTECIMIENTO,
-        A.N_INDICEVINCULADO,
-        A.N_INDICEACTIVO
+        D.C_ESTADOACTCASO
         FROM
         SIMCO_REG_ACTIVIDAD A 
         LEFT JOIN
@@ -719,24 +681,10 @@
 
     <select id="actividadxActaAcuerdoBuscarTotal" resultMap="actividadMap" parameterType="long">
         SELECT 
-        A.N_ID_ACTIVIDAD,
-        A.C_NOMACTIVIDAD,
-        A.C_DESCRIPACTIVIDAD,
-        A.C_LUGARREALIZACION,
-        A.D_FECHAREALIZACIONINI,
-        A.D_FECHAREALIZACIONFIN,
-        A.T_HORAREALIZACIONINI,
-        A.T_HORAREALIZACIONFIN,
-        A.C_JUSTINTERVENCION,
+        A.*,
         B.VALOR_PARAMETRO AS PARAM_TIPO_ACTIVIDAD_VAL, 
         B.NOMBRE_PARAMETRO AS PARAM_TIPO_ACTIVIDAD_NOM,
-        D.C_ESTADOACTIACTA,
-        A.C_TIPOACONTECIMIENTO,
-        A.C_TIPOVIOLENCIA,
-        A.C_RESULTADOVIOLENCIA,
-        A.N_ID_ACONTECIMIENTO,
-        A.N_INDICEVINCULADO,
-        A.N_INDICEACTIVO
+        D.C_ESTADOACTIACTA
         FROM
         SIMCO_REG_ACTIVIDAD A 
         LEFT JOIN

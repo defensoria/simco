@@ -10,6 +10,7 @@
         <ui:define name="content">
             <h:form id="idForm3" class="form-horizontal" enctype="multipart/form-data">
                 <gc:confirmSubmit bean="#{registroController.registrarActividad()}"/>
+                <h2>id:#{registroController.esUsuarioRegistro}</h2>
                 <gc:confirmSubmit bean="#{registroController.inactivarActividad()}" classGC="confirmacion2" mensaje="Esta seguro inactivar el registro?"/>
                 <input type="hidden" jsf:value="#{registroController.actividad.coordenadaX}" id="idCoordenadaX"/>
                 <input type="hidden" jsf:value="#{registroController.actividad.coordenadaY}" id="idCoordenadaY"/>
@@ -111,7 +112,7 @@
                                 </script>
                             </td>
                             <td style="padding-bottom: 10px">
-                                <h:panelGroup rendered="#{registroController.actividad.id != null}">
+                                <h:panelGroup rendered="#{registroController.actividad.id != null and registroController.esUsuarioRegistro}">
                                     <a class="btn btn-warning" onclick="confirmar2()">
                                         <span class="glyphicon glyphicon-floppy-disk" />Inactivar
                                     </a>
@@ -210,9 +211,11 @@
                                         <td style="padding:20px">
                                         </td>
                                         <td>
+                                            <h:panelGroup rendered="#{(registroController.esUsuarioRegistro and registroController.actividad.id != null) or (registroController.actividad.id == null)}">
                                             <a class="btn btn-primary" id="idBotonGuardar">
                                                 <span class="glyphicon glyphicon-floppy-disk"/>Guardar
                                             </a>
+                                                </h:panelGroup>
                                         </td>
                                     </table>
                                 </td>

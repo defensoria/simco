@@ -17,7 +17,7 @@
                                         <tr>
                                             <td>
                                                 <span class="text-resalt-primary" style="font-size:2em">Víctimas de la violencia&#160;&#160;&#160;&#160;&#160;</span>
-                                                <a class="btn btn-warning" jsf:action="#{victimaViolenciaController.nuevo()}">Nuevo
+                                                <a class="btn btn-warning" jsf:action="#{victimaViolenciaController.nuevo()}" jsf:rendered="#{registroController.esUsuarioRegistro}">Nuevo
                                                     <span class="glyphicon glyphicon-user" style="font-size:2em"/>
                                                 </a>
                                                 <br/><br/>
@@ -26,9 +26,11 @@
                                                 <table>
                                                     <tr>
                                                         <td>
-                                                            <a class="btn btn-primary" id="idBtnGuardar">
+                                                            <h:panelGroup rendered="#{registroController.esUsuarioRegistro}">
+                                                                    <a class="btn btn-primary" id="idBtnGuardar">
                                                                 <span class="glyphicon glyphicon-floppy-disk"/>Guardar
                                                             </a>
+                                                            </h:panelGroup>
                                                         </td>
                                                         <td style="padding-left:5px">
                                                             <a class="btn btn-danger" jsf:action="#{victimaViolenciaController.regresar()}">

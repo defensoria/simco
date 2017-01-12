@@ -109,9 +109,11 @@
                                         <span class="glyphicon glyphicon-share"/>Regresar
                                     </a>
                                     &#160;&#160;
+                                    <h:panelGroup rendered="#{registroController.esUsuarioRegistro}">
                                     <a class="btn btn-primary" onclick="return validarActaAcuerdo()" style="float:right">
                                         <span class="glyphicon glyphicon-floppy-disk"/>Guardar
                                     </a>
+                                        </h:panelGroup>
                                 </td>
                             </tr>
                         </table>
@@ -450,15 +452,15 @@
                     <table style="width:100%">
                         <tr>
                             <td>
-                                <h:panelGroup rendered="#{!actaAcuerdoController.verBotonEditar}">
+                                <h:panelGroup rendered="#{!actaAcuerdoController.verBotonEditar and registroController.esUsuarioRegistro}">
                                     <a class="btn btn-primary" onclick="agregarAcuerdo(1)" style="float:right">
                                         <span class="glyphicon glyphicon-plus"/>Agregar
                                     </a>
                                 </h:panelGroup>
-                                <a class="btn btn-primary" jsf:rendered="#{actaAcuerdoController.verBotonEditar}" jsf:onclick="return agregarAcuerdo(2)" jsf:action="#{actaAcuerdoController.modifyActaAcuerdoxActividad()}" style="float:right">
+                                <a class="btn btn-primary" jsf:rendered="#{actaAcuerdoController.verBotonEditar and registroController.esUsuarioRegistro}" jsf:onclick="return agregarAcuerdo(2)" jsf:action="#{actaAcuerdoController.modifyActaAcuerdoxActividad()}" style="float:right">
                                     <span class="glyphicon glyphicon-edit"/>Editar
                                 </a>
-                                <a class="btn btn-danger" jsf:rendered="#{actaAcuerdoController.verBotonEditar}" jsf:action="#{actaAcuerdoController.cancelarActaAcuerdoxActividad()}" style="float:right" jsf:onclick="loadingModal()">
+                                <a class="btn btn-danger" jsf:rendered="#{actaAcuerdoController.verBotonEditar and registroController.esUsuarioRegistro}" jsf:action="#{actaAcuerdoController.cancelarActaAcuerdoxActividad()}" style="float:right" jsf:onclick="loadingModal()">
                                     <span class="glyphicon glyphicon-remove"/>Cancelar
                                 </a>
                             </td>
@@ -506,11 +508,14 @@
                                             </h:column>
                                             <h:column>
                                                 <f:facet name="header"></f:facet>
-                                                <a jsf:rendered="#{!actaAcuerdoController.verBotonEditar}" onclick="confirmar2#{item.id}()" style="cursor:pointer">
+                                                <h:panelGroup rendered="#{registroController.esUsuarioRegistro}">
+                                                    <a jsf:rendered="#{!actaAcuerdoController.verBotonEditar}" onclick="confirmar2#{item.id}()" style="cursor:pointer">
                                                     <span class="glyphicon glyphicon-remove" style="font-size:medium;color:red"/>
                                                 </a>
+                                                </h:panelGroup>
+                                                
                                                 &#160;&#160;&#160;
-                                                <a style="text-decoration:none" jsf:action="#{actaAcuerdoController.editActaAcuerdoxActividad(item)}" jsf:onclick="loadingModal()">
+                                                <a style="text-decoration:none" jsf:action="#{actaAcuerdoController.editActaAcuerdoxActividad(item)}" jsf:rendered="#{registroController.esUsuarioRegistro}" jsf:onclick="loadingModal()">
                                                     <span class="glyphicon glyphicon-edit" style="font-size:medium"/>
                                                 </a>
                                                 <gc:confirmRemoveSubmit bean="#{actaAcuerdoController.removeActaAcuerdoxActividad(item)}" classGC="confirmacion2#{item.id}" mensaje="¿Está seguro que desea eliminar el registro?" />

@@ -48,13 +48,15 @@
                                         <span class="text-resalt-comun">Editar población</span>
                                     </td>
                                     <td style="text-align:right">
+                                        <h:panelGroup rendered="#{seguridadUtilController.tieneRecurso('REC_002')}">
                                         <a class="btn btn-primary" id="idBotonGuardar">
                                             <span class="glyphicon glyphicon-floppy-disk"/>Guardar
                                         </a>
                                         &#160;&#160;
-                                        <a class="btn btn-danger" id="idBtnGuardar" jsf:action="#{actorController.regresarBusquedaEdit()}">
+                                        <a class="btn btn-danger" jsf:action="#{actorController.regresarBusquedaEdit()}">
                                             <span class="glyphicon glyphicon-share"/>Regresar
                                         </a>
+                                        </h:panelGroup>
                                     </td>
                                 </tr>
                             </table>
@@ -249,14 +251,18 @@
                                                                                         <h:inputText value="#{persona.cargo}"/>
                                                                                     </h:column>
                                                                                     <h:column>
+                                                                                        <h:panelGroup rendered="#{seguridadUtilController.tieneRecurso('REC_002')}">
                                                                                         <a jsf:action="#{actorController.addMiembroGuardarPersona(persona)}" jsf:onclick="loadingModal()">
                                                                                             <span style="font-size:large" class="glyphicon glyphicon-floppy-disk"/>
                                                                                         </a>
+                                                                                            </h:panelGroup>
                                                                                     </h:column>
                                                                                     <h:column>
+                                                                                        <h:panelGroup rendered="#{seguridadUtilController.tieneRecurso('REC_002')}">
                                                                                         <a jsf:action="#{actorController.removeTempMiembroPersona(persona)}" jsf:onclick="loadingModal()">
                                                                                             <span style="color:red;font-size:large" class="glyphicon glyphicon-remove"/>
                                                                                         </a>
+                                                                                            </h:panelGroup>
                                                                                     </h:column>
                                                                                 </h:dataTable>
                                                                             </div>
@@ -277,10 +283,12 @@
                                                                                         <h:outputText value="#{person.cargo}"/>
                                                                                     </h:column>
                                                                                     <h:column>
+                                                                                        <h:panelGroup rendered="#{seguridadUtilController.tieneRecurso('REC_002')}">
                                                                                         <a jsf:action="#{actorController.removeMiembroRegistradoPersona(person)}" jsf:onclick="loadingModal()">
                                                                                             <span style="color:red;font-size:large" class="glyphicon glyphicon-remove"></span>
                                                                                             <f:ajax render="@form" onevent="closeModal"/>
                                                                                         </a>
+                                                                                            </h:panelGroup>
                                                                                     </h:column>
                                                                                 </h:dataTable>
                                                                             </div>
@@ -354,6 +362,7 @@
                                         <span class="text-resalt-comun">Editar Organización / empresa</span>
                                     </td>
                                     <td style="text-align:right">
+                                        <h:panelGroup rendered="#{seguridadUtilController.tieneRecurso('REC_002')}">
                                         <a class="btn btn-primary" id="idBotonGuardar2">
                                             <span class="glyphicon glyphicon-floppy-disk"/>Guardar
                                         </a>
@@ -361,6 +370,7 @@
                                         <a class="btn btn-danger" id="idBtnGuardar" jsf:action="#{actorController.regresarBusquedaEdit()}">
                                             <span class="glyphicon glyphicon-share"/>Regresar
                                         </a>
+                                        </h:panelGroup>
                                     </td>
                                 </tr>
                             </table>
@@ -624,10 +634,12 @@
                                                                                 <div id="idDivActorMiembro" class="form-group has-feedback" style="width:50%;text-align:left">
                                                                                     <input type="text" id="actor" jsf:value="#{actorController.actorMiembro.nombre}" />
                                                                                     <input type="hidden" jsf:value="#{actorController.actorMiembro.idMiembro}" id="actor-id" />
+                                                                                    <h:panelGroup rendered="#{seguridadUtilController.tieneRecurso('REC_002')}">
                                                                                     <a style="font-size:large;margin:auto" jsf:action="#{actorController.addMiembro()}" jsf:onclick="loadingModal()">
                                                                                         <span class="glyphicon glyphicon-plus form-control-feedback"/>
                                                                                         <f:ajax render="@form" execute="@form" onevent="limpiarCampoActor"/>
                                                                                     </a>
+                                                                                        </h:panelGroup>
                                                                                 </div>
                                                                                 <br/><br/>
                                                                                 <h:dataTable value="#{actorController.listaMiembros}" var="mienbroE" id="idDatatableMiembros" class="table table-striped" style="width:100%" binding="#{rowd}" rendered="#{actorController.listaMiembros.size() > 0}">
@@ -644,16 +656,20 @@
                                                                                         <h:inputText value="#{mienbroE.cargo}"/>
                                                                                     </h:column>
                                                                                     <h:column>
+                                                                                        <h:panelGroup rendered="#{seguridadUtilController.tieneRecurso('REC_002')}">
                                                                                         <a jsf:action="#{actorController.addMiembroGuardar(mienbroE)}" jsf:onclick="loadingModal()">
                                                                                             <span style="font-size:large" class="glyphicon glyphicon-floppy-disk"></span>
                                                                                             <f:ajax render="@form" execute="@form" onevent="closeModal"/>
                                                                                         </a>
+                                                                                            </h:panelGroup>
                                                                                     </h:column>
                                                                                     <h:column>
+                                                                                        <h:panelGroup rendered="#{seguridadUtilController.tieneRecurso('REC_002')}">
                                                                                         <a jsf:action="#{actorController.removeTempMiembro(mienbroE)}" jsf:onclick="loadingModal()">
                                                                                             <span style="color:red;font-size:large" class="glyphicon glyphicon-remove"></span>
                                                                                             <f:ajax render="@form" onevent="closeModal"/>
                                                                                         </a>
+                                                                                            </h:panelGroup>
                                                                                     </h:column>
                                                                                 </h:dataTable>
                                                                             </div>
@@ -678,10 +694,12 @@
                                                                                         <h:outputText value="#{mienbrosEm.cargo}"/>
                                                                                     </h:column>
                                                                                     <h:column>
+                                                                                        <h:panelGroup rendered="#{seguridadUtilController.tieneRecurso('REC_002')}">
                                                                                         <a jsf:action="#{actorController.removeMiembroRegistrado(mienbrosEm)}" jsf:onclick="loadingModal()">
                                                                                             <span style="color:red;font-size:large" class="glyphicon glyphicon-remove"></span>
                                                                                             <f:ajax render="@form" onevent="closeModal"/>
                                                                                         </a>
+                                                                                            </h:panelGroup>
                                                                                     </h:column>
                                                                                 </h:dataTable>
                                                                             </div>
@@ -744,6 +762,7 @@
                                         <span class="text-resalt-comun">Editar Entidad estatal</span>
                                     </td>
                                     <td style="text-align:right">
+                                        <h:panelGroup rendered="#{seguridadUtilController.tieneRecurso('REC_002')}">
                                         <a class="btn btn-primary" id="idBotonGuardar3">
                                             <span class="glyphicon glyphicon-floppy-disk"/>Guardar
                                         </a>
@@ -751,6 +770,7 @@
                                         <a class="btn btn-danger" id="idBtnGuardar" jsf:action="#{actorController.regresarBusquedaEdit()}">
                                             <span class="glyphicon glyphicon-share"/>Regresar
                                         </a>
+                                        </h:panelGroup>
                                     </td>
                                 </tr>
                             </table>
@@ -926,10 +946,12 @@
                                                                             <div id="idDivActorMiembroEntidad" class="form-group has-feedback" style="width:50%">
                                                                                 <input type="text" id="actor-entidad" jsf:value="#{actorController.actorMiembroEntidad.nombre}"/>
                                                                                 <input type="hidden" jsf:value="#{actorController.actorMiembroEntidad.idMiembro}" id="actor-id-entidad" />
+                                                                                <h:panelGroup rendered="#{seguridadUtilController.tieneRecurso('REC_002')}">
                                                                                 <a style="float:right;font-size:large;margin:auto" jsf:action="#{actorController.addMiembroEntidad()}" jsf:onclick="loadingModal()">
                                                                                     <span class="glyphicon glyphicon-plus form-control-feedback"/>
                                                                                     <f:ajax render="@form" execute="@form" onevent="limpiarCampoActorEntidad"/>
                                                                                 </a>
+                                                                                    </h:panelGroup>
                                                                             </div>
                                                                             <br/><br/>
                                                                             <h:dataTable value="#{actorController.listaMiembrosEntidad}" var="mien" id="idDatatableMiembrosEntidad" class="table table-striped" style="width:100%" binding="#{row10}" rendered="#{actorController.listaMiembrosEntidad.size() > 0}">
@@ -946,16 +968,20 @@
                                                                                     <h:inputText value="#{mien.cargo}"/>
                                                                                 </h:column>
                                                                                 <h:column>
+                                                                                    <h:panelGroup rendered="#{seguridadUtilController.tieneRecurso('REC_002')}">
                                                                                     <a jsf:action="#{actorController.addMiembroGuardarEntidad(mien)}" jsf:onclick="loadingModal()">
                                                                                         <span style="font-size:large" class="glyphicon glyphicon-floppy-disk"></span>
                                                                                         <f:ajax render="@form" execute="@form" onevent="closeModal"/>
                                                                                     </a>
+                                                                                        </h:panelGroup>
                                                                                 </h:column>
                                                                                 <h:column>
+                                                                                    <h:panelGroup rendered="#{seguridadUtilController.tieneRecurso('REC_002')}">
                                                                                     <a jsf:action="#{actorController.removeTempMiembroEntidad(mien)}" jsf:onclick="loadingModal()">
                                                                                         <span style="color:red;font-size:large" class="glyphicon glyphicon-remove"></span>
                                                                                         <f:ajax render="@form" onevent="closeModal"/>
                                                                                     </a>
+                                                                                        </h:panelGroup>
                                                                                 </h:column>
                                                                             </h:dataTable>
                                                                         </div>
@@ -980,10 +1006,12 @@
                                                                                     <h:outputText value="#{mienbrs.cargo}"/>
                                                                                 </h:column>
                                                                                 <h:column>
+                                                                                    <h:panelGroup rendered="#{seguridadUtilController.tieneRecurso('REC_002')}">
                                                                                     <a jsf:action="#{actorController.removeMiembroRegistradoEntidad(mienbrs)}" jsf:onclick="loadingModal()">
                                                                                         <span style="color:red;font-size:large" class="glyphicon glyphicon-remove"></span>
                                                                                         <f:ajax render="@form" onevent="closeModal"/>
                                                                                     </a>
+                                                                                        </h:panelGroup>
                                                                                 </h:column>
                                                                             </h:dataTable>
                                                                         </div>

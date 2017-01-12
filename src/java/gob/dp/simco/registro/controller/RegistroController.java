@@ -145,6 +145,8 @@ public class RegistroController extends AbstractManagedBean implements Serializa
     private List<Actividad> listaActividadesPorCaso;
     
     private List<Actividad> acontecimientoVinculado;
+    
+    private Boolean esUsuarioRegistro;
 
     @Autowired
     private ActividadService actividadService;
@@ -187,6 +189,7 @@ public class RegistroController extends AbstractManagedBean implements Serializa
             generarCadenaCasos();
             caso = new Caso();
             listaNoticiasRegistros = new ArrayList<>();
+            setearEsUsuarioRegistro();
             return "registroNuevo";
         } catch (Exception e) {
             log.error("ERROR - cargarPagina()" + e);
@@ -230,6 +233,12 @@ public class RegistroController extends AbstractManagedBean implements Serializa
         } catch (Exception e) {
             log.error("ERROR - usuarioSession()" + e);
         }
+    }
+    
+    private void setearEsUsuarioRegistro(){
+        System.out.println("usuarioSession.getCodigo()"+usuarioSession.getCodigo());
+        System.out.println("actividad.getUsuarioRegistro()"+actividad.getUsuarioRegistro());
+        esUsuarioRegistro = StringUtils.equals(usuarioSession.getCodigo(), actividad.getUsuarioRegistro());
     }
 
     private void limpiarMedios() {
@@ -299,6 +308,7 @@ public class RegistroController extends AbstractManagedBean implements Serializa
             listaNoticiasRegistro();
             limpiarActaAcuerdo();
             limpiarVictimas2();
+            setearEsUsuarioRegistro();
             return "registroEdit";
         } catch (Exception ex) {
             log.error("ERROR - irModificarRegistro()" + ex);
@@ -322,10 +332,10 @@ public class RegistroController extends AbstractManagedBean implements Serializa
             caso = new Caso();
             caso.setNombre(acti.getNombreCaso());
             caso.setId(acti.getIdCaso());
-            if (!StringUtils.equals(acti.getIdDepartamento(),"0")) {
+            if (StringUtils.isNotBlank(acti.getIdDepartamento()) && !StringUtils.equals(acti.getIdDepartamento(),"0")) {
                 comboProvincia();
             }
-            if (!StringUtils.equals(acti.getIdProvincia(),"0")) {
+            if (StringUtils.isNotBlank(acti.getIdDepartamento()) && !StringUtils.equals(acti.getIdProvincia(),"0")) {
                 comboDistrito();
             }
             actorController.listarActoresXcaso(acti.getId());
@@ -336,6 +346,7 @@ public class RegistroController extends AbstractManagedBean implements Serializa
             actaAcuerdo = actaAcuerdoService.actaAcuerdoxActividadBuscarOne(acti.getId());
             listaNoticiasRegistro();
             limpiarVictimas2();
+            setearEsUsuarioRegistro();
             return "registroNuevo";
         } catch (Exception ex) {
             log.error("ERROR - irModificarRegistro2()" + ex);
@@ -659,6 +670,7 @@ public class RegistroController extends AbstractManagedBean implements Serializa
             }
             historialActividad(accionHistorial, actividad.getId());
             msg.messageInfo("Se guardaron los cambios", null);
+            setearEsUsuarioRegistro();
             if (caso.getId() != null) {
                 return "registroEdit";
             }else{
@@ -1213,6 +1225,14 @@ public class RegistroController extends AbstractManagedBean implements Serializa
 
     public void setAcontecimientoVinculado(List<Actividad> acontecimientoVinculado) {
         this.acontecimientoVinculado = acontecimientoVinculado;
+    }
+
+    public Boolean getEsUsuarioRegistro() {
+        return esUsuarioRegistro;
+    }
+
+    public void setEsUsuarioRegistro(Boolean esUsuarioRegistro) {
+        this.esUsuarioRegistro = esUsuarioRegistro;
     }
 
 }

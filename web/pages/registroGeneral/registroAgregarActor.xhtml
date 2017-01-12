@@ -106,6 +106,7 @@
                                 <div class="panel-body">
                                     <div>
                                         <span class="text-resalt-primary">Actores añadidos</span>
+                                        <h:panelGroup rendered="#{registroController.esUsuarioRegistro}">
                                         <button jsf:rendered="#{!actorController.tip}" id="idBotonGuardar1" class="btn btn-primary" jsf:onclick="return false" style="float:right">
                                             <span class="glyphicon glyphicon-floppy-disk"/>Guardar
                                         </button>
@@ -135,6 +136,7 @@
                                             }
                                             );
                                         </script>
+                                            </h:panelGroup>
                                     </div>
                                     <p></p>
                                     <h:dataTable value="#{actorController.listaActorSeleccionadoFinal}" var="actor" class="table" id="idDatatableActorDetalle" style="font-size:small" binding="#{row3}">

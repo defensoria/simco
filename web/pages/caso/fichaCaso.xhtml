@@ -85,9 +85,10 @@
                     <div class="panel-body">
                         <table style="width:100%">
                             <tr>
-                                <td style="width:70%">
+                                <td style="width:70%; padding-bottom: 15px">
                                     <span class="text-resalt-comun" style="font-weight:bold">#{casoController.caso.nombre} </span>
                                     <h:outputText rendered="#{casoController.caso.id != null and !casoController.caso.indicador eq null}" class="text-resalt-comun" value="código: #{casoController.caso.codigo}" />
+                                    <span style="color: red; font-size: 1.5em; vertical-align: bottom">* </span><label>Nombre del caso</label>
                                     <input style="width:50%" jsf:rendered="#{casoController.caso.id == null}" type="text" id="idNombreCaso" jsf:value="#{casoController.caso.nombre}" placeholder="Nombre"/>
                                 </td>
                                 <td>
@@ -112,7 +113,7 @@
                                         </h:column>
                                         <h:column>
                                             <h:outputText value="&#160;&#160;&#160;" />
-                                            <h:panelGroup rendered="#{casoController.esComisionadoRegistro}">
+                                            <h:panelGroup rendered="#{(casoController.esComisionadoRegistro)}">
                                                 <a jsf:action="#{casoController.removeListaAdjuntias(ad)}" style="text-decoration: none">
                                                     <span style="color:red;font-size:large" class="glyphicon glyphicon-remove"></span>
                                                     <f:ajax render="@form"/>
@@ -130,7 +131,7 @@
                                         <table style="width:100%">
                                             <tr>
                                                 <td style="width:90%">
-                                                    <label>Estado</label>
+                                                    <span style="color: red; font-size: 1.5em; vertical-align: bottom">* </span><label>Estado</label>
                                                     <h:selectOneMenu value="#{casoController.caso.tipoEstado}" class="btn-info cTipoEstadoPreliminar" rendered="#{casoController.caso.indAprobado eq null}">
                                                         <f:selectItem itemLabel="--Seleccione--" itemValue="0"/>
                                                         <f:selectItem itemLabel="Borrador" itemValue="01"/>
@@ -369,7 +370,7 @@
                                         <table style="width:100%">
                                             <tr>
                                                 <td style="width:90%">
-                                                    <label>Tipología</label>
+                                                    <span style="color: red; font-size: 1.5em; vertical-align: bottom">* </span><label>Tipología</label>
                                                     <h:selectOneMenu value="#{casoController.caso.tipo}" class="btn-info" onchange="loadingModal()">
                                                         <f:selectItem itemLabel="--Seleccione--" itemValue="0"/>
                                                         <f:selectItems value="#{listasComunesController.buscarTipoCaso(false, false, false)}" var="y" itemLabel="#{y.nombreParametro}" itemValue="#{y.valorParametro}" />
@@ -484,10 +485,10 @@
                                                                 </h:selectOneMenu>
                                                             </td>
                                                             <td style="vertical-align:bottom; width: 8%">&#160;&#160;
-                                                                <h:panelGroup rendered="#{casoController.esComisionadoRegistro}">
+                                                                <h:panelGroup rendered="#{(casoController.esComisionadoRegistro)}">
                                                                     <a class="btn btn-primary" jsf:action="#{casoController.addRegion()}" jsf:onclick="loadingModal()">
                                                                         <span class="glyphicon glyphicon-plus" />Añadir
-                                                                        <f:ajax render="@form" onevent="closeModal" execute="@form"/>
+                                                                        
                                                                     </a>
                                                                 </h:panelGroup>    
                                                             </td>
@@ -524,7 +525,7 @@
                                                                                 </a>
                                                                             </h:panelGroup>
                                                                             &#160;&#160;
-                                                                            <h:panelGroup rendered="#{casoController.esComisionadoRegistro}">
+                                                                            <h:panelGroup rendered="#{(casoController.esComisionadoRegistro)}">
                                                                                 <a onclick="confirmar5#{region.id}()" style="cursor:pointer">
                                                                                     <span class="glyphicon glyphicon-remove" style="color:red;font-size:medium" />
                                                                                 </a>
@@ -535,8 +536,8 @@
                                                                                         $(".confirmacion6#{region.id}").modal('show');
                                                                                     }
                                                                                 </script>
-                                                                                <gc:confirmRemoveAjax classGC="confirmacion5#{region.id}" bean="#{casoController.removeRegion(region.id)}" mensaje="Esta seguro de eliminar este registro?" />
-                                                                                <gc:confirmAjax classGC="confirmacion6#{region.id}" bean="#{casoController.ubigeoPrincipal(region)}" mensaje="Esta seguro de definir el ubigeo princial?" />
+                                                                                <gc:confirmSubmit classGC="confirmacion5#{region.id}" bean="#{casoController.removeRegion(region.id)}" mensaje="Esta seguro de eliminar este registro?" />
+                                                                                <gc:confirmSubmit classGC="confirmacion6#{region.id}" bean="#{casoController.ubigeoPrincipal(region)}" mensaje="Esta seguro de definir el ubigeo princial?" />
                                                                             </h:panelGroup>
                                                                         </h:panelGroup>
                                                                     </h:column>
@@ -566,10 +567,11 @@
                                             <table>
                                                     <tr>
                                                         <td style="padding-right: 10px">
-                                                <b>Fecha Inicio</b><gc:calendar value="#{casoController.caso.fechaInicio}"/>
+                                                <span style="color: red; font-size: 1.5em; vertical-align: bottom">* </span><label>Fecha Inicio</label>
+                                                <gc:calendar value="#{casoController.caso.fechaInicio}"/>
                                         </td> 
                                                         <td style="padding-left: 10px">
-                                                <b>Fecha Fin</b><gc:calendar value="#{casoController.caso.fechaFin}" />
+                                                <label>Fecha Fin</label><gc:calendar value="#{casoController.caso.fechaFin}" />
                                         </td> 
                                         <td colspan="2"></td> 
                                                 </tr>
@@ -823,11 +825,11 @@
                                                     </script>
                                                 </td>
                                                 <td style="text-align:right">
-                                                    <a jsf:rendered="#{casoController.esComisionadoRegistro}" jsf:action="#{casoController.cargarListaActividadesSinCaso(2)}" jsf:onclick="loadingModal()">
+                                                    <a jsf:rendered="#{(casoController.esComisionadoRegistro)}" jsf:action="#{casoController.cargarListaActividadesSinCaso(2)}" jsf:onclick="loadingModal()">
                                                         <span style="font-size:large" class="glyphicon glyphicon-search"></span>
                                                         <f:ajax render=":idForm3" onevent="openModalBusquedaSinCaso" />
                                                     </a>
-                                                    <a jsf:rendered="#{casoController.esComisionadoRegistro}" style="text-decoration:none" jsf:action="#{registroController.cargarAcontecimientoModal(casoController.caso, 2)}" jsf:onclick="loadingModal()">
+                                                    <a jsf:rendered="#{(casoController.esComisionadoRegistro)}" style="text-decoration:none" jsf:action="#{registroController.cargarAcontecimientoModal(casoController.caso, 2)}" jsf:onclick="loadingModal()">
                                                         <span style="font-size:large" class="glyphicon glyphicon-plus"></span>
                                                         <f:ajax render=":idForm2" execute="@form" onevent="openModalAcontecimiento"/>
                                                     </a>
@@ -848,14 +850,14 @@
                                                 <h:outputText value=" - #{AD.codigoActividad} " />
                                             </h:column>
                                             <h:column>
-                                                <h:panelGroup rendered="#{casoController.esComisionadoRegistro}">
+                                                <h:panelGroup rendered="#{(casoController.esComisionadoRegistro)}">
                                                     <a jsf:action="#{registroController.irModificarRegistro(AD)}">
                                                         <span style="font-size:large" class="glyphicon glyphicon-pencil"></span>
                                                     </a>
                                                 </h:panelGroup>
                                             </h:column>
                                             <h:column>
-                                                <h:panelGroup rendered="#{casoController.esComisionadoRegistro}">
+                                                <h:panelGroup rendered="#{(casoController.esComisionadoRegistro)}">
                                                     <a onclick="confirmar1#{AD.id}()">
                                                         <span style="font-size:large;color:red;cursor:pointer" class="glyphicon glyphicon-remove"></span>
                                                     </a>
@@ -899,11 +901,11 @@
                                                     </script>
                                                 </td>
                                                 <td style="text-align:right">
-                                                    <a jsf:rendered="#{casoController.esComisionadoRegistro}" jsf:action="#{casoController.cargarListaActividadesSinCaso(1)}" jsf:onclick="loadingModal()">
+                                                    <a jsf:rendered="#{(casoController.esComisionadoRegistro)}" jsf:action="#{casoController.cargarListaActividadesSinCaso(1)}" jsf:onclick="loadingModal()">
                                                         <span style="font-size:large" class="glyphicon glyphicon-search"></span>
                                                         <f:ajax render=":idForm3" onevent="openModalBusquedaSinCaso" />
                                                     </a>
-                                                    <a jsf:rendered="#{casoController.esComisionadoRegistro}" style="text-decoration:none" jsf:action="#{registroController.cargarAcontecimientoModal(casoController.caso, 1)}" jsf:onclick="loadingModal()">
+                                                    <a jsf:rendered="#{(casoController.esComisionadoRegistro)}" style="text-decoration:none" jsf:action="#{registroController.cargarAcontecimientoModal(casoController.caso, 1)}" jsf:onclick="loadingModal()">
                                                         <span style="font-size:large" class="glyphicon glyphicon-plus"></span>
                                                         <f:ajax render=":idForm2" execute="@form" onevent="openModalAcontecimiento"/>
                                                     </a>
@@ -924,14 +926,14 @@
                                                 <h:outputText value=" - #{AC.codigoActividad} " />
                                             </h:column>
                                             <h:column>
-                                                <h:panelGroup rendered="#{casoController.esComisionadoRegistro}">
+                                                <h:panelGroup rendered="#{(casoController.esComisionadoRegistro)}">
                                                     <a jsf:action="#{registroController.irModificarRegistro(AC)}">
                                                         <span style="font-size:large" class="glyphicon glyphicon-pencil"></span>
                                                     </a>
                                                 </h:panelGroup>
                                             </h:column>
                                             <h:column>
-                                                <h:panelGroup rendered="#{casoController.esComisionadoRegistro}">
+                                                <h:panelGroup rendered="#{(casoController.esComisionadoRegistro)}">
                                                     <a onclick="confirmar2#{AC.id}()">
                                                         <span style="font-size:large;color:red;cursor:pointer" class="glyphicon glyphicon-remove"></span>
                                                     </a>
@@ -1123,7 +1125,7 @@
                                         </div>
                                         <div class="form-group">
                                             <div class="col-sm-offset-2 col-sm-10">
-                                                <h:panelGroup rendered="#{casoController.esComisionadoRegistro}">
+                                                <h:panelGroup rendered="#{(casoController.esComisionadoRegistro)}">
                                                     <a class="btn btn-primary" jsf:onclick="return registraActividadMini()" jsf:rendered="#{registroController.tipoBoton}" jsf:action="#{registroController.registrarActividadModal(1)}">
                                                         <span class="glyphicon glyphicon-floppy-disk"/>Guardar
                                                         <f:ajax render="@form :idForm" execute="@form" onevent="informar"/>
@@ -1293,7 +1295,7 @@
                                             </h:outputText>
                                         </h:column>
                                         <h:column>
-                                            <h:panelGroup rendered="#{casoController.esComisionadoRegistro}">
+                                            <h:panelGroup rendered="#{(casoController.esComisionadoRegistro)}">
                                                 <a jsf:action="#{casoController.vincularActividadCaso(act)}">
                                                     <span class="glyphicon glyphicon-share" style="font-size:large"></span>
                                                 </a>
