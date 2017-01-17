@@ -141,21 +141,22 @@ public class ReporteGeneralController implements Serializable {
         totalGeneralDialogoProceso = reporteEjecutivoService.totalGeneralCasosDialogoProceso(filtroReporte);
         totalGeneraReunionesPreparatorias = reporteEjecutivoService.totalGeneralCasosReunionesPreparatorias(filtroReporte);
         totalGeneraParticipacionDefensoria = reporteEjecutivoService.totalGeneralCasosParticipacionDefensoria(filtroReporte);
-        totalGeneraCasosViolencia = reporteEjecutivoService.totalGeneralCasosEchoViolencia(filtroReporte);
-        totalGeneraCasosAccionesProtesta = reporteEjecutivoService.totalGeneralCasosAccionesProtesta(filtroReporte);
+        //totalGeneraCasosViolencia = reporteEjecutivoService.totalGeneralCasosEchoViolencia(filtroReporte);
+//        totalGeneraCasosAccionesProtesta = reporteEjecutivoService.totalGeneralCasosAccionesProtesta(filtroReporte);
         totalGeneralActuacion = reporteEjecutivoService.totalGeneralCasosActuacionDefensorial(filtroReporte);
         totalGeneralActuacionSupervisionPreventiva = reporteEjecutivoService.totalGeneralCasosActuacionDefensorialSupervisionPreventiva(filtroReporte);
         totalGeneralActuacionIntermediaciones = reporteEjecutivoService.totalGeneralCasosActuacionDefensorialIntermediaciones(filtroReporte);
         totalGeneralActuacionAccionHumanitaria = reporteEjecutivoService.totalGeneralCasosActuacionDefensorialAccionHumanitaria(filtroReporte);
         totalGeneralActuacionDefensaLegal = reporteEjecutivoService.totalGeneralCasosActuacionDefensorialDefensaLegal(filtroReporte);
+        ejecutivo.setTitulo1("ESTADO DE LOS CONFLICTOS SOCIALES: "+MesesEnum.get(filtroReporte.getMes()).getValue()+" - 20"+filtroReporte.getAnhos());
         ejecutivo.setTotalGeneralActuacionDefensorial(totalGeneralActuacion);
         ejecutivo.setPorcentajeActuacionDefensorial(cambiarPorcentaje(totalCasos,totalGeneralActuacion, "DEL TOTAL DE CASOS"));
         ejecutivo.setTotalGeneralActuacionDefensorialSupervisionPreventiva(totalGeneralActuacionSupervisionPreventiva);
         ejecutivo.setTotalGeneralActuacionDefensorialIntermediaciones(totalGeneralActuacionIntermediaciones);
         ejecutivo.setTotalGeneralActuacionDefensorialAccionHumanitaria(totalGeneralActuacionAccionHumanitaria);
         ejecutivo.setTotalGeneralActuacionDefensorialDefensaLegal(totalGeneralActuacionDefensaLegal);
-        ejecutivo.setAccionesProtestaTexto1(totalGeneraCasosAccionesProtesta+" ACCIONES DE PROTESTA COLECTIVA DURANTE EL MES "+cambiarPorcentaje(totalCasosMes,totalGeneraCasosAccionesProtesta, "RELACIONADOS CON CONFLICTOS"));
-        ejecutivo.setHechoViolenciaTexto1(totalGeneraCasosViolencia+" CASOS PRESENTARON AL MENOS UN HECHO DE VIOLENCIA DESDE QUE INICIARON "+cambiarPorcentaje(totalCasos,totalGeneraCasosViolencia , "DEL TOTAL DE CASOS"));
+//        ejecutivo.setAccionesProtestaTexto1(totalGeneraCasosAccionesProtesta+" ACCIONES DE PROTESTA COLECTIVA DURANTE EL MES "+cambiarPorcentaje(totalCasosMes,totalGeneraCasosAccionesProtesta, "RELACIONADOS CON CONFLICTOS"));
+        //ejecutivo.setHechoViolenciaTexto1(totalGeneraCasosViolencia+" CASOS PRESENTARON AL MENOS UN HECHO DE VIOLENCIA DESDE QUE INICIARON "+cambiarPorcentaje(totalCasos,totalGeneraCasosViolencia , "DEL TOTAL DE CASOS"));
         ejecutivo.setProcedoDialogoTexto1(totalGeneraReunionesPreparatorias+" CASOS SE ENCUENTRAN EN REUNIONES PREPARATORIAS PARA EL DIÁLOGO "+cambiarPorcentaje(totalGeneralDialogo,totalGeneraReunionesPreparatorias , "DE LOS CASOS EN DIALOGO")); 
         ejecutivo.setProcedoDialogoTexto2(totalGeneraParticipacionDefensoria+" CASOS TUVIERON PRESENCIA DE LA DEFENSORÍA EN LOS ESPACIOS DE DIÁLOGO  "+cambiarPorcentaje(totalGeneralDialogo,totalGeneraParticipacionDefensoria , "DE LOS CASOS EN DIALOGO")); 
         ejecutivo.setTotalCasosGeneralDialogoProceso(totalGeneralDialogoProceso);
@@ -165,7 +166,7 @@ public class ReporteGeneralController implements Serializable {
         ejecutivo.setTotalCasosActivoMes(totalActivos);
         ejecutivo.setTotalCasosMes(totalCasosMes);
         ejecutivo.setTotalCasosLatenteMes(totalLatentes);
-        ejecutivo.setMesPublicacion(MesesEnum.verMes(filtroReporte.getMes()).toUpperCase());
+        ejecutivo.setMesPublicacion(MesesEnum.get(filtroReporte.getMes()).getValue().toUpperCase());
         ejecutivo.setPorcentajeActivos(cambiarPorcentaje(totalCasosMes, totalActivos, "DEL TOTAL DE CASOS"));
         ejecutivo.setPorcentajeLatentes(cambiarPorcentaje(totalCasosMes, totalLatentes, "DEL TOTAL DE CASOS"));
         ejecutivo.setTotalCasosActivosLatentes(totalActivosLatentes);
@@ -206,7 +207,7 @@ public class ReporteGeneralController implements Serializable {
                 filtroAnho--;
                 filtroMes = 12;
             }
-            EstadoConflicto ec = new EstadoConflicto(MesesEnum.verMes2(filtroMesString), activos, latentes, total, "20"+filtroAnhoString);
+            EstadoConflicto ec = new EstadoConflicto(MesesEnum.get(filtroMesString).getValue(), activos, latentes, total, "20"+filtroAnhoString);
             ecs.add(ec);
         }
         ejecutivo.setEstadoConflictos(ecs);
@@ -244,10 +245,10 @@ public class ReporteGeneralController implements Serializable {
                 filtroAnho2--;
                 filtroMes2 = 12;
             }
-            NuevoCaso nc = new NuevoCaso(MesesEnum.verMes2(filtroMesString), resue, nuevo, "20"+filtroAnhoString);
+            NuevoCaso nc = new NuevoCaso(MesesEnum.get(filtroMesString).getValue(), resue, nuevo, "20"+filtroAnhoString);
             ncs.add(nc);
         }
-        sb1.append("Desde "+MesesEnum.verMes(filtroReporte.getMes())+" del 20"+(Integer.parseInt(filtroReporte.getAnhos())-1)+" hasta "+MesesEnum.verMes(filtroReporte.getMes())+" del 20"+(Integer.parseInt(filtroReporte.getAnhos()))+" se han resuelto "+sumaResuelto+" casos y se han incorporado "+sumaNuevo+" (ver Gráfico N° 3).");
+        sb1.append("Desde "+MesesEnum.get(filtroReporte.getMes()).getValue()+" del 20"+(Integer.parseInt(filtroReporte.getAnhos())-1)+" hasta "+MesesEnum.get(filtroReporte.getMes()).getValue()+" del 20"+(Integer.parseInt(filtroReporte.getAnhos()))+" se han resuelto "+sumaResuelto+" casos y se han incorporado "+sumaNuevo+" (ver Gráfico N° 3).");
         ejecutivo.setCasosNuevosTexto(sb1.toString());
         
         /*grafic 004 005**/
@@ -316,7 +317,7 @@ public class ReporteGeneralController implements Serializable {
         /*grafic 006**/
         
         StringBuilder sb2 = new StringBuilder();
-        sb2.append("Así, en el mes de "+MesesEnum.verMes(filtroReporte.getMes())+" de 20"+filtroReporte.getAnhos()+", la principal competencia ");
+        sb2.append("Así, en el mes de "+MesesEnum.get(filtroReporte.getMes()).getValue()+" de 20"+filtroReporte.getAnhos()+", la principal competencia ");
         sb2.append("(entre varias que coexisten) en la atención de los conflictos sociales registrados recae en el Gobierno Nacional, con "+gobNacionalSum+" casos ("+cambiarPorcentaje(totalGob, gobNacionalSum)+"), ");
         sb2.append("los Gobiernos Regionales con "+gobRegionalSum+" casos ("+cambiarPorcentaje(totalGob, gobRegionalSum)+"); los Gobiernos Locales con "+gobLocalSum+" casos ("+cambiarPorcentaje(totalGob, gobLocalSum)+"), a continuación el cuadro por competencias:");
         ejecutivo.setNivelGobiernoTexto(sb2.toString());

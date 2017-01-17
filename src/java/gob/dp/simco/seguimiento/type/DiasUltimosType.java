@@ -6,12 +6,12 @@
 
 package gob.dp.simco.seguimiento.type;
 
-import gob.dp.simco.seguimiento.vo.SelectVO1;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.faces.model.SelectItem;
 
 public enum DiasUltimosType {
 
@@ -63,12 +63,12 @@ public enum DiasUltimosType {
 		this.value = value;
 	}
         
-        public static List<SelectVO1> getList() {
-		List<SelectVO1> rList = new ArrayList<>();
+        public static List<SelectItem> getList() {
+		List<SelectItem> rList = new ArrayList<>();
 		for (DiasUltimosType s : list) {
-			SelectVO1 select = new SelectVO1();
-			select.setId(s.getKey());
-			select.setValue(s.getValue());
+			SelectItem select = new SelectItem();
+			select.setValue(s.getKey());
+			select.setLabel(s.getValue());
 			rList.add(select);
 		}
 		return rList;

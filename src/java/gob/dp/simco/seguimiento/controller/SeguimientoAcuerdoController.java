@@ -23,8 +23,6 @@ import gob.dp.simco.seguimiento.type.DiasProximosType;
 import gob.dp.simco.seguimiento.type.DiasUltimosType;
 import gob.dp.simco.seguimiento.type.RepeticionType;
 import gob.dp.simco.seguimiento.type.TiempoType;
-import gob.dp.simco.seguimiento.vo.SelectVO;
-import gob.dp.simco.seguimiento.vo.SelectVO1;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -315,18 +313,7 @@ public class SeguimientoAcuerdoController implements Serializable {
     }
 
     public List<SelectItem> getListaTiempo() {
-        try {
-            listaTiempo = new ArrayList<>();
-            List<SelectVO> tiposTiempo = TiempoType.getList();
-            if (tiposTiempo != null) {
-                listaTiempo.add(new SelectItem("0", "[Seleccione]"));
-                for (SelectVO tipoTiempo : tiposTiempo) {
-                    listaTiempo.add(new SelectItem(tipoTiempo.getId(),
-                            tipoTiempo.getValue()));
-                }
-            }
-        } catch (Exception e) {
-        }
+        listaTiempo = TiempoType.getList();
         return listaTiempo;
     }
 
@@ -335,18 +322,7 @@ public class SeguimientoAcuerdoController implements Serializable {
     }
 
     public List<SelectItem> getListaAntesDespues() {
-        try {
-            listaAntesDespues = new ArrayList<>();
-            List<SelectVO> tiposAntesDespues = AntesDespuesType.getList();
-            if (tiposAntesDespues != null) {
-                listaAntesDespues.add(new SelectItem("0", "[Seleccione]"));
-                for (SelectVO tipoAntesDespues : tiposAntesDespues) {
-                    listaAntesDespues.add(new SelectItem(tipoAntesDespues.getId(),
-                            tipoAntesDespues.getValue()));
-                }
-            }
-        } catch (Exception e) {
-        }
+        listaAntesDespues = AntesDespuesType.getList();
         return listaAntesDespues;
     }
 
@@ -355,18 +331,7 @@ public class SeguimientoAcuerdoController implements Serializable {
     }
 
     public List<SelectItem> getListaRepeticion() {
-        try {
-            listaRepeticion = new ArrayList<>();
-            List<SelectVO> tiposRepeticion = RepeticionType.getList();
-            if (tiposRepeticion != null) {
-                listaRepeticion.add(new SelectItem("0", "[Seleccione]"));
-                for (SelectVO tipoRepeticion : tiposRepeticion) {
-                    listaRepeticion.add(new SelectItem(tipoRepeticion.getId(),
-                            tipoRepeticion.getValue()));
-                }
-            }
-        } catch (Exception e) {
-        }
+        listaRepeticion = RepeticionType.getList();
         return listaRepeticion;
     }
 
@@ -423,18 +388,7 @@ public class SeguimientoAcuerdoController implements Serializable {
     }
 
     public List<SelectItem> getListaProximosDias() {
-        try {
-            listaProximosDias = new ArrayList<>();
-            List<SelectVO1> tiposProximosDias = DiasProximosType.getList();
-            if (tiposProximosDias != null) {
-                listaProximosDias.add(new SelectItem("0", "[Seleccione]"));
-                for (SelectVO1 tipoProximosDias : tiposProximosDias) {
-                    listaProximosDias.add(new SelectItem(tipoProximosDias.getId(),
-                            tipoProximosDias.getValue()));
-                }
-            }
-        } catch (Exception e) {
-        }
+        listaProximosDias = DiasProximosType.getList();        
         return listaProximosDias;
     }
 
@@ -443,18 +397,7 @@ public class SeguimientoAcuerdoController implements Serializable {
     }
 
     public List<SelectItem> getListaUltimosDias() {
-        try {
-            listaUltimosDias = new ArrayList<>();
-            List<SelectVO1> tiposUltimosDias = DiasUltimosType.getList();
-            if (tiposUltimosDias != null) {
-                listaUltimosDias.add(new SelectItem("0", "[Seleccione]"));
-                for (SelectVO1 tipoUltimosDias : tiposUltimosDias) {
-                    listaUltimosDias.add(new SelectItem(tipoUltimosDias.getId(),
-                            tipoUltimosDias.getValue()));
-                }
-            }
-        } catch (Exception e) {
-        }
+        listaUltimosDias = DiasUltimosType.getList();
         return listaUltimosDias;
     }
 

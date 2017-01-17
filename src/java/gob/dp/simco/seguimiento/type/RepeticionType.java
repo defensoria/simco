@@ -1,11 +1,11 @@
 package gob.dp.simco.seguimiento.type;
 
-import gob.dp.simco.seguimiento.vo.SelectVO;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.faces.model.SelectItem;
 
 public enum RepeticionType {
 
@@ -15,10 +15,10 @@ public enum RepeticionType {
         
 	
 	/** La Constante list. */
-	private static final List<RepeticionType> list = new ArrayList<RepeticionType>();
+	private static final List<RepeticionType> list = new ArrayList<>();
 	
 	/** La Constante lookup. */
-	private static final Map<String, RepeticionType> lookup = new HashMap<String, RepeticionType>();
+	private static final Map<String, RepeticionType> lookup = new HashMap<>();
 
 	static {
 		for (RepeticionType s : EnumSet.allOf(RepeticionType.class)) {
@@ -52,12 +52,12 @@ public enum RepeticionType {
 		return this.getValue();
 	}
 
-	public static List<SelectVO> getList() {
-		List<SelectVO> rList = new ArrayList<>();
+	public static List<SelectItem> getList() {
+		List<SelectItem> rList = new ArrayList<>();
 		for (RepeticionType s : list) {
-			SelectVO select = new SelectVO();
-			select.setId(s.getKey());
-			select.setValue(s.getValue());
+			SelectItem select = new SelectItem();
+			select.setValue(s.getKey());
+			select.setLabel(s.getValue());
 			rList.add(select);
 		}
 		return rList;

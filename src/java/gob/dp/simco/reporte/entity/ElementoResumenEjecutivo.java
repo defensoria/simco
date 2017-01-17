@@ -16,6 +16,8 @@ public class ElementoResumenEjecutivo implements Serializable{
     
     private ReporteMapa mapa;
     
+    private String titulo1;
+    
     private String imagePath001;
     
     private String imagePath002;
@@ -1295,6 +1297,14 @@ public class ElementoResumenEjecutivo implements Serializable{
 
     public void setImagePath002(String imagePath002) {
         this.imagePath002 = imagePath002;
+    }
+
+    public String getTitulo1() {
+        return titulo1;
+    }
+
+    public void setTitulo1(String titulo1) {
+        this.titulo1 = titulo1;
     }
 
 }

@@ -9,13 +9,12 @@ package gob.dp.simco.comun.type;
  *
  * @author carlos
  */
-
-import gob.dp.simco.seguimiento.vo.SelectVO;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.faces.model.SelectItem;
 
 public enum MesesEnum {
 
@@ -96,77 +95,17 @@ public enum MesesEnum {
 		return this.getValue();
 	}
 
-	public static List<SelectVO> getList() {
-		List<SelectVO> rList = new ArrayList<>();
+	public static List<SelectItem> getList() {
+		List<SelectItem> rList = new ArrayList<>();
 		for (MesesEnum s : list) {
-			SelectVO select = new SelectVO();
-			select.setId(s.getKey());
-			select.setValue(s.getValue());
+			SelectItem select = new SelectItem();
+			select.setValue(s.getKey());
+			select.setLabel(s.getValue());
 			rList.add(select);
 		}
 		return rList;
 	}
-
-	public static String verMes(String cod){
-		String mes = "";
-		if(cod.equalsIgnoreCase(ENERO.getKey()))
-			mes = ENERO.getValue();
-		if(cod.equalsIgnoreCase(FEBRERO.getKey()))
-			mes = FEBRERO.getValue();
-		if(cod.equalsIgnoreCase(MARZO.getKey()))
-			mes = MARZO.getValue();
-		if(cod.equalsIgnoreCase(ABRIL.getKey()))
-			mes = ABRIL.getValue();
-		if(cod.equalsIgnoreCase(MAYO.getKey()))
-			mes = MAYO.getValue();
-		if(cod.equalsIgnoreCase(JUNIO.getKey()))
-			mes = JUNIO.getValue();
-		if(cod.equalsIgnoreCase(JULIO.getKey()))
-			mes = JULIO.getValue();
-		if(cod.equalsIgnoreCase(AGOSTO.getKey()))
-			mes = AGOSTO.getValue();
-		if(cod.equalsIgnoreCase(SEPTIEMBRE.getKey()))
-			mes = SEPTIEMBRE.getValue();
-		if(cod.equalsIgnoreCase(OCTUBRE.getKey()))
-			mes = OCTUBRE.getValue();
-		if(cod.equalsIgnoreCase(NOVIEMBRE.getKey()))
-			mes = NOVIEMBRE.getValue();
-		if(cod.equalsIgnoreCase(DICIEMBRE.getKey()))
-			mes = DICIEMBRE.getValue();
-		
-		return mes;
-	}
         
-        
-        public static String verMes2(String cod){
-		String mes = "";
-		if(cod.equalsIgnoreCase(ENERO.getKey()))
-			mes = "ENE";
-		if(cod.equalsIgnoreCase(FEBRERO.getKey()))
-			mes = "FEB";
-		if(cod.equalsIgnoreCase(MARZO.getKey()))
-			mes = "MAR";
-		if(cod.equalsIgnoreCase(ABRIL.getKey()))
-			mes = "ABR";
-		if(cod.equalsIgnoreCase(MAYO.getKey()))
-			mes = "MAY";
-		if(cod.equalsIgnoreCase(JUNIO.getKey()))
-			mes = "JUN";
-		if(cod.equalsIgnoreCase(JULIO.getKey()))
-			mes = "JUL";
-		if(cod.equalsIgnoreCase(AGOSTO.getKey()))
-			mes = "AGO";
-		if(cod.equalsIgnoreCase(SEPTIEMBRE.getKey()))
-			mes = "SEP";
-		if(cod.equalsIgnoreCase(OCTUBRE.getKey()))
-			mes = "OCT";
-		if(cod.equalsIgnoreCase(NOVIEMBRE.getKey()))
-			mes = "NOV";
-		if(cod.equalsIgnoreCase(DICIEMBRE.getKey()))
-			mes = "DIC";
-		
-		return mes;
-	}
 	/**
 	 * 
 	 * Metodo constructor del Enum TipoViaType con par&aacute;metro.
