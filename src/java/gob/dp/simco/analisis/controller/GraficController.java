@@ -16,6 +16,7 @@ import gob.dp.simco.analisis.service.TemaService;
 import gob.dp.simco.analisis.type.ColorType;
 import gob.dp.simco.analisis.type.ColorVinculoType;
 import gob.dp.simco.analisis.type.TipoRelacionType;
+import gob.dp.simco.registro.controller.CasoController;
 import gob.dp.simco.registro.entity.Actor;
 import gob.dp.simco.registro.entity.Caso;
 import gob.dp.simco.registro.service.ActorService;
@@ -50,6 +51,8 @@ public class GraficController implements Serializable{
     
     private Usuario usuarioSession;
     
+    private Boolean verModalActor = false;
+    
     @Autowired
     private ActorService actorService;
     
@@ -79,6 +82,15 @@ public class GraficController implements Serializable{
         nodes="";
         generarGraficosActores(c);
         return "relationActor";
+    }
+    
+    public void cargarPaginaRelacionCasoI(){
+        FacesContext context = FacesContext.getCurrentInstance();
+        CasoController casoController = (CasoController) context.getELContext().getELResolver().getValue(context.getELContext(), null, "casoController");
+        verModalActor = true;
+        edges="";
+        nodes="";
+        generarGraficosActores(casoController.getCaso());
     }
     
     public String cargarPaginaRelacionCaso2(Caso c){
@@ -270,6 +282,14 @@ public class GraficController implements Serializable{
 
     public void setUsuarioSession(Usuario usuarioSession) {
         this.usuarioSession = usuarioSession;
+    }
+
+    public Boolean getVerModalActor() {
+        return verModalActor;
+    }
+
+    public void setVerModalActor(Boolean verModalActor) {
+        this.verModalActor = verModalActor;
     }
     
     

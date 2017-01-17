@@ -173,7 +173,16 @@
         <if test="fechaFin != null">
             D_FECHAFIN,
         </if>
-        C_NOMCASO
+        <if test="indAprobado != null">
+            C_INDAPROBADO,
+        </if>
+        <if test="usuAprobado != null">
+            C_USUAPROBADOR,
+        </if>
+        <if test="fechaAprobado != null">
+            D_FECHAAPROBACION,
+        </if>
+         C_NOMCASO
         )
         VALUES 
         (
@@ -267,6 +276,15 @@
         </if>
         <if test="fechaFin != null">
             #{fechaFin},
+        </if>
+        <if test="indAprobado != null">
+            #{indAprobado},
+        </if>
+        <if test="usuAprobado != null">
+            #{usuAprobado},
+        </if>
+        <if test="fechaAprobado != null">
+            #{fechaAprobado},
         </if>
         #{nombre}
         )

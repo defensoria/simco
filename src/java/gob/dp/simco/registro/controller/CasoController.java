@@ -808,7 +808,7 @@ public class CasoController extends AbstractManagedBean implements Serializable 
 
     }
     
-    public void aprobarSolicitudAprobacion(){
+    public String aprobarSolicitudAprobacion(){
         if(caso.getIndAprobado() == null){
             if(StringUtils.isBlank(caso.getCodigo())){
                 caso.setCodigo(generarCodigoCaso());
@@ -828,7 +828,7 @@ public class CasoController extends AbstractManagedBean implements Serializable 
                 msg.messageInfo("Se aprobo el caso", null);
             }            
         }
-        setearFichaCaso(caso);
+        return setearFichaCaso(caso);
     }
     
     private void ordenarParametros() {

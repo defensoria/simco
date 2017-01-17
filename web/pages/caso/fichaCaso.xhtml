@@ -86,9 +86,11 @@
                         <table style="width:100%">
                             <tr>
                                 <td style="width:70%; padding-bottom: 15px">
-                                    <span class="text-resalt-comun" style="font-weight:bold">#{casoController.caso.nombre} </span>
-                                    <h:outputText rendered="#{casoController.caso.id != null and !casoController.caso.indicador eq null}" class="text-resalt-comun" value="código: #{casoController.caso.codigo}" />
-                                    <span style="color: red; font-size: 1.5em; vertical-align: bottom">* </span><label>Nombre del caso</label>
+                                    
+                                    <h:outputText rendered="#{casoController.caso.id != null and casoController.caso.indicador == 'A'}" class="text-resalt-comun" value="código: #{casoController.caso.codigo}" />
+                                    <br/>
+                                    <span style="color: red; font-size: 1.5em; vertical-align: bottom">* </span><span class="text-resalt-comun">Nombre del caso:</span>
+                                    <span class="text-resalt-comun" >#{casoController.caso.nombre} </span>
                                     <input style="width:50%" jsf:rendered="#{casoController.caso.id == null}" type="text" id="idNombreCaso" jsf:value="#{casoController.caso.nombre}" placeholder="Nombre"/>
                                 </td>
                                 <td>
@@ -488,7 +490,6 @@
                                                                 <h:panelGroup rendered="#{(casoController.esComisionadoRegistro)}">
                                                                     <a class="btn btn-primary" jsf:action="#{casoController.addRegion()}" jsf:onclick="loadingModal()">
                                                                         <span class="glyphicon glyphicon-plus" />Añadir
-                                                                        
                                                                     </a>
                                                                 </h:panelGroup>    
                                                             </td>
@@ -564,6 +565,12 @@
                                 </tr>
                                     <tr>
                                         <br/>
+                                        <script>
+                                        $('.datepicker').datetimepicker({pickTime: false});
+                    $(".datepicker").on("changeDate", function (ev) {
+                        $(this).datetimepicker("hide");
+                    });
+                                        </script>
                                             <table>
                                                     <tr>
                                                         <td style="padding-right: 10px">
