@@ -10,29 +10,6 @@
     <result property="usuarioRegistro" column="C_USERACTI"/>
 </resultMap> 
 
-<sql id="sqlBuscarActividadHistorial">
-    SELECT 
-       A.N_ID_HIST_ACTI,
-       A.N_ID_ACTI,
-       A.C_VALORMAESTROACTI,
-       A.D_FECREGISTROACTI,
-       A.C_USERACTI,
-       B.C_NOMBREMAESTRO
-    FROM
-       SIMCO_HIST_ACTIVIDAD A 
-    INNER JOIN
-       SIMCO_HIST_MAESTRO B ON A.C_VALORMAESTROACTI = B.C_VALORMAESTRO
-       AND B.N_PADREMAESTRO = 10    
-    WHERE
-        A.N_ID_ACTI=#{idActividad}
-    ORDER BY
-        A.N_ID_HIST_ACTI
-</sql> 
-
-<select id="actividadHistorialBuscarList" resultMap="actividadHistorialMap" parameterType="actividadHistorial">
-	<include refid="sqlBuscarActividadHistorial"/>
-</select>     
-
 
 <insert id="actividadHistorialInsertar" parameterType="actividadHistorial">
      INSERT INTO SIMCO_HIST_ACTIVIDAD 

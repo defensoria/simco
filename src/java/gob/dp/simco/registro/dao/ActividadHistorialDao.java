@@ -7,7 +7,6 @@
 package gob.dp.simco.registro.dao;
 
 import gob.dp.simco.registro.entity.ActividadHistorial;
-import java.util.List;
 
 /**
  *
@@ -16,7 +15,5 @@ import java.util.List;
 public interface ActividadHistorialDao {
     
     public void actividadHistorialInsertar(ActividadHistorial historial);
-    
-    public List<ActividadHistorial> actividadHistorialBuscarList(Long idActividad);
     
 }

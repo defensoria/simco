@@ -21,12 +21,10 @@ import gob.dp.simco.registro.entity.Actividad;
 import gob.dp.simco.registro.entity.ActividadActor;
 import gob.dp.simco.registro.entity.Actor;
 import gob.dp.simco.registro.entity.ActorAcuerdo;
-import gob.dp.simco.registro.entity.ActorHistorial;
 import gob.dp.simco.registro.entity.ActorMiembro;
 import gob.dp.simco.registro.entity.Caso;
 import gob.dp.simco.registro.service.ActividadActorService;
 import gob.dp.simco.registro.service.ActividadService;
-import gob.dp.simco.registro.service.ActorHistorialService;
 import gob.dp.simco.registro.service.ActorMiembroService;
 import gob.dp.simco.registro.service.ActorService;
 import gob.dp.simco.registro.service.CasoService;
@@ -74,8 +72,6 @@ public class ActorController extends AbstractManagedBean implements Serializable
     private ActorMiembro actorMiembroEntidad;
 
     private ActorMiembro actorMiembroPesona;
-
-    private List<ActorHistorial> listaActorHistorial;
 
     private List<Actividad> listaActividadxActor;
 
@@ -177,9 +173,6 @@ public class ActorController extends AbstractManagedBean implements Serializable
 
     @Autowired
     private ActividadActorService actividadActorService;
-
-    @Autowired
-    private ActorHistorialService actorHistorialService;
 
     @Autowired
     private ActividadService actividadService;
@@ -1454,33 +1447,6 @@ public class ActorController extends AbstractManagedBean implements Serializable
         }
     }
 
-    public void historialActor(String accion, String entidad, Long idEntidad, Long idActor) {
-        try {
-            FacesContext context = FacesContext.getCurrentInstance();
-            LoginController loginController = (LoginController) context.getELContext().getELResolver().getValue(context.getELContext(), null, "loginController");
-            ActorHistorial historial = new ActorHistorial();
-            historial.setAccion(accion);
-            historial.setIdActor(idActor);
-            historial.setFechaRegistro(new Date());
-            historial.setEntidad(entidad);
-            historial.setIdEntidad(idEntidad);
-            historial.setUsuarioRegistro(loginController.getUsuarioSesion().getCodigo());
-            actorHistorialService.actorHistorialInsertar(historial);
-        } catch (Exception e) {
-            log.error("ERROR - historialActor()" + e);
-        }
-    }
-
-    public List<ActorHistorial> listarActorHistorial() {
-        List<ActorHistorial> list = null;
-        try {
-            list = actorHistorialService.actorHistorialBuscarList(actorTemp.getId());
-        } catch (Exception e) {
-            log.error("ERROR - listarActorHistorial()" + e);
-        }
-        return list;
-    }
-
     public void actividadUnionActorModal(Long idActividad) {
         ActividadActor actividadActor1;
         Actividad actividad = new Actividad();
@@ -1650,14 +1616,6 @@ public class ActorController extends AbstractManagedBean implements Serializable
 
     public void setActorBusquedaTemp(ActorBusquedaTemp actorBusquedaTemp) {
         this.actorBusquedaTemp = actorBusquedaTemp;
-    }
-
-    public List<ActorHistorial> getListaActorHistorial() {
-        return listaActorHistorial;
-    }
-
-    public void setListaActorHistorial(List<ActorHistorial> listaActorHistorial) {
-        this.listaActorHistorial = listaActorHistorial;
     }
 
     public List<Actividad> getListaActividadxActor() {

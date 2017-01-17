@@ -7,7 +7,6 @@
 package gob.dp.simco.registro.dao;
 
 import gob.dp.simco.registro.entity.ActividadHistorial;
-import java.util.List;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.springframework.stereotype.Repository;
 
@@ -21,10 +20,5 @@ public class ActividadHistorialDaoImpl extends SqlSessionDaoSupport implements A
     @Override
     public void actividadHistorialInsertar(ActividadHistorial historial) {
         getSqlSession().insert("gob.dp.simco.registro.dao.ActividadHistorialDao.actividadHistorialInsertar", historial);
-    }
-
-    @Override
-    public List<ActividadHistorial> actividadHistorialBuscarList(Long idActividad) {
-        return getSqlSession().selectList("gob.dp.simco.registro.dao.ActividadHistorialDao.actividadHistorialBuscarList",idActividad);
     }   
 }

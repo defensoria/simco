@@ -17,6 +17,4 @@ public interface ActividadHistorialService {
     
     public void actividadHistorialInsertar(ActividadHistorial historial);
     
-    public List<ActividadHistorial> actividadHistorialBuscarList(Long idActividad);
-    
 }

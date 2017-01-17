@@ -129,8 +129,11 @@ public class ReporteGeneralController implements Serializable {
         Integer totalGeneralActuacionDefensaLegal;
         
         ElementoResumenEjecutivo ejecutivo = new ElementoResumenEjecutivo();
-        totalCasos = reporteEjecutivoService.totalCasosRegistrados(filtroReporte);
+        /*UNIVERSO DE CASOS ACTIVOS Y LATENTES HASTA EL MES*/
         totalCasosMes = reporteEjecutivoService.totalCasosRegistradosMes(filtroReporte);
+        
+        totalCasos = reporteEjecutivoService.totalCasosRegistrados(filtroReporte);
+        
         totalActivos = reporteEjecutivoService.totalCasosActivos(filtroReporte);
         totalTotal = reporteEjecutivoService.totalCasosTotales(filtroReporte);
         totalLatentes = reporteEjecutivoService.totalCasosLatentes(filtroReporte);

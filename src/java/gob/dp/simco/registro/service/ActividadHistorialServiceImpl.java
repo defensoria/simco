@@ -26,10 +26,5 @@ public class ActividadHistorialServiceImpl implements ActividadHistorialService{
     public void actividadHistorialInsertar(ActividadHistorial historial) {
         actividadHistorialDao.actividadHistorialInsertar(historial);
     }
-
-    @Override
-    public List<ActividadHistorial> actividadHistorialBuscarList(Long idActividad) {
-        return actividadHistorialDao.actividadHistorialBuscarList(idActividad);
-    }
     
 }
